@@ -4,8 +4,7 @@ from agents.support_agent import support_agent
 ticket_text = """
 Ticket from user:
 
-"Hello, I just installed the Phase theme, but the Elementor artist slider doesn't display any content.
-I tried clearing cache and deactivating plugins but it’s still not working."
+"Hi, I’m getting an error that says ‘The package could not be installed. The theme is missing the style.css stylesheet.’ when I try to upload the theme on WordPress."
 """
 
 support_task = Task(
@@ -13,7 +12,9 @@ support_task = Task(
 You're responding to a real customer support ticket.
 Do NOT summarize or restate the user’s message. 
 Do NOT use generic lines like 'thank you for contacting us'. 
+
 Just give the clearest, most relevant answer — like a human expert would.
+Use the knowledge base loaded in your memory if applicable.
 
 Here is the ticket:
 {ticket_text}
