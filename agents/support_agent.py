@@ -9,21 +9,32 @@ from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from crewai import Agent
 
-# Load .env for OpenAI credentials, etc.
 load_dotenv()
 
-### -------- Helpers --------
+EMBED_PATH = "data/faiss_store"
+
+### -------- Clean Helpers --------
 
 def clean_html_to_text(html_string: str) -> str:
     soup = BeautifulSoup(html.unescape(html_string), "html.parser")
     return soup.get_text(separator="\n", strip=True)
 
+def parse_json_file(path):
+    with open(path, encoding="utf-8") as f:
+        try:
+            data = json.load(f)
+            # if any element is a stringified JSON, parse it
+            if all(isinstance(d, str) for d in data):
+                return [json.loads(x) for x in data]
+            return data
+        except Exception as e:
+            print(f"❌ Failed to load JSON from {path}: {e}")
+            return []
+
 ### -------- Load Articles --------
 
 def load_kb_articles(path="data/wolfthemes_kb_articles.json"):
-    with open(path, encoding="utf-8") as f:
-        kb_data = json.load(f)
-
+    data = parse_json_file(path)
     return [
         Document(
             page_content=clean_html_to_text(a["content"]),
@@ -33,15 +44,13 @@ def load_kb_articles(path="data/wolfthemes_kb_articles.json"):
                 "source": "kb_article"
             }
         )
-        for a in kb_data if a.get("content")
+        for a in data if a.get("content")
     ]
 
 ### -------- Load Theme Docs --------
 
 def load_theme_docs(path="data/wolfthemes_theme_docs.json"):
-    with open(path, encoding="utf-8") as f:
-        doc_data = json.load(f)
-
+    data = parse_json_file(path)
     return [
         Document(
             page_content=d["content"],
@@ -52,41 +61,55 @@ def load_theme_docs(path="data/wolfthemes_theme_docs.json"):
                 "source": "theme_doc"
             }
         )
-        for d in doc_data if d.get("content")
+        for d in data if d.get("content")
     ]
 
 ### -------- Load Closed Tickets --------
 
 def load_closed_tickets(path="data/wolfthemes_closed_tickets.json"):
-    with open(path, encoding="utf-8") as f:
-        ticket_data = json.load(f)
-
+    data = parse_json_file(path)
     documents = []
-    for t in ticket_data:
-        if not t.get("ticket_comments"):
+
+    for t in data:
+        if not isinstance(t, dict) or not t.get("ticket_comments"):
             continue
 
         text_blocks = []
         for c in t["ticket_comments"]:
             if c.get("private") == "1":
                 continue
-            comment = clean_html_to_text(c["comment"])
-            text_blocks.append(f"{c['commenter_name']}:\n{comment}")
+            comment = clean_html_to_text(c.get("comment", ""))
+            if comment:
+                text_blocks.append(f"{c['commenter_name']}:\n{comment}")
 
         conversation = "\n\n---\n\n".join(text_blocks)
-        documents.append(Document(
-            page_content=conversation.strip(),
-            metadata={
-                "title": t.get("ticket_title", "Untitled Ticket"),
-                "url": t.get("related_url", ""),
-                "ticket_id": t.get("ticket_id"),
-                "theme": t.get("envato_verified_string", {}).get("item_name", "Unknown Theme") if isinstance(t.get("envato_verified_string"), dict) else "Unknown Theme",
-                "source": "support_ticket"
-            }
-        ))
+        if conversation.strip():
+            documents.append(Document(
+                page_content=conversation.strip(),
+                metadata={
+                    "title": t.get("ticket_title", "Untitled Ticket"),
+                    "url": t.get("related_url", ""),
+                    "ticket_id": t.get("ticket_id"),
+                    "theme": t.get("envato_verified_string", {}).get("item_name", "Unknown Theme") if isinstance(t.get("envato_verified_string"), dict) else "Unknown Theme",
+                    "source": "support_ticket"
+                }
+            ))
     return documents
 
-### -------- Create KB Tool --------
+### -------- Load or Create VectorStore --------
+
+def load_or_create_vectorstore(docs):
+    embedding = OpenAIEmbeddings()
+    if os.path.exists(EMBED_PATH):
+        print("🔁 Loading existing FAISS index...")
+        return FAISS.load_local(EMBED_PATH, embedding)
+    else:
+        print("✨ Creating new FAISS index...")
+        vectorstore = FAISS.from_documents(docs, embedding)
+        vectorstore.save_local(EMBED_PATH)
+        return vectorstore
+
+### -------- KB Search Tool --------
 
 class KBSearchTool:
     name = "KB Search Tool"
@@ -102,37 +125,31 @@ class KBSearchTool:
             for doc in results
         ]) if results else "No relevant content found."
 
-### -------- Main Agent Setup --------
+### -------- Load Agent --------
 
-print("📦 Loading all knowledge base sources...")
+print("📦 Loading knowledge base documents...")
 
 articles = load_kb_articles()
 theme_docs = load_theme_docs()
 tickets = load_closed_tickets()
 
 all_docs = articles + theme_docs + tickets
-print(f"✅ Loaded {len(all_docs)} documents.")
+print(f"✅ Loaded {len(all_docs)} documents total.")
 
-print("🔍 Creating vector store...")
-embedding = OpenAIEmbeddings()
-vectorstore = FAISS.from_documents(all_docs, embedding)
+vectorstore = load_or_create_vectorstore(all_docs)
 retriever = vectorstore.as_retriever()
-
-print("🔧 Initializing KB Tool...")
 kb_tool = KBSearchTool(retriever)
 
-print("🧠 Creating Support Agent...")
 support_agent = Agent(
     role="WordPress Theme Support Expert",
     goal="Use the knowledge base to resolve customer tickets efficiently",
     backstory="""You are a WordPress support expert for WolfThemes with 
-    access to detailed documentation and resolved support tickets. You use the 
-    knowledge base to find accurate, helpful solutions for customers.""",
+    access to documentation, knowledge base articles, and past resolved tickets. 
+    You provide quick, clear, and accurate support to customers.""",
     tools=[kb_tool],
     allow_delegation=False,
     verbose=True
 )
 
-# Optional debug if running standalone
 if __name__ == "__main__":
-    print("✅ Support agent loaded and ready.")
+    print("✅ Support agent ready.")
