@@ -8,7 +8,7 @@ from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from crewai import Agent
-from langchain.tools import tool  # ✅ this is the correct one
+from langchain.tools import Tool
 
 load_dotenv()
 
@@ -142,8 +142,7 @@ retriever = vectorstore.as_retriever()
 
 ### -------- Tool (CrewAI-Compatible) --------
 
-@tool
-def search_kb(query: str) -> str:
+def search_kb_fn(query: str) -> str:
     """Search WolfThemes documentation and support tickets."""
     results = retriever.invoke(query)
     return "\n\n".join([
@@ -153,6 +152,11 @@ def search_kb(query: str) -> str:
         for doc in results
     ]) or "No relevant results found."
 
+search_kb_tool = {
+    "name": "KB Search Tool",
+    "description": "Search the WolfThemes knowledge base for support issues.",
+    "func": search_kb_fn
+}
 ### -------- Agent --------
 
 support_agent = Agent(
@@ -161,7 +165,7 @@ support_agent = Agent(
     backstory="""You are a WordPress support expert for WolfThemes with 
     access to documentation, knowledge base articles, and past resolved tickets. 
     You provide quick, clear, and accurate support to customers.""",
-    tools=[search_kb],  # Note the parentheses to instantiate the tool
+    tools=[search_kb_tool],  # ✅ now accepted by CrewAI
     allow_delegation=False,
     verbose=True
 )
