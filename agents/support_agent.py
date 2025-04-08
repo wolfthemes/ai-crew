@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
+from langchain.tools import Tool
 from crewai import Agent
 
 load_dotenv()
@@ -20,10 +21,13 @@ def clean_html_to_text(html_string: str) -> str:
     return soup.get_text(separator="\n", strip=True)
 
 def parse_json_file(path):
+    if not os.path.exists(path) or os.path.getsize(path) == 0:
+        print(f"⚠️ Warning: {path} is empty or missing.")
+        return []
+
     with open(path, encoding="utf-8") as f:
         try:
             data = json.load(f)
-            # if any element is a stringified JSON, parse it
             if all(isinstance(d, str) for d in data):
                 return [json.loads(x) for x in data]
             return data
@@ -80,7 +84,7 @@ def load_closed_tickets(path="data/wolfthemes_closed_tickets.json"):
                 continue
             comment = clean_html_to_text(c.get("comment", ""))
             if comment:
-                text_blocks.append(f"{c['commenter_name']}:\n{comment}")
+                text_blocks.append(f"{c.get('commenter_name', 'User')}:\n{comment}")
 
         conversation = "\n\n---\n\n".join(text_blocks)
         if conversation.strip():
@@ -90,7 +94,8 @@ def load_closed_tickets(path="data/wolfthemes_closed_tickets.json"):
                     "title": t.get("ticket_title", "Untitled Ticket"),
                     "url": t.get("related_url", ""),
                     "ticket_id": t.get("ticket_id"),
-                    "theme": t.get("envato_verified_string", {}).get("item_name", "Unknown Theme") if isinstance(t.get("envato_verified_string"), dict) else "Unknown Theme",
+                    "theme": t.get("envato_verified_string", {}).get("item_name", "Unknown Theme")
+                        if isinstance(t.get("envato_verified_string"), dict) else "Unknown Theme",
                     "source": "support_ticket"
                 }
             ))
@@ -102,30 +107,16 @@ def load_or_create_vectorstore(docs):
     embedding = OpenAIEmbeddings()
     if os.path.exists(EMBED_PATH):
         print("🔁 Loading existing FAISS index...")
-        return FAISS.load_local(EMBED_PATH, embedding)
+        if os.path.exists(EMBED_PATH):
+            print("🔁 Loading existing FAISS index (trusted)...")
+            return FAISS.load_local(EMBED_PATH, embedding, allow_dangerous_deserialization=True)
     else:
         print("✨ Creating new FAISS index...")
         vectorstore = FAISS.from_documents(docs, embedding)
         vectorstore.save_local(EMBED_PATH)
         return vectorstore
 
-### -------- KB Search Tool --------
-
-class KBSearchTool:
-    name = "KB Search Tool"
-    description = "Searches the WolfThemes Knowledge Base for answers to theme issues"
-
-    def __init__(self, retriever):
-        self.retriever = retriever
-
-    def __call__(self, query: str) -> str:
-        results = self.retriever.invoke(query)
-        return "\n\n".join([
-            f"Title: {doc.metadata.get('title', 'No title')}\nURL: {doc.metadata.get('url', 'No URL')}\nContent:\n{doc.page_content}"
-            for doc in results
-        ]) if results else "No relevant content found."
-
-### -------- Load Agent --------
+### -------- Build the Agent --------
 
 print("📦 Loading knowledge base documents...")
 
@@ -138,7 +129,12 @@ print(f"✅ Loaded {len(all_docs)} documents total.")
 
 vectorstore = load_or_create_vectorstore(all_docs)
 retriever = vectorstore.as_retriever()
-kb_tool = KBSearchTool(retriever)
+
+kb_tool = Tool(
+    name="KB Search Tool",
+    description="Searches the WolfThemes Knowledge Base for answers to theme issues",
+    func=retriever.invoke
+)
 
 support_agent = Agent(
     role="WordPress Theme Support Expert",
