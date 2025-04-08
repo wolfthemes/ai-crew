@@ -7,14 +7,14 @@ from dotenv import load_dotenv
 from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
-from langchain.tools import tool
 from crewai import Agent
+from langchain.tools import tool  # ✅ this is the correct one
 
 load_dotenv()
 
 EMBED_PATH = "data/faiss_store"
 
-### -------- Utils --------
+### -------- Utilities --------
 
 def clean_html_to_text(html_string: str) -> str:
     soup = BeautifulSoup(html.unescape(html_string), "html.parser")
@@ -24,15 +24,17 @@ def parse_json_file(path):
     if not os.path.exists(path) or os.path.getsize(path) == 0:
         print(f"⚠️ Warning: {path} is empty or missing.")
         return []
-    with open(path, encoding="utf-8") as f:
-        try:
+    try:
+        with open(path, encoding="utf-8") as f:
             data = json.load(f)
-            if all(isinstance(d, str) for d in data):
-                return [json.loads(x) for x in data]
+            
+            # Handle wrapped structure
+            if isinstance(data, dict) and "closed-tickets" in data:
+                return data["closed-tickets"]
             return data
-        except Exception as e:
-            print(f"❌ Failed to load JSON from {path}: {e}")
-            return []
+    except Exception as e:
+        print(f"❌ JSON error in {path}: {str(e)}")
+        return []
 
 def format_documents(raw_data, source, content_key="content", title_key="title", url_key="url"):
     documents = []
@@ -52,22 +54,35 @@ def format_documents(raw_data, source, content_key="content", title_key="title",
         ))
     return documents
 
-### -------- Data Loaders --------
+### -------- Loaders --------
 
-def load_kb_articles():
-    data = parse_json_file("data/wolfthemes_kb_articles.json")
+def load_kb_articles(path="data/wolfthemes_kb_articles.json"):
+    data = parse_json_file(path)
     return format_documents(data, source="kb_article")
 
-def load_theme_docs():
-    data = parse_json_file("data/wolfthemes_theme_docs.json")
+def load_theme_docs(path="data/wolfthemes_theme_docs.json"):
+    data = parse_json_file(path)
     return format_documents(data, source="theme_doc")
 
+# Temporary debug code
 def load_closed_tickets():
-    data = parse_json_file("data/wolfthemes_closed_tickets.json")
+    path = "data/wolfthemes_closed_tickets.json"
+    #with open(path, encoding="utf-8") as f:
+        #raw = f.read()
+        #print(f"First 200 chars: {raw[:200]}")
+        #print(f"File length: {len(raw)}")
+        #print(f"Valid JSON: {json.loads(raw)}")  # This should fail if invalid
+    data = parse_json_file(path)
+
+    # Unwrap if wrapped
+    if isinstance(data, dict) and "closed-tickets" in data:
+        data = data["closed-tickets"]
+
     documents = []
     for t in data:
         if not isinstance(t, dict) or not t.get("ticket_comments"):
             continue
+
         text_blocks = []
         for c in t["ticket_comments"]:
             if c.get("private") == "1":
@@ -75,22 +90,30 @@ def load_closed_tickets():
             comment = clean_html_to_text(c.get("comment", ""))
             if comment:
                 text_blocks.append(f"{c.get('commenter_name', 'User')}:\n{comment}")
+
         conversation = "\n\n---\n\n".join(text_blocks)
         if conversation.strip():
+            theme = "Unknown Theme"
+            if isinstance(t.get("envato_verified_string"), str):
+                try:
+                    theme_data = json.loads(t["envato_verified_string"])
+                    theme = theme_data.get("item_name", theme)
+                except Exception as e:
+                    print(f"⚠️ Could not parse envato_verified_string: {e}")
+
             documents.append(Document(
                 page_content=conversation.strip(),
                 metadata={
                     "title": t.get("ticket_title", "Untitled Ticket"),
                     "url": t.get("related_url", ""),
                     "ticket_id": t.get("ticket_id"),
-                    "theme": t.get("envato_verified_string", {}).get("item_name", "Unknown Theme")
-                        if isinstance(t.get("envato_verified_string"), dict) else "Unknown Theme",
+                    "theme": theme,
                     "source": "support_ticket"
                 }
             ))
     return documents
 
-### -------- Vector Store --------
+### -------- Vector DB --------
 
 def load_or_create_vectorstore(docs):
     embedding = OpenAIEmbeddings()
@@ -103,7 +126,7 @@ def load_or_create_vectorstore(docs):
         vectorstore.save_local(EMBED_PATH)
         return vectorstore
 
-### -------- Main Process --------
+### -------- Load All Docs --------
 
 print("📦 Loading knowledge base documents...")
 
@@ -117,14 +140,20 @@ print(f"✅ Loaded {len(all_docs)} documents total.")
 vectorstore = load_or_create_vectorstore(all_docs)
 retriever = vectorstore.as_retriever()
 
+### -------- Tool (CrewAI-Compatible) --------
+
 @tool
 def search_kb(query: str) -> str:
-    """Searches the WolfThemes knowledge base for support issues."""
+    """Search WolfThemes documentation and support tickets."""
     results = retriever.invoke(query)
     return "\n\n".join([
-        f"Title: {doc.metadata.get('title', 'No title')}\nURL: {doc.metadata.get('url', 'No URL')}\nContent:\n{doc.page_content}"
+        f"📄 {doc.metadata.get('title')} ({doc.metadata['source']})"
+        f"\n🔗 {doc.metadata.get('url', '')}"
+        f"\n{doc.page_content[:300]}..."
         for doc in results
-    ]) if results else "No relevant content found."
+    ]) or "No relevant results found."
+
+### -------- Agent --------
 
 support_agent = Agent(
     role="WordPress Theme Support Expert",
@@ -132,7 +161,7 @@ support_agent = Agent(
     backstory="""You are a WordPress support expert for WolfThemes with 
     access to documentation, knowledge base articles, and past resolved tickets. 
     You provide quick, clear, and accurate support to customers.""",
-    tools=[search_kb],
+    tools=[search_kb],  # Note the parentheses to instantiate the tool
     allow_delegation=False,
     verbose=True
 )
