@@ -8,7 +8,7 @@ from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from crewai import Agent
-from langchain.tools import Tool
+from crewai_tools import tool  # ✅ Decorator-based definition (simpler than BaseTool)
 
 load_dotenv()
 
@@ -142,21 +142,17 @@ retriever = vectorstore.as_retriever()
 
 ### -------- Tool (CrewAI-Compatible) --------
 
+@tool("KB Search Tool")
 def search_kb_fn(query: str) -> str:
-    """Search WolfThemes documentation and support tickets."""
+    """Search the WolfThemes knowledge base for support issues."""
     results = retriever.invoke(query)
     return "\n\n".join([
-        f"📄 {doc.metadata.get('title')} ({doc.metadata['source']})"
+        f"📄 {doc.metadata.get('title')} ({doc.metadata.get('source', '')})"
         f"\n🔗 {doc.metadata.get('url', '')}"
         f"\n{doc.page_content[:300]}..."
         for doc in results
     ]) or "No relevant results found."
 
-search_kb_tool = {
-    "name": "KB Search Tool",
-    "description": "Search the WolfThemes knowledge base for support issues.",
-    "func": search_kb_fn
-}
 ### -------- Agent --------
 
 support_agent = Agent(
@@ -165,10 +161,11 @@ support_agent = Agent(
     backstory="""You are a WordPress support expert for WolfThemes with 
     access to documentation, knowledge base articles, and past resolved tickets. 
     You provide quick, clear, and accurate support to customers.""",
-    tools=[search_kb_tool],  # ✅ now accepted by CrewAI
+    tools=[search_kb_fn],
     allow_delegation=False,
     verbose=True
 )
 
 if __name__ == "__main__":
     print("✅ Support agent ready.")
+    print(search_kb_fn("stylesheet missing"))
