@@ -111,7 +111,7 @@ def rerank_results(results):
 @tool("SearchKnowledgeBase")
 def search_kb(query: str):
     """
-    Search WolfThemes documentation, KB articles, and past tickets for the given query string.
+    Search the ticket examples, WolfThemes documentation, KB articles, and past tickets for the given query string.
     Prioritize common issues first. If found, return the top matching article directly.
     Otherwise, show top retrieved documents as context.
 
