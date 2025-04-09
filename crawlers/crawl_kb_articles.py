@@ -62,7 +62,7 @@ def main():
 
     with open("data/wolfthemes_kb_articles.json", "w", encoding="utf-8") as f:
         json.dump(articles, f, indent=2, ensure_ascii=False)
-    print(f"✅ Saved {len(articles)} articles to data/wolfthemes_kb_articles.json")
+    print(f"✅ Saved {len(articles)} articles to data/kb_articles.json")
 
 if __name__ == "__main__":
     main()

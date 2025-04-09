@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Theme activation failed",
+    "issue": "I cannot activate my theme license. It keeps giving me an error.",
+    "response": "It seems like there may be an issue which can sometimes happen with certain hosting providers. I'm currently working on improving the activation system to avoid this. To help you resolve it quickly, I’ll need access to your WordPress dashboard. Could you please provide your login credentials so I can apply a workaround ?"
+  },
+  {
+    "title": "Demo import failed",
+    "issue": "I tried to import a demo but it's not working or looks different than the preview.",
+    "response": "Demo import issues are usually related to server limitations. Please check that your server meets our requirements (PHP 7.4+, memory_limit 256M+, max_execution_time 300+). Also ensure you've installed all required plugins. For large demos, you might need to increase your PHP limits or contact your hosting provider."
+  },
+  {
+    "title": "Theme is slow to load",
+    "issue": "My website is loading slowly after installing the theme.",
+    "response": "First, be sure that your theme and all plugins are up-to-date and that your server fulfills the minimum server requirements (https://wolfthemes.ticksy.com/article/11651/). Issues you may encounter, such as demo content fails when importing, slow loading speed, and similar issues, are generally related to excessively low PHP configuration limit settings. Please see our demo as a reference. It offers the exact same content but it loads much faster. Here are some useful articles about this: Low Budget Host (https://wolfthemes.ticksy.com/article/11668/), Server Requirement (https://wolfthemes.ticksy.com/article/11651/), Recommended WordPress Web Hosting (https://wolfthemes.ticksy.com/article/13381/). That being said, all live WordPress websites need to be optimized. Here is a useful article about how to increase your loading speed: https://wolfthemes.ticksy.com/article/13469/"
+  },
+  {
+    "title": "Purchase code verification failed",
+    "issue": "I can't verify my purchase code for the bundled plugins.",
+    "response": "For plugin registration issues: 1) Ensure you're using your Envato purchase code, not your theme license key, 2) Verify you're entering the code exactly as provided by Envato (including dashes), 3) Some hosting environments block the verification API - try temporarily disabling security plugins or firewalls. If the issue persists, you can download the plugin directly from your ThemeForest downloads in the 'Installable WordPress Files Only' package."
+  }
+]

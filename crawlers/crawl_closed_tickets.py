@@ -26,7 +26,7 @@ def fetch_closed_tickets():
 
     return response.json()
 
-def save_tickets(data, filename="data/wolfthemes_closed_tickets.json"):
+def save_tickets(data, filename="data/closed_tickets.json"):
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
     print(f"✅ Saved recent closed tickets to {filename}")

@@ -55,16 +55,16 @@ def format_documents(raw_data, source, content_key="content", title_key="title",
 
 ### -------- Loaders --------
 
-def load_kb_articles(path="data/wolfthemes_kb_articles.json"):
+def load_kb_articles(path="data/kb_articles.json"):
     data = parse_json_file(path)
     return format_documents(data, source="kb_article")
 
-def load_theme_docs(path="data/wolfthemes_theme_docs.json"):
+def load_theme_docs(path="data/theme_docs.json"):
     data = parse_json_file(path)
     return format_documents(data, source="theme_doc")
 
 def load_closed_tickets():
-    path = "data/wolfthemes_closed_tickets.json"
+    path = "data/closed_tickets.json"
     data = parse_json_file(path)
 
     # Unwrap if wrapped
@@ -109,6 +109,21 @@ def load_closed_tickets():
             ))
     return documents
 
+def load_common_issues(path="data/common_issues.json"):
+    data = parse_json_file(path)
+    documents = []
+    for item in data:
+        documents.append(Document(
+            page_content=f"COMMON ISSUE: {item['issue']}\nRECOMMENDED RESPONSE: {item['response']}",
+            metadata={
+                "title": item['title'],
+                "issue_type": "common_issue",
+                "source": "common_issue",
+                "format_as_html": item.get('html_format', False)
+            }
+        ))
+    return documents
+
 ### -------- Vector DB --------
 
 def load_or_create_vectorstore(docs):
@@ -129,8 +144,9 @@ print("📦 Loading knowledge base documents...")
 articles = load_kb_articles()
 theme_docs = load_theme_docs()
 tickets = load_closed_tickets()
+common_issues = load_common_issues()
 
-all_docs = articles + theme_docs + tickets
+all_docs = articles + theme_docs + tickets + common_issues
 print(f"✅ Loaded {len(all_docs)} documents total.")
 
 vectorstore = load_or_create_vectorstore(all_docs)
