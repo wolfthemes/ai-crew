@@ -4,19 +4,29 @@ import os
 from bs4 import BeautifulSoup
 import hashlib
 import shutil
+
+import time
+
+
 from dotenv import load_dotenv
 
 from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
+
+print("✅ Just before importing OpenAIEmbeddings")
+
 from langchain_openai import OpenAIEmbeddings
 from crewai import Agent
 from crewai.tools import tool
+
+start = time.time()
 
 load_dotenv()
 
 DATA_FOLDER = "data"
 EMBED_PATH = os.path.join(DATA_FOLDER, "faiss_store")
 HASH_PATH = os.path.join(EMBED_PATH, "doc_hash.json")
+USE_VECTORSTORE = False  # ← Toggle here
 
 ### -------- Utilities --------
 
@@ -76,6 +86,32 @@ def format_documents(raw_data, source, content_key="content", title_key="title",
     return documents
 
 ### -------- Loaders --------
+
+def load_theme_meta(path=os.path.join(DATA_FOLDER, "theme_info.json")):
+    data = parse_json_file(path)
+    documents = []
+
+    for slug, meta in data.items():
+        builder = meta.get("builder", "Unknown")
+        name = meta.get("name", slug)
+        doc = Document(
+            page_content=f"{name} uses the {builder} page builder.",
+            metadata={
+                "title": f"{name} Builder Info",
+                "slug": slug,
+                "builder": builder,
+                "version": meta.get("version"),
+                "updated": meta.get("updated"),
+                "url": meta.get("url"),
+                "demourl": meta.get("demourl"),
+                "shortlink": meta.get("shortlink"),
+                "category": meta.get("category"),
+                "source": "theme_info"
+            }
+        )
+        documents.append(doc)
+
+    return documents
 
 def load_kb_articles(path=os.path.join(DATA_FOLDER, "kb_articles.json")):
     data = parse_json_file(path)
@@ -145,6 +181,21 @@ def load_common_issues(path=os.path.join(DATA_FOLDER, "common_issues.json")):
         ))
     return documents
 
+def load_theme_notes(path=os.path.join(DATA_FOLDER, "theme_notes.json")):
+    data = parse_json_file(path)
+    documents = []
+    for item in data:
+        documents.append(Document(
+            page_content=item["note"],
+            metadata={
+                "title": item["title"],
+                "theme": item.get("theme"),
+                "version": item.get("version"),
+                "source": "theme_note"
+            }
+        ))
+    return documents
+
 ### -------- Vector DB --------
 
 def load_or_create_vectorstore(docs):
@@ -178,19 +229,39 @@ def load_or_create_vectorstore(docs):
 
 print("📦 Loading knowledge base documents...")
 
-articles = load_kb_articles()
-theme_docs = load_theme_docs()
-tickets = load_closed_tickets()
-common_issues = load_common_issues()
+print("⏳ Loading Theme notes..."); theme_notes = load_theme_notes()
+print("⏳ Loading Theme meta..."); theme_meta_docs = load_theme_meta()
+print("⏳ Loading KB articles..."); articles = load_kb_articles()
+print("⏳ Loading theme docs..."); theme_docs = load_theme_docs()
+print("⏳ Loading tickets..."); tickets = load_closed_tickets()
+print("⏳ Loading common issues..."); common_issues = load_common_issues()
 
 # Prioritize common issues
-all_docs = common_issues + articles + theme_docs + tickets
+all_docs = theme_meta_docs + theme_notes + common_issues + articles + theme_docs + tickets
 print(f"✅ Loaded {len(all_docs)} documents total.")
 
-vectorstore = load_or_create_vectorstore(all_docs)
-retriever = vectorstore.as_retriever()
+if USE_VECTORSTORE:
+    vectorstore = load_or_create_vectorstore(all_docs)
+    retriever = vectorstore.as_retriever()
+else:
+    retriever = None
+    print("🚫 Vectorstore skipped. Retrieval disabled.")
 
 ### -------- Tool (CrewAI-Compatible) --------
+
+@tool("GetThemeBuilder")
+def get_theme_builder(slug: str):
+    """Return the page builder used by a given theme slug."""
+    try:
+        with open(os.path.join(DATA_FOLDER, "theme_info.json"), encoding="utf-8") as f:
+            data = json.load(f)
+        theme = data.get(slug)
+        if theme:
+            return f"{theme['name']} uses {theme['builder']}."
+        else:
+            return f"No info found for theme '{slug}'."
+    except Exception as e:
+        return f"Error retrieving theme info: {e}"
 
 @tool("SearchKnowledgeBase")
 def search_kb(query: str):
@@ -199,6 +270,10 @@ def search_kb(query: str):
     Args:
         query (str): The search query to look for in the knowledge base.
     """
+
+    if not retriever:
+        return "Retrieval is disabled. Vectorstore not loaded."
+   
     results = retriever.invoke(query)
 
     # Try to find a common issue match first
@@ -232,6 +307,10 @@ The WolfThemes support policy covers:
 - Technical questions about theme features
 - Assistance with reported bugs and issues
 - Help with included theme-related plugins
+
+You have access to a list of all WolfThemes products and their metadata, including the page builder used (Elementor or WPBakery), theme version, last update, demo URL, and category. Use this data to identify the theme and builder involved in any ticket, and tailor your support response accordingly. Always check this metadata before suggesting any feature or troubleshooting step related to Elementor or WPBakery.
+
+You can also use the tool GetThemeBuilder to quickly find out which builder a theme uses based on its slug.
 
 Support does not cover installation or customization services. For these requests, you politely direct customers to our paid services at https://wolfthemes.com/services.
 

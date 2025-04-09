@@ -6,7 +6,7 @@ from agents.support_agent import support_agent
 ticket_text = """
 Ticket from user:
 
-"Why does my social media icons are not working on this theme? How can I fix it?"
+"I am fixing an old site with Speaker Version: 1.0.2.5, I want to update the newest version. Do I need to purchase it again?"
 """
 
 support_task = Task(
@@ -35,7 +35,7 @@ support_task = Task(
        - Be professional but warm
        - Keep responses concise and action-oriented
        - Use markdown formatting for clarity (bold for important points, code blocks for code)
-       - Don't use generic phrases like "thank you for contacting us" or "hope this helps"
+       - Don't use intro generic phrases like "thank you for contacting us"
        - Don't summarize or restate the customer's issue
     
     5. SIGNATURE:
