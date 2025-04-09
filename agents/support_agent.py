@@ -214,21 +214,25 @@ def load_theme_notes(path=os.path.join(DATA_FOLDER, "theme_notes.json")):
     return documents
 
 def load_ticket_examples(path=os.path.join(DATA_FOLDER, "ticket_examples.json")):
-    """Load theme-specific examples from a JSON file."""
+    """Load ticket-based support examples from a JSON file and convert them into Document objects."""
     data = parse_json_file(path)
     documents = []
+    
     for item in data:
         documents.append(Document(
-            page_content=item["note"],
+            page_content=(
+                f"CUSTOMER MESSAGE:\n{item.get('customer_message', '')}\n\n"
+                f"EXPECTED RESPONSE:\n{item.get('expected_response', '')}"
+            ),
             metadata={
-                "title": item["title"],
-                "type": item["type"],
-                "customer_message": item["customer_message"],
-                "expected_response": item["expected_response"],
+                "title": item.get("title", "Untitled"),
+                "type": item.get("type", "unknown"),
                 "source": "ticket_example"
             }
         ))
+    
     return documents
+
 
 ### -------- Vector DB --------
 

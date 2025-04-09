@@ -46,11 +46,11 @@ support_task = Task(
        - Be professional but warm
        - Keep responses concise and action-oriented
        - Use markdown formatting for clarity (bold for important points, code blocks for code)
-       - Don't use intro generic phrases like "thank you for contacting us"
+       - Don't use intro generic phrases like "thank you for contacting us" or end with "Let me know if you need more help"
        - Don't summarize or restate the customer's issue
     
-    5. SIGNATURE:
-       - End with "WolfThemes Support"
+    5. Conclusion:
+       - End with "I hope it helps", "Kind Regards", or "Best regards"
     """,
     expected_output="Markdown formatted support reply that directly addresses the customer's issue.",
     agent=support_agent,
