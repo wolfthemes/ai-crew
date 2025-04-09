@@ -4,9 +4,20 @@ from agents.support_agent import support_agent
 ticket_text = """
 Ticket from user:
 
-"Trying to add a menu to the default footer where the menu lists out all the items in a horizontal, centered manner. Right now, it stacks them on top of each other in a list.
+"Hello Constantin,
 
-Any way to fix this?"
+I didn’t work on the site for some time.
+It is Herion theme and on server site is very slow. I found that  WPBakery Page Builder 7.9. slow down the site a lot …
+When I uninstall WPBakery site is okay. But then is broken …
+No additional plugins, WP Super Cache is installed.
+
+How to update WPBakery to 8.3.1.? How to activate?
+If that doesn't work I can't use this theme. 
+
+Thank you
+
+Regards
+Dalibor"
 """
 
 support_task = Task(

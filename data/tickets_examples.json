@@ -1,0 +1,38 @@
+[
+  {
+    "type": "common_issue",
+    "title": "How to update and activate WPBakery Page Builder",
+    "customer_message": "Hello Constantin,\n\nI didn’t work on the site for some time.\nIt is Herion theme and on server site is very slow. I found that WPBakery Page Builder 7.9. slow down the site a lot …\nWhen I uninstall WPBakery site is okay. But then is broken …\nNo additional plugins, WP Super Cache is installed.\n\nHow to update WPBakery to 8.3.1.? How to activate?\nIf that doesn't work I can't use this theme.\n\nThank you\n\nRegards",
+    "expected_response": "Hi there,\n\nThanks for reaching out. I understand you're having performance issues with WPBakery Page Builder 7.9 on the Herion theme and would like to update and activate the plugin correctly.\n\n1. ✅ **To update WPBakery Page Builder** (as it's bundled with the theme), please follow the steps in this guide:\n👉 [Update WPBakery Page Builder (Formerly Visual Composer)](https://wolfthemes.ticksy.com/article/11671/)\n\nIn short:\n- Make sure you're using the latest version of the Herion theme.\n- Delete the old version of WPBakery from **Plugins > Installed Plugins**.\n- Then go to **Appearance > Install Plugins** and reinstall it — this will install the latest bundled version (currently 8.3.1).\n\n2. ✅ **About plugin activation**:\nSince WPBakery is bundled with the theme, you don't need to activate it with a license key.\n👉 See this guide for details: [Bundled Premium Plugin Activation](https://wolfthemes.ticksy.com/article/12629/)\n\nLet me know if anything remains unclear or if you still face performance issues after updating!"
+    },
+  {
+    "type": "common_issue",
+    "title": "Menu doesn't show after import",
+    "customer_message": "Hi, after importing the demo, the menu doesn't appear at the top. What should I do?",
+    "expected_response": "Hi there! Thanks for reaching out. It looks like the menu isn’t assigned yet. To fix it, go to Appearance > Menus > Manage Locations, then assign your main menu to the 'Primary' location. Let me know if that works!"
+  },
+  {
+    "type": "server_limitation",
+    "title": "Demo import stuck on 'Fetching content'",
+    "customer_message": "I can't import the demo. It gets stuck while fetching content.",
+    "expected_response": "Hi! That usually means your server is blocking external requests or running into timeout limits. Are you using GoDaddy, Strato, or OVH by any chance? Please check that allow_url_fopen is enabled, memory_limit is at least 256M, and PHP max execution time is 300+. You can also try importing manually using the XML files from the theme package. Let me know your hosting provider and we'll help from there!"
+  },
+  {
+    "type": "info_gap",
+    "title": "Something’s wrong with the theme",
+    "customer_message": "Hello, the theme is broken on my site.",
+    "expected_response": "Hi! Thanks for your message. Could you please share a URL to your site and a screenshot of the issue? That’ll help me better understand what’s going on. If you’ve made recent changes, let me know what they were too!"
+  },
+  {
+    "type": "customization_request",
+    "title": "Can you add a second logo?",
+    "customer_message": "I’d like to have one logo in the navbar and another one when the page scrolls. Can you help?",
+    "expected_response": "Hi! That’s a great idea, but it falls under theme customization, which isn’t included in our standard support. If you’d like help with that, feel free to request it here: https://wolfthemes.com/services. Thanks for understanding!"
+  },
+  {
+    "type": "actual_bug",
+    "title": "Portfolio images not showing in grid",
+    "customer_message": "Hi, I added projects but they’re not showing in the portfolio grid even though they’re published.",
+    "expected_response": "Hi! Thanks for reporting this. Could you let me know which theme you're using, and if it’s up to date? Also, are you using Elementor or WPBakery for this page? This might be related to a known bug in version X.Y.Z — if so, updating the theme should solve it. Let me know!"
+  }
+]

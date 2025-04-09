@@ -1,6 +1,6 @@
 [
   {
-    "title": "Speaker 2.0.0 Redesign Note",
+    "title": "Speaker Update from old version (prior to 2.0)",
     "theme": "speaker",
     "version": "2.0.0",
     "note": "Speaker (2.0.0) has been re-designed a couple of years ago. The whole home page is now managed via Elementor in one single place. Users updating from older versions may need to manually rebuild the homepage layout."
