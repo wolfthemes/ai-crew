@@ -1,10 +1,12 @@
 from crewai import Task
 from agents.support_agent import support_agent
 
+#I am fixing an old site with Speaker Version: 1.0.2.5, I want to update the newest version. Do I need to purchase it again?
+
 ticket_text = """
 Ticket from user:
 
-"Hey,.. can't activate my purchase code. I got an error. Please check. Thank you."
+"Why does my social media icons are not working on this theme? How can I fix it?"
 """
 
 support_task = Task(
