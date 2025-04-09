@@ -139,8 +139,12 @@ retriever = vectorstore.as_retriever()
 ### -------- Tool (CrewAI-Compatible) --------
 
 @tool("SearchKnowledgeBase")
-def search_kb(query):
-    """Search WolfThemes documentation and support tickets."""
+def search_kb(query: str):
+    """Search WolfThemes documentation and support tickets for the given query string.
+    
+    Args:
+        query (str): The search query to look for in the knowledge base.
+    """
     results = retriever.invoke(query)
     return "\n\n".join([
         f"📄 {doc.metadata.get('title')} ({doc.metadata.get('source', '')})"
