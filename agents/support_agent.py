@@ -2,6 +2,8 @@ import json
 import html
 import os
 from bs4 import BeautifulSoup
+import hashlib
+import shutil
 from dotenv import load_dotenv
 
 from langchain_core.documents import Document
@@ -12,9 +14,30 @@ from crewai.tools import tool
 
 load_dotenv()
 
-EMBED_PATH = "data/faiss_store"
+DATA_FOLDER = "data"
+EMBED_PATH = os.path.join(DATA_FOLDER, "faiss_store")
+HASH_PATH = os.path.join(EMBED_PATH, "doc_hash.json")
 
 ### -------- Utilities --------
+
+def compute_file_hash(filepath):
+    hash_md5 = hashlib.md5()
+    with open(filepath, "rb") as f:
+        while chunk := f.read(8192):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
+def compute_all_file_hashes(folder_path):
+    file_hashes = {}
+    for root, _, files in sorted(os.walk(folder_path)):
+        for fname in sorted(files):
+            fpath = os.path.join(root, fname)
+            if os.path.isfile(fpath):
+                file_hashes[os.path.relpath(fpath, folder_path)] = compute_file_hash(fpath)
+    return file_hashes
+
+def hashes_changed(stored_hashes, current_hashes):
+    return stored_hashes != current_hashes
 
 def clean_html_to_text(html_string: str) -> str:
     soup = BeautifulSoup(html.unescape(html_string), "html.parser")
@@ -27,7 +50,6 @@ def parse_json_file(path):
     try:
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
-            # Handle wrapped structure
             if isinstance(data, dict) and "closed-tickets" in data:
                 return data["closed-tickets"]
             return data
@@ -55,19 +77,18 @@ def format_documents(raw_data, source, content_key="content", title_key="title",
 
 ### -------- Loaders --------
 
-def load_kb_articles(path="data/kb_articles.json"):
+def load_kb_articles(path=os.path.join(DATA_FOLDER, "kb_articles.json")):
     data = parse_json_file(path)
     return format_documents(data, source="kb_article")
 
-def load_theme_docs(path="data/theme_docs.json"):
+def load_theme_docs(path=os.path.join(DATA_FOLDER, "theme_docs.json")):
     data = parse_json_file(path)
     return format_documents(data, source="theme_doc")
 
 def load_closed_tickets():
-    path = "data/closed_tickets.json"
+    path = os.path.join(DATA_FOLDER, "closed_tickets.json")
     data = parse_json_file(path)
 
-    # Unwrap if wrapped
     if isinstance(data, dict) and "closed-tickets" in data:
         data = data["closed-tickets"]
 
@@ -109,7 +130,7 @@ def load_closed_tickets():
             ))
     return documents
 
-def load_common_issues(path="data/common_issues.json"):
+def load_common_issues(path=os.path.join(DATA_FOLDER, "common_issues.json")):
     data = parse_json_file(path)
     documents = []
     for item in data:
@@ -128,14 +149,30 @@ def load_common_issues(path="data/common_issues.json"):
 
 def load_or_create_vectorstore(docs):
     embedding = OpenAIEmbeddings()
-    if os.path.exists(EMBED_PATH):
-        print("🔁 Loading existing FAISS index (trusted)...")
-        return FAISS.load_local(EMBED_PATH, embedding, allow_dangerous_deserialization=True)
+    current_hashes = compute_all_file_hashes(DATA_FOLDER)
+
+    if os.path.exists(EMBED_PATH) and os.path.exists(HASH_PATH):
+        with open(HASH_PATH, "r") as f:
+            stored_hashes = json.load(f)
+        if not hashes_changed(stored_hashes, current_hashes):
+            print("📦 Loading existing FAISS index (documents unchanged)...")
+            return FAISS.load_local(EMBED_PATH, embedding)
+        else:
+            print("🗑️ Document files changed. Rebuilding FAISS index...")
     else:
-        print("✨ Creating new FAISS index...")
-        vectorstore = FAISS.from_documents(docs, embedding)
-        vectorstore.save_local(EMBED_PATH)
-        return vectorstore
+        print("⚠️ No existing FAISS index or hashes found. Creating new index...")
+
+    if os.path.exists(EMBED_PATH):
+        shutil.rmtree(EMBED_PATH)
+
+    vectorstore = FAISS.from_documents(docs, embedding)
+    vectorstore.save_local(EMBED_PATH)
+
+    os.makedirs(EMBED_PATH, exist_ok=True)
+    with open(HASH_PATH, "w") as f:
+        json.dump(current_hashes, f)
+
+    return vectorstore
 
 ### -------- Load All Docs --------
 
@@ -146,7 +183,8 @@ theme_docs = load_theme_docs()
 tickets = load_closed_tickets()
 common_issues = load_common_issues()
 
-all_docs = articles + theme_docs + tickets + common_issues
+# Prioritize common issues
+all_docs = common_issues + articles + theme_docs + tickets
 print(f"✅ Loaded {len(all_docs)} documents total.")
 
 vectorstore = load_or_create_vectorstore(all_docs)
@@ -157,11 +195,17 @@ retriever = vectorstore.as_retriever()
 @tool("SearchKnowledgeBase")
 def search_kb(query: str):
     """Search WolfThemes documentation and support tickets for the given query string.
-    
+
     Args:
         query (str): The search query to look for in the knowledge base.
     """
     results = retriever.invoke(query)
+
+    # Try to find a common issue match first
+    for doc in results:
+        if doc.metadata.get("issue_type") == "common_issue":
+            return f"✅ Common Issue Detected:\n\n📄 {doc.metadata.get('title')}\n{doc.page_content}"
+
     return "\n\n".join([
         f"📄 {doc.metadata.get('title')} ({doc.metadata.get('source', '')})"
         f"\n🔗 {doc.metadata.get('url', '')}"

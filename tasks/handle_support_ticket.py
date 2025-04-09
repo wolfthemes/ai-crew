@@ -4,7 +4,7 @@ from agents.support_agent import support_agent
 ticket_text = """
 Ticket from user:
 
-"Hey,.. can't activate my purchase code. Please check. Thank you."
+"Hey,.. can't activate my purchase code. I got an error. Please check. Thank you."
 """
 
 support_task = Task(
