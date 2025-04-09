@@ -57,12 +57,13 @@ def load_common_issues():
     data = parse_json_file(os.path.join(DATA_FOLDER, "common_issues.json"))
     return [
         Document(
-            page_content=f"COMMON ISSUE: {item['issue']} RECOMMENDED RESPONSE: {item['response']}",
+            page_content=item['customer_message'],  # Just use the customer message as content
             metadata={
                 "title": item["title"],
                 "issue_type": "common_issue",
-                "source": "common_issue",
-                "format_as_html": item.get("html_format", False)
+                "customer_message": item["customer_message"],  # Uncomment this
+                "expected_response": item['expected_response'],  # Uncomment this
+                "source": "common_issue"  # Change to singular to match your rerank function
             }
         ) for item in data
     ]

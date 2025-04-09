@@ -16,7 +16,6 @@ from utils.helpers import compute_all_file_hashes, hashes_changed
 from utils.document_loaders import (
     load_common_issues,
     load_theme_notes,
-    load_ticket_examples,
     load_theme_meta,
     load_kb_articles,
     load_theme_docs,
@@ -38,7 +37,6 @@ MAX_WORKERS = max(1, multiprocessing.cpu_count() - 1)
 print("📦 Loading knowledge base documents...")
 
 theme_notes = load_theme_notes()
-ticket_examples = load_ticket_examples()
 theme_meta_docs = load_theme_meta()
 articles = load_kb_articles()
 theme_docs = load_theme_docs()
@@ -46,7 +44,7 @@ tickets = load_closed_tickets()
 common_issues = load_common_issues()
 backstory_text = load_backstory()
 
-all_docs = theme_meta_docs + theme_notes + ticket_examples + common_issues + articles + theme_docs + tickets
+all_docs = theme_meta_docs + theme_notes + common_issues + articles + theme_docs + tickets
 print(f"✅ Loaded {len(all_docs)} documents total.")
 
 ### Vectorstore setup
@@ -99,12 +97,11 @@ def get_theme_builder(slug: str):
 # Set prioritis to resources type
 def rerank_results(results):
     priority_map = {
-        "ticket_example": 1,
-        "common_issue": 2,
-        "kb_article": 3,
-        "theme_note": 4,
-        "theme_doc": 5,
-        "support_ticket": 6
+        "common_issue": 1,
+        "kb_article": 2,
+        "theme_note": 3,
+        "theme_doc": 4,
+        "support_ticket": 5
     }
     return sorted(results, key=lambda doc: priority_map.get(doc.metadata.get("source", ""), 99))
 
@@ -156,7 +153,11 @@ support_agent = Agent(
     backstory = backstory_text,
     tools=[search_kb, get_theme_builder],
     allow_delegation=False,
-    verbose=True
+    verbose=True,
+    instructions="""
+    For common issues, ALWAYS use response provided by the SearchKnowledgeBase tool. 
+    Reformulate it as needed but do not extrapolate your own additional information.
+    """
 )
 
 if __name__ == "__main__":
