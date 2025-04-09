@@ -4,9 +4,10 @@ import os
 from bs4 import BeautifulSoup
 import hashlib
 import shutil
-
 import time
-
+from functools import lru_cache
+from concurrent.futures import ThreadPoolExecutor
+import multiprocessing
 
 from dotenv import load_dotenv
 
@@ -23,14 +24,19 @@ start = time.time()
 
 load_dotenv()
 
+# Configuration constants
 DATA_FOLDER = "data"
 EMBED_PATH = os.path.join(DATA_FOLDER, "faiss_store")
 HASH_PATH = os.path.join(EMBED_PATH, "doc_hash.json")
-USE_VECTORSTORE = False  # ← Toggle here
+USE_VECTORSTORE = True  # ← Toggle here
+BATCH_SIZE = 100  # Number of documents to process at once
+MAX_WORKERS = max(1, multiprocessing.cpu_count() - 1)  # Use N-1 CPU cores
 
 ### -------- Utilities --------
 
+@lru_cache(maxsize=100)
 def compute_file_hash(filepath):
+    """Compute MD5 hash of a file with caching."""
     hash_md5 = hashlib.md5()
     with open(filepath, "rb") as f:
         while chunk := f.read(8192):
@@ -38,6 +44,7 @@ def compute_file_hash(filepath):
     return hash_md5.hexdigest()
 
 def compute_all_file_hashes(folder_path):
+    """Compute hashes for all files in a folder."""
     file_hashes = {}
     for root, _, files in sorted(os.walk(folder_path)):
         for fname in sorted(files):
@@ -47,13 +54,17 @@ def compute_all_file_hashes(folder_path):
     return file_hashes
 
 def hashes_changed(stored_hashes, current_hashes):
+    """Check if file hashes have changed."""
     return stored_hashes != current_hashes
 
 def clean_html_to_text(html_string: str) -> str:
+    """Convert HTML to plain text with proper spacing."""
     soup = BeautifulSoup(html.unescape(html_string), "html.parser")
     return soup.get_text(separator="\n", strip=True)
 
+@lru_cache(maxsize=20)
 def parse_json_file(path):
+    """Parse JSON file with error handling and caching."""
     if not os.path.exists(path) or os.path.getsize(path) == 0:
         print(f"⚠️ Warning: {path} is empty or missing.")
         return []
@@ -67,7 +78,10 @@ def parse_json_file(path):
         print(f"❌ JSON error in {path}: {str(e)}")
         return []
 
+### -------- Document Loaders --------
+
 def format_documents(raw_data, source, content_key="content", title_key="title", url_key="url"):
+    """Format raw data into Document objects."""
     documents = []
     for item in raw_data:
         content = item.get(content_key)
@@ -85,9 +99,8 @@ def format_documents(raw_data, source, content_key="content", title_key="title",
         ))
     return documents
 
-### -------- Loaders --------
-
 def load_theme_meta(path=os.path.join(DATA_FOLDER, "theme_info.json")):
+    """Load theme metadata from a JSON file."""
     data = parse_json_file(path)
     documents = []
 
@@ -114,14 +127,17 @@ def load_theme_meta(path=os.path.join(DATA_FOLDER, "theme_info.json")):
     return documents
 
 def load_kb_articles(path=os.path.join(DATA_FOLDER, "kb_articles.json")):
+    """Load knowledge base articles from a JSON file."""
     data = parse_json_file(path)
     return format_documents(data, source="kb_article")
 
 def load_theme_docs(path=os.path.join(DATA_FOLDER, "theme_docs.json")):
+    """Load theme documentation from a JSON file."""
     data = parse_json_file(path)
     return format_documents(data, source="theme_doc")
 
 def load_closed_tickets():
+    """Load closed support tickets from a JSON file."""
     path = os.path.join(DATA_FOLDER, "closed_tickets.json")
     data = parse_json_file(path)
 
@@ -140,7 +156,6 @@ def load_closed_tickets():
                 is_private = c.get("private") == "1"
                 prefix = f"[PRIVATE] " if is_private else ""
                 text_blocks.append(f"{prefix}{c.get('commenter_name', 'User')}:\n{comment}")
-
         conversation = "\n\n---\n\n".join(text_blocks)
         if conversation.strip():
             theme = "Unknown Theme"
@@ -167,6 +182,7 @@ def load_closed_tickets():
     return documents
 
 def load_common_issues(path=os.path.join(DATA_FOLDER, "common_issues.json")):
+    """Load common issues and their recommended responses from a JSON file."""
     data = parse_json_file(path)
     documents = []
     for item in data:
@@ -182,6 +198,7 @@ def load_common_issues(path=os.path.join(DATA_FOLDER, "common_issues.json")):
     return documents
 
 def load_theme_notes(path=os.path.join(DATA_FOLDER, "theme_notes.json")):
+    """Load theme-specific notes from a JSON file."""
     data = parse_json_file(path)
     documents = []
     for item in data:
@@ -199,6 +216,7 @@ def load_theme_notes(path=os.path.join(DATA_FOLDER, "theme_notes.json")):
 ### -------- Vector DB --------
 
 def load_or_create_vectorstore(docs):
+    """Load or create a FAISS vectorstore from documents."""
     embedding = OpenAIEmbeddings()
     current_hashes = compute_all_file_hashes(DATA_FOLDER)
 
@@ -273,7 +291,7 @@ def search_kb(query: str):
 
     if not retriever:
         return "Retrieval is disabled. Vectorstore not loaded."
-   
+
     results = retriever.invoke(query)
 
     # Try to find a common issue match first
@@ -294,6 +312,8 @@ support_agent = Agent(
     role="WordPress Theme Support Expert",
     goal="Use the knowledge base to resolve customer tickets efficiently",
     backstory="""You are a WordPress support expert for WolfThemes with access to documentation, knowledge base articles, and past resolved tickets. You provide fast, clear, and concise support to customers.
+
+WolfThemes is a theme author who sells his products exclusively on ThemeForest.
 
 Your communication style is professional yet warm. You keep responses brief and to the point, focusing on actionable solutions.
 
@@ -321,7 +341,10 @@ Your goal is efficient resolution of tickets while maintaining customer satisfac
 )
 
 if __name__ == "__main__":
+    # import cProfile
+    # print("✅ Profiling document loading...")
+    # cProfile.run('load_all_documents()')
     print("✅ Support agent ready.")
     # Example usage:
     # result = search_kb("stylesheet missing")
-    # print(result)
+    print(f"✅ Script completed in {time.time() - start:.2f} seconds.")

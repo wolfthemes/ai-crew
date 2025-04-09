@@ -1,12 +1,12 @@
 from crewai import Task
 from agents.support_agent import support_agent
 
-#I am fixing an old site with Speaker Version: 1.0.2.5, I want to update the newest version. Do I need to purchase it again?
-
 ticket_text = """
 Ticket from user:
 
-"I am fixing an old site with Speaker Version: 1.0.2.5, I want to update the newest version. Do I need to purchase it again?"
+"Trying to add a menu to the default footer where the menu lists out all the items in a horizontal, centered manner. Right now, it stacks them on top of each other in a list.
+
+Any way to fix this?"
 """
 
 support_task = Task(
