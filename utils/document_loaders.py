@@ -88,7 +88,7 @@ def load_ticket_examples():
             page_content=f"CUSTOMER MESSAGE: {item.get('customer_message', '')} EXPECTED RESPONSE: {item.get('expected_response', '')}",
             metadata={
                 "title": item.get("title", "Untitled"),
-                "type": item.get("type", "unknown"),
+                "issue_type": item.get("issue_type", "unknown"),
                 "source": "ticket_example"
             }
         ) for item in data

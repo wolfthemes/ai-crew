@@ -95,6 +95,18 @@ def get_theme_builder(slug: str):
             return f"No info found for theme '{slug}'."
     except Exception as e:
         return f"Error retrieving theme info: {e}"
+    
+# Set prioritis to resources type
+def rerank_results(results):
+    priority_map = {
+        "ticket_example": 1,
+        "common_issue": 2,
+        "kb_article": 3,
+        "theme_note": 4,
+        "theme_doc": 5,
+        "support_ticket": 6
+    }
+    return sorted(results, key=lambda doc: priority_map.get(doc.metadata.get("source", ""), 99))
 
 @tool("SearchKnowledgeBase")
 def search_kb(query: str):
@@ -115,7 +127,7 @@ def search_kb(query: str):
     if not retriever:
         return "Retrieval is disabled. Vectorstore not loaded."
 
-    results = retriever.invoke(query)
+    results = rerank_results(retriever.invoke(query))
 
     if not results:
         return "No relevant results found in the knowledge base."
