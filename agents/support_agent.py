@@ -8,7 +8,7 @@ from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from crewai import Agent
-from crewai_tools import tool  # ✅ Decorator-based definition (simpler than BaseTool)
+from crewai.tools import tool
 
 load_dotenv()
 
@@ -27,7 +27,6 @@ def parse_json_file(path):
     try:
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
-            
             # Handle wrapped structure
             if isinstance(data, dict) and "closed-tickets" in data:
                 return data["closed-tickets"]
@@ -49,7 +48,7 @@ def format_documents(raw_data, source, content_key="content", title_key="title",
                 "title": item.get(title_key, "Untitled"),
                 "url": item.get(url_key, ""),
                 "source": source,
-                **({ "slug": item.get("slug") } if source == "theme_doc" else {})
+                **({"slug": item.get("slug")} if source == "theme_doc" else {})
             }
         ))
     return documents
@@ -64,14 +63,8 @@ def load_theme_docs(path="data/wolfthemes_theme_docs.json"):
     data = parse_json_file(path)
     return format_documents(data, source="theme_doc")
 
-# Temporary debug code
 def load_closed_tickets():
     path = "data/wolfthemes_closed_tickets.json"
-    #with open(path, encoding="utf-8") as f:
-        #raw = f.read()
-        #print(f"First 200 chars: {raw[:200]}")
-        #print(f"File length: {len(raw)}")
-        #print(f"Valid JSON: {json.loads(raw)}")  # This should fail if invalid
     data = parse_json_file(path)
 
     # Unwrap if wrapped
@@ -85,21 +78,24 @@ def load_closed_tickets():
 
         text_blocks = []
         for c in t["ticket_comments"]:
-            if c.get("private") == "1":
-                continue
             comment = clean_html_to_text(c.get("comment", ""))
             if comment:
-                text_blocks.append(f"{c.get('commenter_name', 'User')}:\n{comment}")
+                is_private = c.get("private") == "1"
+                prefix = f"[PRIVATE] " if is_private else ""
+                text_blocks.append(f"{prefix}{c.get('commenter_name', 'User')}:\n{comment}")
 
         conversation = "\n\n---\n\n".join(text_blocks)
         if conversation.strip():
             theme = "Unknown Theme"
-            if isinstance(t.get("envato_verified_string"), str):
+            envato_str = t.get("envato_verified_string")
+            if isinstance(envato_str, str):
                 try:
-                    theme_data = json.loads(t["envato_verified_string"])
+                    theme_data = json.loads(envato_str)
                     theme = theme_data.get("item_name", theme)
+                except json.JSONDecodeError:
+                    print(f"⚠️ Invalid JSON in envato_verified_string for ticket {t.get('ticket_id', 'unknown')}")
                 except Exception as e:
-                    print(f"⚠️ Could not parse envato_verified_string: {e}")
+                    print(f"⚠️ Error parsing envato_verified_string for ticket {t.get('ticket_id', 'unknown')}: {e}")
 
             documents.append(Document(
                 page_content=conversation.strip(),
@@ -142,9 +138,9 @@ retriever = vectorstore.as_retriever()
 
 ### -------- Tool (CrewAI-Compatible) --------
 
-@tool("KB Search Tool")
-def search_kb_fn(query: str) -> str:
-    """Search the WolfThemes knowledge base for support issues."""
+@tool("SearchKnowledgeBase")
+def search_kb(query):
+    """Search WolfThemes documentation and support tickets."""
     results = retriever.invoke(query)
     return "\n\n".join([
         f"📄 {doc.metadata.get('title')} ({doc.metadata.get('source', '')})"
@@ -161,11 +157,13 @@ support_agent = Agent(
     backstory="""You are a WordPress support expert for WolfThemes with 
     access to documentation, knowledge base articles, and past resolved tickets. 
     You provide quick, clear, and accurate support to customers.""",
-    tools=[search_kb_fn],
+    tools=[search_kb],
     allow_delegation=False,
     verbose=True
 )
 
 if __name__ == "__main__":
     print("✅ Support agent ready.")
-    print(search_kb_fn("stylesheet missing"))
+    # Example usage:
+    # result = search_kb("stylesheet missing")
+    # print(result)
