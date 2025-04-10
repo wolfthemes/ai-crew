@@ -57,13 +57,11 @@ def load_common_issues():
     data = parse_json_file(os.path.join(DATA_FOLDER, "common_issues.json"))
     return [
         Document(
-            page_content=(
-                f"CUSTOMER MESSAGE:\n{item['customer_message']}\n\n"
-                f"RECOMMENDED RESPONSE:\n{item['expected_response']}"
-            ),
+            page_content=item["customer_message"],
             metadata={
                 "title": item["title"],
                 "issue_type": "common_issue",
+                "expected_response": item["expected_response"],
                 "source": "common_issue"
             }
         )

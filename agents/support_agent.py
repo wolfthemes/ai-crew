@@ -45,6 +45,7 @@ common_issues = load_common_issues()
 backstory_text = load_backstory()
 
 all_docs = theme_meta_docs + theme_notes + common_issues + articles + theme_docs + tickets
+
 print(f"✅ Loaded {len(all_docs)} documents total.")
 
 ### Vectorstore setup
@@ -108,17 +109,9 @@ def rerank_results(results):
 @tool("SearchKnowledgeBase")
 def search_kb(query: str):
     """
-    Search the ticket examples, WolfThemes documentation, KB articles, and past tickets for the given query string.
-    Prioritize common issues first. If found, return the top matching article directly.
-    Otherwise, show top retrieved documents as context.
-
-    Use the ticket examples to identify the ticket type and reply accurately.
-    
-    Args:
-        query (str): The user’s question or issue in natural language.
-        
-    Returns:
-        str: A formatted summary of the best matches from the knowledge base.
+    Search the common issues, WolfThemes documentation, KB articles, and past tickets for the given query string.
+    Prioritize common issues first and return ALL their responses.
+    Otherwise, show top retrieved documents as fallback context.
     """
 
     if not retriever:
@@ -129,20 +122,24 @@ def search_kb(query: str):
     if not results:
         return "No relevant results found in the knowledge base."
 
-    # First pass: prioritize common issues
-    for doc in results:
-        if doc.metadata.get("issue_type") == "common_issue":
-            return doc.metadata.get("expected_response")
+    # ✅ Return all common issue matches
+    common_responses = [
+        f"✅ Common Issue: {doc.metadata.get('title')}\n{doc.metadata.get('expected_response')}"
+        for doc in results if doc.metadata.get("issue_type") == "common_issue"
+    ]
 
+    if common_responses:
+        return "\n\n".join(common_responses)
+
+    # Fallback: return first few general results
     return "\n\n".join([
         f"📄 {doc.metadata.get('title')} ({doc.metadata.get('source', '')})"
         f"\n🔗 {doc.metadata.get('url', '')}"
         f"\n{doc.page_content[:300]}..."
-        for doc in results
+        for doc in results[:3]
     ]) or "No relevant results found."
 
 ### Agent
-
 support_agent = Agent(
     role="WordPress Theme Support Expert",
     goal="Use the knowledge base to resolve customer tickets efficiently",
@@ -151,9 +148,9 @@ support_agent = Agent(
     allow_delegation=False,
     verbose=True,
     instructions="""
-    You must use the response returned by the SearchKnowledgeBase tool *as-is*, unless it is clearly wrong or irrelevant.
-Do not rephrase or add anything unless instructed.
-    """
+Always use the SearchKnowledgeBase tool.
+If it returns any ‘common issues’, you **must reuse those responses** for the ticket.
+"""
 )
 
 if __name__ == "__main__":
