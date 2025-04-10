@@ -114,6 +114,11 @@
     "title": "Missing files/templates without explanation",
     "customer_message": "I'm missing templates but I don't know how to install/get it.",
     "expected_response": "Could you please clarify what you mean by missing Woo templates? If possible, share a link to the page, a screenshot of the issue, and confirm which theme you are using. That'll help me assist you faster!"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Can I use this theme for an online store?",
+    "customer_message": "Is this theme suitable for a professional WooCommerce store?",
+    "expected_response": "Yes, our themes are designed to support online stores using WooCommerce. They are flexible and customizable to fit various e-commerce needs."
   }
-
 ]
