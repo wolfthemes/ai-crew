@@ -16,16 +16,9 @@ from agents.support_agent import support_agent
 ticket_text = """
 Ticket from user:
 
-"Hello,
+"I'm missing woo templates but I don't know how to install it.
 
-Elementor editor not loading, what to do?
-
-Also, when I import the demo I have an error..
-
-Thank you
-
-Regards
-Jacob"
+And another thing I do not know if it is possible to add a player that stays at the bottom when you play the songs could be done? Even if it is by paying something extra but I would like to have it."
 """
 
 support_task = Task(

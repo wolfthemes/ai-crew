@@ -62,7 +62,9 @@ def load_common_issues():
                 "title": item["title"],
                 "issue_type": "common_issue",
                 "expected_response": item["expected_response"],
-                "source": "common_issue"
+                "source": "common_issue",
+                "human_validation": item.get("human_validation", False),
+                "customization_summary": item.get("customization_summary", "")
             }
         )
         for item in data

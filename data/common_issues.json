@@ -91,9 +91,11 @@
   },
   {
     "issue_type": "common_issue",
-    "title": "I want to add this feature",
+    "title": "Wants a feature added (paid customization)",
     "customer_message": "I want to add this feature?",
-    "expected_response": "feature isn\u2019t included in the theme by default I do offer customization services for our themes https://wolfthemes.com/services/"
+    "expected_response": "Thanks for your message! This feature isn't included in the theme by default. However, we do offer customization services for our themes. I’ll check internally and get back to you shortly regarding the feasibility and cost.",
+    "human_validation": true,
+    "customization_summary": "User wants a feature added that's not part of the theme. Needs feasibility check and quote."
   },
   {
     "issue_type": "common_issue",
@@ -106,5 +108,12 @@
     "title": "Unclear issue",
     "customer_message": "I have a problem",
     "expected_response": "First, be sure that your WordPress installation, theme, and plugins are up-to-date. Please provide the page URL where it occurs, at least screenshots, and/or even better, a temporary login access if possible."
+  },
+  {
+    "issue_type": "info_gap",
+    "title": "Missing files/templates without explanation",
+    "customer_message": "I'm missing templates but I don't know how to install/get it.",
+    "expected_response": "Could you please clarify what you mean by missing Woo templates? If possible, share a link to the page, a screenshot of the issue, and confirm which theme you are using. That'll help me assist you faster!"
   }
+
 ]
