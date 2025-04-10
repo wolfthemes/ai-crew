@@ -106,7 +106,9 @@ def rerank_results(results):
     }
     return sorted(results, key=lambda doc: priority_map.get(doc.metadata.get("source", ""), 99))
 
-def search_kb_raw(query: str):
+@tool("SearchKnowledgeBase")
+def search_kb(query: str):
+    """Search the WolfThemes knowledge base for a matching article using strict priority."""
 
     if not retriever:
         return "Retrieval is disabled. Vectorstore not loaded."
@@ -130,15 +132,15 @@ def search_kb_raw(query: str):
     ]) or "No relevant results found."
 
 
-@tool("SearchKnowledgeBase")
-def search_kb(query: str):
-    """Search the WolfThemes knowledge base for a matching article using strict priority."""
-    result = search_kb_raw(query)
-    return (
-        f"📚 **Source: {result['source']}**\n"
-        f"📄 **{result['title']}**\n\n"
-        f"{result['content']}"
-    )
+# @tool("SearchKnowledgeBase")
+# def search_kb(query: str):
+#     """Search the WolfThemes knowledge base for a matching article using strict priority."""
+#     result = search_kb_raw(query)
+#     return (
+#         f"📚 **Source: {result['source']}**\n"
+#         f"📄 **{result['title']}**\n\n"
+#         f"{result['content']}"
+#     )
 
 ### Agent
 support_agent = Agent(
