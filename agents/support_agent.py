@@ -106,13 +106,7 @@ def rerank_results(results):
     }
     return sorted(results, key=lambda doc: priority_map.get(doc.metadata.get("source", ""), 99))
 
-@tool("SearchKnowledgeBase")
-def search_kb(query: str):
-    """
-    Search the common issues, WolfThemes documentation, KB articles, and past tickets for the given query string.
-    If a common issue is found, return ONLY the expected_response field verbatim.
-    Otherwise, show top retrieved documents as fallback context.
-    """
+def search_kb_raw(query: str):
 
     if not retriever:
         return "Retrieval is disabled. Vectorstore not loaded."
@@ -134,6 +128,17 @@ def search_kb(query: str):
         f"\n{doc.page_content[:300]}..."
         for doc in results[:3]
     ]) or "No relevant results found."
+
+
+@tool("SearchKnowledgeBase")
+def search_kb(query: str):
+    """Search the WolfThemes knowledge base for a matching article using strict priority."""
+    result = search_kb_raw(query)
+    return (
+        f"📚 **Source: {result['source']}**\n"
+        f"📄 **{result['title']}**\n\n"
+        f"{result['content']}"
+    )
 
 ### Agent
 support_agent = Agent(
