@@ -16,7 +16,7 @@ from agents.support_agent import support_agent
 ticket_text = """
 Ticket from user:
 
-"I'm missing woo templates but I don't know how to install it.
+"I use Vonzot theme. I'm missing woo templates but I don't know how to install it.
 
 And another thing I do not know if it is possible to add a player that stays at the bottom when you play the songs could be done? Even if it is by paying something extra but I would like to have it."
 """
@@ -28,6 +28,15 @@ support_task = Task(
     {ticket_text}
 
     Follow these guidelines when creating your response:
+
+    If you detect that the issue is unclear, vague, or missing information,
+      you MUST respond with a polite request for clarification.
+
+      Ask for one or more of:
+      - A screenshot
+      - The URL where the issue appears
+      - Which theme they’re using
+      - Whether they made recent changes
     
     1. GREETING:
        - If customer's name is clearly identifiable (e.g., John, Roberto, Maria), start with "Hi [name],"
