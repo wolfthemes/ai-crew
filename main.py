@@ -2,7 +2,8 @@ from dotenv import load_dotenv
 import sys
 load_dotenv()
 
-from crews.support_crew import support_crew_fresh, support_crew_conversation
+#from crews.support_crew import support_crew_fresh, support_crew_conversation
+from crews.support_crew import support_crew_fresh_with_review
 
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "fresh"

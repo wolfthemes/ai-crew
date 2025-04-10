@@ -11,25 +11,28 @@ def review_support_reply_task(ticket_text, kb_result):
     
     return Task(
         description=f"""
-        Review the support agent's reply to this ticket:
-
+        Review the support agent's reply to this ticket.
+        
         ### Original Ticket:
         {ticket_text}
-
+        
         ### Knowledge Base Source:
-        {kb_result}
-
+        Source: {kb_result['source']}
+        Title: {kb_result['title']}
+        
         ### Guidelines:
         {guidelines}
-
-        Review ONLY the previous agent's response against our guidelines.
-        Do NOT create a new reply - only evaluate the existing one.
+        
+        IMPORTANT: Your job is to review the support reply from the previous task.
+        DO NOT create a new reply - only evaluate the existing one.
+        
+        Check if the reply:
+        1. Follows our support guidelines
+        2. Uses the knowledge base information correctly
+        3. Is helpful and accurate
+        4. Has the right tone and format
         """,
         expected_output="Quality assessment report with specific feedback on the support reply.",
         agent=support_quality_control_agent,
-        context=[
-            # This context will contain the output from the support task
-            # The CrewAI framework will automatically pass the support reply here
-        ],
-        output_file="quality_review.md"  # Optional: save the output to a file
+        context=[],  # This will be filled by the crew with the output of the previous task
     )
