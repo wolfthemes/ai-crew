@@ -20,9 +20,7 @@ guidelines = load_guidelines()
 ticket_text = """
 Ticket from user:
 
-"I use Vonzot theme. I'm missing woo templates but I don't know how to install it.
-
-And another thing I do not know if it is possible to add a player that stays at the bottom when you play the songs could be done? Even if it is by paying something extra but I would like to have it."
+"How to update WPBakery to 8.3.1.? I'm using Herion theme"
 """
 
 parts = split_ticket_into_parts(ticket_text)
