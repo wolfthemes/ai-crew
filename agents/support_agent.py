@@ -1,5 +1,7 @@
 
+print("✅ Script started")
 import os
+print("✅ os imported")
 import json
 import time
 import shutil
@@ -9,6 +11,7 @@ from dotenv import load_dotenv
 from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
+print("✅ openai imported")
 from crewai import Agent
 from crewai.tools import tool
 
