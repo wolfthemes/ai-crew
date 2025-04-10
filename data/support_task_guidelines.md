@@ -10,7 +10,7 @@ Follow these guidelines when creating your response:
       - Whether they made recent changes
     
     1. GREETING:
-       - If customer's name is clearly identifiable (e.g., John, Roberto, Maria), start with "Hi [name],"
+       - If customer's name is clearly identifiable and it is a common name (e.g., John, Roberto, Maria), start with "Hi [name],"
        - Otherwise, start with "Hi there,"
     
     2. ISSUE CATEGORIZATION:
