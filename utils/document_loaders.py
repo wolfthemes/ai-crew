@@ -57,10 +57,14 @@ def load_common_issues():
     data = parse_json_file(os.path.join(DATA_FOLDER, "common_issues.json"))
     return [
         Document(
-            page_content=item["customer_message"],
+            page_content = (
+                f"ISSUE TITLE: {item['title']}\n"
+                f"RELATED QUESTION: {item['customer_message']}\n"
+                f"SOLUTION: {item['expected_response']}"
+            ),
             metadata={
                 "title": item["title"],
-                "issue_type": "common_issue",
+                "issue_type": item.get("issue_type", "common_issue"),
                 "expected_response": item["expected_response"],
                 "source": "common_issue",
                 "human_validation": item.get("human_validation", False),
@@ -69,6 +73,7 @@ def load_common_issues():
         )
         for item in data
     ]
+
 
 def load_theme_notes():
     data = parse_json_file(os.path.join(DATA_FOLDER, "theme_notes.json"))

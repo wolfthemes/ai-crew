@@ -1,5 +1,6 @@
 from crewai import Task
 from agents.support_agent import support_agent
+from utils.ticket_classifier import classify_ticket, split_ticket_into_parts
 
 # I have a few issues:
 
@@ -20,6 +21,11 @@ Ticket from user:
 
 And another thing I do not know if it is possible to add a player that stays at the bottom when you play the songs could be done? Even if it is by paying something extra but I would like to have it."
 """
+
+parts = split_ticket_into_parts(ticket_text)
+classified_parts = [(p, classify_ticket(p)) for p in parts]
+
+issue_summary = "\\n".join([f"- {cat}: \"{part}\"" for part, cat in classified_parts])
 
 support_task = Task(
     description=f"""
@@ -61,6 +67,13 @@ support_task = Task(
     
     5. Conclusion:
        - End with "I hope it helps", "Kind Regards", or "Best regards"
+
+   ---
+
+    Internally, this ticket contains the following parts:
+   {issue_summary}
+
+   Respond to each in the most accurate way possible.
     """,
     expected_output="Markdown formatted support reply that directly addresses the customer's issue.",
     agent=support_agent,

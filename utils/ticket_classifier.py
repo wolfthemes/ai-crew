@@ -5,9 +5,10 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from utils.document_loaders import load_common_issues
 
+# Load environment variables (API keys, etc.)
 load_dotenv()
 
-# Define simple label categories
+# Define label categories
 LABELS = [
     "common_issue",
     "server_issue",
@@ -17,34 +18,50 @@ LABELS = [
     "unclear"
 ]
 
-# Load vector store from common issues (can be expanded later)
+# Load vector store from common issues
 embedding = OpenAIEmbeddings()
 common_issues = load_common_issues()
 vectorstore = FAISS.from_documents(common_issues, embedding)
-retriever = vectorstore.as_retriever()
+
+def split_ticket_into_parts(text: str) -> list[str]:
+    # Split by sentence or paragraph
+    parts = re.split(r"(?<=[.?!])\\s+|\\n+", text.strip())
+    return [p.strip() for p in parts if len(p.strip()) > 8]
 
 def classify_ticket(ticket_text: str) -> str:
-    results = retriever.invoke(ticket_text)
-    if not results:
-        return "unclear"
+    results = vectorstore.similarity_search_with_score(ticket_text, k=1)
 
-    top_doc = results[0]
-    score = top_doc.metadata.get("score", 0)
+    if results:
+        top_doc, score = results[0]
+        top_issue_type = top_doc.metadata.get("issue_type")
 
-    if top_doc.metadata.get("issue_type") == "common_issue":
-        return "common_issue"
+        print(f"    ⚙️ Score: {score:.2f}")
+        if top_issue_type == "common_issue" and score > 0.6:
+            return "common_issue"
 
-    # Basic fuzzy heuristics
+    # Fallback heuristics
     ticket_lower = ticket_text.lower()
+
+    if "don't know" in ticket_lower or "no idea how" in ticket_lower:
+        return "info_gap"
+
+    if "missing" in ticket_lower and "template" in ticket_lower:
+        return "info_gap"
 
     if "theme broken" in ticket_lower or "not loading" in ticket_lower:
         return "bug"
 
     if "how to customize" in ticket_lower or "can you add" in ticket_lower:
         return "customization"
+    
+    if "elementor" in ticket_lower and "not loading" in ticket_lower:
+        return "common_issue"
 
-    if "don't know" in ticket_lower or "no idea how" in ticket_lower or "missing" in ticket_lower:
-        return "info_gap"
+    if "demo import" in ticket_lower or "can't import demo" in ticket_lower:
+        return "common_issue"
+
+    if "update slider" in ticket_lower or "slider revolution" in ticket_lower:
+        return "common_issue"
 
     return "unclear"
 

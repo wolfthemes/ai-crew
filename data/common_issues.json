@@ -90,7 +90,7 @@
     "expected_response": "Be sure to do NOT install the whole downloaded package but only the theme zip file included. https://wolfthemes.ticksy.com/article/11682/"
   },
   {
-    "issue_type": "common_issue",
+    "issue_type": "customization",
     "title": "Wants a feature added (paid customization)",
     "customer_message": "I want to add this feature?",
     "expected_response": "Thanks for your message! This feature isn't included in the theme by default. However, we do offer customization services for our themes. I’ll check internally and get back to you shortly regarding the feasibility and cost.",
