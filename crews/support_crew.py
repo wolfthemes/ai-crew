@@ -1,9 +1,16 @@
 from crewai import Crew
-from tasks.simulate_ticket_reply import support_task
+from tasks.task_fresh_ticket import support_task_fresh
+from tasks.task_ticket_followup import support_task_conversation
 from agents.support_agent import support_agent
 
-support_crew = Crew(
+support_crew_fresh = Crew(
     agents=[support_agent],
-    tasks=[support_task],
+    tasks=[support_task_fresh],
+    verbose=True
+)
+
+support_crew_conversation = Crew(
+    agents=[support_agent],
+    tasks=[support_task_conversation],
     verbose=True
 )

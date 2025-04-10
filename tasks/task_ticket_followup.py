@@ -12,7 +12,7 @@ user_comment = extract_latest_user_comment(ticket["ticket_comments"])
 history_text = format_ticket_history(ticket["ticket_comments"], max_entries=10)
 category = classify_ticket(user_comment)
 
-support_task = Task(
+support_task_conversation = Task(
     description=f"""
 You are responding to this ongoing customer support ticket.
 

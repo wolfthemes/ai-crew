@@ -30,7 +30,7 @@ classified_parts = [(p, classify_ticket(p)) for p in parts]
 
 issue_summary = "\\n".join([f"- {cat}: \"{part}\"" for part, cat in classified_parts])
 
-support_task = Task(
+support_task_fresh = Task(
     description=f"""
     You are responding to this customer support ticket:
 
