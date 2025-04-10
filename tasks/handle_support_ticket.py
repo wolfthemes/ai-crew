@@ -6,7 +6,7 @@ Ticket from user:
 
 "Hello,
 
-How to update WPBakery to 8.3.1.? How to activate?
+How to update WPBakery to 8.3.1.? How to activate it?
 
 Thank you
 

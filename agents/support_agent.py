@@ -135,7 +135,7 @@ def search_kb(query: str):
             return (
                 f"✅ **Common Issue Detected**\n\n"
                 f"📄 **{doc.metadata.get('title', 'Untitled')}**\n"
-                f"{doc.page_content.strip()}"
+                f"{doc.metadata.get('expected_response', '').strip()}"
             )
 
     return "\n\n".join([
