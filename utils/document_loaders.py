@@ -150,3 +150,7 @@ def load_closed_tickets():
 def load_backstory(path="data/support_agent_backstory.md"):
     with open(path, encoding="utf-8") as f:
         return f.read()
+    
+def load_guidelines(path="data/support_task_guidelines.md"):
+    with open(path, encoding="utf-8") as f:
+        return f.read()

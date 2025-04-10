@@ -1,5 +1,5 @@
 from crewai import Crew
-from tasks.handle_support_ticket import support_task
+from tasks.simulate_ticket_reply import support_task
 from agents.support_agent import support_agent
 
 support_crew = Crew(

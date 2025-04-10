@@ -2,10 +2,28 @@
 import json
 from html import unescape
 
-def load_ticket(ticket_path):
-    with open(ticket_path, encoding="utf-8") as f:
+import json
+
+def load_ticket(filepath="data/open_tickets.json", index=0):
+    """
+    Load a single ticket from the JSON file.
+
+    Args:
+        filepath (str): Path to the JSON file with ticket data.
+        index (int): Index of the ticket to load (default: 0).
+
+    Returns:
+        dict: Ticket data for the specified ticket.
+    """
+    with open(filepath, "r", encoding="utf-8") as f:
         data = json.load(f)
-    return data["open-tickets"][0]  # or loop over entries if batch processing
+
+    tickets = data.get("open-tickets", [])
+    if 0 <= index < len(tickets):
+        return tickets[index]
+    else:
+        raise IndexError(f"No ticket found at index {index}.")
+
 
 def extract_latest_user_comment(comments):
     user_comments = [c for c in comments if c['user_type'] == 'user']
