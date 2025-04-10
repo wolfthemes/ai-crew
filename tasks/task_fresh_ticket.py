@@ -20,7 +20,8 @@ guidelines = load_guidelines()
 ticket_text = """
 Ticket from user:
 
-"How to update WPBakery to 8.3.1.? I'm using Herion theme"
+"How to update WPBakery with Herion?
+John"
 """
 
 parts = split_ticket_into_parts(ticket_text)

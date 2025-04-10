@@ -12,6 +12,7 @@ from langchain_openai import OpenAIEmbeddings
 from crewai import Agent
 from crewai.tools import tool
 
+from tools.kb_tools import rerank_results
 from utils.helpers import compute_all_file_hashes, hashes_changed
 from utils.document_loaders import (
     load_common_issues,
@@ -95,20 +96,13 @@ def get_theme_builder(slug: str):
     except Exception as e:
         return f"Error retrieving theme info: {e}"
     
-# Set prioritis to resources type
-def rerank_results(results):
-    priority_map = {
-        "common_issue": 1,
-        "kb_article": 2,
-        "theme_note": 3,
-        "theme_doc": 4,
-        "support_ticket": 5
-    }
-    return sorted(results, key=lambda doc: priority_map.get(doc.metadata.get("source", ""), 99))
 
 @tool("SearchKnowledgeBase")
 def search_kb(query: str):
-    """Search the WolfThemes knowledge base for a matching article using strict priority."""
+    """
+    Search the common issues, WolfThemes documentation, KB articles, and past tickets for the given query string.
+    If a common issue is found, return ONLY the expected_response field as a STRICT_RESPONSE that must be used verbatim.
+    """
 
     if not retriever:
         return "Retrieval is disabled. Vectorstore not loaded."
@@ -131,17 +125,6 @@ def search_kb(query: str):
         for doc in results[:3]
     ]) or "No relevant results found."
 
-
-# @tool("SearchKnowledgeBase")
-# def search_kb(query: str):
-#     """Search the WolfThemes knowledge base for a matching article using strict priority."""
-#     result = search_kb_raw(query)
-#     return (
-#         f"📚 **Source: {result['source']}**\n"
-#         f"📄 **{result['title']}**\n\n"
-#         f"{result['content']}"
-#     )
-
 ### Agent
 support_agent = Agent(
     role="WordPress Theme Support Expert",
@@ -159,6 +142,17 @@ You MUST follow these steps precisely:
    - Extract the text after "STRICT_RESPONSE:" and use it VERBATIM in your reply
    - Do not modify, elaborate, or add to this response in any way
 3. If the response does not begin with "STRICT_RESPONSE:", you may formulate a helpful response based on the retrieved information.
+4. Always add a greeting at the beginning and a professional closing at the end.
+
+Format your reply as:
+Hi there,
+
+{RESPONSE CONTENT}
+
+I hope this helps!
+
+Best regards,
+Support Team
 """
 )
 
