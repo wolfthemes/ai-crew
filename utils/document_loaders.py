@@ -58,8 +58,8 @@ def load_common_issues():
     return [
         Document(
             page_content = (
-                f"ISSUE TITLE: {item['title']}\n"
-                f"RELATED QUESTION: {item['customer_message']}\n"
+                f"COMMON TITLE: {item['title']}\n"
+                f"CUSTOMER MESSAGE: {item['customer_message']}\n"
                 f"SOLUTION: {item['expected_response']}"
             ),
             metadata={

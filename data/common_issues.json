@@ -39,19 +39,19 @@
     "issue_type": "common_issue",
     "title": "Events order incorrectly or missing",
     "customer_message": "Events order incorrectly or missing?",
-    "expected_response": "update Events plugin"
+    "expected_response": "Be sure to update the 'Events' plugin to the latest verion."
   },
   {
     "issue_type": "common_issue",
     "title": "How to update WPBakery or Slider Revolution",
     "customer_message": "How to update wpbakery or slider revolution?",
-    "expected_response": "https://wolfthemes.ticksy.com/article/11671/"
+    "expected_response": "Any time the plugin is updated, you will find the latest version of the plugin in the config/plugins (or includes/admin/plugins) folder of your theme.\n\nPlease note that we need several days to test the compatibility with our themes, and if the new plugin version doesn't include important updates, it may take more time before we update all our themes.\n\nTo update the plugin, you can simply deactivate & delete the plugin from your WordPress plugin panel, then reinstall the new version via the \"Appearance\" > \"Install Plugins\" panel. You will find more info here: https://wolfthemes.ticksy.com/article/11671/"
   },
   {
     "issue_type": "common_issue",
     "title": "How to update theme",
     "customer_message": "How to update theme?",
-    "expected_response": "https://wolfthemes.ticksy.com/article/11658/"
+    "expected_response": "You will find the intructions about how to update the theme here: https://wolfthemes.ticksy.com/article/11658/"
   },
   {
     "issue_type": "common_issue",

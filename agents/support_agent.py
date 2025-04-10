@@ -110,7 +110,7 @@ def rerank_results(results):
 def search_kb(query: str):
     """
     Search the common issues, WolfThemes documentation, KB articles, and past tickets for the given query string.
-    Prioritize common issues first and return ALL their responses.
+    If a common issue is found, return ONLY the expected_response field verbatim.
     Otherwise, show top retrieved documents as fallback context.
     """
 
@@ -122,14 +122,10 @@ def search_kb(query: str):
     if not results:
         return "No relevant results found in the knowledge base."
 
-    # ✅ Return all common issue matches
-    common_responses = [
-        f"✅ Common Issue: {doc.metadata.get('title')}\n{doc.metadata.get('expected_response')}"
-        for doc in results if doc.metadata.get("issue_type") == "common_issue"
-    ]
-
-    if common_responses:
-        return "\n\n".join(common_responses)
+    # Return ONLY expected_response for common issues with a special prefix
+    common_issues = [doc for doc in results if doc.metadata.get("issue_type") == "common_issue"]
+    if common_issues:
+        return f"STRICT_RESPONSE: {common_issues[0].metadata.get('expected_response')}"
 
     # Fallback: return first few general results
     return "\n\n".join([
@@ -148,9 +144,14 @@ support_agent = Agent(
     allow_delegation=False,
     verbose=True,
     instructions="""
-You MUST base your entire response only on the output of the SearchKnowledgeBase tool.
-You are NOT allowed to add new steps, troubleshooting advice, or explanations.
-Simply reuse the common issue responses exactly as they are.
+Your job is to answer a customer support ticket.
+
+You MUST follow these steps precisely:
+1. Call the `SearchKnowledgeBase` tool using the ticket text.
+2. Check if the response begins with "STRICT_RESPONSE:". If it does:
+   - Extract the text after "STRICT_RESPONSE:" and use it VERBATIM in your reply
+   - Do not modify, elaborate, or add to this response in any way
+3. If the response does not begin with "STRICT_RESPONSE:", you may formulate a helpful response based on the retrieved information.
 """
 )
 
