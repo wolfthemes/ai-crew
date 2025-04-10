@@ -28,6 +28,7 @@ John"
         
         print("\n🔎 Quality Review:\n")
         print(result["review"])
+    
     except Exception as e:
         print(f"\n❌ Error running crew: {str(e)}")
         import traceback

@@ -31,8 +31,8 @@ def support_crew_fresh_with_review(ticket_text, kb_result):
     )
     
     # Execute the crew
-    result = crew.kickoff()
-    
+    crew.kickoff()
+
     # Access results by task_id
     return {
         "reply": support_task.output,

@@ -12,12 +12,15 @@ def create_support_reply_task(ticket_text, kb_result):
 
     parts = split_ticket_into_parts(ticket_text)
     classified_parts = [(p, classify_ticket(p)) for p in parts]
-
     issue_summary = "\\n".join([f"- {cat}: \"{part}\"" for part, cat in classified_parts])
+
+    source_info = f"Source: {kb_result['source'] if kb_result and 'source' in kb_result else 'N/A'}"
+    source_title = f"Title: {kb_result['title'] if kb_result and 'title' in kb_result else 'N/A'}"
+    source_content = f"Content: {kb_result['content'] if kb_result and 'content' in kb_result else 'N/A'}"
     
     # Check if we have a strict response
     strict_instruction = ""
-    if kb_result.get("is_strict", False) and "STRICT_RESPONSE:" in kb_result.get("content", ""):
+    if kb_result and kb_result.get("is_strict", False) and "STRICT_RESPONSE:" in kb_result.get("content", ""):
         strict_instruction = """
         IMPORTANT: This is a common issue with a predefined response.
         You MUST use the exact predefined response provided below, without modification.
@@ -35,9 +38,9 @@ def create_support_reply_task(ticket_text, kb_result):
         {issue_summary}
 
         Here are the most relevant knowledge base results:
-        Source: {kb_result['source']}
-        Title: {kb_result['title']}
-        Content: {kb_result['content'][:1000]}
+        Source: {source_info}
+        Title: {source_title}
+        Content: {source_content}
 
         {strict_instruction}
 

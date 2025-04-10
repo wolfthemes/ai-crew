@@ -8,6 +8,13 @@ def review_support_reply_task(ticket_text, kb_result):
     with proper context to prevent looping back
     """
     guidelines = load_guidelines()
+
+    parts = split_ticket_into_parts(ticket_text)
+    classified_parts = [(p, classify_ticket(p)) for p in parts]
+    issue_summary = "\\n".join([f"- {cat}: \"{part}\"" for part, cat in classified_parts])
+
+    source_info = f"Source: {kb_result['source'] if kb_result and 'source' in kb_result else 'N/A'}"
+    source_title = f"Source: {kb_result['title'] if kb_result and 'title' in kb_result else 'N/A'}"
     
     return Task(
         description=f"""
@@ -17,11 +24,14 @@ def review_support_reply_task(ticket_text, kb_result):
         {ticket_text}
         
         ### Knowledge Base Source:
-        Source: {kb_result['source']}
-        Title: {kb_result['title']}
+        Source: {source_info}
+        Title: {source_title}
         
         ### Guidelines:
         {guidelines}
+
+        Internally, this ticket contains the following parts:
+        {issue_summary}
         
         IMPORTANT: Your job is to review the support reply from the previous task.
         DO NOT create a new reply - only evaluate the existing one.
