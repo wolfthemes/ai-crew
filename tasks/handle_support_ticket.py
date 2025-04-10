@@ -1,17 +1,37 @@
 from crewai import Task
 from agents.support_agent import support_agent
 
+# I have a few issues:
+
+# How to update WPBakery to 8.3.1.? 
+# I can't activate Slider Revolution?
+
+# Also, when I import the demo I have an error..
+
+# I noticed that my admin is slow after activating the theme.
+
+# Lastly is it possible to add a Jiggily Biggily plugin compatiblity?
+# I would like to cusomtize the appearance of the shop with this.
+
 ticket_text = """
 Ticket from user:
 
 "Hello,
 
-How to update WPBakery to 8.3.1.? How to activate the WPBakery license?
+How to update WPBakery to 8.3.1.? 
+I can't activate Slider Revolution?
+
+Also, when I import the demo I have an error..
+
+I noticed that my admin is slow after activating the theme.
+
+Lastly is it possible to add a Jiggily Biggily plugin compatiblity?
+I would like to cusomtize the appearance of the shop with this.
 
 Thank you
 
 Regards
-Dalibor"
+Jacob"
 """
 
 support_task = Task(

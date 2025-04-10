@@ -1,7 +1,5 @@
 
-print("✅ Script started")
 import os
-print("✅ os imported")
 import json
 import time
 import shutil
@@ -11,7 +9,6 @@ from dotenv import load_dotenv
 from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
-print("✅ openai imported")
 from crewai import Agent
 from crewai.tools import tool
 
@@ -135,11 +132,7 @@ def search_kb(query: str):
     # First pass: prioritize common issues
     for doc in results:
         if doc.metadata.get("issue_type") == "common_issue":
-            return (
-                f"✅ **Common Issue Detected**\n\n"
-                f"📄 **{doc.metadata.get('title', 'Untitled')}**\n"
-                f"{doc.metadata.get('expected_response', '').strip()}"
-            )
+            return doc.metadata.get("expected_response")
 
     return "\n\n".join([
         f"📄 {doc.metadata.get('title')} ({doc.metadata.get('source', '')})"
@@ -158,8 +151,8 @@ support_agent = Agent(
     allow_delegation=False,
     verbose=True,
     instructions="""
-    For common issues, ALWAYS use response provided by the SearchKnowledgeBase tool. 
-    Reformulate it as needed but do not extrapolate your own additional information.
+    You must use the response returned by the SearchKnowledgeBase tool *as-is*, unless it is clearly wrong or irrelevant.
+Do not rephrase or add anything unless instructed.
     """
 )
 

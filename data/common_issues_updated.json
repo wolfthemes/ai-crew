@@ -1,0 +1,116 @@
+[
+  {
+    "issue_type": "common_issue",
+    "title": "Can't activate WPBakery or Slider Revolution",
+    "customer_message": "How to activate WPBakery or Slider Revolution? Can't activate WPBakery or Slider Revolution?",
+    "expected_response": "Bundled plugins don\u2019t require activation. You can use them fully without a license key. We're not allowed to share their license as per Envato's policy. More info here: https://wolfthemes.ticksy.com/article/12629/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "How to activate the theme",
+    "customer_message": "How to activate the theme?",
+    "expected_response": "To activate your theme, go to the WordPress admin panel and open the 'About the Theme' > 'License' tab. If the license key is rejected, please double-check it or contact support."
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Can't activate the theme",
+    "customer_message": "Can't activate the theme?",
+    "expected_response": "This may be due to restrictions from certain hosting providers like Strato or OVH. Please share temporary login credentials so I can check and activate it manually for you. Recommended hosts: https://wolfthemes.ticksy.com/article/13381/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Can't import demos",
+    "customer_message": "Can't import demos?",
+    "expected_response": "Demo import often fails with hosts like Strato or OVH. Please check this guide: https://wolfthemes.ticksy.com/article/11680/. We also offer install services: http://wolfthemes.com/services/. For Elementor themes, importing templates directly from the theme package is the easiest method."
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Admin is slow",
+    "customer_message": "Admin is slow?",
+    "expected_response": "Slow backend performance is often related to hosting. Strato, for example, is known for poor performance. Consider switching to a recommended host: https://wolfthemes.ticksy.com/article/13381/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Can't edit footer or header",
+    "customer_message": "I can't edit my footer or header?",
+    "expected_response": "If you're using Elementor, make sure the 'Content Block' post type is enabled under Elementor > Settings. See the full troubleshooting guide: https://wolfthemes.ticksy.com/article/20209/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Broken layout or missing animations",
+    "customer_message": "Something doesn't seem to work correctly, broken layout, no animation fired?",
+    "expected_response": "This usually results from JavaScript errors. Make sure the theme is fully installed and updated, and disable third-party plugins to test for conflicts."
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Elementor editor not loading",
+    "customer_message": "Elementor editor not loading?",
+    "expected_response": "Please make sure you have the latest version of the Wolf Core plugin. This usually fixes the issue."
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Events order incorrect or missing",
+    "customer_message": "Events order incorrectly or missing?",
+    "expected_response": "Please update the Wolf Events plugin to its latest version. This should fix event display issues."
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "How to update WPBakery or Slider Revolution",
+    "customer_message": "How to update WPBakery or Slider Revolution?",
+    "expected_response": "Follow this guide for updating WPBakery or Slider Revolution: https://wolfthemes.ticksy.com/article/11671/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "How to update the theme",
+    "customer_message": "How to update the theme?",
+    "expected_response": "Use this guide to update your theme: https://wolfthemes.ticksy.com/article/11658/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "404 error page",
+    "customer_message": "404 error page?",
+    "expected_response": "This is likely a permalink issue. Go to Settings > Permalinks and click Save. Full article here: https://wolfthemes.ticksy.com/article/11681/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Website too slow",
+    "customer_message": "Website too slow?",
+    "expected_response": "All WordPress sites need performance optimization. Follow this tutorial: https://wolfthemes.ticksy.com/article/13469/. Also, consider switching to a recommended host: https://wolfthemes.ticksy.com/article/13381/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Sliders missing after demo import",
+    "customer_message": "Sliders missing after demo import?",
+    "expected_response": "Sliders must be imported separately. Please follow this article: https://wolfthemes.ticksy.com/article/12739/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Font and color not working correctly in Elementor",
+    "customer_message": "Font and color not good on Elementor?",
+    "expected_response": "Disable 'Default Colors' and 'Default Fonts' in Elementor settings. See: https://wolfthemes.ticksy.com/article/20209/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Stylesheet is missing error",
+    "customer_message": "Stylesheet is missing?",
+    "expected_response": "Make sure you are uploading only the theme ZIP file, not the entire package from ThemeForest. Guide: https://wolfthemes.ticksy.com/article/11682/"
+  },
+  {
+    "issue_type": "customization_request",
+    "title": "I want to add this feature",
+    "customer_message": "I want to add this feature?",
+    "expected_response": "That feature isn\u2019t included in the theme by default. I do offer customization services here: https://wolfthemes.com/services/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "WPBakery frontend editor is missing",
+    "customer_message": "WPBakery frontend is missing?",
+    "expected_response": "For performance and compatibility, features like the frontend editor are disabled in most large themes. We're working on compatibility improvements."
+  },
+  {
+    "issue_type": "info_gap",
+    "title": "Unclear issue or vague request",
+    "customer_message": "I have a problem",
+    "expected_response": "Please make sure your theme and plugins are up-to-date. If the issue persists, provide a page URL, screenshot, or temporary login so I can take a look."
+  }
+]
