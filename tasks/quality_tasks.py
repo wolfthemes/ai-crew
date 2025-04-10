@@ -1,5 +1,6 @@
 from crewai import Task
 from agents.support_quality_control_agent import support_quality_control_agent
+from utils.ticket_classifier import classify_ticket, split_ticket_into_parts
 from utils.document_loaders import load_guidelines
 
 def review_support_reply_task(ticket_text, kb_result):
