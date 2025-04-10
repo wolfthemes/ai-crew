@@ -9,7 +9,7 @@ from utils.document_loaders import load_guidelines
 guidelines = load_guidelines()
 ticket = load_ticket(index=0)
 user_comment = extract_latest_user_comment(ticket["ticket_comments"])
-history_text = format_ticket_history(ticket["ticket_comments"], max_entries=10)
+history_text = format_ticket_history(ticket["ticket_comments"], max_entries=50)
 category = classify_ticket(user_comment)
 
 support_task_conversation = Task(
