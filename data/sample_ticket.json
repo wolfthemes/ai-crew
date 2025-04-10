@@ -1,0 +1,78 @@
+{
+  "ticket_id": "3884993",
+  "time_stamp": "2025-04-04 03:55:37",
+  "user_id": "2331936",
+  "assigned_to": "757451",
+  "category_id": "100014695",
+  "ticket_type": "public",
+  "status": "open",
+  "starred": "0",
+  "ticket_title": "Menu Not Appearing On Home Page",
+  "related_url": "https://secrethistoryrecords.com",
+  "needs_response": "1",
+  "envato_verified_string": "{\"item_name\":\"Snakepit - A Rock and Metal Oriented Music WordPress Theme\",\"item_id\":23418267,\"created_at\":\"2025-04-03T17:16:57+11:00\",\"buyer\":\"secrethistoryrec\",\"licence\":\"Regular License\",\"supported_until\":\"2025-10-03T07:16:57+10:00\",\"purchase_code\":\"af0549e0-ea12-49c7-bd48-6547ba5b329f\",\"shop_type\":\"envato\"}",
+  "envato_purchase_code": "af0549e0-ea12-49c7-bd48-6547ba5b329f",
+  "user_avatar": "https://secure.gravatar.com/avatar/c2ad9f216379cb08cab47d5fbf1f7e77?s=160",
+  "user_name": "secrethistoryrec",
+  "user_email": "secrethistoryrec@gmail.com",
+  "elapsed_time": "just now",
+  "ticket_comments": [
+    {
+      "comment_id": "20789272",
+      "system_id": "10095",
+      "user_id": "2331936",
+      "ticket_id": "3884993",
+      "comment": "<p>Hello, I just bought the theme and am having trouble getting the menu to show up on my homepage. I'm trying to set up the website without using the demo, but the menu wasn't showing up on new pages I made even when I was using the demo. I tried looking through the documentation, and online for answers, but I haven't found a solution. Thank you for any help you can provide!</p>",
+      "private": "0",
+      "time_stamp": "2025-04-04 03:55:37",
+      "commenter_name": "secrethistoryrec",
+      "user_type": "user",
+      "type": "comment",
+      "attachments": [
+        {
+          "id": "3799810",
+          "file_url": "https://ticksy_attachments.s3.amazonaws.com/Home Page_67ef57a4ae0f9.png",
+          "file_name": "Home Page.png"
+        }
+      ]
+    },
+    {
+      "comment_id": "20793516",
+      "system_id": "10095",
+      "user_id": "757451",
+      "ticket_id": "3884993",
+      "comment": "<p>Hi there,</p><p>Please provide your login info so I can check this.</p><p>Talk to you soon</p>",
+      "private": "0",
+      "time_stamp": "2025-04-04 09:09:15",
+      "commenter_name": "Constantin Saguin",
+      "user_type": "employee",
+      "type": "comment"
+    },
+    {
+      "comment_id": "20798238",
+      "system_id": "10095",
+      "user_id": "2331936",
+      "ticket_id": "3884993",
+      "comment": "<p>Hello, I created an admin account so you can access the website:</p><p>Username: wolfthemes<br>Email: wolfthemes@secrethistoryrecords.com<br>Password: x)kw#8y^Ilh9NBQE6R#!)@KK</p>",
+      "private": "1",
+      "time_stamp": "2025-04-04 18:08:47",
+      "commenter_name": "secrethistoryrec",
+      "user_type": "user",
+      "type": "comment"
+    },
+    {
+      "comment_id": "20800000",
+      "system_id": "10095",
+      "user_id": "2331936",
+      "ticket_id": "3884993",
+      "comment": "<p>Hi again, sorry to bother you — I also noticed the mobile menu doesn’t work. It just opens blank. Any ideas?</p>",
+      "private": "0",
+      "time_stamp": "2025-04-10 11:35:00",
+      "commenter_name": "secrethistoryrec",
+      "user_type": "user",
+      "type": "comment"
+    }
+  ],
+  "assigned_to_name": "Constantin Saguin",
+  "assigned_to_email": "wolfthemes14@gmail.com"
+}
