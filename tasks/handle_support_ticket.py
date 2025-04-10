@@ -20,6 +20,8 @@ Ticket from user:
 
 Elementor editor not loading, what to do?
 
+Also, when I import the demo I have an error..
+
 Thank you
 
 Regards

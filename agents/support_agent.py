@@ -148,8 +148,9 @@ support_agent = Agent(
     allow_delegation=False,
     verbose=True,
     instructions="""
-Always use the SearchKnowledgeBase tool.
-If it returns any ‘common issues’, you **must reuse those responses** for the ticket.
+You MUST base your entire response only on the output of the SearchKnowledgeBase tool.
+You are NOT allowed to add new steps, troubleshooting advice, or explanations.
+Simply reuse the common issue responses exactly as they are.
 """
 )
 
