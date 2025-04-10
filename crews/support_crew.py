@@ -1,53 +1,36 @@
-from crewai import Crew
-from tasks.task_fresh_ticket import support_task_fresh
-from tasks.task_ticket_followup import support_task_conversation
-from tasks.task_review_support_reply import build_review_task
+from crewai import Crew, Process
 from agents.support_agent import support_agent
 from agents.support_quality_control_agent import support_quality_control_agent
+from tasks.support_tasks import create_support_reply_task
+from tasks.quality_tasks import review_support_reply_task
 
 def support_crew_fresh_with_review(ticket_text, kb_result):
-    # Inject KB + ticket into the support agent task
-    support_task_fresh.description = f"""
-You are replying to this customer ticket:
-
-{ticket_text}
-
-Use this knowledge base result:
-{kb_result}
-
-Be brief, use markdown formatting, and only say what the KB recommends.
-"""
-
-    # Run support agent task
-    support_crew = Crew(
-        agents=[support_agent],
-        tasks=[support_task_fresh],
-        verbose=False
+    """
+    Creates a crew that generates a support reply and then reviews it,
+    without creating an infinite loop.
+    
+    Returns a dictionary with both the reply and the review.
+    """
+    # Create the support reply task
+    support_task = create_support_reply_task(ticket_text, kb_result)
+    
+    # Create the quality review task with a clear dependency on the support task
+    quality_task = review_support_reply_task(ticket_text, kb_result)
+    
+    # Create the crew with a sequential process to prevent looping
+    crew = Crew(
+        agents=[support_agent, support_quality_control_agent],
+        tasks=[support_task, quality_task],
+        process=Process.sequential,  # Ensure sequential execution
+        verbose=True
     )
-    support_reply = support_crew.kickoff()
-
-    # Build and run review task
-    review_task = build_review_task(ticket_text, kb_result, support_reply)
-    review_crew = Crew(
-        agents=[support_quality_control_agent],
-        tasks=[review_task],
-        verbose=False
-    )
-    review_result = review_crew.kickoff()
-
+    
+    # Execute the crew
+    result = crew.kickoff()
+    
+    # Parse results
+    # The first task result is the support reply, the second is the quality review
     return {
-        "reply": support_reply,
-        "review": review_result
+        "reply": result[0],  # Support reply
+        "review": result[1]  # Quality review
     }
-
-support_crew_fresh = Crew(
-    agents=[support_agent],
-    tasks=[support_task_fresh],
-    verbose=True
-)
-
-support_crew_conversation = Crew(
-    agents=[support_agent],
-    tasks=[support_task_conversation],
-    verbose=True
-)
