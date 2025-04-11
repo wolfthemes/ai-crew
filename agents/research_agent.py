@@ -1,60 +1,51 @@
-import os
-import json
 from crewai import Agent
-from crewai.tools import tool
-from tools.vector_retriever import retriever
+from tools.crewai_tools import SearchKnowledgeBaseTool, GetThemeBuilderTool
 
-from pydantic import BaseModel, Field
-from typing import Type
-from crewai.tools import BaseTool
-from tools.kb_tools import search_kb_structured
-### Tools
+# class SearchKBInput(BaseModel):
+#     query: str = Field(..., description="The search query string")
 
-class SearchKBInput(BaseModel):
-    query: str = Field(..., description="The search query string")
-
-class SearchKnowledgeBaseTool(BaseTool):
-    name: str = "SearchKnowledgeBase"
-    description: str = "Searches all KB sources for a query and returns best match"
-    args_schema: Type[BaseModel] = SearchKBInput
+# class SearchKnowledgeBaseTool(BaseTool):
+#     name: str = "SearchKnowledgeBase"
+#     description: str = "Searches all KB sources for a query and returns best match"
+#     args_schema: Type[BaseModel] = SearchKBInput
     
-    def _run(self, query: str) -> str:
-        #from tools.kb_tools import search_kb_structured
-        #from tools.vector_retriever import retriever
+#     def _run(self, query: str) -> str:
+#         #from tools.kb_tools import search_kb_structured
+#         #from tools.vector_retriever import retriever
         
-        result = search_kb_structured(query, retriever)
+#         result = search_kb_structured(query, retriever)
 
-        print(f"🛠️ TOOL CALLED with query: {query}")
-        print(f"🔁 Tool result:\n{result}")
+#         print(f"🛠️ TOOL CALLED with query: {query}")
+#         print(f"🔁 Tool result:\n{result}")
 
-        if not result:
-            return "No results found in the KB."
+#         if not result:
+#             return "No results found in the KB."
 
-        if result.get("is_strict"):
-            return f"STRICT_RESPONSE: {result['content']}"
+#         if result.get("is_strict"):
+#             return f"STRICT_RESPONSE: {result['content']}"
 
-        return "\n\n".join([
-            f"📄 {result['title']} ({result['source']})"
-            f"\n🔗 {result.get('url', '')}"
-            f"\n{result['content'][:300]}..."
-        ] + [
-            f"\n\n🔎 Additional: {r['title']} ({r['source']})\n{r['snippet'][:200]}..."
-            for r in result.get("all_results", [])
-        ])
+#         return "\n\n".join([
+#             f"📄 {result['title']} ({result['source']})"
+#             f"\n🔗 {result.get('url', '')}"
+#             f"\n{result['content'][:300]}..."
+#         ] + [
+#             f"\n\n🔎 Additional: {r['title']} ({r['source']})\n{r['snippet'][:200]}..."
+#             for r in result.get("all_results", [])
+#         ])
 
-@tool("GetThemeBuilder")
-def get_theme_builder(slug: str):
-    """Return the page builder used by a given theme slug."""
-    try:
-        with open(os.path.join(retriever.DATA_FOLDER, "theme_info.json"), encoding="utf-8") as f:
-            data = json.load(f)
-        theme = data.get(slug)
-        if theme:
-            return f"{theme['name']} uses {theme['builder']}."
-        else:
-            return f"No info found for theme '{slug}'."
-    except Exception as e:
-        return f"Error retrieving theme info: {e}"
+# @tool("GetThemeBuilder")
+# def get_theme_builder(slug: str):
+#     """Return the page builder used by a given theme slug."""
+#     try:
+#         with open(os.path.join(retriever.DATA_FOLDER, "theme_info.json"), encoding="utf-8") as f:
+#             data = json.load(f)
+#         theme = data.get(slug)
+#         if theme:
+#             return f"{theme['name']} uses {theme['builder']}."
+#         else:
+#             return f"No info found for theme '{slug}'."
+#     except Exception as e:
+#         return f"Error retrieving theme info: {e}"
     
 
 # @tool("SearchKnowledgeBase")
@@ -93,6 +84,6 @@ research_agent = Agent(
         "by splitting tickets into clear issues, identifying the theme and builder, "
         "and finding existing solutions from the KB if available."
     ),
-    tools=[SearchKnowledgeBaseTool(),get_theme_builder],
+    tools=[SearchKnowledgeBaseTool(),GetThemeBuilderTool()],
     verbose=True,
 )

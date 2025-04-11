@@ -26,8 +26,9 @@ def review_support_reply_task(ticket_text: str) -> Task:
         4. Has the right tone and format
         """,
         expected_output="Quality assessment report with specific feedback on the support reply.",
-        agent=support_quality_control_agent,
+        agent=support_quality_control_agent
     )
+
 
 
 def review_legacy_support_reply_task(ticket_text, kb_result):
