@@ -94,3 +94,4 @@ Looks solid! (This should later run an LLM quality pass.)
 """
     def run(self, query: str) -> str:
         return self._run(query)
+

@@ -14,6 +14,8 @@ st.markdown("Paste a ticket message below. The agent will suggest a reply:")
 
 ticket_input = st.text_area("🎫 Paste the customer ticket text here:", height=200)
 
+note_input = st.text_input("📝 Paste an optional note here:")
+
 if st.button("✉️ Generate Reply") and ticket_input.strip():
     # Update the task description
     support_task_fresh.description = f"""

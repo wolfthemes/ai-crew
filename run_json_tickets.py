@@ -29,6 +29,6 @@ with open("data/crawled/open_tickets.json", encoding="utf-8") as f:
 # Pick the first ticket just for test
 ticket_data = parse_json_ticket(tickets[0])
 reply = run_ticket_task_from_json(ticket_data)
-markdown = html2text.html2text(reply)
+#markdown = html2text.html2text(reply)
 
 print("Suggested reply:\n", reply)
