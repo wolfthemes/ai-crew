@@ -1,6 +1,6 @@
 from crews.support_crew import support_crew_fresh_with_review
 from utils.ticket_classifier import classify_ticket
-from agents.support_agent import search_kb_raw
+from tools.kb_tools import search_kb_raw
 
 def main():
     ticket_text = """

@@ -12,7 +12,7 @@ from langchain_openai import OpenAIEmbeddings
 from crewai import Agent
 from crewai.tools import tool
 
-from tools.kb_tools import rerank_results
+from core.reranker import rerank_results
 from utils.helpers import compute_all_file_hashes, hashes_changed
 from utils.document_loaders import (
     load_common_issues,
@@ -80,33 +80,33 @@ else:
     retriever = None
     print("🚫 Vectorstore skipped. Retrieval disabled.")
 
-def search_kb_raw(query: str):
-    """Raw search function that returns structured string data from the KB"""
-    if not retriever:
-        return {
-            "source": "error",
-            "title": "Retrieval Error",
-            "content": "Retrieval is disabled. Vectorstore not loaded."
-        }
+# def search_kb_raw(query: str):
+#     """Raw search function that returns structured string data from the KB"""
+#     if not retriever:
+#         return {
+#             "source": "error",
+#             "title": "Retrieval Error",
+#             "content": "Retrieval is disabled. Vectorstore not loaded."
+#         }
 
-    results = rerank_results(retriever.invoke(query))
+#     results = rerank_results(retriever.invoke(query))
 
-    if not results:
-        return {
-            "source": "none",
-            "title": "No Results",
-            "content": "No relevant results found in the knowledge base."
-        }
+#     if not results:
+#         return {
+#             "source": "none",
+#             "title": "No Results",
+#             "content": "No relevant results found in the knowledge base."
+#         }
 
-    # Return structured data for common issues with a special prefix
-    common_issues = [doc for doc in results if doc.metadata.get("issue_type") == "common_issue"]
-    if common_issues:
-        return {
-            "source": "common_issue",
-            "title": common_issues[0].metadata.get("title", "Common Issue"),
-            "content": f"STRICT_RESPONSE: {common_issues[0].metadata.get('expected_response')}",
-            "is_strict": True
-        }
+#     # Return structured data for common issues with a special prefix
+#     common_issues = [doc for doc in results if doc.metadata.get("issue_type") == "common_issue"]
+#     if common_issues:
+#         return {
+#             "source": "common_issue",
+#             "title": common_issues[0].metadata.get("title", "Common Issue"),
+#             "content": f"STRICT_RESPONSE: {common_issues[0].metadata.get('expected_response')}",
+#             "is_strict": True
+#         }
 
 ### Tools
 

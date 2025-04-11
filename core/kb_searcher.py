@@ -1,4 +1,4 @@
-from tools.kb_tools import rerank_results
+from core.reranker import rerank_results
 
 class KnowledgeBaseSearcher:
     def __init__(self, theme: str, retriever):
@@ -24,7 +24,7 @@ class KnowledgeBaseSearcher:
                 "content": "No relevant results found in the knowledge base."
             }
 
-        # Strict match from common_issues
+        # Return structured data for common issues with a special prefix
         common_issues = [doc for doc in results if doc.metadata.get("issue_type") == "common_issue"]
         if common_issues:
             return {
@@ -34,21 +34,21 @@ class KnowledgeBaseSearcher:
                 "is_strict": True
             }
 
-        # Fallback: general best match
-        first_result = results[0]
-        return {
-            "source": first_result.metadata.get("source", "unknown"),
-            "title": first_result.metadata.get("title", "Untitled"),
-            "url": first_result.metadata.get("url", ""),
-            "content": first_result.page_content[:1000],
-            "is_strict": False,
-            "all_results": [
-                {
-                    "source": doc.metadata.get("source", "unknown"),
-                    "title": doc.metadata.get("title", "Untitled"),
-                    "url": doc.metadata.get("url", ""),
-                    "snippet": doc.page_content[:300]
-                }
-                for doc in results[1:3]
-            ]
-        }
+        # # Fallback: general best match
+        # first_result = results[0]
+        # return {
+        #     "source": first_result.metadata.get("source", "unknown"),
+        #     "title": first_result.metadata.get("title", "Untitled"),
+        #     "url": first_result.metadata.get("url", ""),
+        #     "content": first_result.page_content[:1000],
+        #     "is_strict": False,
+        #     "all_results": [
+        #         {
+        #             "source": doc.metadata.get("source", "unknown"),
+        #             "title": doc.metadata.get("title", "Untitled"),
+        #             "url": doc.metadata.get("url", ""),
+        #             "snippet": doc.page_content[:300]
+        #         }
+        #         for doc in results[1:3]
+        #     ]
+        # }
