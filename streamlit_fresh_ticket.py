@@ -5,7 +5,6 @@ from crewai import Crew
 from tasks.task_fresh_ticket import support_task_fresh  # this task uses support_agent
 from crews.support_crew import support_crew_fresh_with_review
 from utils.ticket_classifier import classify_ticket
-from agents.support_agent import search_kb_raw
 
 st.set_page_config(page_title="WolfThemes Support Agent", layout="centered")
 
@@ -37,14 +36,10 @@ Your answer must be markdown formatted, short and professional.
     category = classify_ticket(ticket_input)
     print(f"📋 Ticket classified as: {category}")
     
-    # 2. Use KB tool to get relevant information
-    kb_result = search_kb_raw(ticket_input)
-    print(f"📚 Knowledge base searched.")
-    
     # 3. Run both reply and review with proper crew
     print("🤖 Starting support crew...")
 
-    result = support_crew_fresh_with_review(ticket_input, kb_result)
+    result = support_crew_fresh_with_review(ticket_input)
     
     st.markdown("### 💬 Suggested Reply:")
     st.markdown(result["reply"])
