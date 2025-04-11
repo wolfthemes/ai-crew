@@ -14,9 +14,13 @@ def support_crew_with_research(ticket_text: str):
     # 1. Research the ticket and structure its issues
     research_task = create_research_task(ticket_text)
     research_task.name = "Research Task"
+    research_data = research_task._output["research_output"]
+
+    #print("📦 Research Output for Support Agent:")
+    #print(research_task.metadata["research_output"])
 
     # 2. Generate the support reply using research result
-    support_task = create_support_reply_task(ticket_text, research_task.output)  # Will later consume research_task.output
+    support_task = create_support_reply_task(ticket_text, research_data)
     support_task.name = "Support Reply"
     support_task.context = [research_task]
 

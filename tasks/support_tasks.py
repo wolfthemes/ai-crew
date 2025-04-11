@@ -30,6 +30,7 @@ def create_support_reply_task(ticket_text: str, research_output: str = None) -> 
         agent=support_agent
     )
 
+
 def create_legacy_support_task(ticket_text, kb_result):
     """
     Creates a task for the support agent to respond to a ticket,

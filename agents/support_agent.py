@@ -1,6 +1,4 @@
 
-import os
-import json
 from crewai import Agent
 from tools.vector_retriever import support_agent_backstory_text
 

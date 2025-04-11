@@ -4,6 +4,7 @@ from tools.kb_tools import search_kb_structured
 from tools.vector_retriever import retriever
 
 def process_ticket_research(ticket_text: str) -> str:
+        
     parser = TicketParser(ticket_text)
     parsed = parser.extract_all()
 

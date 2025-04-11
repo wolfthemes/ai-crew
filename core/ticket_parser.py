@@ -5,21 +5,22 @@ class TicketParser:
         self.ticket_text = ticket_text
 
     def extract_customer_name(self):
-        lines = self.ticket_text.splitlines()
-        possible_names = [l.strip() for l in lines if len(l.strip().split()) <= 2 and len(l.strip()) > 1]
-        return possible_names[-1] if possible_names else "Customer"
+        # Simple: look for a line with a name at the end
+        lines = self.ticket_text.strip().splitlines()
+        candidates = [l.strip() for l in lines if 1 <= len(l.strip().split()) <= 3]
+        return candidates[-1] if candidates else "Customer"
 
     def extract_theme_slug(self):
-        # Placeholder: You might infer from ticket or metadata
+        # Dummy value for now
         return "herion"
 
     def extract_url(self):
-        matches = re.findall(r'https?://[^\s]+', self.ticket_text)
-        return matches[0] if matches else None
+        urls = re.findall(r'https?://[^\s]+', self.ticket_text)
+        return urls[0] if urls else None
 
     def split_into_parts(self):
-        # Naive: split by question marks, new lines, etc.
-        return [p.strip() for p in re.split(r"\n|[?]", self.ticket_text) if p.strip()]
+        # Naive: split by line or ?
+        return [p.strip() for p in re.split(r"\n|[?]", self.ticket_text) if len(p.strip()) > 10]
 
     def extract_all(self):
         return {
