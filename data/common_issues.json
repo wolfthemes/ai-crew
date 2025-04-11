@@ -120,5 +120,11 @@
     "title": "Can I use this theme for an online store?",
     "customer_message": "Is this theme suitable for a professional WooCommerce store?",
     "expected_response": "Yes, our themes are designed to support online stores using WooCommerce. They are flexible and customizable to fit various e-commerce needs."
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Theme animations not working with Elementor Pro header",
+    "customer_message": "All the animation doesn't work (appears on scroll / svg animation ecc) but the classic elementor animation works perfectly.",
+    "expected_response": "This happens because the Elementor Pro custom header replaces the theme’s header.php, which prevents required scripts from loading. Use a Content Block for the header instead: https://wolfthemes.ticksy.com/article/12792/"
   }
 ]
