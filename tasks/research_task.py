@@ -1,25 +1,34 @@
 from crewai import Task
 from agents.research_agent import research_agent
 
-def create_research_task(ticket_data: dict) -> Task:
+def create_research_task(ticket_text: str) -> Task:
     return Task(
-        description=f"""Analyze the following support ticket and:
-        - Identify all distinct issues
-        - For each issue:
-            1. Detect related theme
-            2. Retrieve solution from resources in this strict order:
-               common_issues → kb_articles → theme_note → theme_doc → support_ticket
-        - Return a list of issues with:
+        description=f"""
+        Parse the following support ticket and extract the following:
+        - Customer name (if signed)
+        - Theme name or slug (guess if not clear)
+        - Website URL (if any)
+        - All distinct issues or parts (split logically)
+
+        For each part, use the knowledge base to find an existing solution if available.
+        If the match is a STRICT_RESPONSE, include it.
+
+        Return a structured JSON list like:
+        [
           {{
-            "issue_summary": "...",
-            "matched_source": "...",
-            "content_used": "...",
-            "theme": "..."
-          }}
+            "part": "How to update WPBakery with Herion?",
+            "match": {{
+              "source": "common_issue",
+              "title": "...",
+              "content": "STRICT_RESPONSE: ..."
+            }}
+          }},
+          ...
+        ]
         
         Ticket:
-        {ticket_data}
+        {ticket_text}
         """,
+        expected_output="Structured list of ticket parts with matched KB entries.",
         agent=research_agent,
-        expected_output="A structured list of issues with matched sources and extracted content."
     )
