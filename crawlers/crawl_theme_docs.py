@@ -71,10 +71,10 @@ def main():
 
         browser.close()
 
-    os.makedirs("data", exist_ok=True)
-    with open("data/theme_docs.json", "w", encoding="utf-8") as f:
+    os.makedirs("data/crawled", exist_ok=True)
+    with open("data/crawled/theme_docs.json", "w", encoding="utf-8") as f:
         json.dump(docs, f, indent=2, ensure_ascii=False)
-    print(f"✅ Saved {len(docs)} docs to data/theme_docs.json")
+    print(f"✅ Saved {len(docs)} docs to data/crawled/theme_docs.json")
 
 if __name__ == "__main__":
     main()

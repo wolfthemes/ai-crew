@@ -12,7 +12,7 @@ TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
 TICKSY_API_KEY = os.getenv("TICKSY_API_KEY")
 BASE_API_URL = f"https://api.ticksy.com/v1/{TICKSY_DOMAIN}/{TICKSY_API_KEY}"
 
-os.makedirs("data", exist_ok=True)
+os.makedirs("data/crawled", exist_ok=True)
 
 def fetch_closed_tickets():
     url = f"{BASE_API_URL}/closed-tickets.json"
@@ -26,7 +26,7 @@ def fetch_closed_tickets():
 
     return response.json()
 
-def save_tickets(data, filename="data/closed_tickets.json"):
+def save_tickets(data, filename="data/crawled/closed_tickets.json"):
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
     print(f"✅ Saved recent closed tickets to {filename}")

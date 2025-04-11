@@ -25,7 +25,7 @@ def format_documents(raw_data, source, content_key="content", title_key="title",
     return documents
 
 def load_theme_meta():
-    data = parse_json_file(os.path.join(DATA_FOLDER, "theme_info.json"))
+    data = parse_json_file(os.path.join(DATA_FOLDER, "crawled/theme_info.json"))
     documents = []
     for slug, meta in data.items():
         builder = meta.get("builder", "Unknown")
@@ -48,10 +48,10 @@ def load_theme_meta():
     return documents
 
 def load_kb_articles():
-    return format_documents(parse_json_file(os.path.join(DATA_FOLDER, "kb_articles.json")), "kb_article")
+    return format_documents(parse_json_file(os.path.join(DATA_FOLDER, "crawled/kb_articles.json")), "kb_article")
 
 def load_theme_docs():
-    return format_documents(parse_json_file(os.path.join(DATA_FOLDER, "theme_docs.json")), "theme_doc")
+    return format_documents(parse_json_file(os.path.join(DATA_FOLDER, "crawled/theme_docs.json")), "theme_doc")
 
 def load_common_issues():
     data = parse_json_file(os.path.join(DATA_FOLDER, "common_issues.json"))
@@ -104,7 +104,7 @@ def load_ticket_examples():
 
 def load_closed_tickets():
     """Load closed support tickets from a JSON file."""
-    path = os.path.join(DATA_FOLDER, "closed_tickets.json")
+    path = os.path.join(DATA_FOLDER, "crawled/closed_tickets.json")
     data = parse_json_file(path)
 
     if isinstance(data, dict) and "closed-tickets" in data:
