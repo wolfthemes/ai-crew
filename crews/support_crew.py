@@ -1,8 +1,45 @@
 from crewai import Crew, Process
+from agents.research_agent import research_agent
 from agents.support_agent import support_agent
 from agents.support_quality_control_agent import support_quality_control_agent
+
+from tasks.research_task import create_research_task
 from tasks.support_tasks import create_support_reply_task
 from tasks.quality_tasks import review_support_reply_task
+
+def support_crew_with_research(ticket_text: str):
+    """
+    Crew pipeline: Research → Support Reply → Review
+    """
+    # 1. Research the ticket and structure its issues
+    research_task = create_research_task(ticket_text)
+    research_task.name = "Research Task"
+
+    # 2. Generate the support reply using research result
+    support_task = create_support_reply_task(ticket_text)  # Will later consume research_task.output
+    support_task.name = "Support Reply"
+    support_task.context = [research_task]
+
+    # 3. Review the reply
+    review_task = review_support_reply_task(ticket_text)
+    review_task.name = "Review"
+    review_task.context = [support_task]
+
+    crew = Crew(
+        agents=[research_agent, support_agent, support_quality_control_agent],
+        tasks=[research_task, support_task, review_task],
+        process=Process.sequential,
+        verbose=True
+    )
+
+    result = crew.kickoff()
+
+    return {
+        "research": research_task.output,
+        "reply": support_task.output,
+        "review": review_task.output
+    }
+
 
 def support_crew_fresh_with_review(ticket_text):
     """

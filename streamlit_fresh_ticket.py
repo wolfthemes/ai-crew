@@ -3,7 +3,7 @@
 import streamlit as st
 from crewai import Crew
 from tasks.task_fresh_ticket import support_task_fresh  # this task uses support_agent
-from crews.support_crew import support_crew_fresh_with_review
+from crews.support_crew import support_crew_with_research
 from utils.ticket_classifier import classify_ticket
 
 st.set_page_config(page_title="WolfThemes Support Agent", layout="centered")
@@ -39,7 +39,7 @@ Your answer must be markdown formatted, short and professional.
     # 3. Run both reply and review with proper crew
     print("🤖 Starting support crew...")
 
-    result = support_crew_fresh_with_review(ticket_input)
+    result = support_crew_with_research(ticket_input)
     
     st.markdown("### 💬 Suggested Reply:")
     st.markdown(result["reply"])

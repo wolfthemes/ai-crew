@@ -1,4 +1,4 @@
-from crews.support_crew import support_crew_fresh_with_review
+from crews.support_crew import support_crew_with_research
 from utils.ticket_classifier import classify_ticket
 
 def main():
@@ -17,12 +17,15 @@ John"
     print("🤖 Starting support crew...")
 
     try:
-        result = support_crew_fresh_with_review(ticket_text)
+        result = support_crew_with_research(ticket_text)
+
+        print("\n📚 Research Output:\n")
+        print(result["research"])
 
         print("\n📝 Support Reply:\n")
         print(result["reply"])
 
-        print("\n🔎 Quality Review:\n")
+        print("\n🔎 Review:\n")
         print(result["review"])
 
     except Exception as e:
