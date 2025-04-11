@@ -2,5 +2,5 @@
 __pycache__/
 *.pyc
 .DS_Store
-faiss_store/
+data/faiss_store/
 .env
