@@ -6,14 +6,24 @@ def review_support_reply_task(ticket_text: str) -> Task:
     guidelines = load_guidelines()
 
     return Task(
-        description="Review the support agent's reply using the provided source and guidelines.",
+        description=f"""
+        Review the support agent's reply to this ticket.
+        
+        ### Original Ticket:
+        {ticket_text}
+        
+        ### Guidelines:
+        {guidelines}
+
+        IMPORTANT: Your job is to review the support reply from the previous task.
+        DO NOT create a new reply - only evaluate the existing one.
+        
+        Check if the reply:
+        1. Follows our support guidelines
+        2. Uses the knowledge base information correctly
+        3. Is helpful and accurate
+        4. Has the right tone and format
+        """,
         expected_output="Quality assessment report with specific feedback on the support reply.",
-        agent=support_quality_control_agent,
-        context=[],  # This will still receive the support reply task
-        tool_args={
-            "reply": lambda ctx: ctx[0].output.raw,  # reply content from previous task
-            "ticket": ticket_text,
-            "source_doc": lambda ctx: ctx[0].metadata.get("source_doc", ""),  # customize if you store this
-            "guidelines": guidelines
-        }
+        agent=support_quality_control_agent
     )

@@ -2,7 +2,26 @@
 import json
 from utils.json_ticket_parser import parse_json_ticket
 from crews.support_crew import support_crew_with_research
-import html2text
+
+def format_task_outputs(result: dict) -> str:
+    lines = []
+
+    if "reply" in result:
+        lines.append("🎯 **Suggested Reply:**\n")
+        lines.append(result["reply"].raw.strip())
+        lines.append("")
+
+    if "review" in result:
+        lines.append("🕵️‍♂️ **Review Summary:**\n")
+        lines.append(result["review"].raw.strip())
+        lines.append("")
+
+    if "research" in result:
+        lines.append("📚 **Research Summary:**\n")
+        lines.append(result["research"].raw.strip())
+        lines.append("")
+
+    return "\n".join(lines)
 
 def run_ticket_task_from_json(parsed_ticket: dict) -> str:
     # Format a plain text version that mimics Streamlit drop input
@@ -29,6 +48,6 @@ with open("data/crawled/open_tickets.json", encoding="utf-8") as f:
 # Pick the first ticket just for test
 ticket_data = parse_json_ticket(tickets[0])
 reply = run_ticket_task_from_json(ticket_data)
-#markdown = html2text.html2text(reply)
+formatted_output = format_task_outputs(reply)
 
-print("Suggested reply:\n", reply)
+print("Suggested reply:\n", formatted_output)

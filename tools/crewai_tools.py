@@ -79,6 +79,7 @@ class ReviewSupportReplyTool(BaseTool):
     args_schema: Type[BaseModel] = ReviewReplyInput
 
     def _run(self, reply: str, ticket: str, source_doc: str, guidelines: str) -> str:
+        
         return f"""
 ## Review Summary
 - Ticket: {ticket[:200]}...
