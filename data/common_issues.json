@@ -125,6 +125,6 @@
     "issue_type": "common_issue",
     "title": "Theme animations not working with Elementor Pro header",
     "customer_message": "All the animation doesn't work (appears on scroll / svg animation ecc) but the classic elementor animation works perfectly.",
-    "expected_response": "This happens because the Elementor Pro custom header replaces the theme’s header.php, which prevents required scripts from loading. Use a Content Block for the header instead: https://wolfthemes.ticksy.com/article/12792/"
+    "expected_response": "This may happen because the Elementor Pro custom header replaces the theme’s header.php, which prevents required scripts from loading. Use a Content Block for the header instead: https://wolfthemes.ticksy.com/article/12792/"
   }
 ]
