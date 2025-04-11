@@ -12,8 +12,6 @@ from crewai.tools import tool
 
 from tools.vector_retriever import retriever, agent_backstory_text
 
-from tools.kb_tools import search_kb_structured
-
 start = time.time()
 load_dotenv()
 
@@ -69,8 +67,15 @@ def search_kb(query: str):
     Search all available KB sources and return the most relevant result.
     If a STRICT_RESPONSE is found in common issues, it will be returned directly.
     """
+    from tools.kb_tools import search_kb_structured
 
     result = search_kb_structured(query, retriever)
+
+    print(f"🛠️ TOOL CALLED with query: {query}")
+    print(f"🔁 Tool result:\n{result}")
+
+    if not result:
+        return "No results found in the KB."
 
     if result.get("is_strict"):
         return result["content"]
