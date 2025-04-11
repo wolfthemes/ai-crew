@@ -40,6 +40,9 @@ Your answer must be markdown formatted, short and professional.
     print("🤖 Starting support crew...")
 
     result = support_crew_with_research(ticket_input)
+
+    st.markdown("### 🔎 Search:")
+    st.markdown(result["research"])
     
     st.markdown("### 💬 Suggested Reply:")
     st.markdown(result["reply"])

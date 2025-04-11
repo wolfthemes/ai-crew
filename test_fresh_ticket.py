@@ -4,7 +4,6 @@ from utils.ticket_classifier import classify_ticket
 def main():
     ticket_text = """
 Ticket from user:
-
 "How to update WPBakery with Herion?
 John"
 """

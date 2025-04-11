@@ -4,7 +4,43 @@ from crewai import Agent
 from crewai.tools import tool
 from tools.vector_retriever import retriever
 
+from pydantic import BaseModel, Field
+from typing import Type
+from crewai.tools import BaseTool
+from tools.kb_tools import search_kb_structured
 ### Tools
+
+class SearchKBInput(BaseModel):
+    query: str = Field(..., description="The search query string")
+
+class SearchKnowledgeBaseTool(BaseTool):
+    name: str = "SearchKnowledgeBase"
+    description: str = "Searches all KB sources for a query and returns best match"
+    args_schema: Type[BaseModel] = SearchKBInput
+    
+    def _run(self, query: str) -> str:
+        #from tools.kb_tools import search_kb_structured
+        #from tools.vector_retriever import retriever
+        
+        result = search_kb_structured(query, retriever)
+
+        print(f"🛠️ TOOL CALLED with query: {query}")
+        print(f"🔁 Tool result:\n{result}")
+
+        if not result:
+            return "No results found in the KB."
+
+        if result.get("is_strict"):
+            return f"STRICT_RESPONSE: {result['content']}"
+
+        return "\n\n".join([
+            f"📄 {result['title']} ({result['source']})"
+            f"\n🔗 {result.get('url', '')}"
+            f"\n{result['content'][:300]}..."
+        ] + [
+            f"\n\n🔎 Additional: {r['title']} ({r['source']})\n{r['snippet'][:200]}..."
+            for r in result.get("all_results", [])
+        ])
 
 @tool("GetThemeBuilder")
 def get_theme_builder(slug: str):
@@ -21,33 +57,33 @@ def get_theme_builder(slug: str):
         return f"Error retrieving theme info: {e}"
     
 
-@tool("SearchKnowledgeBase")
-def search_kb(query: str):
-    """
-    Search all available KB sources and return the most relevant result.
-    If a STRICT_RESPONSE is found in common issues, it will be returned directly.
-    """
-    from tools.kb_tools import search_kb_structured
+# @tool("SearchKnowledgeBase")
+# def search_kb(query: str):
+#     """
+#     Search all available KB sources and return the most relevant result.
+#     If a STRICT_RESPONSE is found in common issues, it will be returned directly.
+#     """
+#     from tools.kb_tools import search_kb_structured
 
-    result = search_kb_structured(query, retriever)
+#     result = search_kb_structured(query, retriever)
 
-    print(f"🛠️ TOOL CALLED with query: {query}")
-    print(f"🔁 Tool result:\n{result}")
+#     print(f"🛠️ TOOL CALLED with query: {query}")
+#     print(f"🔁 Tool result:\n{result}")
 
-    if not result:
-        return "No results found in the KB."
+#     if not result:
+#         return "No results found in the KB."
 
-    if result.get("is_strict"):
-        return result["content"]
+#     if result.get("is_strict"):
+#         return result["content"]
 
-    return "\n\n".join([
-        f"📄 {result['title']} ({result['source']})"
-        f"\n🔗 {result.get('url', '')}"
-        f"\n{result['content'][:300]}..."
-    ] + [
-        f"\n\n🔎 Additional: {r['title']} ({r['source']})\n{r['snippet'][:200]}..."
-        for r in result.get("all_results", [])
-    ])
+#     return "\n\n".join([
+#         f"📄 {result['title']} ({result['source']})"
+#         f"\n🔗 {result.get('url', '')}"
+#         f"\n{result['content'][:300]}..."
+#     ] + [
+#         f"\n\n🔎 Additional: {r['title']} ({r['source']})\n{r['snippet'][:200]}..."
+#         for r in result.get("all_results", [])
+#     ])
 
 research_agent = Agent(
     role="Support Research Assistant",
@@ -57,6 +93,6 @@ research_agent = Agent(
         "by splitting tickets into clear issues, identifying the theme and builder, "
         "and finding existing solutions from the KB if available."
     ),
-    tools=[search_kb,get_theme_builder],
+    tools=[SearchKnowledgeBaseTool(),get_theme_builder],
     verbose=True,
 )
