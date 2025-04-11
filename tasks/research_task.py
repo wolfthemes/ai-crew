@@ -4,28 +4,21 @@ from agents.research_agent import research_agent
 def create_research_task(ticket_text: str) -> Task:
     return Task(
         description=f"""
-        Parse the following support ticket and extract the following:
-        - Customer name (if signed)
-        - Theme name or slug (guess if not clear)
-        - Website URL (if any)
-        - All distinct issues or parts (split logically)
+        You must do only one thing:
 
-        For each part, use the knowledge base to find an existing solution if available.
-        If the match is a STRICT_RESPONSE, include it.
+        🔍 Search for a STRICT_RESPONSE match to this ticket using the knowledge base.
+        You can only use entries marked as `common_issue`.
 
-        Return a structured JSON list like:
-        [
-          {{
-            "part": "How to update WPBakery with Herion?",
-            "match": {{
-              "source": "common_issue",
-              "title": "...",
-              "content": "STRICT_RESPONSE: ..."
-            }}
-          }},
-          ...
-        ]
-        
+        If a match is found:
+        - Return only the STRICT_RESPONSE content exactly as it is (no editing).
+        - Use this structure:
+
+        STRICT_RESPONSE:
+        <full content here>
+
+        If no STRICT_RESPONSE is found:
+        - Return only: NO_MATCH
+
         Ticket:
         {ticket_text}
         """,

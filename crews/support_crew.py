@@ -16,7 +16,7 @@ def support_crew_with_research(ticket_text: str):
     research_task.name = "Research Task"
 
     # 2. Generate the support reply using research result
-    support_task = create_support_reply_task(ticket_text)  # Will later consume research_task.output
+    support_task = create_support_reply_task(ticket_text, research_task.output)  # Will later consume research_task.output
     support_task.name = "Support Reply"
     support_task.context = [research_task]
 
