@@ -2,6 +2,7 @@
 import json
 from utils.json_ticket_parser import parse_json_ticket
 from crews.support_crew import support_crew_with_research
+import html2text
 
 def run_ticket_task_from_json(parsed_ticket: dict) -> str:
     # Format a plain text version that mimics Streamlit drop input
@@ -28,5 +29,6 @@ with open("data/crawled/open_tickets.json", encoding="utf-8") as f:
 # Pick the first ticket just for test
 ticket_data = parse_json_ticket(tickets[0])
 reply = run_ticket_task_from_json(ticket_data)
+markdown = html2text.html2text(reply)
 
 print("Suggested reply:\n", reply)
