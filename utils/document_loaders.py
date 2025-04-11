@@ -147,7 +147,7 @@ def load_closed_tickets():
             ))
     return documents
 
-def load_backstory(path="data/support_agent_backstory.md"):
+def load_agent_backstory(path="data/support_agent_backstory.md"):
     with open(path, encoding="utf-8") as f:
         return f.read()
     
