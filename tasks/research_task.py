@@ -12,4 +12,3 @@ def create_research_task(ticket_text: str) -> Task:
         agent=research_agent,
         output=research_output
     )
-
