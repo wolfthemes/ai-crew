@@ -1,41 +1,39 @@
 
 import streamlit as st
 import json
-import time
-from datetime import datetime
 import html
+import re
+
+from crews.support_crew import support_crew_with_research
+from utils.helpers import time_ago
+from utils.ticket_classifier import classify_ticket
 
 # Load preprocessed tickets
-with open("data/preprocessed_tickets.json", encoding="utf-8") as f:
+with open("data/dynamic/preprocessed_tickets.json", encoding="utf-8") as f:
     tickets_data = json.load(f)["preprocessed_tickets"]
 
-# Helper: format "time ago"
-def time_ago(timestamp_str):
-    try:
-        posted_time = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
-        seconds = int(time.time() - posted_time.timestamp())
-        if seconds < 60:
-            return f"{seconds}s ago"
-        elif seconds < 3600:
-            return f"{seconds // 60}m ago"
-        elif seconds < 86400:
-            return f"{seconds // 3600}h ago"
-        else:
-            return f"{seconds // 86400}d ago"
-    except:
-        return "—"
+# Strip basic HTML tags for sidebar
+def strip_html_tags(text):
+    return re.sub(r"<.*?>", "", html.unescape(text)).strip()
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="WolfThemes Tickets", layout="wide")
 st.title("🛠️ Ticket Dashboard")
 
 # Sidebar: ticket list
 st.sidebar.header("📬 Tickets")
 
 for idx, ticket in enumerate(tickets_data):
-    label = "🔒 " if ticket["needs_human"] else ""
-    label += f"{html.unescape(ticket['summary'])} — {ticket['customer']} ({ticket['theme']})"
-    label += f" · {ticket.get('time_stamp', '')}"
-    if st.sidebar.button(label, key=f"ticket_{ticket['id']}"):
+    summary_clean = strip_html_tags(ticket['summary'])
+    timestamp = time_ago(ticket.get("last_message_timestamp", "2025-01-01 00:00:00"))
+
+    st.sidebar.markdown(f"""
+    <div style='text-align: left; padding-bottom: 0.2em;'>
+        {"🔒 " if ticket["needs_human"] else ""}<strong>{summary_clean}</strong><br>
+        <small>{ticket['customer']} ({ticket['theme']}) · {timestamp}</small><br>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if st.sidebar.button("View ticket 🡺", key=f"ticket_{ticket['id']}"):
         st.session_state.selected_ticket = idx
 
 # Main panel: show selected ticket
@@ -48,18 +46,60 @@ cols = st.columns([2, 1])
 with cols[0]:
     st.subheader("🗨️ Last Message")
     with st.expander("📜 Show Full Discussion"):
-        for msg in ticket["full_thread"]:
-            st.markdown(html.unescape(msg))
+        for msg in ticket["formatted_text_thread"]:
+            clean_msg = html.unescape(msg)
+            st.markdown(msg, unsafe_allow_html=True)
 
-    st.markdown(html.unescape(ticket["last_message"]))
+    st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
+    if st.button("🔄 Generate / Regenerate Reply"):
+        input_text = ticket["last_message"]
+        with st.spinner("Generating reply..."):
+            try:
+                result = support_crew_with_research(input_text)
+                st.session_state.reply = result["reply"]
+
+                st.markdown("### 🔎 Search:")
+                st.markdown(result["research"])
+
+                st.markdown("### 💬 Suggested Reply:")
+                st.markdown(result["reply"], unsafe_allow_html=True)
+
+                st.markdown("### 🕵️‍♂️ Review:")
+                st.markdown(result["review"])
+            except Exception as e:
+                st.error(f"❌ Error running agent: {str(e)}")
+
 
     st.subheader("✍️ Suggested Reply")
-    ai_reply = st.text_area("AI Reply", value=ticket["ai_reply"], height=180)
+
+    if "reply" not in st.session_state:
+        st.session_state.reply = ticket["ai_reply"]
+
+    ai_reply = st.text_area(
+        "AI Reply (HTML allowed)",
+        value=st.session_state.reply,
+        height=200,
+        key="reply",
+        help="You can use basic HTML tags like <p>, <a>, <strong>..."
+    )
 
     note = st.text_input("Optional internal note")
     col1, col2 = st.columns(2)
-    col1.button("✅ Post Reply")
-    col2.button("🔄 Regenerate")
+
+
+    
+    from utils.ticket_utils import reformulate_reply
+
+    st.markdown("### ✏️ Reformulate Reply")
+    reformulate_instruction = st.text_input("Optional reformulation instruction (not used yet)", "")
+    if st.button("♻️ Reformulate"):
+        try:
+            st.session_state.reply = reformulate_reply(st.session_state.reply)
+        except Exception as e:
+            st.error(f"Reformulation error: {str(e)}")
+
+
+    col2.button("✅ Post Reply")
 
 # === RIGHT: Ticket metadata ===
 with cols[1]:
