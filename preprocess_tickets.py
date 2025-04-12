@@ -1,6 +1,4 @@
 # run_json_ticket.py
-import json
-from crews.support_crew import support_crew_with_research
 from utils.ticket_utils import preprocess_all_tickets, save_preprocessed_tickets
 from utils.ticket_classifier import classify_ticket
 
