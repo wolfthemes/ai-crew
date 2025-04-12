@@ -66,6 +66,7 @@ with cols[0]:
 
                 #st.markdown("### 🧪 Raw Crew Reply Output")
                 #st.code(result["reply"], language="html")
+                print( result["reply"] )
 
                 st.session_state.generated_reply = result["reply"]
                 st.rerun()

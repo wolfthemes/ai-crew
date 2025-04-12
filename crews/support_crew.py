@@ -21,12 +21,12 @@ def support_crew_with_research(ticket_text: str, instruction: str = ""):
     #print(research_task.metadata["research_output"])
 
     # 2. Generate the support reply using research result
-    support_task = create_support_reply_task(ticket_text, research_data)
+    support_task = create_support_reply_task(ticket_text, research_data, instruction=instruction)
     support_task.name = "Support Reply"
     support_task.context = [research_task]
 
     # 3. Review the reply
-    review_task = review_support_reply_task(ticket_text)
+    review_task = review_support_reply_task(ticket_text, instruction=instruction)
     review_task.name = "Review"
     review_task.context = [support_task]
 
