@@ -3,6 +3,7 @@ import streamlit as st
 import json
 import html
 import re
+from streamlit_ace import st_ace
 
 from crews.support_crew import support_crew_with_research
 from utils.helpers import time_ago
@@ -57,46 +58,40 @@ with cols[0]:
     st.divider()
     
     crew_instruction = st.text_input("📝 Paste an optional note here:")
-    
+
     if st.button("🤖 Generate / Regenerate Reply"):
-        input_text = ticket["last_message"]
         with st.spinner("Generating reply..."):
             try:
-                result = support_crew_with_research(input_text, instruction=crew_instruction)
-
-                #st.markdown("### 🧪 Raw Crew Reply Output")
-                #st.code(result["reply"], language="html")
-                print( result["reply"] )
-
+                result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction)
                 st.session_state.generated_reply = result["reply"]
                 st.rerun()
-            
             except Exception as e:
                 st.error(f"❌ Error running agent: {str(e)}")
 
 
-    st.subheader("✍️ Suggested Reply")
+    st.subheader("✍️ Edit and Post Reply (HTML)")
 
-    if "reply" not in st.session_state or st.session_state.reply is None:
-        st.session_state.reply = ""
-    elif "reformulated_reply" in st.session_state:
+    if "reformulated_reply" in st.session_state:
         st.session_state.reply = st.session_state.reformulated_reply
         del st.session_state.reformulated_reply
     elif "generated_reply" in st.session_state:
         st.session_state.reply = st.session_state.generated_reply
         del st.session_state.generated_reply
 
-    reply_value = st.session_state.get("reply")
+    reply_value = st.session_state.get("reply", "")
     if not isinstance(reply_value, str):
         reply_value = ""
 
-    ai_reply = st.text_area(
-        "Reply",
+    html_reply = st_ace(
         value=reply_value,
-        height=200,
-        key="reply",
-        help="You can use basic HTML tags like <p>, <a>, <strong>..."
+        language="html",
+        theme="chrome",
+        height=300,
+        key="reply_editor"
     )
+
+    if html_reply and html_reply.strip() != reply_value.strip():
+        st.session_state.reply = html_reply
 
     col1, col2 = st.columns(2)
 
