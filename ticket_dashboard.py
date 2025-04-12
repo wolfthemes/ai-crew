@@ -56,7 +56,7 @@ with cols[0]:
 
     st.divider()
     
-    crew_instruction = st.text_input("📝 Paste an optional note here:")
+    crew_instruction = st.text_area("📝 Paste an optional note here:")
 
     if st.button("🤖 Generate / Regenerate Reply"):
         with st.spinner("Generating reply..."):
@@ -86,7 +86,7 @@ with cols[0]:
 
     # Optional: session-state default
     if "reply" not in st.session_state:
-        st.session_state.reply = "<p><strong>Welcome!</strong> This is a test HTML message.</p>"
+        st.session_state.reply = ""
 
     # Save edited HTML using a hidden input
     components.html(f"""
@@ -95,7 +95,7 @@ with cols[0]:
     <script>
         tinymce.init({{
         selector: '#editor',
-        height: 500,
+        height: 450,
         menubar: false,
         plugins: 'link lists code',
         toolbar: 'undo redo | bold italic | bullist numlist | link | code',
@@ -106,7 +106,7 @@ with cols[0]:
         }}
         }});
     </script>
-    """, height=350)
+    """, height=500)
 
     # Display preview
     #st.markdown("### 🔍 Live Preview")
@@ -117,12 +117,14 @@ with cols[0]:
     from utils.ticket_utils import reformulate_reply
 
     st.markdown("### ✏️ Reformulate Reply")
-    reformulate_instruction = st.text_input("Optional reformulation")
+    reformulate_instruction = st.text_area("Optional reformulation")
     
     if st.button("♻️ Reformulate"):
         try:
+            reply_text = st.session_state.reply
+            if not isinstance(reply_text, str):
+                reply_text = str(reply_text)
             reformulated = reformulate_reply(
-                reply_text=st.session_state.reply,
                 instruction=reformulate_instruction,
                 last_user_message=ticket["last_message"]
             )
@@ -133,7 +135,23 @@ with cols[0]:
 
 
     st.divider()
-    st.button("✅ Post Reply")
+
+    col1, col2 = st.columns([1, 2])
+    
+    with col1:
+        private_reply = st.checkbox("Private", value=False)
+
+    with col2:   
+        if st.button("✅ Post Reply"):
+            ticket_payload = {
+                "action": "new_ticket_comment",
+                "ticket_id": ticket["id"],
+                "comment": st.session_state.get("reply", ""),
+                "private": str(private_reply).lower(),
+            }
+
+            st.markdown("### 🧪 Debug: Reply Payload to API")
+            st.code(json.dumps(ticket_payload, indent=2), language="json")
 
 # === RIGHT: Ticket metadata ===
 with cols[1]:
