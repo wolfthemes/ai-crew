@@ -10,27 +10,59 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = OpenAI()
+openai_client = OpenAI()
 #openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def reformulate_reply(reply_text: str) -> str:
+def reformulate_reply(reply_text: str, instruction: str = "", last_user_message: str = "") -> str:
     """
-    Reformulate the given reply text using OpenAI API.
-    Returns a clearer, more polished version of the same reply.
+    Reformulates the AI reply with optional extra instruction and original customer message for context.
+    Preserves formatting, tone, and details.
     """
-    if not reply_text:
-        return "No summary available."
-    
-    response = client.chat.completions.create(
+    openai_client = OpenAI()
+
+    system_prompt = """
+    Reformulate the support reply to be clearer, more concise, and professional.
+    Preserve all important instructions, links, and HTML formatting.
+
+    Guidelines:
+    1. GREETING:
+    - If customer's name is clearly identifiable and a common name (e.g., John, Maria, Roberto), start with "Hi [name],"
+    - Otherwise, use "Hi there,"
+    - Ignore the name "Constantin" — it's not a customer
+
+    2. STYLE:
+    - Be professional but warm
+    - Keep the response concise and action-oriented
+    - Use markdown formatting for clarity (bold for important points, code blocks for code snippets)
+
+    3. AVOID:
+    - Don’t use generic openings like “Thank you for contacting us”
+    - Don’t end with “Let me know if you need more help”
+    - Don’t summarize or restate the customer’s issue
+
+    4. CONCLUSION:
+    - End with a simple polite phrase like “I hope it helps”, “Kind Regards”, or “Best regards”
+    """
+
+
+    user_prompt = f"Customer message:\n{last_user_message.strip()}\n\n"
+
+    if instruction.strip():
+        user_prompt += f"Instruction:\n{instruction.strip()}\n\n"
+
+    user_prompt += f"Reply to reformulate:\n{reply_text.strip()}"
+
+    response = openai_client.chat.completions.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "Reformulate the user's reply. Keep the meaning and formatting intact."},
-            {"role": "user", "content": reply_text}
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
         ],
         temperature=0.4
     )
-    
+
     return response.choices[0].message.content.strip()
+
 
 def summarize_ticket(comments: list[str]) -> str:
     """Summarize the latest user message into one clean sentence."""
@@ -46,7 +78,7 @@ def summarize_ticket(comments: list[str]) -> str:
     )
 
     try:
-        response = client.chat.completions.create(
+        response = openai_client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a support assistant summarizing support tickets."},

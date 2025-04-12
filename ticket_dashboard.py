@@ -89,7 +89,7 @@ with cols[0]:
         del st.session_state.reformulated_reply
 
     ai_reply = st.text_area(
-        "AI Reply (HTML allowed)",
+        "Reply",
         value=st.session_state.reply,
         height=200,
         key="reply",
@@ -105,7 +105,11 @@ with cols[0]:
     
     if st.button("♻️ Reformulate"):
         try:
-            reformulated = reformulate_reply(st.session_state.reply)
+            reformulated = reformulate_reply(
+                reply_text=st.session_state.reply,
+                instruction=reformulate_instruction,
+                last_user_message=ticket["last_message"]
+            )
             st.session_state.reformulated_reply = reformulated
             st.rerun()
         except Exception as e:
