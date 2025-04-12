@@ -1,30 +1,16 @@
 
 import streamlit as st
 import json
-import time
-from datetime import datetime
 import html
 import re
+
+from crews.support_crew import support_crew_with_research
+from utils.helpers import time_ago
 
 # Load preprocessed tickets
 with open("data/dynamic/preprocessed_tickets.json", encoding="utf-8") as f:
     tickets_data = json.load(f)["preprocessed_tickets"]
 
-# Helper: format "time ago"
-def time_ago(timestamp_str):
-    try:
-        posted_time = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
-        seconds = int(time.time() - posted_time.timestamp())
-        if seconds < 60:
-            return f"{seconds}s ago"
-        elif seconds < 3600:
-            return f"{seconds // 60}m ago"
-        elif seconds < 86400:
-            return f"{seconds // 3600}h ago"
-        else:
-            return f"{seconds // 86400}d ago"
-    except:
-        return "—"
 
 # Strip basic HTML tags for sidebar
 def strip_html_tags(text):
@@ -71,13 +57,37 @@ with cols[0]:
 
     note = st.text_input("Optional internal note")
     col1, col2 = st.columns(2)
-    col1.button("✅ Post Reply")
-    col2.button("🔄 Regenerate")
+    #col1.button("🤖 Generate")
+    
+
+    if col1.button("🤖 Generate", key="generate_col1"):
+
+        input_text = ticket["last_message"]
+
+        with st.spinner("Generating reply..."):
+            try:
+                result = support_crew_with_research(input_text)
+
+                # Show research + reply
+                st.markdown("### 🔎 Search:")
+                st.markdown(result["research"])
+
+                st.markdown("### 💬 Suggested Reply:")
+                st.session_state.reply = result["reply"]
+                st.markdown(result["reply"], unsafe_allow_html=True)
+
+                st.markdown("### 🕵️‍♂️ Review:")
+                st.markdown(result["review"])
+
+            except Exception as e:
+                st.error(f"❌ Error running agent: {str(e)}")
+
+    col2.button("✅ Post Reply")    
 
 # === RIGHT: Ticket metadata ===
 with cols[1]:
     st.markdown("### 🧾 Ticket Info")
     st.markdown(f"**Customer:** [{ticket['customer']}]({ticket['customer_url']})")
     st.markdown(f"**Website:** {ticket['user_site']}")
-    st.markdown(f"**Theme:** {ticket['theme']} ({ticket['builder']})")
+    st.markdown(f"**Theme:** {ticket['theme']}")
     st.markdown(f"**Ticket Link:** [View on Ticksy]({ticket['ticket_url']})")

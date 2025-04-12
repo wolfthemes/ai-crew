@@ -5,6 +5,8 @@ import html
 import hashlib
 from functools import lru_cache
 from bs4 import BeautifulSoup
+import time
+from datetime import datetime
 
 @lru_cache(maxsize=100)
 def compute_file_hash(filepath):
@@ -45,3 +47,19 @@ def parse_json_file(path):
     except Exception as e:
         print(f"❌ JSON error in {path}: {str(e)}")
         return []
+    
+# Helper: format "time ago"
+def time_ago(timestamp_str):
+    try:
+        posted_time = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
+        seconds = int(time.time() - posted_time.timestamp())
+        if seconds < 60:
+            return f"{seconds}s ago"
+        elif seconds < 3600:
+            return f"{seconds // 60}m ago"
+        elif seconds < 86400:
+            return f"{seconds // 3600}h ago"
+        else:
+            return f"{seconds // 86400}d ago"
+    except:
+        return "—"

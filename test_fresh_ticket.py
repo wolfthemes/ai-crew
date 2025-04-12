@@ -18,14 +18,14 @@ John"
     try:
         result = support_crew_with_research(ticket_text)
 
-        print("\n📚 Research Output:\n")
-        print(result["research"])
+        # print("\n📚 Research Output:\n")
+        # print(result["research"])
 
         print("\n📝 Support Reply:\n")
         print(result["reply"])
 
-        print("\n🔎 Review:\n")
-        print(result["review"])
+        # print("\n🔎 Review:\n")
+        # print(result["review"])
 
     except Exception as e:
         print(f"\n❌ Error running crew: {str(e)}")
