@@ -28,6 +28,6 @@ def create_support_reply_task(ticket_text: str, research_output: str = None, ins
         Use ONLY this data to generate your response.
         - If no match is found, explain clearly and politely.
         """,
-        expected_output="Markdown-formatted support reply.",
+        expected_output = "Support reply formatted in clean HTML, ready for copy-paste into Ticksy.",
         agent=support_agent
     )

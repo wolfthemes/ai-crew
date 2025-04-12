@@ -7,7 +7,7 @@ import re
 import streamlit.components.v1 as components
 from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
-from utils.helpers import time_ago
+from utils.helpers import time_ago, strip_html_tags
 
 load_dotenv()
 
@@ -16,10 +16,6 @@ TINYMCE_API_KEY = os.getenv("TINYMCE_API_KEY")
 # Load preprocessed tickets
 with open("data/dynamic/preprocessed_tickets.json", encoding="utf-8") as f:
     tickets_data = json.load(f)["preprocessed_tickets"]
-
-# Strip basic HTML tags for sidebar
-def strip_html_tags(text):
-    return re.sub(r"<.*?>", "", html.unescape(text)).strip()
 
 st.set_page_config(page_title="WolfThemes Tickets", layout="wide")
 st.title("🛠️ Ticket Dashboard")
@@ -114,8 +110,8 @@ with cols[0]:
     """, height=350)
 
     # Display preview
-    st.markdown("### 🔍 Live Preview")
-    st.markdown(st.session_state.reply, unsafe_allow_html=True)
+    #st.markdown("### 🔍 Live Preview")
+    #st.markdown(st.session_state.reply, unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
 

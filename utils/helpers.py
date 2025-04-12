@@ -63,3 +63,7 @@ def time_ago(timestamp_str):
             return f"{seconds // 86400}d ago"
     except:
         return "—"
+    
+# Strip basic HTML tags for sidebar
+def strip_html_tags(text):
+    return re.sub(r"<.*?>", "", html.unescape(text)).strip()
