@@ -13,33 +13,24 @@ load_dotenv()
 client = OpenAI()
 #openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def reformulate_reply(comments: list[str]) -> str:
-    """Summarize the latest user message into one clean sentence."""
-    if not comments:
+def reformulate_reply(reply_text: str) -> str:
+    """
+    Reformulate the given reply text using OpenAI API.
+    Returns a clearer, more polished version of the same reply.
+    """
+    if not reply_text:
         return "No summary available."
-
-    full_text = "\n\n".join(comments)
-    prompt = (
-        "Summarize the core issue from this support ticket in a very short, label-style sentence. "
-        "Do not include the user's name, and do not start with phrases like 'The user is experiencing' or 'The issue is'. "
-        "Use 5 to 10 words max, focusing only on the main problem:\n\n"
-        f"{full_text}"
+    
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "Reformulate the user's reply. Keep the meaning and formatting intact."},
+            {"role": "user", "content": reply_text}
+        ],
+        temperature=0.4
     )
-
-    try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a support assistant summarizing support tickets."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.3,
-            max_tokens=60
-        )
-        return response.choices[0].message.content.strip()
-    except Exception as e:
-        print(f"❌ OpenAI summarization failed: {e}")
-        return "Summary generation failed."
+    
+    return response.choices[0].message.content.strip()
 
 def summarize_ticket(comments: list[str]) -> str:
     """Summarize the latest user message into one clean sentence."""

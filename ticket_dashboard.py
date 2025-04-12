@@ -53,6 +53,11 @@ with cols[0]:
     st.subheader("🗨️ Last Message")
 
     st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
+
+    st.divider()
+    
+    note = st.text_input("Optional instructions")
+    
     if st.button("🔄 Generate / Regenerate Reply"):
         input_text = ticket["last_message"]
         with st.spinner("Generating reply..."):
@@ -85,11 +90,8 @@ with cols[0]:
         help="You can use basic HTML tags like <p>, <a>, <strong>..."
     )
 
-    note = st.text_input("Optional internal note")
     col1, col2 = st.columns(2)
 
-
-    
     from utils.ticket_utils import reformulate_reply
 
     st.markdown("### ✏️ Reformulate Reply")
