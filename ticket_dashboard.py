@@ -64,13 +64,11 @@ with cols[0]:
             try:
                 result = support_crew_with_research(input_text, instruction=crew_instruction)
 
-                # ✅ Debug print — see reply before assigning
-                st.markdown("### 🧪 Raw Crew Reply Output")
-                st.code(result["reply"], language="html")
+                #st.markdown("### 🧪 Raw Crew Reply Output")
+                #st.code(result["reply"], language="html")
 
-                # ⛔ Comment this out temporarily to avoid crash
-                # st.session_state.generated_reply = result["reply"]
-                # st.rerun()
+                st.session_state.generated_reply = result["reply"]
+                st.rerun()
             
             except Exception as e:
                 st.error(f"❌ Error running agent: {str(e)}")
@@ -120,7 +118,6 @@ with cols[0]:
 
 
     st.divider()
-
     st.button("✅ Post Reply")
 
 # === RIGHT: Ticket metadata ===
