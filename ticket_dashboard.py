@@ -3,6 +3,7 @@ import streamlit as st
 import os
 import json
 import html
+import html2text
 import streamlit.components.v1 as components
 from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
@@ -63,8 +64,11 @@ with cols[0]:
             try:
                 result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction)
 
-                # ✅ Debug output to console
-                print("🧠 Crew Reply →", result["reply"])
+                raw_reply = result["reply"].output if hasattr(result["reply"], "output") else str(result["reply"])
+                markdown_debug = html2text.html2text(raw_reply)
+
+                print("🧠 Crew Reply (Markdown View) →")
+                print(markdown_debug)
 
                 # ✅ Store to session
                 st.session_state.generated_reply = result["reply"]
@@ -124,7 +128,9 @@ with cols[0]:
             reply_text = st.session_state.reply
             if not isinstance(reply_text, str):
                 reply_text = str(reply_text)
+
             reformulated = reformulate_reply(
+                reply_text=reply_text,
                 instruction=reformulate_instruction,
                 last_user_message=ticket["last_message"]
             )
@@ -137,7 +143,7 @@ with cols[0]:
     st.divider()
 
     col1, col2 = st.columns([1, 2])
-    
+
     with col1:
         private_reply = st.checkbox("Private", value=False)
 

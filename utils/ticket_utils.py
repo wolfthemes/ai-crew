@@ -33,7 +33,12 @@ def reformulate_reply(reply_text: str, instruction: str = "", last_user_message:
     2. STYLE:
     - Be professional but warm
     - Keep the response concise and action-oriented
-    - Use markdown formatting for clarity (bold for important points, code blocks for code snippets)
+    - Use proper HTML formatting:
+        - Use <strong> for bold
+        - Use <code> for code
+        - Use <ul>/<li> for lists
+        - Use <p> tags for every separate paragraph or block of thought (no double line breaks without <p>)
+    - The result must be valid HTML and ready to paste into a support ticket
 
     3. AVOID:
     - Don’t use generic openings like “Thank you for contacting us”
