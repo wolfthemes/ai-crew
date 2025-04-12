@@ -82,6 +82,12 @@ with cols[0]:
     if "reply" not in st.session_state:
         st.session_state.reply = ticket["ai_reply"]
 
+    if "reply" not in st.session_state:
+        st.session_state.reply = ""
+    elif "reformulated_reply" in st.session_state:
+        st.session_state.reply = st.session_state.reformulated_reply
+        del st.session_state.reformulated_reply
+
     ai_reply = st.text_area(
         "AI Reply (HTML allowed)",
         value=st.session_state.reply,
@@ -96,9 +102,12 @@ with cols[0]:
 
     st.markdown("### ✏️ Reformulate Reply")
     reformulate_instruction = st.text_input("Optional reformulation instruction (not used yet)", "")
+    
     if st.button("♻️ Reformulate"):
         try:
-            st.session_state.reply = reformulate_reply(st.session_state.reply)
+            reformulated = reformulate_reply(st.session_state.reply)
+            st.session_state.reformulated_reply = reformulated
+            st.rerun()
         except Exception as e:
             st.error(f"Reformulation error: {str(e)}")
 
