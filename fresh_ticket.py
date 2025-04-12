@@ -14,7 +14,7 @@ st.markdown("Paste a ticket message below. The agent will suggest a reply:")
 
 ticket_input = st.text_area("🎫 Paste the customer ticket text here:", height=200)
 
-note_input = st.text_input("📝 Paste an optional note here:")
+crew_instruction = st.text_input("📝 Paste an optional note here:")
 
 if st.button("✉️ Generate Reply") and ticket_input.strip():
     # Update the task description
@@ -41,7 +41,7 @@ Your answer must be markdown formatted, short and professional.
     # 3. Run both reply and review with proper crew
     print("🤖 Starting support crew...")
 
-    result = support_crew_with_research(ticket_input)
+    result = support_crew_with_research(ticket_input, instruction=crew_instruction)
 
     st.markdown("### 🔎 Search:")
     st.markdown(result["research"])
@@ -49,8 +49,8 @@ Your answer must be markdown formatted, short and professional.
     st.markdown("### 💬 Suggested Reply:")
     st.markdown(result["reply"])
 
-    st.markdown("### 🕵️‍♂️ Quality Review:")
-    st.markdown(result["review"])
+    #st.markdown("### 🕵️‍♂️ Quality Review:")
+    #st.markdown(result["review"])
 
 elif st.button("❌ Clear"):
     ticket_input = ""

@@ -56,18 +56,22 @@ with cols[0]:
 
     st.divider()
     
-    crew_instruction = st.text_input("Optional instructions", "")
+    crew_instruction = st.text_input("📝 Paste an optional note here:")
     
-    if st.button("🔄 Generate / Regenerate Reply"):
+    if st.button("🤖 Generate / Regenerate Reply"):
         input_text = ticket["last_message"]
         with st.spinner("Generating reply..."):
             try:
                 result = support_crew_with_research(input_text, instruction=crew_instruction)
-                st.session_state.generated_reply = result["reply"]
 
-                # Optionally store research/review for later display
-                st.session_state.last_research = result["research"]
-                ##st.session_state.last_review = result["review"]
+                # ✅ Debug print — see reply before assigning
+                st.markdown("### 🧪 Raw Crew Reply Output")
+                st.code(result["reply"], language="html")
+
+                # ⛔ Comment this out temporarily to avoid crash
+                # st.session_state.generated_reply = result["reply"]
+                # st.rerun()
+            
             except Exception as e:
                 st.error(f"❌ Error running agent: {str(e)}")
 
@@ -83,14 +87,14 @@ with cols[0]:
         st.session_state.reply = st.session_state.generated_reply
         del st.session_state.generated_reply
 
-    reply_value = st.session_state.get("reply", "")
-    if reply_value is None:
+    reply_value = st.session_state.get("reply")
+    if not isinstance(reply_value, str):
         reply_value = ""
 
     ai_reply = st.text_area(
         "Reply",
         value=reply_value,
-        height=600,
+        height=200,
         key="reply",
         help="You can use basic HTML tags like <p>, <a>, <strong>..."
     )
@@ -100,7 +104,7 @@ with cols[0]:
     from utils.ticket_utils import reformulate_reply
 
     st.markdown("### ✏️ Reformulate Reply")
-    reformulate_instruction = st.text_input("Optional reformulation instruction (not used yet)", "")
+    reformulate_instruction = st.text_input("Optional reformulation")
     
     if st.button("♻️ Reformulate"):
         try:
