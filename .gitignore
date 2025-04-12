@@ -4,5 +4,6 @@ __pycache__/
 .DS_Store
 data/faiss_store/
 /data/crawled/
+/data/dynamic/
 .env
 logs/

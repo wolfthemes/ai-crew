@@ -22,7 +22,7 @@ def main():
             classify_ticket_func=classify_ticket,
         )
 
-        save_preprocessed_tickets(tickets, output_path="data/preprocessed_tickets.json")
+        save_preprocessed_tickets(tickets, output_path="data/dynamic/preprocessed_tickets.json")
         print(f"✅ {len(tickets)} tickets saved to preprocessed_tickets.json")
 
     except Exception as e:

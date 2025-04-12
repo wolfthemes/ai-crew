@@ -7,7 +7,7 @@ import html
 import re
 
 # Load preprocessed tickets
-with open("data/preprocessed_tickets.json", encoding="utf-8") as f:
+with open("data/dynamic/preprocessed_tickets.json", encoding="utf-8") as f:
     tickets_data = json.load(f)["preprocessed_tickets"]
 
 # Helper: format "time ago"
@@ -39,7 +39,7 @@ st.sidebar.header("📬 Tickets")
 for idx, ticket in enumerate(tickets_data):
     label = "🔒 " if ticket["needs_human"] else ""
     summary_clean = strip_html_tags(ticket['summary'])
-    timestamp = time_ago(ticket.get("time_stamp", "2025-01-01 00:00:00"))
+    timestamp = time_ago(ticket.get("last_message_timestamp", "2025-01-01 00:00:00"))
     label += f"{summary_clean} — {ticket['customer']} ({ticket['theme']}) · {timestamp}"
     if st.sidebar.button(label, key=f"ticket_{ticket['id']}"):
         st.session_state.selected_ticket = idx

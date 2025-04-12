@@ -61,6 +61,12 @@ def extract_latest_user_comment(comments):
         return unescape(user_comments[0].get('comment', '').replace('\\n', '\n'))
     return ""
 
+def extract_latest_user_comment_timestamp(comments):
+    user_comments = [c for c in comments if c.get('user_type') == 'user']
+    if user_comments:
+        return unescape(user_comments[0].get('time_stamp', '').replace('\\n', '\n'))
+    return ""
+
 def should_process_ticket(ticket):
     """Only process ticket if it needs a response."""
     return ticket.get("needs_response") == "1"
@@ -89,6 +95,7 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
     comments = raw_ticket["ticket_comments"]
     first_msg = unescape(comments[0]["comment"])
     last_msg = extract_latest_user_comment(comments)
+    last_msg_timestamp = extract_latest_user_comment_timestamp(comments)
     full_thread = format_ticket_history(comments)
 
     theme = extract_theme_from_envato(raw_ticket.get("envato_verified_string", "{}"))
@@ -116,7 +123,8 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
         "ticket_url": ticket_url,
         "first_message": first_msg,
         "last_message": last_msg,
-        "full_thread": full_thread,
+        "last_message_timestamp": last_msg_timestamp,
+        "full_thread": comments,
         "summary": summary,
         "match_source": match_source,
         "ai_reply": "",
@@ -133,7 +141,7 @@ def preprocess_all_tickets(filepath, theme_metadata, classify_ticket_func):
             processed.append(preprocess_ticket(t, theme_metadata, classify_ticket_func))
     return processed
 
-def save_preprocessed_tickets(tickets, output_path="data/preprocessed_tickets.json"):
+def save_preprocessed_tickets(tickets, output_path="data/dynamic/preprocessed_tickets.json"):
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"preprocessed_tickets": tickets}, f, indent=2, ensure_ascii=False)
