@@ -1,13 +1,17 @@
 
 import streamlit as st
+import os
 import json
 import html
 import re
-from streamlit_ace import st_ace
-
+import streamlit.components.v1 as components
+from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
 from utils.helpers import time_ago
-from utils.ticket_classifier import classify_ticket
+
+load_dotenv()
+
+TINYMCE_API_KEY = os.getenv("TINYMCE_API_KEY")
 
 # Load preprocessed tickets
 with open("data/dynamic/preprocessed_tickets.json", encoding="utf-8") as f:
@@ -63,7 +67,13 @@ with cols[0]:
         with st.spinner("Generating reply..."):
             try:
                 result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction)
+
+                # ✅ Debug output to console
+                print("🧠 Crew Reply →", result["reply"])
+
+                # ✅ Store to session
                 st.session_state.generated_reply = result["reply"]
+                st.session_state.reply = result["reply"]  # Ensure it's in the editor too
                 st.rerun()
             except Exception as e:
                 st.error(f"❌ Error running agent: {str(e)}")
@@ -71,6 +81,7 @@ with cols[0]:
 
     st.subheader("✍️ Edit and Post Reply (HTML)")
 
+    # Prioritize the most recent crew outputs
     if "reformulated_reply" in st.session_state:
         st.session_state.reply = st.session_state.reformulated_reply
         del st.session_state.reformulated_reply
@@ -78,20 +89,33 @@ with cols[0]:
         st.session_state.reply = st.session_state.generated_reply
         del st.session_state.generated_reply
 
-    reply_value = st.session_state.get("reply", "")
-    if not isinstance(reply_value, str):
-        reply_value = ""
+    # Optional: session-state default
+    if "reply" not in st.session_state:
+        st.session_state.reply = "<p><strong>Welcome!</strong> This is a test HTML message.</p>"
 
-    html_reply = st_ace(
-        value=reply_value,
-        language="html",
-        theme="chrome",
-        height=300,
-        key="reply_editor"
-    )
+    # Save edited HTML using a hidden input
+    components.html(f"""
+    <script src="https://cdn.tiny.cloud/1/{TINYMCE_API_KEY}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <textarea id="editor">{st.session_state.reply}</textarea>
+    <script>
+        tinymce.init({{
+        selector: '#editor',
+        height: 300,
+        menubar: false,
+        plugins: 'link lists code',
+        toolbar: 'undo redo | bold italic | bullist numlist | link | code',
+        setup: function (editor) {{
+            editor.on('Change KeyUp', function (e) {{
+            window.parent.postMessage({{type: 'html_update', content: editor.getContent()}}, '*');
+            }});
+        }}
+        }});
+    </script>
+    """, height=350)
 
-    if html_reply and html_reply.strip() != reply_value.strip():
-        st.session_state.reply = html_reply
+    # Display preview
+    st.markdown("### 🔍 Live Preview")
+    st.markdown(st.session_state.reply, unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
 
