@@ -37,11 +37,17 @@ st.title("🛠️ Ticket Dashboard")
 st.sidebar.header("📬 Tickets")
 
 for idx, ticket in enumerate(tickets_data):
-    label = "🔒 " if ticket["needs_human"] else ""
     summary_clean = strip_html_tags(ticket['summary'])
     timestamp = time_ago(ticket.get("last_message_timestamp", "2025-01-01 00:00:00"))
-    label += f"{summary_clean} — {ticket['customer']} ({ticket['theme']}) · {timestamp}"
-    if st.sidebar.button(label, key=f"ticket_{ticket['id']}"):
+
+    st.sidebar.markdown(f"""
+    <div style='text-align: left; padding-bottom: 0.2em;'>
+        {"🔒 " if ticket["needs_human"] else ""}<strong>{summary_clean}</strong><br>
+        <small>{ticket['customer']} ({ticket['theme']}) · {timestamp}</small><br>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if st.sidebar.button("View ticket 🡺", key=f"ticket_{ticket['id']}"):
         st.session_state.selected_ticket = idx
 
 # Main panel: show selected ticket

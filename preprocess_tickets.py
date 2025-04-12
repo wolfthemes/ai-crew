@@ -26,7 +26,7 @@ def main():
         print(f"✅ {len(tickets)} tickets saved to preprocessed_tickets.json")
 
     except Exception as e:
-        print(f"\n❌ Error running crew: {str(e)}")
+        print(f"\n❌ Error running tickets preprocessor: {str(e)}")
         import traceback
         traceback.print_exc()
 
