@@ -2,11 +2,13 @@ from crewai import Task
 from core.research_processor import process_ticket_research
 from agents.research_agent import research_agent
 
-def create_research_task(ticket_text: str) -> Task:
+def create_research_task(ticket_text: str, instruction: str = "") -> Task:
     research_output = process_ticket_research(ticket_text)
 
     task = Task(
-        description="Pre-parsed ticket. Research has been done already.",
+        description="Pre-parsed ticket. Research has been done already. "
+                    "Also consider the following instruction:\n"
+                    f"{instruction}",
         expected_output="Structured ticket parts and KB matches.",
         agent=research_agent
     )

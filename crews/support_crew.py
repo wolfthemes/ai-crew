@@ -7,12 +7,13 @@ from tasks.research_task import create_research_task
 from tasks.support_tasks import create_support_reply_task
 from tasks.quality_tasks import review_support_reply_task
 
-def support_crew_with_research(ticket_text: str):
+def support_crew_with_research(ticket_text: str, instruction: str = ""):
     """
     Crew pipeline: Research → Support Reply → Review
     """
     # 1. Research the ticket and structure its issues
-    research_task = create_research_task(ticket_text)
+    #research_task = create_research_task(ticket_text)
+    research_task = create_research_task(ticket_text, instruction=instruction)
     research_task.name = "Research"
     research_data = research_task._output["research_output"]
 

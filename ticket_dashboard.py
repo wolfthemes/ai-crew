@@ -56,13 +56,13 @@ with cols[0]:
 
     st.divider()
     
-    note = st.text_input("Optional instructions")
+    crew_instruction = st.text_input("Optional instructions", "")
     
     if st.button("🔄 Generate / Regenerate Reply"):
         input_text = ticket["last_message"]
         with st.spinner("Generating reply..."):
             try:
-                result = support_crew_with_research(input_text)
+                result = support_crew_with_research(input_text, instruction=crew_instruction)
                 st.session_state.generated_reply = result["reply"]
 
                 # Optionally store research/review for later display
@@ -74,7 +74,7 @@ with cols[0]:
 
     st.subheader("✍️ Suggested Reply")
 
-    if "reply" not in st.session_state:
+    if "reply" not in st.session_state or st.session_state.reply is None:
         st.session_state.reply = ""
     elif "reformulated_reply" in st.session_state:
         st.session_state.reply = st.session_state.reformulated_reply
@@ -83,10 +83,14 @@ with cols[0]:
         st.session_state.reply = st.session_state.generated_reply
         del st.session_state.generated_reply
 
+    reply_value = st.session_state.get("reply", "")
+    if reply_value is None:
+        reply_value = ""
+
     ai_reply = st.text_area(
         "Reply",
-        value=st.session_state.reply,
-        height=200,
+        value=reply_value,
+        height=600,
         key="reply",
         help="You can use basic HTML tags like <p>, <a>, <strong>..."
     )
