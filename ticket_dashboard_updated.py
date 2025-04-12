@@ -1,24 +1,25 @@
+
 import streamlit as st
+import os
 import json
 import html
-import re
-from streamlit_ace import st_ace
-
+import streamlit.components.v1 as components
+from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
-from utils.helpers import time_ago
-from utils.ticket_classifier import classify_ticket
-from utils.ticket_utils import reformulate_reply
+from utils.helpers import time_ago, strip_html_tags
+
+load_dotenv()
+
+TINYMCE_API_KEY = os.getenv("TINYMCE_API_KEY")
 
 # Load preprocessed tickets
 with open("data/dynamic/preprocessed_tickets.json", encoding="utf-8") as f:
     tickets_data = json.load(f)["preprocessed_tickets"]
 
-def strip_html_tags(text):
-    return re.sub(r"<.*?>", "", html.unescape(text)).strip()
-
 st.set_page_config(page_title="WolfThemes Tickets", layout="wide")
 st.title("🛠️ Ticket Dashboard")
 
+# Sidebar: ticket list
 st.sidebar.header("📬 Tickets")
 
 for idx, ticket in enumerate(tickets_data):
@@ -35,32 +36,47 @@ for idx, ticket in enumerate(tickets_data):
     if st.sidebar.button("View ticket 🡺", key=f"ticket_{ticket['id']}"):
         st.session_state.selected_ticket = idx
 
+# Main panel: show selected ticket
 selected_idx = st.session_state.get("selected_ticket", 0)
 ticket = tickets_data[selected_idx]
+
 cols = st.columns([2, 1])
 
+# === LEFT: Ticket content ===
 with cols[0]:
+   
     with st.expander("📜 Show Full Discussion"):
         for msg in ticket["formatted_text_thread"]:
-            st.markdown(html.unescape(msg), unsafe_allow_html=True)
+            clean_msg = html.unescape(msg)
+            st.markdown(msg, unsafe_allow_html=True)
 
     st.subheader("🗨️ Last Message")
-    st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
-    st.divider()
 
+    st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
+
+    st.divider()
+    
     crew_instruction = st.text_input("📝 Paste an optional note here:")
 
     if st.button("🤖 Generate / Regenerate Reply"):
         with st.spinner("Generating reply..."):
             try:
                 result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction)
+
+                # ✅ Debug output to console
+                print("🧠 Crew Reply →", result["reply"])
+
+                # ✅ Store to session
                 st.session_state.generated_reply = result["reply"]
+                st.session_state.reply = result["reply"]  # Ensure it's in the editor too
                 st.rerun()
             except Exception as e:
                 st.error(f"❌ Error running agent: {str(e)}")
 
+
     st.subheader("✍️ Edit and Post Reply (HTML)")
 
+    # Prioritize the most recent crew outputs
     if "reformulated_reply" in st.session_state:
         st.session_state.reply = st.session_state.reformulated_reply
         del st.session_state.reformulated_reply
@@ -68,30 +84,47 @@ with cols[0]:
         st.session_state.reply = st.session_state.generated_reply
         del st.session_state.generated_reply
 
-    reply_value = st.session_state.get("reply", "")
-    if not isinstance(reply_value, str):
-        reply_value = ""
+    # Optional: session-state default
+    if "reply" not in st.session_state:
+        st.session_state.reply = "<p><strong>Welcome!</strong> This is a test HTML message.</p>"
 
-    html_reply = st_ace(
-        value=reply_value,
-        language="html",
-        theme="chrome",
-        height=300,
-        key="reply_editor"
-    )
+    # Save edited HTML using a hidden input
+    components.html(f"""
+    <script src="https://cdn.tiny.cloud/1/{TINYMCE_API_KEY}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <textarea id="editor">{st.session_state.reply}</textarea>
+    <script>
+        tinymce.init({{
+        selector: '#editor',
+        height: 300,
+        menubar: false,
+        plugins: 'link lists code',
+        toolbar: 'undo redo | bold italic | bullist numlist | link | code',
+        setup: function (editor) {{
+            editor.on('Change KeyUp', function (e) {{
+            window.parent.postMessage({{type: 'html_update', content: editor.getContent()}}, '*');
+            }});
+        }}
+        }});
+    </script>
+    """, height=350)
 
-    if html_reply and html_reply.strip() != reply_value.strip():
-        st.session_state.reply = html_reply
+    # Display preview
+    #st.markdown("### 🔍 Live Preview")
+    #st.markdown(st.session_state.reply, unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
 
-    st.markdown("### ✏️ Reformulate Reply")
-    reformulate_instruction = st.text_input("Reformulation instruction (optional)")
+    from utils.ticket_utils import reformulate_reply
 
-    if col1.button("♻️ Reformulate"):
+    st.markdown("### ✏️ Reformulate Reply")
+    reformulate_instruction = st.text_input("Optional reformulation")
+    
+    if st.button("♻️ Reformulate"):
         try:
+            reply_text = st.session_state.reply
+            if not isinstance(reply_text, str):
+                reply_text = str(reply_text)
             reformulated = reformulate_reply(
-                reply_text=st.session_state.reply,
                 instruction=reformulate_instruction,
                 last_user_message=ticket["last_message"]
             )
@@ -100,9 +133,13 @@ with cols[0]:
         except Exception as e:
             st.error(f"Reformulation error: {str(e)}")
 
-    col2.button("✅ Post Reply")
 
+    st.divider()
+    st.button("✅ Post Reply")
+
+# === RIGHT: Ticket metadata ===
 with cols[1]:
+    
     st.markdown("### 🧾 Ticket Info")
     st.markdown(f"**Theme:** {ticket['theme']}")
     st.markdown(f"**Customer:** [{ticket['customer']}]({ticket['customer_url']})")

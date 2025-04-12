@@ -3,7 +3,6 @@ import streamlit as st
 import os
 import json
 import html
-import re
 import streamlit.components.v1 as components
 from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
@@ -96,7 +95,7 @@ with cols[0]:
     <script>
         tinymce.init({{
         selector: '#editor',
-        height: 300,
+        height: 500,
         menubar: false,
         plugins: 'link lists code',
         toolbar: 'undo redo | bold italic | bullist numlist | link | code',
