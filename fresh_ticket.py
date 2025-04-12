@@ -43,8 +43,8 @@ Your answer must be markdown formatted, short and professional.
 
     result = support_crew_with_research(ticket_input, instruction=crew_instruction)
 
-    st.markdown("### 🔎 Search:")
-    st.markdown(result["research"])
+    #st.markdown("### 🔎 Search:")
+    #st.markdown(result["research"])
     
     st.markdown("### 💬 Suggested Reply:")
     st.markdown(result["reply"])
