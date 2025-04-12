@@ -1,8 +1,29 @@
 # utils/ticket_utils.py
+import os
 import re
 import json
+import openai
 from html import unescape
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+def summarize_ticket(text):
+    prompt = f"Summarize the following support thread in one clear sentence:\n\n{text}"
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a support assistant summarizing support tickets."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.3,
+        max_tokens=60
+    )
+    return response["choices"][0]["message"]["content"].strip()
 
 def contains_credentials(text):
     """Detect if the comment includes login credentials."""
@@ -73,6 +94,9 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
     theme = extract_theme_from_envato(raw_ticket.get("envato_verified_string", "{}"))
     builder = theme_metadata.get(theme, {}).get("builder", "Unknown")
 
+    #summary = summarize_ticket(comments)
+    summary = "Tickets ummary in once clear sentence"
+
     user_site = raw_ticket.get("related_url", "—")
     customer_name = raw_ticket.get("user_name", "Unknown")
     customer_url = f"https://ticksy.com/user/{raw_ticket.get('user_id')}"
@@ -93,7 +117,7 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
         "first_message": first_msg,
         "last_message": last_msg,
         "full_thread": full_thread,
-        "summary": last_msg[:120] + "…" if len(last_msg) > 120 else last_msg,
+        "summary": summary,
         "match_source": match_source,
         "ai_reply": "",
         "needs_human": needs_human
