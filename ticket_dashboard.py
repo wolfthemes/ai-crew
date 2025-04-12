@@ -63,16 +63,11 @@ with cols[0]:
         with st.spinner("Generating reply..."):
             try:
                 result = support_crew_with_research(input_text)
-                st.session_state.reply = result["reply"]
+                st.session_state.generated_reply = result["reply"]
 
-                st.markdown("### 🔎 Search:")
-                st.markdown(result["research"])
-
-                st.markdown("### 💬 Suggested Reply:")
-                st.markdown(result["reply"], unsafe_allow_html=True)
-
-                st.markdown("### 🕵️‍♂️ Review:")
-                st.markdown(result["review"])
+                # Optionally store research/review for later display
+                st.session_state.last_research = result["research"]
+                ##st.session_state.last_review = result["review"]
             except Exception as e:
                 st.error(f"❌ Error running agent: {str(e)}")
 
@@ -80,13 +75,13 @@ with cols[0]:
     st.subheader("✍️ Suggested Reply")
 
     if "reply" not in st.session_state:
-        st.session_state.reply = ticket["ai_reply"]
-
-    if "reply" not in st.session_state:
         st.session_state.reply = ""
     elif "reformulated_reply" in st.session_state:
         st.session_state.reply = st.session_state.reformulated_reply
         del st.session_state.reformulated_reply
+    elif "generated_reply" in st.session_state:
+        st.session_state.reply = st.session_state.generated_reply
+        del st.session_state.generated_reply
 
     ai_reply = st.text_area(
         "Reply",
