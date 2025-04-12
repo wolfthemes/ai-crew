@@ -168,14 +168,14 @@ with cols[0]:
             #     "private": "true",
             # }
 
-            # try:
-            #     response = requests.post(TICKSY_API_URL, data=ticket_payload)
-            #     if response.status_code == 200:
-            #         st.success("✅ Reply successfully posted to Ticksy!")
-            #     else:
-            #         st.error(f"❌ Failed to post reply: {response.status_code}\n{response.text}")
-            # except Exception as e:
-            #     st.error(f"🚨 Exception during POST: {str(e)}")
+            try:
+                response = requests.post(TICKSY_API_URL, data=ticket_payload)
+                if response.status_code == 200:
+                    st.success("✅ Reply successfully posted to Ticksy!")
+                else:
+                    st.error(f"❌ Failed to post reply: {response.status_code}\n{response.text}")
+            except Exception as e:
+                st.error(f"🚨 Exception during POST: {str(e)}")
 
             st.markdown("### 🧪 Debug: Reply Payload to API")
             st.code(json.dumps(ticket_payload, indent=2), language="json")

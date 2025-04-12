@@ -10,12 +10,12 @@ load_dotenv(dotenv_path=dotenv_path)
 
 TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
 TICKSY_API_KEY = os.getenv("TICKSY_API_KEY")
-BASE_API_URL = f"https://api.ticksy.com/v1/{TICKSY_DOMAIN}/{TICKSY_API_KEY}"
+TICKY_API_URL = f"https://api.ticksy.com/v1/{TICKSY_DOMAIN}/{TICKSY_API_KEY}"
 
 os.makedirs("data/crawled", exist_ok=True)
 
 def fetch_closed_tickets():
-    url = f"{BASE_API_URL}/closed-tickets.json"
+    url = f"{TICKY_API_URL}/closed-tickets.json"
     print(f"Fetching tickets from {url}")
 
     response = requests.get(url)

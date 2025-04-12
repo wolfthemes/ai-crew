@@ -10,6 +10,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
+
 openai_client = OpenAI()
 #openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -23,6 +25,8 @@ def reformulate_reply(reply_text: str, instruction: str = "", last_user_message:
     system_prompt = """
     Reformulate the support reply to be clearer, more concise, and professional.
     Preserve all important instructions, links, and HTML formatting.
+
+    If Instructions are provided, be sure to use these to re-generate your reply.
 
     Guidelines:
     1. GREETING:
@@ -178,8 +182,8 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
 
     user_site = raw_ticket.get("related_url", "—")
     customer_name = raw_ticket.get("user_name", "Unknown")
-    customer_url = f"https://ticksy.com/user/{raw_ticket.get('user_id')}"
-    ticket_url = f"https://ticksy.com/ticket/{raw_ticket['ticket_id']}"
+    customer_url = f"https://{TICKSY_DOMAIN}.ticksy.com/user/{raw_ticket.get('user_id')}"
+    ticket_url = f"https://{TICKSY_DOMAIN}.ticksy.com/ticket/{raw_ticket['ticket_id']}"
 
     match_source = classify_ticket_func(last_msg)
     needs_human = contains_credentials(last_msg)
