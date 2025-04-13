@@ -53,11 +53,12 @@ with cols[0]:
    
     with st.expander("📜 Show Full Discussion"):
         for msg in ticket["formatted_text_thread"]:
+            
             clean_msg = html.unescape(msg)
             st.markdown(msg, unsafe_allow_html=True)
 
-    st.subheader("🗨️ Last Message")
-
+    single_summary_clean = strip_html_tags(ticket['summary'])
+    st.subheader(f"🗨️ {single_summary_clean}")
     st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
 
     st.divider()
