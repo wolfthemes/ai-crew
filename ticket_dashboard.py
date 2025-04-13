@@ -5,6 +5,7 @@ import os
 import json
 import html
 import html2text
+from html import unescape
 import streamlit.components.v1 as components
 from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
@@ -52,10 +53,24 @@ cols = st.columns([2, 1])
 with cols[0]:
    
     with st.expander("📜 Show Full Discussion"):
-        for msg in ticket["formatted_text_thread"]:
-            
-            clean_msg = html.unescape(msg)
-            st.markdown(msg, unsafe_allow_html=True)
+        comments = ticket["full_thread"]
+
+        # Remove last message (already shown separately)
+        comments = comments[1:]
+
+        # Remove what was originally the last (now first) before reversing
+        if comments:
+            comments = list(reversed(comments))    # reverse to get oldest first
+
+        for c in comments:
+            name = c["commenter_name"]
+            role = "User" if c["user_type"] == "user" else "Support"
+            timestamp = c.get("time_stamp", "")
+            comment_html = unescape(c["comment"])
+
+            st.markdown(f"**[{role}] {name}** — *{timestamp}*", unsafe_allow_html=True)
+            st.markdown(comment_html, unsafe_allow_html=True)
+            st.markdown("---")
 
     single_summary_clean = strip_html_tags(ticket['summary'])
     st.subheader(f"🗨️ {single_summary_clean}")
