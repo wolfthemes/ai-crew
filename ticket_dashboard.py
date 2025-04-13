@@ -115,10 +115,13 @@ with cols[0]:
 
     
     # Create the hidden field that JS writes to
-    st.text_area("Hidden editor value", key="reply", label_visibility="collapsed", height=68)
+    #st.text_area("Hidden editor value", key="reply", label_visibility="collapsed", height=68)
 
-    # Show the editor — use existing reply state for initial load
-    editor_content = tinymce_editor(initial_content=st.session_state["reply"], height=450)
+    # Hidden Streamlit field that will be updated from JS
+    st.text_area("Hidden reply field", key="reply", label_visibility="collapsed", height=70)
+
+    # Render TinyMCE with whatever is in session state
+    tinymce_editor(initial_content=st.session_state.get("reply", ""), height=450)
 
     # Display preview
     #st.markdown("### 🔍 Live Preview")
