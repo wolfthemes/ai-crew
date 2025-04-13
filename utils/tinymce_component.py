@@ -23,6 +23,7 @@ def tinymce_editor(initial_content="", height=500):
             const sendToStreamlit = () => {{
                 const content = tinymce.get(editorId).getContent();
                 localStorage.setItem("tinymce_reply", content);
+                localStorage.setItem("editor_id", editorId);
             }};
 
             tinymce.init({{
@@ -46,30 +47,39 @@ def tinymce_editor(initial_content="", height=500):
     </html>
     """
 
-    components.html(component_html, height=height + 60)
+    components.html(component_html, height=450)
 
-def sync_from_localstorage(local_key="tinymce_reply", target_key="reply", interval_ms=1000):
-    # Create a hidden text area that will connect to session_state
-    hidden_field_label="hidden_sync_field"
-    
-    components.html(f"""
+def submit_button_script_inline(ticket_id: str, private: bool):
+    TICKSY_API_KEY = os.getenv("TICKSY_API_KEY")
+    TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
+    private_str = "true" if private else "false"
+
+    js = f"""
     <script>
-    function syncFromLocalStorage() {{
-        const value = localStorage.getItem("{local_key}");
-        const target = window.parent.document.querySelector("textarea[aria-label='{hidden_field_label}']");
-        if (target && target.value !== value) {{
-            target.value = value;
+        const btn = window.parent.document.querySelector("#post_submit");
+        if (btn) {{
+            btn.onclick = () => {{
+                const content = localStorage.getItem("tinymce_reply");
+                const ticketId = "{ticket_id}";
+                const apiKey = "{TICKSY_API_KEY}";
+                const domain = "{TICKSY_DOMAIN}";
 
-            target.dispatchEvent(new Event("input", {{ bubbles: true }}));
-            target.dispatchEvent(new Event("blur", {{ bubbles: true }}));
+                const payload = new URLSearchParams({{
+                    action: "new_ticket_comment",
+                    ticket_id: ticketId,
+                    comment: content,
+                    private: "{private_str}"
+                }});
 
-            console.log("✅ Synced with simulated input:", value.slice(0, 60));
+                console.log("🧪 Ticksy payload:");
+                console.log(payload.toString());
+
+                alert("🚀 Would post to Ticksy:\\n" + payload.toString());
+            }};
+        }} else {{
+            console.warn("❌ Could not find #post_submit");
         }}
-    }}
-    syncFromLocalStorage();
-    setInterval(syncFromLocalStorage, {interval_ms});
     </script>
-    """, height=0)
-
-    st.text_area(hidden_field_label, key=target_key, label_visibility="collapsed", height=68)
+    """
+    components.html(js, height=0)
 

@@ -10,7 +10,7 @@ import streamlit.components.v1 as components
 from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
 from utils.helpers import time_ago, strip_html_tags
-from utils.tinymce_component import tinymce_editor, sync_from_localstorage
+from utils.tinymce_component import tinymce_editor, submit_button_script_inline
 
 load_dotenv()
 
@@ -115,9 +115,6 @@ with cols[0]:
 
     # Render TinyMCE with whatever is in session state
     tinymce_editor(initial_content=st.session_state.get("reply", ""), height=450)
-    sync_from_localstorage(local_key="tinymce_reply", target_key="reply")
-
-    st.code(st.session_state.get("reply", "⛔ Not yet synced!"), language="html")
 
     col1, col2 = st.columns(2)
 
@@ -151,30 +148,13 @@ with cols[0]:
         private_reply = st.checkbox("Private", value=False)
 
     with col2:   
-        if st.button("✅ Post Reply"):
 
-            # Get the reply content from session state - should be a string now
-            reply_html = st.session_state["reply"]
-            print("🛰️ Sending reply to Ticksy:\n", reply_html)
-            
-            ticket_payload = {
-                "action": "new_ticket_comment",
-                "ticket_id": ticket["id"],
-                "comment": reply_html,
-                "private": str(private_reply).lower(),
-            }
-
-            # try:
-            #     response = requests.post(TICKSY_API_URL, data=ticket_payload)
-            #     if response.status_code == 200:
-            #         st.success("✅ Reply successfully posted to Ticksy!")
-            #     else:
-            #         st.error(f"❌ Failed to post reply: {response.status_code}\n{response.text}")
-            # except Exception as e:
-            #     st.error(f"🚨 Exception during POST: {str(e)}")
-
-            st.markdown("### 🧪 Debug: Reply Payload to API")
-            st.code(json.dumps(ticket_payload, indent=2), language="json")
+        st.markdown("""
+        <button id="post_submit" style="padding: 0.5em 1em; font-size: 1em; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer;">
+        ✅ Post Reply
+        </button>
+        """, unsafe_allow_html=True)
+        submit_button_script_inline(ticket_id=ticket["id"], private=private_reply)
 
 # === RIGHT: Ticket metadata ===
 with cols[1]:
