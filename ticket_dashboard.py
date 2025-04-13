@@ -10,7 +10,7 @@ import streamlit.components.v1 as components
 from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
 from utils.helpers import time_ago, strip_html_tags
-from utils.tinymce_component import tinymce_editor
+from utils.tinymce_component import tinymce_editor, sync_from_localstorage
 
 load_dotenv()
 
@@ -113,19 +113,11 @@ with cols[0]:
     elif "reply" in st.session_state:
         initial_content = st.session_state.reply
 
-    
-    # Create the hidden field that JS writes to
-    #st.text_area("Hidden editor value", key="reply", label_visibility="collapsed", height=68)
-
-    # Hidden Streamlit field that will be updated from JS
-    st.text_area("Hidden reply field", key="reply", label_visibility="collapsed", height=70)
-
     # Render TinyMCE with whatever is in session state
     tinymce_editor(initial_content=st.session_state.get("reply", ""), height=450)
+    sync_from_localstorage(local_key="tinymce_reply", target_key="reply")
 
-    # Display preview
-    #st.markdown("### 🔍 Live Preview")
-    #st.markdown(st.session_state.reply, unsafe_allow_html=True)
+    st.code(st.session_state.get("reply", "⛔ Not yet synced!"), language="html")
 
     col1, col2 = st.columns(2)
 
@@ -161,10 +153,8 @@ with cols[0]:
     with col2:   
         if st.button("✅ Post Reply"):
 
-
             # Get the reply content from session state - should be a string now
-            reply_html = st.session_state.reply 
-            
+            reply_html = st.session_state["reply"]
             print("🛰️ Sending reply to Ticksy:\n", reply_html)
             
             ticket_payload = {
