@@ -91,7 +91,7 @@ def submit_button_script_inline(ticket_id: str, private: bool):
                     private: "{private_str}"
                 }});
 
-                fetch(`https://aaaapi.ticksy.com/v1/${{domain}}/${{apiKey}}`, {{
+                fetch(`https://api.ticksy.com/v1/${{domain}}/${{apiKey}}`, {{
                     method: "POST",
                     headers: {{
                         "Content-Type": "application/x-www-form-urlencoded"
