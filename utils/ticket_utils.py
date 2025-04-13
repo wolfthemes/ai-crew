@@ -20,6 +20,7 @@ def reformulate_reply(reply_text: str, instruction: str = "", last_user_message:
     Reformulates the AI reply with optional extra instruction and original customer message for context.
     Preserves formatting, tone, and details.
     """
+
     openai_client = OpenAI()
 
     system_prompt = """

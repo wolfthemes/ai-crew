@@ -10,6 +10,7 @@ import streamlit.components.v1 as components
 from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
 from utils.helpers import time_ago, strip_html_tags
+from utils.tinymce_component import tinymce_editor
 
 load_dotenv()
 
@@ -101,37 +102,23 @@ with cols[0]:
 
     st.subheader("✍️ Edit and Post Reply (HTML)")
 
-    # Prioritize the most recent crew outputs
+    # Determine initial content
+    initial_content = ""
     if "reformulated_reply" in st.session_state:
-        st.session_state.reply = st.session_state.reformulated_reply
+        initial_content = st.session_state.reformulated_reply
         del st.session_state.reformulated_reply
     elif "generated_reply" in st.session_state:
-        st.session_state.reply = st.session_state.generated_reply
+        initial_content = st.session_state.generated_reply
         del st.session_state.generated_reply
+    elif "reply" in st.session_state:
+        initial_content = st.session_state.reply
 
-    # Optional: session-state default
-    if "reply" not in st.session_state:
-        st.session_state.reply = ""
+    
+    # Create the hidden field that JS writes to
+    st.text_area("Hidden editor value", key="reply", label_visibility="collapsed", height=68)
 
-    # Save edited HTML using a hidden input
-    components.html(f"""
-    <script src="https://cdn.tiny.cloud/1/{TINYMCE_API_KEY}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-    <textarea id="editor">{st.session_state.reply}</textarea>
-    <script>
-        tinymce.init({{
-        selector: '#editor',
-        height: 450,
-        menubar: false,
-        plugins: 'link lists code',
-        toolbar: 'undo redo | bold italic | bullist numlist | link | code',
-        setup: function (editor) {{
-            editor.on('Change KeyUp', function (e) {{
-            window.parent.postMessage({{type: 'html_update', content: editor.getContent()}}, '*');
-            }});
-        }}
-        }});
-    </script>
-    """, height=500)
+    # Show the editor — use existing reply state for initial load
+    editor_content = tinymce_editor(initial_content=st.session_state["reply"], height=450)
 
     # Display preview
     #st.markdown("### 🔍 Live Preview")
@@ -170,19 +157,19 @@ with cols[0]:
 
     with col2:   
         if st.button("✅ Post Reply"):
+
+
+            # Get the reply content from session state - should be a string now
+            reply_html = st.session_state.reply 
+            
+            print("🛰️ Sending reply to Ticksy:\n", reply_html)
+            
             ticket_payload = {
                 "action": "new_ticket_comment",
                 "ticket_id": ticket["id"],
-                "comment": st.session_state.get("reply", ""),
+                "comment": reply_html,
                 "private": str(private_reply).lower(),
             }
-
-            # ticket_payload = {
-            #     "action": "new_ticket_comment",
-            #     "ticket_id": "000000000000",
-            #     "comment": st.session_state.get("reply", ""),
-            #     "private": "true",
-            # }
 
             # try:
             #     response = requests.post(TICKSY_API_URL, data=ticket_payload)
