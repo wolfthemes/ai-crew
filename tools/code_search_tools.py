@@ -8,6 +8,8 @@ class CodeSearchInput(BaseModel):
     function_name: str = Field(..., description="The function name to search for")
     repo_path: str = Field(..., description="The repo directory to search in")
 
+REPO_ROOT = os.path.abspath("repos")
+
 # Define the tool class
 class GetCodeSearchTool(BaseTool):
     name: str = "get_code_search"
@@ -17,7 +19,10 @@ class GetCodeSearchTool(BaseTool):
     def _run(self, function_name: str, repo_path: str) -> str:
         try:
             matches = []
-            for root, _, files in os.walk(repo_path):
+            full_path = os.path.join(REPO_ROOT, repo_path)
+            print(f"Searching in: {full_path}")
+
+            for root, _, files in os.walk(full_path):
                 for file in files:
                     if file.endswith('.php'):
                         file_path = os.path.join(root, file)
@@ -25,9 +30,11 @@ class GetCodeSearchTool(BaseTool):
                             for i, line in enumerate(f):
                                 if f"function {function_name}" in line:
                                     matches.append(f"{file_path}:{i+1} → {line.strip()}")
+
             return "\n".join(matches) if matches else "Function not found."
         except Exception as e:
             return f"Error searching function: {e}"
+
 
     # This method is for text-only tools (optional override)
     def run(self, query: str) -> str:
