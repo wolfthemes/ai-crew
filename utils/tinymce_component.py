@@ -60,16 +60,8 @@ def sync_from_localstorage(local_key="tinymce_reply", target_key="reply", interv
         if (target && target.value !== value) {{
             target.value = value;
 
-            // Simulate user typing
-            const event = new Event("input", {{ bubbles: true }});
-            target.dispatchEvent(event);
-
-            const change = new Event("change", {{ bubbles: true }});
-            target.dispatchEvent(change);
-
-            // Optional: Simulate a small keypress (safe fallback)
-            const keyEvent = new KeyboardEvent("keydown", {{ bubbles: true, key: "a" }});
-            target.dispatchEvent(keyEvent);
+            target.dispatchEvent(new Event("input", {{ bubbles: true }}));
+            target.dispatchEvent(new Event("blur", {{ bubbles: true }}));
 
             console.log("✅ Synced with simulated input:", value.slice(0, 60));
         }}
