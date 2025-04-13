@@ -56,6 +56,26 @@ def submit_button_script_inline(ticket_id: str, private: bool):
 
     js = f"""
     <script>
+        const createBanner = (message, type = "success") => {{
+            let banner = document.createElement("div");
+            banner.innerText = message;
+            banner.style.position = "fixed";
+            banner.style.top = "20px";
+            banner.style.right = "20px";
+            banner.style.padding = "12px 20px";
+            banner.style.zIndex = 999999;
+            banner.style.borderRadius = "8px";
+            banner.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+            banner.style.fontWeight = "bold";
+            banner.style.color = "white";
+            banner.style.backgroundColor = type === "success" ? "#4CAF50" : "#F44336";
+
+            window.parent.document.body.appendChild(banner);
+            setTimeout(() => {{
+                banner.remove();
+            }}, 3000);
+        }}
+
         const btn = window.parent.document.querySelector("#post_submit");
         if (btn) {{
             btn.onclick = () => {{
@@ -71,10 +91,22 @@ def submit_button_script_inline(ticket_id: str, private: bool):
                     private: "{private_str}"
                 }});
 
-                console.log("🧪 Ticksy payload:");
-                console.log(payload.toString());
-
-                alert("🚀 Would post to Ticksy:\\n" + payload.toString());
+                fetch(`https://aaaapi.ticksy.com/v1/${{domain}}/${{apiKey}}`, {{
+                    method: "POST",
+                    headers: {{
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }},
+                    body: payload
+                }})
+                .then(response => response.text())
+                .then(result => {{
+                    console.log("✅ Ticksy response:", result);
+                    createBanner("✅ Reply successfully posted!", "success");
+                }})
+                .catch(error => {{
+                    console.error("❌ Ticksy error:", error);
+                    createBanner("❌ Failed to post reply", "error");
+                }});
             }};
         }} else {{
             console.warn("❌ Could not find #post_submit");
@@ -82,4 +114,3 @@ def submit_button_script_inline(ticket_id: str, private: bool):
     </script>
     """
     components.html(js, height=0)
-
