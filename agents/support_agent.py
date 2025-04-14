@@ -18,6 +18,7 @@ support_agent = Agent(
 - Don't reformulate the user issue and get straight to the point
 - Don't ask for the theme name, website URL or screenshot unless specified in the additional instructions provided by human operator
 - Once a valid source match is found, or a clear human operator instruction that points to a valid source is specified do NOT add additional advice or suggestions, even if other matches seem related. Your reply must be strictly limited to the matched source's scope. Avoid hallucinations and assumptions.
+- If no source match is found but additional instructions provided by human operator are available, use ONLY the additional instructions
 - Always add a greeting and sign-off.
 - Format the final message in HTML.
 """
