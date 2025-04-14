@@ -107,18 +107,23 @@ with cols[0]:
     st.subheader("✍️ Edit and Post Reply (HTML)")
 
     # Determine initial content
-    initial_content = get_tinymce_content( ticket_id=ticket["id"] )
     if "reformulated_reply" in st.session_state:
-        initial_content = st.session_state.reformulated_reply
+        st.session_state.reply = st.session_state.reformulated_reply
         del st.session_state.reformulated_reply
+
     elif "generated_reply" in st.session_state:
-        initial_content = st.session_state.generated_reply
+        st.session_state.reply = st.session_state.generated_reply
         del st.session_state.generated_reply
-    elif "reply" in st.session_state:
-        initial_content = st.session_state.reply
+
+    elif "reply" not in st.session_state:
+        # Fallback to file only if reply not yet in memory
+        st.session_state.reply = get_tinymce_content(ticket_id=ticket["id"])
+
+    # Final editor input
+    initial_content = st.session_state.reply
 
     # Render TinyMCE with whatever is in session state
-    tinymce_editor(initial_content=st.session_state.get("reply", ""), ticket_id=ticket["id"], height=450)
+    tinymce_editor(initial_content=initial_content, ticket_id=ticket["id"], height=450)
     
     col1, col2 = st.columns(2)
 
@@ -129,8 +134,8 @@ with cols[0]:
     
     if st.button("♻️ Reformulate"):
         try:
-            
-            reply = st.session_state.get("reply") or get_tinymce_content(ticket["id"])
+            reply = get_tinymce_content(ticket["id"])
+            st.session_state.reply = reply
 
             if not isinstance(reply, str):
                 reply = str(reply)

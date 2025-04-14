@@ -54,7 +54,6 @@ def reformulate_reply(reply_text: str, instruction: str = "", last_user_message:
     - End with a simple polite phrase like “I hope it helps”, “Kind Regards”, or “Best regards”
     """
 
-
     user_prompt = f"Customer message:\n{last_user_message.strip()}\n\n"
 
     if instruction.strip():
@@ -62,14 +61,18 @@ def reformulate_reply(reply_text: str, instruction: str = "", last_user_message:
 
     user_prompt += f"Reply to reformulate:\n{reply_text.strip()}"
 
+    #print( user_prompt )
+
     response = openai_client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
         ],
         temperature=0.4
     )
+
+    #print( response.choices[0].message.content.strip() )
 
     return response.choices[0].message.content.strip()
 
