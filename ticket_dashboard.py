@@ -110,7 +110,7 @@ with cols[0]:
     st.subheader("✍️ Edit and Post Reply (HTML)")
 
     # Determine initial content
-    initial_content = ""
+    initial_content = get_tinymce_content()
     if "reformulated_reply" in st.session_state:
         initial_content = st.session_state.reformulated_reply
         del st.session_state.reformulated_reply
@@ -142,7 +142,7 @@ with cols[0]:
             reply = get_tinymce_content()
 
             if not isinstance(reply, str):
-                reply_text = str(reply)
+                reply = str(reply)
 
             reformulated = reformulate_reply(
                 reply_text=reply,
