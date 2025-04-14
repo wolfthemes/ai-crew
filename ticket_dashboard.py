@@ -56,6 +56,15 @@ for idx, ticket in enumerate(tickets_data):
     if st.sidebar.button("View ticket 🡺", key=f"ticket_{ticket['id']}"):
         st.session_state.selected_ticket = idx
 
+st.sidebar.divider()
+
+if st.sidebar.button("🔄 Refresh Tickets"):
+    with st.spinner("Refreshing ticket data..."):
+        preprocess_tickets.run_preprocessing()
+        st.session_state.preprocessing_done = True
+        st.success("✅ Ticket data refreshed!")
+        st.rerun()
+
 # Main panel: show selected ticket
 selected_idx = st.session_state.get("selected_ticket", 0)
 ticket = tickets_data[selected_idx]
