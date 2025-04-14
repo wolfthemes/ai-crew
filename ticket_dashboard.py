@@ -151,14 +151,14 @@ with cols[0]:
     
     if st.button("♻️ Reformulate"):
         try:
-            reply = get_tinymce_content(ticket["id"])
-            st.session_state.reply = reply
+            current_editor_reply = get_tinymce_content(ticket["id"])
+            st.session_state.reply = current_editor_reply
 
-            if not isinstance(reply, str):
-                reply = str(reply)
+            if not isinstance(current_editor_reply, str):
+                current_editor_reply = str(current_editor_reply)
 
             reformulated = reformulate_reply(
-                reply_text=reply,
+                reply_text=current_editor_reply,
                 instruction=reformulate_instruction,
                 last_user_message=ticket["last_message"]
             )
@@ -179,13 +179,13 @@ with cols[0]:
 
         if st.button("✅ Post Reply to Ticksy"):
             
-            reply = get_tinymce_content(ticket["id"])
-            st.session_state.reply = reply
+            current_editor_reply = get_tinymce_content(ticket["id"])
+            st.session_state.reply = current_editor_reply
             
-            if not reply.strip():
+            if not isinstance(current_editor_reply, str):
                 st.warning("⚠️ Editor is empty — nothing to post.")
             else:
-                result = post_to_ticksy(ticket_id=ticket["id"], message=reply)
+                result = post_to_ticksy(ticket_id=ticket["id"], message=current_editor_reply)
 
                 if result.get("status") == "ok":
                     st.success("✅ Reply posted to Ticksy.")
