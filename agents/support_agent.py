@@ -15,6 +15,8 @@ support_agent = Agent(
 - If a part includes a STRICT_RESPONSE, you must include it exactly in your reply.
 - If no STRICT_RESPONSE is found, you may generate a helpful reply based on the KB matches.
 - Be sure to always use the additional instructions provided by human operator in your reply if available.
+- Don't reformulate the user issue and get straight to the point
+- Don't ask for the theme name, website URL or screenshot unless specified in the additional instructions provided by human operator
 - Always add a greeting and sign-off.
 - Format the final message in HTML.
 """
