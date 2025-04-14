@@ -9,8 +9,13 @@ from html import unescape
 from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
 from utils.helpers import time_ago, strip_html_tags
-from utils.tinymce_component import tinymce_editor, submit_button_script_inline
-from tinymce_bridge import get_editor_reply
+from utils.tinymce_component import tinymce_editor, get_tinymce_content, submit_button_script_inline
+
+import subprocess
+
+if "api_started" not in st.session_state:
+    subprocess.Popen(["uvicorn", "utils.editor_api:app", "--port", "5050", "--reload"])
+    st.session_state.api_started = True
 
 load_dotenv()
 
@@ -117,7 +122,10 @@ with cols[0]:
 
     # Render TinyMCE with whatever is in session state
     tinymce_editor(initial_content=st.session_state.get("reply", ""), height=450)
-    st.write(get_editor_reply())
+    reply = get_tinymce_content()
+    
+    st.markdown("### 🔁 Synced TinyMCE reply:")
+    st.code(reply)
     
     #st.write(f"Retrieved from localStorage: {st.session_state.reply}")
 
@@ -131,13 +139,13 @@ with cols[0]:
     if st.button("♻️ Reformulate"):
         try:
             
-            tinymce_reply = get_editor_reply()
+            reply = get_tinymce_content()
 
-            if not isinstance(tinymce_reply, str):
-                reply_text = str(tinymce_reply)
+            if not isinstance(reply, str):
+                reply_text = str(reply)
 
             reformulated = reformulate_reply(
-                reply_text=tinymce_reply,
+                reply_text=reply,
                 instruction=reformulate_instruction,
                 last_user_message=ticket["last_message"]
             )

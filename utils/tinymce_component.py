@@ -31,10 +31,19 @@ def tinymce_editor(initial_content="", height=500):
         <textarea id="{editor_id}">{initial_content}</textarea>
         <script>
             const editorId = "{editor_id}";
-            const sendToStreamlit = () => {{
+            const saveToFile = () => {{
                 const content = tinymce.get(editorId).getContent();
-                localStorage.setItem("tinymce_reply", content);
-                localStorage.setItem("editor_id", editorId);
+                console.log( content );
+                fetch("http://localhost:5050/save_editor_content", {{
+                method: "POST",
+                headers: {{
+                    "Content-Type": "application/json"
+                }},
+                    body: JSON.stringify({{ html: content }})
+                }})
+                .then(response => response.json())
+                .then(data => console.log("✅ Sent to Python:", data))
+                .catch(error => console.error("❌ Error posting:", error));
             }};
 
             tinymce.init({{
@@ -44,14 +53,14 @@ def tinymce_editor(initial_content="", height=500):
                 plugins: "link lists code",
                 toolbar: "undo redo | bold italic | bullist numlist | link | code",
                 setup: function (editor) {{
-                    editor.on("Change KeyUp", sendToStreamlit);
+                    editor.on("Change KeyUp", saveToFile);
                     
                     // Add a blur event to ensure we capture the final content
-                    editor.on("blur", sendToStreamlit);
+                    editor.on("blur", saveToFile);
                 }},
                 init_instance_callback: function (editor) {{
                     // Send initial content after initialization
-                    sendToStreamlit();
+                    saveToFile();
                 }}
             }});
         </script>
@@ -61,7 +70,6 @@ def tinymce_editor(initial_content="", height=500):
 
     # Return the content of the editor
     return components.html(component_html, height=height)
-
 
 
 def submit_button_script_inline(ticket_id: str, private: bool):
@@ -130,3 +138,10 @@ def submit_button_script_inline(ticket_id: str, private: bool):
     """
     components.html(js, height=0)
 
+def get_tinymce_content() -> str:
+    file_path = "data/dynamic/tinymce_content"
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return ""
