@@ -68,138 +68,140 @@ if st.sidebar.button("🔄 Refresh Tickets"):
         st.success("✅ Ticket data refreshed!")
         st.rerun()
 
-# Main panel: show selected ticket
-selected_idx = st.session_state.get("selected_ticket", 0)
-ticket = tickets_data[selected_idx]
-
 cols = st.columns([2, 1])
 
 # === LEFT: Ticket content ===
-with cols[0]:
-   
-    with st.expander("📜 Show Full Discussion"):
-        comments = ticket["full_thread"]
-
-        # Remove last message (already shown separately)
-        comments = comments[1:]
-
-        # Remove what was originally the last (now first) before reversing
-        if comments:
-            comments = list(reversed(comments))    # reverse to get oldest first
-
-        for c in comments:
-            name = c["commenter_name"]
-            role = "User" if c["user_type"] == "user" else "Support"
-            timestamp = c.get("time_stamp", "")
-            comment_html = unescape(c["comment"])
-
-            st.markdown(f"**[{role}] {name}** — *{timestamp}*", unsafe_allow_html=True)
-            st.markdown(comment_html, unsafe_allow_html=True)
-            st.markdown("---")
-
-    single_summary_clean = strip_html_tags(ticket['summary'])
-    st.subheader(f"🗨️ {single_summary_clean}")
-    st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
-
-    st.divider()
+if not tickets_data:
+    st.markdown("No ticket.", unsafe_allow_html=True)
+else:
+    # Main panel: show selected ticket
+    selected_idx = st.session_state.get("selected_ticket", 0)
+    ticket = tickets_data[selected_idx]
+    with cols[0]:
     
-    crew_instruction = st.text_area("📝 Paste an optional note here:")
+        with st.expander("📜 Show Full Discussion"):
+            comments = ticket["full_thread"]
 
-    if st.button("🤖 Generate / Regenerate Reply"):
-        with st.spinner("Generating reply..."):
+            # Remove last message (already shown separately)
+            comments = comments[1:]
+
+            # Remove what was originally the last (now first) before reversing
+            if comments:
+                comments = list(reversed(comments))    # reverse to get oldest first
+
+            for c in comments:
+                name = c["commenter_name"]
+                role = "User" if c["user_type"] == "user" else "Support"
+                timestamp = c.get("time_stamp", "")
+                comment_html = unescape(c["comment"])
+
+                st.markdown(f"**[{role}] {name}** — *{timestamp}*", unsafe_allow_html=True)
+                st.markdown(comment_html, unsafe_allow_html=True)
+                st.markdown("---")
+
+        single_summary_clean = strip_html_tags(ticket['summary'])
+        st.subheader(f"🗨️ {single_summary_clean}")
+        st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
+
+        st.divider()
+        
+        crew_instruction = st.text_area("📝 Paste an optional note here:")
+
+        if st.button("🤖 Generate / Regenerate Reply"):
+            with st.spinner("Generating reply..."):
+                try:
+                    result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction)
+
+                    raw_reply = result["reply"].output if hasattr(result["reply"], "output") else str(result["reply"])
+                    markdown_debug = html2text.html2text(raw_reply)
+
+                    print("🧠 Crew Reply (Markdown View) →")
+                    print(markdown_debug)
+
+                    # ✅ Store to session
+                    st.session_state.generated_reply = result["reply"]
+                    st.session_state.reply = result["reply"]  # Ensure it's in the editor too
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"❌ Error running agent: {str(e)}")
+
+
+        st.subheader("✍️ Edit and Post Reply (HTML)")
+
+        # Determine initial content
+        if "reformulated_reply" in st.session_state:
+            st.session_state.reply = st.session_state.reformulated_reply
+            del st.session_state.reformulated_reply
+
+        elif "generated_reply" in st.session_state:
+            st.session_state.reply = st.session_state.generated_reply
+            del st.session_state.generated_reply
+
+        elif "reply" not in st.session_state:
+            # Fallback to file only if reply not yet in memory
+            st.session_state.reply = get_tinymce_content(ticket_id=ticket["id"])
+
+        # Final editor input
+        initial_content = st.session_state.reply
+
+        # Render TinyMCE with whatever is in session state
+        tinymce_editor(initial_content=initial_content, ticket_id=ticket["id"], height=450)
+        
+        col1, col2 = st.columns(2)
+
+        from utils.ticket_utils import reformulate_reply
+
+        st.markdown("### ✏️ Reformulate Reply")
+        reformulate_instruction = st.text_area("Optional reformulation")
+        
+        if st.button("♻️ Reformulate"):
             try:
-                result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction)
+                current_editor_reply = get_tinymce_content(ticket["id"])
+                st.session_state.reply = current_editor_reply
 
-                raw_reply = result["reply"].output if hasattr(result["reply"], "output") else str(result["reply"])
-                markdown_debug = html2text.html2text(raw_reply)
+                if not isinstance(current_editor_reply, str):
+                    current_editor_reply = str(current_editor_reply)
 
-                print("🧠 Crew Reply (Markdown View) →")
-                print(markdown_debug)
-
-                # ✅ Store to session
-                st.session_state.generated_reply = result["reply"]
-                st.session_state.reply = result["reply"]  # Ensure it's in the editor too
+                reformulated = reformulate_reply(
+                    reply_text=current_editor_reply,
+                    instruction=reformulate_instruction,
+                    last_user_message=ticket["last_message"]
+                )
+                st.session_state.reformulated_reply = reformulated
                 st.rerun()
             except Exception as e:
-                st.error(f"❌ Error running agent: {str(e)}")
+                st.error(f"Reformulation error: {str(e)}")
 
 
-    st.subheader("✍️ Edit and Post Reply (HTML)")
+        st.divider()
 
-    # Determine initial content
-    if "reformulated_reply" in st.session_state:
-        st.session_state.reply = st.session_state.reformulated_reply
-        del st.session_state.reformulated_reply
+        col1, col2 = st.columns([1, 2])
 
-    elif "generated_reply" in st.session_state:
-        st.session_state.reply = st.session_state.generated_reply
-        del st.session_state.generated_reply
+        with col1:
+            private_reply = st.checkbox("Private", value=False)
 
-    elif "reply" not in st.session_state:
-        # Fallback to file only if reply not yet in memory
-        st.session_state.reply = get_tinymce_content(ticket_id=ticket["id"])
+        with col2:
 
-    # Final editor input
-    initial_content = st.session_state.reply
-
-    # Render TinyMCE with whatever is in session state
-    tinymce_editor(initial_content=initial_content, ticket_id=ticket["id"], height=450)
-    
-    col1, col2 = st.columns(2)
-
-    from utils.ticket_utils import reformulate_reply
-
-    st.markdown("### ✏️ Reformulate Reply")
-    reformulate_instruction = st.text_area("Optional reformulation")
-    
-    if st.button("♻️ Reformulate"):
-        try:
-            current_editor_reply = get_tinymce_content(ticket["id"])
-            st.session_state.reply = current_editor_reply
-
-            if not isinstance(current_editor_reply, str):
-                current_editor_reply = str(current_editor_reply)
-
-            reformulated = reformulate_reply(
-                reply_text=current_editor_reply,
-                instruction=reformulate_instruction,
-                last_user_message=ticket["last_message"]
-            )
-            st.session_state.reformulated_reply = reformulated
-            st.rerun()
-        except Exception as e:
-            st.error(f"Reformulation error: {str(e)}")
-
-
-    st.divider()
-
-    col1, col2 = st.columns([1, 2])
-
-    with col1:
-        private_reply = st.checkbox("Private", value=False)
-
-    with col2:
-
-        if st.button("✅ Post Reply to Ticksy"):
-            
-            current_editor_reply = get_tinymce_content(ticket["id"])
-            st.session_state.reply = current_editor_reply
-            
-            if not isinstance(current_editor_reply, str):
-                st.warning("⚠️ Editor is empty — nothing to post.")
-            else:
-                result = post_to_ticksy(ticket_id=ticket["id"], message=current_editor_reply)
-
-                if result.get("status") == "ok":
-                    st.success("✅ Reply posted to Ticksy.")
+            if st.button("✅ Post Reply to Ticksy"):
+                
+                current_editor_reply = get_tinymce_content(ticket["id"])
+                st.session_state.reply = current_editor_reply
+                
+                if not isinstance(current_editor_reply, str):
+                    st.warning("⚠️ Editor is empty — nothing to post.")
                 else:
-                    st.error("❌ Failed to post. Check console/logs.")
+                    result = post_to_ticksy(ticket_id=ticket["id"], message=current_editor_reply)
 
-# === RIGHT: Ticket metadata ===
-with cols[1]:
-    
-    st.markdown("### 🧾 Ticket Info")
-    st.markdown(f"**Theme:** {ticket['theme']}")
-    st.markdown(f"**Customer:** [{ticket['customer']}]({ticket['customer_url']})")
-    st.markdown(f"**Website:** {ticket['user_site']}")
-    st.markdown(f"**Ticket Link:** [#{ticket['id']}]({ticket['ticket_url']})")
+                    if result.get("status") == "ok":
+                        st.success("✅ Reply posted to Ticksy.")
+                    else:
+                        st.error("❌ Failed to post. Check console/logs.")
+
+    # === RIGHT: Ticket metadata ===
+    with cols[1]:
+        
+        st.markdown("### 🧾 Ticket Info")
+        st.markdown(f"**Theme:** {ticket['theme']}")
+        st.markdown(f"**Customer:** [{ticket['customer']}]({ticket['customer_url']})")
+        st.markdown(f"**Website:** {ticket['user_site']}")
+        st.markdown(f"**Ticket Link:** [#{ticket['id']}]({ticket['ticket_url']})")
