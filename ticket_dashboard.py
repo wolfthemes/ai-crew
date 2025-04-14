@@ -5,25 +5,19 @@ import os
 import json
 import html
 import html2text
+import subprocess
 from html import unescape
 from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
 from utils.helpers import time_ago, strip_html_tags
 from utils.tinymce_component import tinymce_editor, get_tinymce_content, submit_button_script_inline
 
-import subprocess
-
-# # Update tickets
-# subprocess.run(["python", "preprocess_tickets.py"], check=True)
-
 if "api_started" not in st.session_state:
     subprocess.Popen(["uvicorn", "utils.editor_api:app", "--port", "5050", "--reload"])
     st.session_state.api_started = True
 
 load_dotenv()
-
 TINYMCE_API_KEY = os.getenv("TINYMCE_API_KEY")
-
 TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
 TICKSY_API_KEY = os.getenv("TICKSY_API_KEY")
 TICKSY_API_URL = f"https://api.ticksy.com/v1/{TICKSY_DOMAIN}/{TICKSY_API_KEY}"
@@ -113,7 +107,7 @@ with cols[0]:
     st.subheader("✍️ Edit and Post Reply (HTML)")
 
     # Determine initial content
-    initial_content = get_tinymce_content()
+    initial_content = get_tinymce_content( ticket_id=ticket["id"] )
     if "reformulated_reply" in st.session_state:
         initial_content = st.session_state.reformulated_reply
         del st.session_state.reformulated_reply
@@ -124,8 +118,8 @@ with cols[0]:
         initial_content = st.session_state.reply
 
     # Render TinyMCE with whatever is in session state
-    tinymce_editor(initial_content=st.session_state.get("reply", ""), height=450)
-    reply = get_tinymce_content()
+    tinymce_editor(initial_content=st.session_state.get("reply", ""), ticket_id=ticket["id"], height=450)
+    reply = get_tinymce_content( ticket_id=ticket["id"] )
     
     st.markdown("### 🔁 Synced TinyMCE reply:")
     st.code(reply)
@@ -142,7 +136,7 @@ with cols[0]:
     if st.button("♻️ Reformulate"):
         try:
             
-            reply = get_tinymce_content()
+            reply = get_tinymce_content( ticket_id=ticket["id"] )
 
             if not isinstance(reply, str):
                 reply = str(reply)

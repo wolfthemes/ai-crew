@@ -3,7 +3,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import uuid
 
-def tinymce_editor(initial_content="", height=500):
+def tinymce_editor(initial_content="", ticket_id="0", height=500):
     """
     Render a TinyMCE editor and return its content.
     
@@ -33,13 +33,16 @@ def tinymce_editor(initial_content="", height=500):
             const editorId = "{editor_id}";
             const saveToFile = () => {{
                 const content = tinymce.get(editorId).getContent();
-                console.log( content );
+                console.log(content)
                 fetch("http://localhost:5050/save_editor_content", {{
                 method: "POST",
                 headers: {{
                     "Content-Type": "application/json"
                 }},
-                    body: JSON.stringify({{ html: content }})
+                    body: JSON.stringify({{
+                        html: content,
+                        ticket_id: {ticket_id}
+                    }})
                 }})
                 .then(response => response.json())
                 .then(data => console.log("✅ Sent to Python:", data))
@@ -71,6 +74,13 @@ def tinymce_editor(initial_content="", height=500):
     # Return the content of the editor
     return components.html(component_html, height=height)
 
+def get_tinymce_content(ticket_id: str) -> str:
+    path = f"data/dynamic/draft_{ticket_id}"
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return ""
 
 def submit_button_script_inline(ticket_id: str, private: bool):
     TICKSY_API_KEY = os.getenv("TICKSY_API_KEY")
@@ -138,10 +148,3 @@ def submit_button_script_inline(ticket_id: str, private: bool):
     """
     components.html(js, height=0)
 
-def get_tinymce_content() -> str:
-    file_path = "data/dynamic/tinymce_content"
-    try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            return f.read()
-    except FileNotFoundError:
-        return ""
