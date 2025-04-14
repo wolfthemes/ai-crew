@@ -75,7 +75,7 @@ def reformulate_reply(reply_text: str, instruction: str = "", last_user_message:
 
 
 def summarize_ticket(comments: list[str]) -> str:
-    """Summarize the latest user message into one clean sentence."""
+    """Summarize the ticket thread into one clean sentence."""
     if not comments:
         return "No summary available."
 
@@ -89,7 +89,44 @@ def summarize_ticket(comments: list[str]) -> str:
 
     try:
         response = openai_client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a support assistant summarizing support tickets."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.3,
+            max_tokens=60
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"❌ OpenAI summarization failed: {e}")
+        return "Summary generation failed."
+    
+def summarize_last_user_comment(comments: list[str], last_msg: str) -> str:
+    """Summarize the last user comment from this ticket thread into one clean sentence."""
+    
+    if not comments:
+        return "No summary available."
+
+    full_text = "\n\n".join(comments)
+    
+    prompt = (
+        "You are a support assistant summarizing a customer request.\n\n"
+        "Below is the full support thread for context, followed by the last user message.\n"
+        "Your task is to summarize the **last user message** as a very short, label-style sentence.\n\n"
+        "⚠️ Do NOT include the user's name.\n"
+        "⚠️ Do NOT start with phrases like 'The user is experiencing...'\n"
+        "✅ Make it short (5 to 10 words max) and specific:\n\n"
+        "---\n"
+        f"Full thread:\n{full_text}\n\n"
+        "---\n"
+        f"Last user message:\n{last_msg}\n\n"
+        "Summary:"
+    )
+
+    try:
+        response = openai_client.chat.completions.create(
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": "You are a support assistant summarizing support tickets."},
                 {"role": "user", "content": prompt}
@@ -179,6 +216,7 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
     builder = theme_metadata.get(theme, {}).get("builder", "Unknown")
 
     summary = summarize_ticket(full_thread)
+    last_msg_summary = summarize_last_user_comment(last_msg)
     #summary = "Tickets summary in once clear sentence"
 
     user_site = raw_ticket.get("related_url", "—")
@@ -201,6 +239,7 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
         "first_message": first_msg,
         "last_message": last_msg,
         "last_message_timestamp": last_msg_timestamp,
+        "last_message_summary": last_msg_summary,
         "full_thread": comments,
         "formatted_text_thread": full_thread,
         "summary": summary,
