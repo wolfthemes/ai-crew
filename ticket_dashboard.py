@@ -6,11 +6,11 @@ import json
 import html
 import html2text
 from html import unescape
-import streamlit.components.v1 as components
 from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
 from utils.helpers import time_ago, strip_html_tags
 from utils.tinymce_component import tinymce_editor, submit_button_script_inline
+from tinymce_bridge import get_editor_reply
 
 load_dotenv()
 
@@ -125,7 +125,7 @@ with cols[0]:
     
     if st.button("♻️ Reformulate"):
         try:
-            reply_text = st.session_state["reply"]
+            reply_text = get_editor_reply()
             if not isinstance(reply_text, str):
                 reply_text = str(reply_text)
 
