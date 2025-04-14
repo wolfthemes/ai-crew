@@ -26,8 +26,6 @@ if "fastapi_started" not in st.session_state:
     threading.Thread(target=run_fastapi, daemon=True).start()
     st.session_state.fastapi_started = True
 
-
-
 if "preprocessing_done" not in st.session_state:
     preprocess_tickets.run_preprocessing()
     st.session_state.preprocessing_done = True
@@ -192,4 +190,4 @@ with cols[1]:
     st.markdown(f"**Theme:** {ticket['theme']}")
     st.markdown(f"**Customer:** [{ticket['customer']}]({ticket['customer_url']})")
     st.markdown(f"**Website:** {ticket['user_site']}")
-    st.markdown(f"**Ticket Link:** [View on Ticksy]({ticket['ticket_url']})")
+    st.markdown(f"**Ticket Link:** [#{ticket['id']}]({ticket['ticket_url']})")
