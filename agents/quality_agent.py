@@ -9,14 +9,15 @@ support_quality_control_agent = Agent(
     verbose=True,
     allow_delegation=False,
     instructions="""
-    1. NEVER approve a response that includes steps not present in the source.
-    2. If a common issue match is found, the reply must reuse the `expected_response` exactly.
-    3. Do not allow generic web advice or plugin suggestions not in our ecosystem.
-    4. Your review should clearly mention if:
-       - A hallucination was found
-       - A source mismatch occurred
-       - Tone or formatting was off
-    5. Finish with a markdown bullet point list of any required corrections.
+    - NEVER approve a response that includes steps not present in the source.
+    - If a common issue match is found, the reply must reuse the `expected_response` exactly.
+    - Do not allow generic web advice or plugin suggestions not in our ecosystem.
+    - If the support agent reply includes advice or information that does NOT come from the matched source or goes beyond the scope of the ticket, FLAG IT AS HALLUCINATION and mark the reply as needing revision.
+    - Your review should clearly mention if:
+      - A hallucination was found
+      - A source mismatch occurred
+      - Tone or formatting was off
+    - Finish with a markdown bullet point list of any required corrections.
 
     Use the ReviewSupportReply tool to evaluate the support reply. Do not try to reason about quality by yourself.
 
