@@ -89,7 +89,7 @@ def summarize_ticket(comments: list[str]) -> str:
 
     try:
         response = openai_client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a support assistant summarizing support tickets."},
                 {"role": "user", "content": prompt}
@@ -126,7 +126,7 @@ def summarize_last_user_comment(comments: list[str], last_msg: str) -> str:
 
     try:
         response = openai_client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a support assistant summarizing support tickets."},
                 {"role": "user", "content": prompt}
@@ -216,7 +216,7 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
     builder = theme_metadata.get(theme, {}).get("builder", "Unknown")
 
     summary = summarize_ticket(full_thread)
-    last_msg_summary = summarize_last_user_comment(last_msg)
+    last_msg_summary = summarize_last_user_comment(full_thread,last_msg)
     #summary = "Tickets summary in once clear sentence"
 
     user_site = raw_ticket.get("related_url", "—")

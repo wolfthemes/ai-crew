@@ -32,11 +32,13 @@ st.sidebar.header("📬 Tickets")
 
 for idx, ticket in enumerate(tickets_data):
     summary_clean = strip_html_tags(ticket['summary'])
+    last_message_summary_clean = strip_html_tags(ticket['last_message_summary'])
     timestamp = time_ago(ticket.get("last_message_timestamp", "2025-01-01 00:00:00"))
 
     st.sidebar.markdown(f"""
     <div style='text-align: left; padding-bottom: 0.2em;'>
         {"🔒 " if ticket["needs_human"] else ""}<strong>{summary_clean}</strong><br>
+        <span>{last_message_summary_clean}</span><br>
         <small>{ticket['customer']} ({ticket['theme']}) · {timestamp}</small><br>
     </div>
     """, unsafe_allow_html=True)
