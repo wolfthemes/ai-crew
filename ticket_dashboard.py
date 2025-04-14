@@ -13,6 +13,9 @@ from utils.tinymce_component import tinymce_editor, get_tinymce_content, submit_
 
 import subprocess
 
+# # Update tickets
+# subprocess.run(["python", "preprocess_tickets.py"], check=True)
+
 if "api_started" not in st.session_state:
     subprocess.Popen(["uvicorn", "utils.editor_api:app", "--port", "5050", "--reload"])
     st.session_state.api_started = True
