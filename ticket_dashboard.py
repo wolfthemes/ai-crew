@@ -1,26 +1,29 @@
 
 import streamlit as st
 import requests
+import threading
 import os
 import json
 import html
 import html2text
 import subprocess
 from html import unescape
-from dotenv import load_dotenv
 from crews.support_crew import support_crew_with_research
 from utils.helpers import time_ago, strip_html_tags
+from utils.post_to_ticksy import post_to_ticksy
 from utils.tinymce_component import tinymce_editor, get_tinymce_content, submit_button_script_inline
+from uvicorn import Config, Server
+from utils.editor_api import app  # your FastAPI app
 
-if "api_started" not in st.session_state:
-    subprocess.Popen(["uvicorn", "utils.editor_api:app", "--port", "5050"])
-    st.session_state.api_started = True
+def run_fastapi():
+    config = Config(app=app, port=5050, log_level="info")
+    server = Server(config)
+    server.run()
 
-load_dotenv()
-TINYMCE_API_KEY = os.getenv("TINYMCE_API_KEY")
-TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
-TICKSY_API_KEY = os.getenv("TICKSY_API_KEY")
-TICKSY_API_URL = f"https://api.ticksy.com/v1/{TICKSY_DOMAIN}/{TICKSY_API_KEY}"
+# Run only once
+if "fastapi_started" not in st.session_state:
+    threading.Thread(target=run_fastapi, daemon=True).start()
+    st.session_state.fastapi_started = True
 
 # Load preprocessed tickets
 with open("data/dynamic/preprocessed_tickets.json", encoding="utf-8") as f:
@@ -158,14 +161,22 @@ with cols[0]:
     with col1:
         private_reply = st.checkbox("Private", value=False)
 
-    with col2:   
+    with col2:
 
-        st.markdown("""
-        <button id="post_submit" style="padding: 0.5em 1em; font-size: 1em; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer;">
-        ✅ Post Reply
-        </button>
-        """, unsafe_allow_html=True)
-        submit_button_script_inline(ticket_id=ticket["id"], private=private_reply)
+        if st.button("✅ Post Reply to Ticksy"):
+            
+            reply = get_tinymce_content(ticket["id"])
+            st.session_state.reply = reply
+            
+            if not reply.strip():
+                st.warning("⚠️ Editor is empty — nothing to post.")
+            else:
+                result = post_to_ticksy(ticket_id=ticket["id"], message=reply)
+
+                if result.get("status") == "ok":
+                    st.success("✅ Reply posted to Ticksy.")
+                else:
+                    st.error("❌ Failed to post. Check console/logs.")
 
 # === RIGHT: Ticket metadata ===
 with cols[1]:

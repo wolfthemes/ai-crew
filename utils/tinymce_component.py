@@ -82,6 +82,7 @@ def get_tinymce_content(ticket_id: str) -> str:
     except FileNotFoundError:
         return ""
 
+# Not used any more
 def submit_button_script_inline(ticket_id: str, private: bool):
     TICKSY_API_KEY = os.getenv("TICKSY_API_KEY")
     TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
