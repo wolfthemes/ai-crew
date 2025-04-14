@@ -117,6 +117,9 @@ with cols[0]:
 
     # Render TinyMCE with whatever is in session state
     tinymce_editor(initial_content=st.session_state.get("reply", ""), height=450)
+    st.write(get_editor_reply())
+    
+    #st.write(f"Retrieved from localStorage: {st.session_state.reply}")
 
     col1, col2 = st.columns(2)
 
@@ -127,12 +130,14 @@ with cols[0]:
     
     if st.button("♻️ Reformulate"):
         try:
-            reply_text = get_editor_reply()
-            if not isinstance(reply_text, str):
-                reply_text = str(reply_text)
+            
+            tinymce_reply = get_editor_reply()
+
+            if not isinstance(tinymce_reply, str):
+                reply_text = str(tinymce_reply)
 
             reformulated = reformulate_reply(
-                reply_text=reply_text,
+                reply_text=tinymce_reply,
                 instruction=reformulate_instruction,
                 last_user_message=ticket["last_message"]
             )

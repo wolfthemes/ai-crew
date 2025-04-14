@@ -4,6 +4,17 @@ import streamlit.components.v1 as components
 import uuid
 
 def tinymce_editor(initial_content="", height=500):
+    """
+    Render a TinyMCE editor and return its content.
+    
+    Parameters:
+    - initial_content: The starting content for the editor
+    - height: Editor height in pixels
+    
+    Returns:
+    - The editor content
+    """
+    # Generate a unique ID
     editor_id = f"editor_{uuid.uuid4().hex[:8]}"
     TINYMCE_API_KEY = os.getenv("TINYMCE_API_KEY")
 
@@ -34,12 +45,13 @@ def tinymce_editor(initial_content="", height=500):
                 toolbar: "undo redo | bold italic | bullist numlist | link | code",
                 setup: function (editor) {{
                     editor.on("Change KeyUp", sendToStreamlit);
+                    
+                    // Add a blur event to ensure we capture the final content
+                    editor.on("blur", sendToStreamlit);
                 }},
-                init_instance_callback: function () {{
-                    setTimeout(() => {{
-                        const content = tinymce.get(editorId).getContent();
-                        localStorage.setItem("tinymce_reply", content);
-                    }}, 500);
+                init_instance_callback: function (editor) {{
+                    // Send initial content after initialization
+                    sendToStreamlit();
                 }}
             }});
         </script>
@@ -47,7 +59,10 @@ def tinymce_editor(initial_content="", height=500):
     </html>
     """
 
-    components.html(component_html, height=450)
+    # Return the content of the editor
+    return components.html(component_html, height=height)
+
+
 
 def submit_button_script_inline(ticket_id: str, private: bool):
     TICKSY_API_KEY = os.getenv("TICKSY_API_KEY")
@@ -114,3 +129,4 @@ def submit_button_script_inline(ticket_id: str, private: bool):
     </script>
     """
     components.html(js, height=0)
+

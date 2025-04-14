@@ -7,3 +7,4 @@ data/faiss_store/
 /data/dynamic/
 .env
 logs/
+*node_modules/
