@@ -13,7 +13,7 @@ from utils.helpers import time_ago, strip_html_tags
 from utils.tinymce_component import tinymce_editor, get_tinymce_content, submit_button_script_inline
 
 if "api_started" not in st.session_state:
-    subprocess.Popen(["uvicorn", "utils.editor_api:app", "--port", "5050", "--reload"])
+    subprocess.Popen(["uvicorn", "utils.editor_api:app", "--port", "5050"])
     st.session_state.api_started = True
 
 load_dotenv()
@@ -119,13 +119,7 @@ with cols[0]:
 
     # Render TinyMCE with whatever is in session state
     tinymce_editor(initial_content=st.session_state.get("reply", ""), ticket_id=ticket["id"], height=450)
-    reply = get_tinymce_content( ticket_id=ticket["id"] )
     
-    st.markdown("### 🔁 Synced TinyMCE reply:")
-    st.code(reply)
-    
-    #st.write(f"Retrieved from localStorage: {st.session_state.reply}")
-
     col1, col2 = st.columns(2)
 
     from utils.ticket_utils import reformulate_reply
@@ -136,7 +130,7 @@ with cols[0]:
     if st.button("♻️ Reformulate"):
         try:
             
-            reply = get_tinymce_content( ticket_id=ticket["id"] )
+            reply = st.session_state.get("reply") or get_tinymce_content(ticket["id"])
 
             if not isinstance(reply, str):
                 reply = str(reply)
