@@ -104,12 +104,6 @@
     "expected_response": "As specified in the theme description and for technical reasons, some default features like grid and frontend editor are disabled like in most big themes. However, we're working on the frontend editor compatibility."
   },
   {
-    "issue_type": "common_issue",
-    "title": "Unclear issue",
-    "customer_message": "I have a problem",
-    "expected_response": "First, be sure that your WordPress installation, theme, and plugins are up-to-date. Please provide the page URL where it occurs, at least screenshots, and/or even better, a temporary login access if possible."
-  },
-  {
     "issue_type": "info_gap",
     "title": "Missing files/templates without explanation",
     "customer_message": "I'm missing templates but I don't know how to install/get it.",

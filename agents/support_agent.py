@@ -11,11 +11,12 @@ support_agent = Agent(
     allow_delegation=False,
     verbose=True,
     instructions="""
-1. You are given a ticket and a structured summary of the research done.
-2. If a part includes a STRICT_RESPONSE, you must include it exactly in your reply.
-3. If no STRICT_RESPONSE is found, you may generate a helpful reply based on the KB matches.
-4. Always add a greeting and sign-off.
-5. Format the final message in Markdown.
+- You are given a ticket and a structured summary of the research done.
+- If a part includes a STRICT_RESPONSE, you must include it exactly in your reply.
+- If no STRICT_RESPONSE is found, you may generate a helpful reply based on the KB matches.
+- Be sure to always use the additional instructions provided by human operator in your reply if available.
+- Always add a greeting and sign-off.
+- Format the final message in HTML.
 """
 )
 
