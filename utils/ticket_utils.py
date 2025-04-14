@@ -265,3 +265,50 @@ def save_preprocessed_tickets(tickets, output_path="data/dynamic/preprocessed_ti
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"preprocessed_tickets": tickets}, f, indent=2, ensure_ascii=False)
+
+def get_ticket_metadata(ticket_id):
+    ticket = load_ticket_by_id(ticket_id)
+    
+    if not ticket:
+        return {}
+
+    return {
+        "ticket_id": ticket_id,
+        "user_site": ticket.get("user_site"),
+        "theme": ticket.get("theme"),
+        "builder": ticket.get("builder"),
+        "customer": ticket.get("customer"),
+        "summary": ticket.get("summary"),
+        "last_message": ticket.get("last_message"),
+        "full_thread": ticket.get("full_thread", []),
+        "flags": {
+            "needs_human": ticket.get("needs_human"),
+            "private": ticket.get("private", False)
+        }
+    }
+
+
+import json
+
+def load_ticket_by_id(ticket_id, path="data/dynamic/preprocessed_tickets.json"):
+    """
+    Load a specific ticket by ID from the preprocessed tickets file.
+
+    Args:
+        ticket_id (int or str): The ID of the ticket to load.
+        path (str): Path to the preprocessed ticket data file.
+
+    Returns:
+        dict or None: The ticket data dict if found, otherwise None.
+    """
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            all_data = json.load(f)
+            tickets = all_data.get("preprocessed_tickets", [])
+            for ticket in tickets:
+                if str(ticket["id"]) == str(ticket_id):
+                    return ticket
+    except Exception as e:
+        print(f"Error loading ticket by ID {ticket_id}: {e}")
+    
+    return None

@@ -110,7 +110,7 @@ else:
         if st.button("🤖 Generate / Regenerate Reply"):
             with st.spinner("Generating reply..."):
                 try:
-                    result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction)
+                    result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction, ticket_id=ticket["id"])
 
                     raw_reply = result["reply"].output if hasattr(result["reply"], "output") else str(result["reply"])
                     markdown_debug = html2text.html2text(raw_reply)

@@ -3,7 +3,7 @@ from agents.support_agent import support_agent
 from utils.ticket_classifier import classify_ticket, split_ticket_into_parts
 from utils.document_loaders import load_guidelines
 
-def create_support_reply_task(ticket_text: str, research_output: str = None, instruction: str = "") -> Task:
+def create_support_reply_task(ticket_text: str, research_output: str = None, instruction: str = "", ticket_meta: dict = None) -> Task:
     guidelines = load_guidelines()
 
     return Task(
