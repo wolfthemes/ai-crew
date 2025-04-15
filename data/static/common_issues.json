@@ -1,9 +1,10 @@
 [
   {
     "issue_type": "common_issue",
-    "title": "Can't activate purchase code",
-    "customer_message": "Can't activate purchase code?",
-    "expected_response": "issue with some hosters that I don't recommend (strato, OVH mainly), please give you login so I can fix this (recommended hosts https://wolfthemes.ticksy.com/article/13381/)"
+    "title": "Theme activation issue",
+    "customer_message": "I can't activate the theme using my licence purchase code?",
+    "expected_response": "<p>It seems like there may be an issue that can sometimes happen with certain hosting providers. I'm currently working on improving the activation system to avoid this.</p><p>That's what site always recommed <a href=\"https://fr.siteground.com/?referrer_id=8486532\" target=\"_blank\" rel=\"noopener\">Siteground</a> as hoster among other <a href=\"https://wolfthemes.ticksy.com/article/13381/\" target=\"_blank\" rel=\"noopener\">recommeded hosts</a>.</p><p>To help you resolve it quickly, I&rsquo;ll need access to your WordPress dashboard.<br>Could you please provide your login credentials so I can apply a workaround ?</p>",
+    "plugin": []
   },
   {
     "issue_type": "common_issue",
