@@ -1,5 +1,5 @@
 from crewai import Task
-from agents.support_quality_control_agent import support_quality_control_agent
+from deprecated.support_quality_control_agent import support_quality_control_agent
 
 def build_review_task(ticket_text, kb_result, support_reply):
     return Task(

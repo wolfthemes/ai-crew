@@ -3,7 +3,7 @@ import json
 from crewai import Crew, Process
 from agents.research_agent import research_agent
 from agents.support_agent import support_agent
-from agents.support_quality_control_agent import support_quality_control_agent
+from agents.quality_agent import support_quality_control_agent
 
 from utils.ticket_utils import get_ticket_metadata
 from tasks.research_task import create_research_task
@@ -20,12 +20,7 @@ def support_crew_with_research(ticket_text: str, instruction: str = "", ticket_i
     else:
         ticket_meta = {}
 
-    
-    print("📦 Ticket meta:")
-    print(json.dumps(ticket_meta, indent=2, ensure_ascii=False))
-    
     # 1. Research the ticket and structure its issues
-    #research_task = create_research_task(ticket_text)
     research_task = create_research_task(ticket_text, instruction=instruction, ticket_meta=ticket_meta)
     research_task.name = "Research"
     research_data = research_task._output["research_output"]

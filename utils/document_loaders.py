@@ -74,21 +74,6 @@ def load_common_issues():
         for item in data
     ]
 
-
-def load_theme_notes():
-    data = parse_json_file(os.path.join(DATA_FOLDER, "theme_notes.json"))
-    return [
-        Document(
-            page_content=item["note"],
-            metadata={
-                "title": item["title"],
-                "theme": item.get("theme"),
-                "version": item.get("version"),
-                "source": "theme_note"
-            }
-        ) for item in data
-    ]
-
 def load_ticket_examples():
     data = parse_json_file(os.path.join(DATA_FOLDER, "ticket_examples.json"))
     return [

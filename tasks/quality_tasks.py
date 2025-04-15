@@ -1,5 +1,5 @@
 from crewai import Task
-from agents.support_quality_control_agent import support_quality_control_agent
+from agents.quality_agent import support_quality_control_agent
 from utils.document_loaders import load_guidelines
 
 def review_support_reply_task(ticket_text: str, instruction: str = "", ticket_meta: dict = None) -> Task:
