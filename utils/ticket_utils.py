@@ -175,7 +175,7 @@ def extract_first_user_comment(comments):
     """Return the last user comment from the comments list, unescaped and formatted."""
     user_comments = [c for c in comments if c.get('user_type') == 'user']
     if user_comments:
-        return unescape(user_comments[0].get('comment', '').replace('\\n', '\n'))
+        return unescape(user_comments[-1].get('comment', '').replace('\\n', '\n'))
     return ""
 
 def extract_latest_user_comment(comments):
