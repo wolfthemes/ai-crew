@@ -3,11 +3,17 @@ from pydantic import BaseModel, Field
 from crewai.tools import BaseTool
 import os
 import subprocess
+from dotenv import load_dotenv
+
+load_dotenv()
 
 REPO_ROOT = os.path.abspath("repos")
+GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 class GitHubInput(BaseModel):
-    repo_name: str = Field(..., description="The name of the repository (e.g. sample-plugin)")
+    repo_name: str = Field(..., description="The name of the repository (e.g. vinylparadise)")
+    owner: str = Field(default=GITHUB_USERNAME, description="The owner of the repository (user or org)")
     branch: str = Field(default="main", description="Branch to checkout")
 
 class GitHubTool(BaseTool):
@@ -15,19 +21,18 @@ class GitHubTool(BaseTool):
     description: str = "Clones a GitHub repo using env-based authentication"
     args_schema: Type[BaseModel] = GitHubInput
 
-    def _run(self, repo_name: str, branch: str) -> str:
+    def _run(self, repo_name: str, owner: str = GITHUB_USERNAME, branch: str = "main") -> str:
         try:
-            username = os.getenv("GITHUB_USERNAME")
-            token = os.getenv("GITHUB_TOKEN")
-
-            if not username or not token:
+            if not GITHUB_USERNAME or not GITHUB_TOKEN:
                 return "GITHUB_USERNAME and/or GITHUB_TOKEN not set in environment."
 
-            repo_url = f"https://{username}:{token}@github.com/{username}/{repo_name}.git"
+            #https://github.com/wolfthemes/vinylparadise.git
+            #repo_url = f"https://{GITHUB_USERNAME}:{GITHUB_TOKEN}@github.com/{owner}/{repo_name}.git"
+            repo_url = f"https://github.com/{GITHUB_USERNAME}/{repo_name}.git"
             clone_path = os.path.join(REPO_ROOT, repo_name)
 
             if os.path.exists(clone_path):
-                return f"Repo already exists at {clone_path}"
+                return f"CLONE_STATUS: SKIPPED — Repo already exists at {clone_path}"
 
             os.makedirs(REPO_ROOT, exist_ok=True)
 
@@ -37,12 +42,12 @@ class GitHubTool(BaseTool):
                 check=True
             )
 
-            return f"Repo '{repo_name}' cloned to {clone_path} on branch '{branch}'"
+            return f"CLONE_STATUS: SUCCESS — Repo '{owner}/{repo_name}' cloned to {clone_path} on branch '{branch}'"
 
         except subprocess.CalledProcessError as e:
-            return f"Git error: {e}"
+            return f"CLONE_STATUS: FAILED — Git error: {e}"
         except Exception as e:
-            return f"Error: {e}"
+            return f"CLONE_STATUS: FAILED — Error: {e}"
 
     def run(self, query: str) -> str:
-        return "Use structured input with repo_name and branch."
+        return "Use structured input with 'repo_name', optional 'owner', and 'branch'."
