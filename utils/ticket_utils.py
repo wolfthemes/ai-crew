@@ -339,7 +339,7 @@ def get_theme_last_update(theme_name):
     # Loop through all themes to match by name
     for theme in data.values():
         if theme.get("name", "").lower() == theme_name.lower():
-            return theme['envato_id']
+            return theme['updated']
     
     return f"No date available"
     
