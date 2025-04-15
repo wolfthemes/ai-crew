@@ -26,3 +26,4 @@ You must use a professional yet warm tone and not sound too "corporate" to refle
 
 5. Conclusion:
     - End with "I hope it helps", "Kind Regards", or "Best regards"
+    - DO NOT add any name as signature or any placeholder like [Your Name] or WolfThemes support
