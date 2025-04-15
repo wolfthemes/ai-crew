@@ -75,7 +75,7 @@ def tinymce_editor(initial_content="", ticket_id="0", height=500):
     return components.html(component_html, height=height)
 
 def get_tinymce_content(ticket_id: str) -> str:
-    path = f"data/dynamic/draft_{ticket_id}"
+    path = f"data/dynamic/editor/draft_{ticket_id}"
     try:
         with open(path, "r", encoding="utf-8") as f:
             return f.read()

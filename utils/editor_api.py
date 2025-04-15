@@ -19,8 +19,8 @@ async def save_editor_content(request: Request):
     content = data.get("html", "")
     ticket_id = data.get("ticket_id")
 
-    os.makedirs("data/dynamic", exist_ok=True)
-    with open(f"data/dynamic/draft_{ticket_id}", "w", encoding="utf-8") as f:
+    os.makedirs("data/dynamic/editor", exist_ok=True)
+    with open(f"data/dynamic/editor/draft_{ticket_id}", "w", encoding="utf-8") as f:
         f.write(content)
 
     return {"status": "ok", "message": "Reply saved"}
