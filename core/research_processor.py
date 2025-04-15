@@ -3,7 +3,7 @@ from core.ticket_parser import TicketParser
 from tools.kb_tools import search_kb_structured
 from tools.vector_retriever import retriever
 
-def process_ticket_research(ticket_text: str) -> str:
+def process_ticket_research(ticket_text: str, ticket_meta: dict = None) -> str:
         
     parser = TicketParser(ticket_text)
     parsed = parser.extract_all()
