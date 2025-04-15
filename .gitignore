@@ -8,3 +8,5 @@ data/faiss_store/
 .env
 logs/
 *node_modules/
+repos/*
+!repos/.gitkeep
