@@ -3,26 +3,15 @@ import sys
 import os
 import subprocess
 from utils.ticket_utils import preprocess_all_tickets, save_preprocessed_tickets
-from utils.ticket_classifier import classify_ticket
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-theme_metadata = {
-    "Omnity": {"builder": "Elementor"},
-    "MediaFoundry": {"builder": "Elementor"},
-    "Gaintab": {"builder": "WPBakery"},
-}
 
 def run_preprocessing():
     try:
         print("📦 Preprocessing all open tickets...")
         subprocess.run(["python", "crawlers/crawl_open_tickets.py"], check=True)
 
-        tickets = preprocess_all_tickets(
-            filepath="data/crawled/open_tickets.json",
-            theme_metadata=theme_metadata,
-            classify_ticket_func=classify_ticket,
-        )
+        tickets = preprocess_all_tickets(filepath="data/crawled/open_tickets.json")
 
         save_preprocessed_tickets(tickets, output_path="data/dynamic/preprocessed_tickets.json")
         print(f"✅ {len(tickets)} tickets saved to preprocessed_tickets.json")

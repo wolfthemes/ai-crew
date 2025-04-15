@@ -5,7 +5,6 @@ import json
 from openai import OpenAI
 from html import unescape
 from pathlib import Path
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -171,6 +170,14 @@ def load_ticket(filepath="data/crawled/open_tickets.json", index=0):
     else:
         raise IndexError(f"No ticket at index {index}.")
 
+
+def extract_first_user_comment(comments):
+    """Return the last user comment from the comments list, unescaped and formatted."""
+    user_comments = [c for c in comments if c.get('user_type') == 'user']
+    if user_comments:
+        return unescape(user_comments[0].get('comment', '').replace('\\n', '\n'))
+    return ""
+
 def extract_latest_user_comment(comments):
     """Return the first user comment from the comments list, unescaped and formatted."""
     user_comments = [c for c in comments if c.get('user_type') == 'user']
@@ -208,27 +215,33 @@ def extract_theme_from_envato(envato_verified_string):
     except Exception:
         return "Unknown"
 
-def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
+def preprocess_ticket(raw_ticket):
+    
+    # Tickets info
     comments = raw_ticket["ticket_comments"]
-    first_msg = unescape(comments[0]["comment"])
+    first_msg = extract_first_user_comment(comments)
     last_msg = extract_latest_user_comment(comments)
     last_msg_timestamp = extract_latest_user_comment_timestamp(comments)
     full_thread = format_ticket_history(comments)
-
-    theme = extract_theme_from_envato(raw_ticket.get("envato_verified_string", "{}"))
-    builder = theme_metadata.get(theme, {}).get("builder", "Unknown")
-
-    summary = summarize_ticket(full_thread)
+    full_thread_summary = summarize_ticket(full_thread)
     last_msg_summary = summarize_last_user_comment(full_thread,last_msg)
-    #summary = "Tickets summary in once clear sentence"
 
+    # Theme info
+    theme = extract_theme_from_envato(raw_ticket.get("envato_verified_string", "{}"))
+    builder = get_theme_builder(theme)
+    category = get_theme_category(theme)
+    version = get_theme_version(theme)
+    
+    #summary = "Tickets summary in once clear sentence"
+    # User info
     user_site = raw_ticket.get("related_url", "—")
     customer_name = raw_ticket.get("user_name", "Unknown")
     customer_url = f"https://{TICKSY_DOMAIN}.ticksy.com/customer/{raw_ticket.get('user_id')}"
     ticket_url = f"https://{TICKSY_DOMAIN}.ticksy.com/ticket/{raw_ticket['ticket_id']}"
 
-    match_source = classify_ticket_func(last_msg)
-    needs_human = contains_credentials(last_msg)
+    #match_source = classify_ticket_func(last_msg)
+    #contains_credentials = contains_credentials(full_thread)
+    needs_human = "false"
 
     return {
         "id": raw_ticket["ticket_id"],
@@ -237,6 +250,8 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
         "customer_url": customer_url,
         "theme": theme,
         "builder": builder,
+        "category": category,
+        "version": version,
         "user_site": user_site,
         "ticket_url": ticket_url,
         "first_message": first_msg,
@@ -244,27 +259,55 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
         "last_message_timestamp": last_msg_timestamp,
         "last_message_summary": last_msg_summary,
         "full_thread": comments,
+        "full_thread_sumary": full_thread_summary,
         "formatted_text_thread": full_thread,
-        "summary": summary,
-        "match_source": match_source,
+        #"contains_credentials" : contains_credentials,
+        #"match_source": match_source,
         "ai_reply": "",
         "needs_human": needs_human
     }
 
-def preprocess_all_tickets(filepath, theme_metadata, classify_ticket_func):
+def preprocess_all_tickets(filepath):
     with open(filepath, encoding="utf-8") as f:
         data = json.load(f)
 
     processed = []
     for t in data.get("open-tickets", []):
         if t.get("needs_response") == "1":
-            processed.append(preprocess_ticket(t, theme_metadata, classify_ticket_func))
+            processed.append(preprocess_ticket(t))
     return processed
 
 def save_preprocessed_tickets(tickets, output_path="data/dynamic/preprocessed_tickets.json"):
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"preprocessed_tickets": tickets}, f, indent=2, ensure_ascii=False)
+
+def get_theme_builder(slug):
+    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    theme = data.get(slug)
+    if theme:
+        return f"{theme['name']} uses {theme['builder']}."
+    else:
+        return f"No info found for theme '{slug}'."
+    
+def get_theme_category(slug):
+    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    theme = data.get(slug)
+    if theme:
+        return f"{theme['name']} uses {theme['category']}."
+    else:
+        return f"No info found for theme '{slug}'."
+    
+def get_theme_version(slug):
+    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    theme = data.get(slug)
+    if theme:
+        return f"{theme['name']} uses {theme['version']}."
+    else:
+        return f"No info found for theme '{slug}'."
 
 def get_ticket_metadata(ticket_id):
     ticket = load_ticket_by_id(ticket_id)
@@ -287,8 +330,6 @@ def get_ticket_metadata(ticket_id):
         }
     }
 
-
-import json
 
 def load_ticket_by_id(ticket_id, path="data/dynamic/preprocessed_tickets.json"):
     """
