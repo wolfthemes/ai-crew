@@ -38,29 +38,3 @@ class SearchKnowledgeBaseTool(BaseTool):
     def run(self, query: str) -> str:
         return self._run(query)
 
-
-# --- Tool: GetThemeBuilder ---
-
-class ThemeBuilderInput(BaseModel):
-    slug: str = Field(..., description="The theme slug (folder name)")
-
-class GetThemeBuilderTool(BaseTool):
-    name: str = "GetThemeBuilder"
-    description: str = "Returns the builder used by a given theme slug (Elementor, WPBakery, etc)"
-    args_schema: Type[BaseModel] = ThemeBuilderInput
-
-    def _run(self, slug: str) -> str:
-        try:
-            with open(os.path.join("data", "theme_info.json"), encoding="utf-8") as f:
-                data = json.load(f)
-            theme = data.get(slug)
-            if theme:
-                return f"{theme['name']} uses {theme['builder']}."
-            else:
-                return f"No info found for theme '{slug}'."
-        except Exception as e:
-            return f"Error retrieving theme info: {e}"
-        
-    def run(self, query: str) -> str:
-        return self._run(query)
-
