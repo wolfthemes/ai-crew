@@ -1,5 +1,5 @@
 from crewai import Agent
-from tools.crewai_tools import ReviewSupportReplyTool
+from tools.review_tools import ReviewSupportReplyTool
 
 support_quality_control_agent = Agent(
     role="Support Quality Reviewer",
