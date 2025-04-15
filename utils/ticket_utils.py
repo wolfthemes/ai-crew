@@ -230,7 +230,7 @@ def preprocess_ticket(raw_ticket):
     # Theme info
     theme = extract_theme_from_envato(raw_ticket.get("envato_verified_string", "{}"))
     theme_url = get_theme_url(theme)
-    theme_demo_url = get_theme_url(theme)
+    theme_demo_url = get_theme_demo_url(theme)
     builder = get_theme_builder(theme)
     category = get_theme_category(theme)
     version = get_theme_version(theme)
@@ -306,7 +306,7 @@ def get_theme_demo_url(theme_name):
     # Loop through all themes to match by name
     for theme in data.values():
         if theme.get("name", "").lower() == theme_name.lower():
-            return theme['demo_url']
+            return theme['demourl']
     
     return f"Unknown"
 
