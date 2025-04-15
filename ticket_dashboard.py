@@ -12,7 +12,7 @@ from crews.support_crew import support_crew_with_research
 from tools import preprocess_tickets
 from utils.helpers import time_ago, strip_html_tags
 from utils.post_to_ticksy import post_to_ticksy
-from utils.tinymce_component import tinymce_editor, get_tinymce_content, submit_button_script_inline
+from utils.tinymce_component import tinymce_editor, get_tinymce_content
 from uvicorn import Config, Server
 from utils.editor_api import app  # your FastAPI app
 
@@ -31,7 +31,7 @@ if "preprocessing_done" not in st.session_state:
     st.session_state.preprocessing_done = True
 
 # Load preprocessed tickets
-with open("data/dynamic/preprocessed_tickets.json", encoding="utf-8") as f:
+with open("data/dynamic/tickets/preprocessed_tickets.json", encoding="utf-8") as f:
     tickets_data = json.load(f)["preprocessed_tickets"]
 
 st.set_page_config(page_title="WolfThemes Tickets", layout="wide")

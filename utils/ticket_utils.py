@@ -403,12 +403,12 @@ def preprocess_all_tickets(filepath):
             processed.append(preprocess_ticket(t))
     return processed
 
-def save_preprocessed_tickets(tickets, output_path="data/dynamic/preprocessed_tickets.json"):
+def save_preprocessed_tickets(tickets, output_path="data/dynamic/tickets/preprocessed_tickets.json"):
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"preprocessed_tickets": tickets}, f, indent=2, ensure_ascii=False)
 
-def load_ticket_by_id(ticket_id, path="data/dynamic/preprocessed_tickets.json"):
+def load_ticket_by_id(ticket_id, path="data/dynamic/tickets/preprocessed_tickets.json"):
     """
     Load a specific ticket by ID from the preprocessed tickets file.
 

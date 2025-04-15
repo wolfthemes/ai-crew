@@ -13,7 +13,7 @@ def run_preprocessing():
 
         tickets = preprocess_all_tickets(filepath="data/crawled/open_tickets.json")
 
-        save_preprocessed_tickets(tickets, output_path="data/dynamic/preprocessed_tickets.json")
+        save_preprocessed_tickets(tickets, output_path="data/dynamic/tickets/preprocessed_tickets.json")
         print(f"✅ {len(tickets)} tickets saved to preprocessed_tickets.json")
 
     except Exception as e:
