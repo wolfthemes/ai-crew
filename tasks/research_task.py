@@ -2,8 +2,9 @@ from crewai import Task
 from core.research_processor import process_ticket_research
 from agents.research_agent import research_agent
 
-def create_research_task(ticket_text: str, instruction: str = "") -> Task:
-    research_output = process_ticket_research(ticket_text)
+def create_research_task(ticket_text: str, instruction: str = "", ticket_meta: dict = None) -> Task:
+    
+    research_output = process_ticket_research(ticket_text, ticket_meta)
 
     task = Task(
         description="Pre-parsed ticket. Research has been done already. "

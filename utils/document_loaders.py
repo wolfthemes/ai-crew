@@ -54,7 +54,7 @@ def load_theme_docs():
     return format_documents(parse_json_file(os.path.join(DATA_FOLDER, "crawled/theme_docs.json")), "theme_doc")
 
 def load_common_issues():
-    data = parse_json_file(os.path.join(DATA_FOLDER, "common_issues.json"))
+    data = parse_json_file(os.path.join(DATA_FOLDER, "static/common_issues.json"))
     return [
         Document(
             page_content = (
@@ -72,21 +72,6 @@ def load_common_issues():
             }
         )
         for item in data
-    ]
-
-
-def load_theme_notes():
-    data = parse_json_file(os.path.join(DATA_FOLDER, "theme_notes.json"))
-    return [
-        Document(
-            page_content=item["note"],
-            metadata={
-                "title": item["title"],
-                "theme": item.get("theme"),
-                "version": item.get("version"),
-                "source": "theme_note"
-            }
-        ) for item in data
     ]
 
 def load_ticket_examples():
@@ -147,10 +132,14 @@ def load_closed_tickets():
             ))
     return documents
 
-def load_support_agent_backstory(path="data/support_agent_backstory.md"):
+def load_support_agent_backstory(path="prompts/support_agent_backstory.md"):
     with open(path, encoding="utf-8") as f:
         return f.read()
     
-def load_guidelines(path="data/support_task_guidelines.md"):
+def load_support_agent_instructions(path="prompts/support_agent_instructions.md"):
+    with open(path, encoding="utf-8") as f:
+        return f.read()
+    
+def load_guidelines(path="prompts/support_task_guidelines.md"):
     with open(path, encoding="utf-8") as f:
         return f.read()

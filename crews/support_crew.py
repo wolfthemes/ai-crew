@@ -1,32 +1,37 @@
+import json
+
 from crewai import Crew, Process
 from agents.research_agent import research_agent
 from agents.support_agent import support_agent
-from agents.support_quality_control_agent import support_quality_control_agent
+from agents.quality_agent import support_quality_control_agent
 
+from utils.ticket_utils import get_ticket_metadata
 from tasks.research_task import create_research_task
 from tasks.support_tasks import create_support_reply_task
 from tasks.quality_tasks import review_support_reply_task
 
-def support_crew_with_research(ticket_text: str, instruction: str = ""):
+def support_crew_with_research(ticket_text: str, instruction: str = "", ticket_id: str = ""):
     """
     Crew pipeline: Research → Support Reply → Review
     """
+
+    if ticket_id:
+        ticket_meta = get_ticket_metadata(ticket_id)
+    else:
+        ticket_meta = {}
+
     # 1. Research the ticket and structure its issues
-    #research_task = create_research_task(ticket_text)
-    research_task = create_research_task(ticket_text, instruction=instruction)
+    research_task = create_research_task(ticket_text, instruction=instruction, ticket_meta=ticket_meta)
     research_task.name = "Research"
     research_data = research_task._output["research_output"]
 
-    #print("📦 Research Output for Support Agent:")
-    #print(research_task.metadata["research_output"])
-
     # 2. Generate the support reply using research result
-    support_task = create_support_reply_task(ticket_text, research_data, instruction=instruction)
+    support_task = create_support_reply_task(ticket_text, research_data, instruction=instruction, ticket_meta=ticket_meta)
     support_task.name = "Support Reply"
     support_task.context = [research_task]
 
     # 3. Review the reply
-    review_task = review_support_reply_task(ticket_text, instruction=instruction)
+    review_task = review_support_reply_task(ticket_text, instruction=instruction, ticket_meta=ticket_meta)
     review_task.name = "Review"
     review_task.context = [support_task]
 

@@ -53,6 +53,7 @@ def extract_metadata(config):
         "version": config.get("version"),
         "updated": config.get("updated"),
         "category": config.get("category"),
+        "itemId": config.get("itemId"),
     }
 
 def main():

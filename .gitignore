@@ -7,5 +7,10 @@ data/faiss_store/
 /data/dynamic/
 .env
 logs/
+
 # Ignore cloned or test repos
-repos/
+repos/*
+!repos/.gitkeep
+
+# Node-related (if you use Node or frontend tooling)
+node_modules/

@@ -50,8 +50,8 @@ def preprocess_ticket(raw_ticket, theme_metadata, classify_ticket_func):
 
     user_site = raw_ticket.get("related_url", "—")
     customer_name = raw_ticket.get("user_name", "Unknown")
-    customer_url = f"https://ticksy.com/user/{raw_ticket.get('user_id')}"
-    ticket_url = f"https://ticksy.com/ticket/{raw_ticket['ticket_id']}"
+    customer_url = f"https://wolfthemes.ticksy.com/user/{raw_ticket.get('user_id')}"
+    ticket_url = f"https://wolfthemes.ticksy.com/ticket/{raw_ticket['ticket_id']}"
 
     match_source = classify_ticket_func(last_msg)
     needs_human = contains_credentials(last_msg)

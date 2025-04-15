@@ -1,8 +1,7 @@
 # run_json_ticket.py
-import json
-from crews.support_crew import support_crew_with_research
 from utils.ticket_utils import preprocess_all_tickets, save_preprocessed_tickets
 from utils.ticket_classifier import classify_ticket
+import subprocess
 
 # Theme metadata stub (replace with real dynamic loading later)
 theme_metadata = {
@@ -15,7 +14,7 @@ def main():
 
     try:
         print("📦 Preprocessing all open tickets...")
-
+        subprocess.run(["python", "crawlers/crawl_open_tickets.py"], check=True)
         tickets = preprocess_all_tickets(
             filepath="data/crawled/open_tickets.json",
             theme_metadata=theme_metadata,

@@ -9,12 +9,12 @@ from dotenv import load_dotenv
 
 from utils.document_loaders import (
     load_common_issues,
-    load_theme_notes,
     load_theme_meta,
     load_kb_articles,
     load_theme_docs,
     load_closed_tickets,
-    load_support_agent_backstory
+    load_support_agent_backstory,
+    load_support_agent_instructions
 )
 from utils.helpers import compute_all_file_hashes, hashes_changed
 
@@ -28,15 +28,15 @@ USE_VECTORSTORE = True
 MAX_WORKERS = max(1, multiprocessing.cpu_count() - 1)
 
 # Load all documents
-theme_notes = load_theme_notes()
 theme_meta_docs = load_theme_meta()
 articles = load_kb_articles()
 theme_docs = load_theme_docs()
 tickets = load_closed_tickets()
 common_issues = load_common_issues()
 support_agent_backstory_text = load_support_agent_backstory()
+support_agent_instructions_text = load_support_agent_instructions()
 
-all_docs = theme_meta_docs + theme_notes + common_issues + articles + theme_docs + tickets
+all_docs = theme_meta_docs + common_issues + articles + theme_docs + tickets
 
 # Build or load retriever
 if USE_VECTORSTORE:

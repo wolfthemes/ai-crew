@@ -1,25 +1,37 @@
 
 import streamlit as st
 import requests
+import threading
 import os
 import json
 import html
 import html2text
-import streamlit.components.v1 as components
-from dotenv import load_dotenv
+import subprocess
+from html import unescape
 from crews.support_crew import support_crew_with_research
+from tools import preprocess_tickets
 from utils.helpers import time_ago, strip_html_tags
+from utils.post_to_ticksy import post_to_ticksy
+from utils.tinymce_component import tinymce_editor, get_tinymce_content
+from uvicorn import Config, Server
+from utils.editor_api import app  # your FastAPI app
 
-load_dotenv()
+def run_fastapi():
+    config = Config(app=app, port=5050, log_level="info")
+    server = Server(config)
+    server.run()
 
-TINYMCE_API_KEY = os.getenv("TINYMCE_API_KEY")
+# Run only once
+if "fastapi_started" not in st.session_state:
+    threading.Thread(target=run_fastapi, daemon=True).start()
+    st.session_state.fastapi_started = True
 
-TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
-TICKSY_API_KEY = os.getenv("TICKSY_API_KEY")
-TICKSY_API_URL = f"https://api.ticksy.com/v1/{TICKSY_DOMAIN}/{TICKSY_API_KEY}"
+if "preprocessing_done" not in st.session_state:
+    preprocess_tickets.run_preprocessing()
+    st.session_state.preprocessing_done = True
 
 # Load preprocessed tickets
-with open("data/dynamic/preprocessed_tickets.json", encoding="utf-8") as f:
+with open("data/dynamic/tickets/preprocessed_tickets.json", encoding="utf-8") as f:
     tickets_data = json.load(f)["preprocessed_tickets"]
 
 st.set_page_config(page_title="WolfThemes Tickets", layout="wide")
@@ -28,163 +40,168 @@ st.title("🛠️ Ticket Dashboard")
 # Sidebar: ticket list
 st.sidebar.header("📬 Tickets")
 
-for idx, ticket in enumerate(tickets_data):
-    summary_clean = strip_html_tags(ticket['summary'])
-    timestamp = time_ago(ticket.get("last_message_timestamp", "2025-01-01 00:00:00"))
+if not tickets_data:
+    st.sidebar.markdown("🎉 No ticket left to process!", unsafe_allow_html=True)
+else:
+    for idx, ticket in enumerate(tickets_data):
+        summary_clean = strip_html_tags(ticket['full_thread_sumary'])
+        last_message_summary_clean = strip_html_tags(ticket['last_message_summary'])
+        timestamp = time_ago(ticket.get("last_message_timestamp", "2025-01-01 00:00:00"))
 
-    st.sidebar.markdown(f"""
-    <div style='text-align: left; padding-bottom: 0.2em;'>
-        {"🔒 " if ticket["needs_human"] else ""}<strong>{summary_clean}</strong><br>
-        <small>{ticket['customer']} ({ticket['theme']}) · {timestamp}</small><br>
-    </div>
-    """, unsafe_allow_html=True)
+        st.sidebar.markdown(f"""
+        <div style='text-align: left; padding-bottom: 0.2em;'>
+            {"🔒 " if ticket["needs_human"] else ""}<strong>{summary_clean}</strong><br>
+            <span>{last_message_summary_clean}</span><br>
+            <small>{ticket['customer']} ({ticket['theme']}) · {timestamp}</small><br>
+        </div>
+        """, unsafe_allow_html=True)
 
-    if st.sidebar.button("View ticket 🡺", key=f"ticket_{ticket['id']}"):
-        st.session_state.selected_ticket = idx
+        if st.sidebar.button("View ticket 🡺", key=f"ticket_{ticket['id']}"):
+            st.session_state.selected_ticket = idx
 
-# Main panel: show selected ticket
-selected_idx = st.session_state.get("selected_ticket", 0)
-ticket = tickets_data[selected_idx]
+st.sidebar.divider()
+
+if st.sidebar.button("🔄 Refresh Tickets"):
+    with st.spinner("Refreshing ticket data..."):
+        preprocess_tickets.run_preprocessing()
+        st.session_state.preprocessing_done = True
+        st.success("✅ Ticket data refreshed!")
+        st.rerun()
 
 cols = st.columns([2, 1])
 
 # === LEFT: Ticket content ===
-with cols[0]:
-   
-    with st.expander("📜 Show Full Discussion"):
-        for msg in ticket["formatted_text_thread"]:
-            clean_msg = html.unescape(msg)
-            st.markdown(msg, unsafe_allow_html=True)
-
-    st.subheader("🗨️ Last Message")
-
-    st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
-
-    st.divider()
+if not tickets_data:
+    st.markdown("No ticket.", unsafe_allow_html=True)
+else:
+    # Main panel: show selected ticket
+    selected_idx = st.session_state.get("selected_ticket", 0)
+    ticket = tickets_data[selected_idx]
+    with cols[0]:
     
-    crew_instruction = st.text_area("📝 Paste an optional note here:")
+        with st.expander("📜 Show Full Discussion"):
+            comments = ticket["full_thread"]
 
-    if st.button("🤖 Generate / Regenerate Reply"):
-        with st.spinner("Generating reply..."):
+            # Remove last message (already shown separately)
+            comments = comments[1:]
+
+            # Remove what was originally the last (now first) before reversing
+            if comments:
+                comments = list(reversed(comments))    # reverse to get oldest first
+
+            for c in comments:
+                name = c["commenter_name"]
+                role = "User" if c["user_type"] == "user" else "Support"
+                timestamp = c.get("time_stamp", "")
+                comment_html = unescape(c["comment"])
+
+                st.markdown(f"**[{role}] {name}** — *{timestamp}*", unsafe_allow_html=True)
+                st.markdown(comment_html, unsafe_allow_html=True)
+                st.markdown("---")
+
+        single_summary_clean = strip_html_tags(ticket['full_thread_sumary'])
+        st.subheader(f"🗨️ {single_summary_clean}")
+        st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
+
+        st.divider()
+        
+        crew_instruction = st.text_area("📝 Paste an optional note here:")
+
+        if st.button("🤖 Generate / Regenerate Reply"):
+            with st.spinner("Generating reply..."):
+                try:
+                    result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction, ticket_id=ticket["id"])
+
+                    raw_reply = result["reply"].output if hasattr(result["reply"], "output") else str(result["reply"])
+                    markdown_debug = html2text.html2text(raw_reply)
+
+                    print("🧠 Crew Reply (Markdown View) →")
+                    print(markdown_debug)
+
+                    # ✅ Store to session
+                    st.session_state.generated_reply = result["reply"]
+                    st.session_state.reply = result["reply"]  # Ensure it's in the editor too
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"❌ Error running agent: {str(e)}")
+
+
+        st.subheader("✍️ Edit and Post Reply (HTML)")
+
+        # Determine initial content
+        if "reformulated_reply" in st.session_state:
+            st.session_state.reply = st.session_state.reformulated_reply
+            del st.session_state.reformulated_reply
+
+        elif "generated_reply" in st.session_state:
+            st.session_state.reply = st.session_state.generated_reply
+            del st.session_state.generated_reply
+
+        elif "reply" not in st.session_state:
+            # Fallback to file only if reply not yet in memory
+            st.session_state.reply = get_tinymce_content(ticket_id=ticket["id"])
+
+        # Final editor input
+        initial_content = st.session_state.reply
+
+        # Render TinyMCE with whatever is in session state
+        tinymce_editor(initial_content=initial_content, ticket_id=ticket["id"], height=450)
+        
+        col1, col2 = st.columns(2)
+
+        from utils.ticket_utils import reformulate_reply
+
+        st.markdown("### ✏️ Reformulate Reply")
+        reformulate_instruction = st.text_area("Optional reformulation")
+        
+        if st.button("♻️ Reformulate"):
             try:
-                result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction)
+                current_editor_reply = get_tinymce_content(ticket["id"])
+                st.session_state.reply = current_editor_reply
 
-                raw_reply = result["reply"].output if hasattr(result["reply"], "output") else str(result["reply"])
-                markdown_debug = html2text.html2text(raw_reply)
+                if not isinstance(current_editor_reply, str):
+                    current_editor_reply = str(current_editor_reply)
 
-                print("🧠 Crew Reply (Markdown View) →")
-                print(markdown_debug)
-
-                # ✅ Store to session
-                st.session_state.generated_reply = result["reply"]
-                st.session_state.reply = result["reply"]  # Ensure it's in the editor too
+                reformulated = reformulate_reply(
+                    reply_text=current_editor_reply,
+                    instruction=reformulate_instruction,
+                    last_user_message=ticket["last_message"]
+                )
+                st.session_state.reformulated_reply = reformulated
                 st.rerun()
             except Exception as e:
-                st.error(f"❌ Error running agent: {str(e)}")
+                st.error(f"Reformulation error: {str(e)}")
 
 
-    st.subheader("✍️ Edit and Post Reply (HTML)")
+        st.divider()
 
-    # Prioritize the most recent crew outputs
-    if "reformulated_reply" in st.session_state:
-        st.session_state.reply = st.session_state.reformulated_reply
-        del st.session_state.reformulated_reply
-    elif "generated_reply" in st.session_state:
-        st.session_state.reply = st.session_state.generated_reply
-        del st.session_state.generated_reply
+        col1, col2 = st.columns([1, 2])
 
-    # Optional: session-state default
-    if "reply" not in st.session_state:
-        st.session_state.reply = ""
+        with col1:
+            private_reply = st.checkbox("Private", value=False)
 
-    # Save edited HTML using a hidden input
-    components.html(f"""
-    <script src="https://cdn.tiny.cloud/1/{TINYMCE_API_KEY}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-    <textarea id="editor">{st.session_state.reply}</textarea>
-    <script>
-        tinymce.init({{
-        selector: '#editor',
-        height: 450,
-        menubar: false,
-        plugins: 'link lists code',
-        toolbar: 'undo redo | bold italic | bullist numlist | link | code',
-        setup: function (editor) {{
-            editor.on('Change KeyUp', function (e) {{
-            window.parent.postMessage({{type: 'html_update', content: editor.getContent()}}, '*');
-            }});
-        }}
-        }});
-    </script>
-    """, height=500)
+        with col2:
 
-    # Display preview
-    #st.markdown("### 🔍 Live Preview")
-    #st.markdown(st.session_state.reply, unsafe_allow_html=True)
-
-    col1, col2 = st.columns(2)
-
-    from utils.ticket_utils import reformulate_reply
-
-    st.markdown("### ✏️ Reformulate Reply")
-    reformulate_instruction = st.text_area("Optional reformulation")
-    
-    if st.button("♻️ Reformulate"):
-        try:
-            reply_text = st.session_state.reply
-            if not isinstance(reply_text, str):
-                reply_text = str(reply_text)
-
-            reformulated = reformulate_reply(
-                reply_text=reply_text,
-                instruction=reformulate_instruction,
-                last_user_message=ticket["last_message"]
-            )
-            st.session_state.reformulated_reply = reformulated
-            st.rerun()
-        except Exception as e:
-            st.error(f"Reformulation error: {str(e)}")
-
-
-    st.divider()
-
-    col1, col2 = st.columns([1, 2])
-
-    with col1:
-        private_reply = st.checkbox("Private", value=False)
-
-    with col2:   
-        if st.button("✅ Post Reply"):
-            ticket_payload = {
-                "action": "new_ticket_comment",
-                "ticket_id": ticket["id"],
-                "comment": st.session_state.get("reply", ""),
-                "private": str(private_reply).lower(),
-            }
-
-            # ticket_payload = {
-            #     "action": "new_ticket_comment",
-            #     "ticket_id": "000000000000",
-            #     "comment": st.session_state.get("reply", ""),
-            #     "private": "true",
-            # }
-
-            try:
-                response = requests.post(TICKSY_API_URL, data=ticket_payload)
-                if response.status_code == 200:
-                    st.success("✅ Reply successfully posted to Ticksy!")
+            if st.button("✅ Post Reply to Ticksy"):
+                
+                current_editor_reply = get_tinymce_content(ticket["id"])
+                st.session_state.reply = current_editor_reply
+                
+                if not isinstance(current_editor_reply, str):
+                    st.warning("⚠️ Editor is empty — nothing to post.")
                 else:
-                    st.error(f"❌ Failed to post reply: {response.status_code}\n{response.text}")
-            except Exception as e:
-                st.error(f"🚨 Exception during POST: {str(e)}")
+                    result = post_to_ticksy(ticket_id=ticket["id"], message=current_editor_reply)
 
-            st.markdown("### 🧪 Debug: Reply Payload to API")
-            st.code(json.dumps(ticket_payload, indent=2), language="json")
+                    if result.get("status") == "ok":
+                        st.success("✅ Reply posted to Ticksy.")
+                    else:
+                        st.error("❌ Failed to post. Check console/logs.")
 
-# === RIGHT: Ticket metadata ===
-with cols[1]:
-    
-    st.markdown("### 🧾 Ticket Info")
-    st.markdown(f"**Theme:** {ticket['theme']}")
-    st.markdown(f"**Customer:** [{ticket['customer']}]({ticket['customer_url']})")
-    st.markdown(f"**Website:** {ticket['user_site']}")
-    st.markdown(f"**Ticket Link:** [View on Ticksy]({ticket['ticket_url']})")
+    # === RIGHT: Ticket metadata ===
+    with cols[1]:
+        
+        st.markdown("### 🧾 Ticket Info")
+        st.markdown(f"**Theme:** {ticket['theme']}")
+        st.markdown(f"**Customer:** [{ticket['customer']}]({ticket['customer_url']})")
+        st.markdown(f"**Website:** {ticket['user_site']}")
+        st.markdown(f"**Ticket Link:** [#{ticket['id']}]({ticket['ticket_url']})")
