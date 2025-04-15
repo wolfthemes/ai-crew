@@ -1,5 +1,5 @@
 from crewai import Agent
-from tools.crewai_tools import SearchKnowledgeBaseTool
+from tools.research_tools import SearchKnowledgeBaseTool
 
 research_agent = Agent(
     role="Support Research Assistant",
