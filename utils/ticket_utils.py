@@ -6,10 +6,9 @@ from openai import OpenAI
 from html import unescape
 from pathlib import Path
 from dotenv import load_dotenv
+from utils.ticket_classifier import classify_ticket
 
 load_dotenv()
-
-TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
 
 openai_client = OpenAI()
 #openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -216,7 +215,8 @@ def extract_theme_from_envato(envato_verified_string):
         return "Unknown"
 
 def preprocess_ticket(raw_ticket):
-    
+    TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
+
     # Tickets info
     comments = raw_ticket["ticket_comments"]
     first_msg = extract_first_user_comment(comments)
@@ -225,12 +225,17 @@ def preprocess_ticket(raw_ticket):
     full_thread = format_ticket_history(comments)
     full_thread_summary = summarize_ticket(full_thread)
     last_msg_summary = summarize_last_user_comment(full_thread,last_msg)
+    ticket_type = raw_ticket["ticket_type"]
 
     # Theme info
     theme = extract_theme_from_envato(raw_ticket.get("envato_verified_string", "{}"))
+    theme_url = get_theme_url(theme)
+    theme_demo_url = get_theme_url(theme)
     builder = get_theme_builder(theme)
     category = get_theme_category(theme)
     version = get_theme_version(theme)
+    last_update = get_theme_last_update(theme)
+    envato_id = get_theme_envato_id(theme)
     
     #summary = "Tickets summary in once clear sentence"
     # User info
@@ -239,8 +244,8 @@ def preprocess_ticket(raw_ticket):
     customer_url = f"https://{TICKSY_DOMAIN}.ticksy.com/customer/{raw_ticket.get('user_id')}"
     ticket_url = f"https://{TICKSY_DOMAIN}.ticksy.com/ticket/{raw_ticket['ticket_id']}"
 
-    #match_source = classify_ticket_func(last_msg)
-    #contains_credentials = contains_credentials(full_thread)
+    match_source = classify_ticket(full_thread)
+    contains_credentials_value = contains_credentials(full_thread)
     needs_human = "false"
 
     return {
@@ -252,19 +257,140 @@ def preprocess_ticket(raw_ticket):
         "builder": builder,
         "category": category,
         "version": version,
+        "updated": last_update,
+        "envato_id": envato_id,
+        "theme_url": theme_url,
+        "theme_demo_url": theme_demo_url,
         "user_site": user_site,
         "ticket_url": ticket_url,
+        "ticket_type" : ticket_type,
         "first_message": first_msg,
         "last_message": last_msg,
         "last_message_timestamp": last_msg_timestamp,
         "last_message_summary": last_msg_summary,
-        "full_thread": comments,
         "full_thread_sumary": full_thread_summary,
         "formatted_text_thread": full_thread,
-        #"contains_credentials" : contains_credentials,
-        #"match_source": match_source,
+        "contains_credentials" : contains_credentials_value,
+        "match_source": match_source,
         "ai_reply": "",
-        "needs_human": needs_human
+        "needs_human": needs_human,
+        "full_thread": comments,
+    }
+
+def get_theme_url(theme_name):
+    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    
+    # Loop through all themes to match by name
+    for theme in data.values():
+        if theme.get("name", "").lower() == theme_name.lower():
+            return theme['url']
+    
+    return f"Unknown"
+
+def get_theme_envato_id(theme_name):
+    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    
+    # Loop through all themes to match by name
+    for theme in data.values():
+        if theme.get("name", "").lower() == theme_name.lower():
+            return theme['itemId']
+    
+    return f"Unknown"
+
+def get_theme_demo_url(theme_name):
+    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    
+    # Loop through all themes to match by name
+    for theme in data.values():
+        if theme.get("name", "").lower() == theme_name.lower():
+            return theme['demo_url']
+    
+    return f"Unknown"
+
+def get_theme_builder(theme_name):
+    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    
+    # Loop through all themes to match by name
+    for theme in data.values():
+        if theme.get("name", "").lower() == theme_name.lower():
+            return theme['builder']
+    
+    return f"Unknown"
+    
+def get_theme_category(theme_name):
+    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    
+    # Loop through all themes to match by name
+    for theme in data.values():
+        if theme.get("name", "").lower() == theme_name.lower():
+            return theme['category']
+    
+    return f"Uncategorized"
+
+def get_theme_last_update(theme_name):
+    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    
+    # Loop through all themes to match by name
+    for theme in data.values():
+        if theme.get("name", "").lower() == theme_name.lower():
+            return theme['envato_id']
+    
+    return f"No date available"
+    
+def get_theme_version(theme_name):
+    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    
+    # Loop through all themes to match by name
+    for theme in data.values():
+        if theme.get("name", "").lower() == theme_name.lower():
+            return theme['version']
+    
+    return f"No version found"
+
+def get_ticket_metadata(ticket_id):
+    ticket = load_ticket_by_id(ticket_id)
+    
+    if not ticket:
+        return {}
+    
+    return {
+        "ticket_id": ticket_id,
+        "ticket_type": ticket.get("ticket_type"),
+        "user_site": ticket.get("user_site"),
+        "subject": ticket.get("subject"),
+        "customer": ticket.get("customer"),
+        "customer_url": ticket.get("customer_url"),
+        "theme": ticket.get("theme"),
+        "builder": ticket.get("builder"),
+        "category": ticket.get("category"),
+        "version": ticket.get("version"),
+        "theme_url": ticket.get("theme_url"),
+        "theme_demo_url": ticket.get("theme_demo_url"),
+        "envato_id": ticket.get("envato_id"),
+        "updated": ticket.get("updated"),
+        "user_site": ticket.get("user_site"),
+        "ticket_url": ticket.get("ticket_url"),
+        "first_message": ticket.get("first_message"),
+        "last_message": ticket.get("last_message"),
+        "last_message_timestamp": ticket.get("last_message_timestamp"),
+        "last_message_summary": ticket.get("last_message_summary"),
+        "full_thread_sumary": ticket.get("full_thread_sumary"),
+        "formatted_text_thread": ticket.get("formatted_text_thread"),
+        "contains_credentials" : ticket.get("contains_credentials"),
+        "match_source": ticket.get("match_source"),
+        "ai_reply": "",
+        "full_thread": ticket.get("customer_url"),
+        "flags": {
+            "needs_human": ticket.get("needs_human"),
+            "private": ticket.get("private", False)
+        }
     }
 
 def preprocess_all_tickets(filepath):
@@ -281,55 +407,6 @@ def save_preprocessed_tickets(tickets, output_path="data/dynamic/preprocessed_ti
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"preprocessed_tickets": tickets}, f, indent=2, ensure_ascii=False)
-
-def get_theme_builder(slug):
-    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
-        data = json.load(f)
-    theme = data.get(slug)
-    if theme:
-        return f"{theme['name']} uses {theme['builder']}."
-    else:
-        return f"No info found for theme '{slug}'."
-    
-def get_theme_category(slug):
-    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
-        data = json.load(f)
-    theme = data.get(slug)
-    if theme:
-        return f"{theme['name']} uses {theme['category']}."
-    else:
-        return f"No info found for theme '{slug}'."
-    
-def get_theme_version(slug):
-    with open(os.path.join("data", "crawled/theme_info.json"), encoding="utf-8") as f:
-        data = json.load(f)
-    theme = data.get(slug)
-    if theme:
-        return f"{theme['name']} uses {theme['version']}."
-    else:
-        return f"No info found for theme '{slug}'."
-
-def get_ticket_metadata(ticket_id):
-    ticket = load_ticket_by_id(ticket_id)
-    
-    if not ticket:
-        return {}
-
-    return {
-        "ticket_id": ticket_id,
-        "user_site": ticket.get("user_site"),
-        "theme": ticket.get("theme"),
-        "builder": ticket.get("builder"),
-        "customer": ticket.get("customer"),
-        "summary": ticket.get("summary"),
-        "last_message": ticket.get("last_message"),
-        "full_thread": ticket.get("full_thread", []),
-        "flags": {
-            "needs_human": ticket.get("needs_human"),
-            "private": ticket.get("private", False)
-        }
-    }
-
 
 def load_ticket_by_id(ticket_id, path="data/dynamic/preprocessed_tickets.json"):
     """
