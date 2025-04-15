@@ -1,8 +1,8 @@
 from core.reranker import rerank_results
 
 class KnowledgeBaseSearcher:
-    def __init__(self, theme: str, retriever):
-        self.theme = theme
+    def __init__(self, retriever, context: dict):
+        self.context = context
         self.retriever = retriever
 
     def find_best_match(self, query: str) -> dict:
