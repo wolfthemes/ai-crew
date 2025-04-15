@@ -1,8 +1,33 @@
 import streamlit as st
+import os
 import json
 from crewai import Task, Crew
 from agents.dev_agent import dev_agent  # from your code
 # Optional: import tools here if not auto-loaded by agent setup
+
+st.sidebar.title("📂 Codebase Context")
+
+repos_dir = "repos"
+code_extensions = (".py", ".php", ".js", ".ts", ".css")
+
+# List repos + default "All Repos" option
+repo_options = ["-- All Repos --"] + sorted([
+    d for d in os.listdir(repos_dir) if os.path.isdir(os.path.join(repos_dir, d))
+])
+selected_repo = st.sidebar.selectbox("Select a repo", repo_options)
+
+repo_files = []
+if selected_repo != "-- All Repos --":
+    selected_repo_path = os.path.join(repos_dir, selected_repo)
+    for root, dirs, files in os.walk(selected_repo_path):
+        for file in files:
+            if file.endswith(code_extensions):
+                rel_path = os.path.relpath(os.path.join(root, file), selected_repo_path)
+                repo_files.append(rel_path)
+
+# Add default "All Files" option
+file_options = ["-- All Files --"] + sorted(repo_files)
+selected_file = st.sidebar.selectbox("Select a file", file_options)
 
 st.title("💻 Dev Agent Chat")
 
@@ -32,8 +57,15 @@ if query := st.chat_input("Ask your dev agent..."):
             expected_output="Exact file and line of the matching function in the repo."
         )
     except json.JSONDecodeError:
+
+        context_scope = ""
+        if selected_repo != "-- All Repos --":
+            context_scope += f"Repo: `{selected_repo}`\n"
+        if selected_file != "-- All Files --":
+            context_scope += f"File: `{selected_file}`\n"
+
         task = Task(
-            description=query,
+            description=f"{query}\n\n{context_scope}",
             agent=dev_agent,
             expected_output="A concise and actionable response to the developer question."
         )
