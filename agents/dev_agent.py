@@ -8,5 +8,6 @@ dev_agent = Agent(
     goal="Help with WordPress themes and plugin development tasks",
     tools=[GetCodeSearchTool(),GitHubTool(),FixCodeTool()],
     backstory="A helpful expert developer that understands PHP, JS, CSS and WordPress codebases.",
-    verbose=True
+    verbose=True,
+    llm="gpt-4"
 )
