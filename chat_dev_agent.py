@@ -5,6 +5,16 @@ from crewai import Task, Crew
 from agents.dev_agent import dev_agent  # from your code
 # Optional: import tools here if not auto-loaded by agent setup
 
+if "dev_context" not in st.session_state:
+    st.session_state.dev_context = {
+        "repo": None,
+        "owner": None,
+        "branch": "main",
+        "last_file": None,
+        "last_function": None
+    }
+
+
 st.sidebar.title("📂 Codebase Context")
 
 repos_dir = "repos"
@@ -58,14 +68,26 @@ if query := st.chat_input("Ask your dev agent..."):
         )
     except json.JSONDecodeError:
 
-        context_scope = ""
+        # Update memory from UI selections
         if selected_repo != "-- All Repos --":
-            context_scope += f"Repo: `{selected_repo}`\n"
+            st.session_state.dev_context["repo"] = selected_repo
         if selected_file != "-- All Files --":
-            context_scope += f"File: `{selected_file}`\n"
+            st.session_state.dev_context["last_file"] = selected_file
+
+        # Inject context memory
+        ctx = st.session_state.dev_context
+        context_injection = (
+            f"[Context]"
+            f"Repo: {ctx['owner']}/{ctx['repo'] or 'unknown'}"
+            f"Branch: {ctx['branch']}"
+        )
+        if ctx["last_file"]:
+            context_injection += f"File: {ctx['last_file']}"
+        if ctx["last_function"]:
+            context_injection += f"Last function: {ctx['last_function']}"
 
         task = Task(
-            description=f"{query}\n\n{context_scope}",
+            description=f"{query}{context_injection}",
             agent=dev_agent,
             expected_output="A concise and actionable response to the developer question."
         )
