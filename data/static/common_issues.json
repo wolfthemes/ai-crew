@@ -136,5 +136,12 @@
     "customer_message": "I updated from an old version of Speaker and I can't retrieve my content.",
     "expected_response": "Speaker (2.0.0) has been re-designed a couple of years ago. The whole home page is now managed via Elementor in one single place. Users updating from older versions may need to manually rebuild the homepage layout.",
     "theme":"Speaker"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Instagram feed not displaying like the demo",
+    "customer_message": "How do I make the Instagram feed look like the demo? It's not pulling the right images and shows a blank screen.",
+    "expected_response": "To customize your Instagram feed to match the demo, open the Smash Balloon Instagram Feed plugin and go to Feed > Customize tab > Sections. For layout and media display, use the Images and Videos section. If you still see a blank screen, try clearing your browser cache and the plugin cache. For more help, contact the plugin author: https://smashballoon.com/instagram-feed/support/",
+    "plugin": ["Smash Balloon Instagram Feed"]
   }
 ]
