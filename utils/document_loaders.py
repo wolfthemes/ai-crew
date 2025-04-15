@@ -54,7 +54,7 @@ def load_theme_docs():
     return format_documents(parse_json_file(os.path.join(DATA_FOLDER, "crawled/theme_docs.json")), "theme_doc")
 
 def load_common_issues():
-    data = parse_json_file(os.path.join(DATA_FOLDER, "common_issues.json"))
+    data = parse_json_file(os.path.join(DATA_FOLDER, "static/common_issues.json"))
     return [
         Document(
             page_content = (
