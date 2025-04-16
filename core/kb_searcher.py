@@ -1,80 +1,62 @@
 from core.reranker import rerank_results
-from tools.reference_ticket_store import ReferenceTicketStore
 
 class KnowledgeBaseSearcher:
     def __init__(self, retriever, context: dict):
         self.context = context
         self.retriever = retriever
-        self.reference_store = ReferenceTicketStore()
 
     def find_best_match(self, query: str) -> dict:
-        """Structured search with layered priority: common > reference > kb > doc"""
+        """Structured search using strict priority and reranking logic."""
 
         if not self.retriever:
             return {
-                "error": "Retriever not loaded",
-                "matches": {},
-                "strict_response": None
+                "source": "error",
+                "title": "Retrieval Error",
+                "content": "Retrieval is disabled. Vectorstore not loaded."
             }
 
-        matches = {
-            "common_issue": None,
-            "reference_ticket": None,
-            "kb": [],
-            "theme_doc": [],
-            "old_ticket": [],
-        }
-        strict_response = None
-
-        # 🔍 1. Search and rerank all results
+        # This is used to rerank the result to improve the query
         results = rerank_results(self.retriever.invoke(query))
 
         if not results:
             return {
-                "matches": matches,
-                "strict_response": None
+                "source": "none",
+                "title": "No Results",
+                "solution": "No relevant results found in the knowledge base."
             }
-
-        # 🔎 2. Check for common issue
-        for doc in results:
-            if doc.metadata.get("issue_type") == "common_issue":
-                matches["common_issue"] = {
-                    "source": "common_issue",
-                    "title": doc.metadata.get("title", "Common Issue"),
-                    "content": f"STRICT_RESPONSE: {doc.metadata.get('expected_response')}",
-                    "is_strict": True
-                }
-                strict_response = matches["common_issue"]["content"]
-                return {
-                    "matches": matches,
-                    "strict_response": strict_response
-                }
-
-        # 📎 3. Check for reference ticket match
-        ref_match = self.reference_store.find_match(query, theme=self.context.get("theme"))
-        if ref_match:
-            matches["reference_ticket"] = ref_match
-            strict_response = ref_match["content"]
+        
+        reference_tickets = [doc for doc in results if doc.metadata.get("source") == "reference_ticket"]
+        if reference_tickets:
             return {
-                "matches": matches,
-                "strict_response": strict_response
+                "source": "reference_ticket",
+                "title": reference_tickets[0].metadata.get("title", "Ref ticket"),
+                "solution": f"STRICT_RESPONSE: {reference_tickets[0].metadata.get('solution')}",
             }
 
-        # 📚 4. Add non-strict results to KB and Theme Doc groups
-        for doc in results:
-            category = doc.metadata.get("source", "")
-            match_data = {
-                "title": doc.metadata.get("title", "Untitled"),
-                "url": doc.metadata.get("url", ""),
-                "snippet": doc.page_content[:500]
+        # Return structured data for common issues with a special prefix
+        common_issues = [doc for doc in results if doc.metadata.get("source") == "common_issue"]
+        if common_issues:
+            return {
+                "source": "common_issue",
+                "title": common_issues[0].metadata.get("title", "Common Issue"),
+                "solution": f"STRICT_RESPONSE: {common_issues[0].metadata.get('solution')}",
             }
-
-            if category == "kb_article":
-                matches["kb"].append(match_data)
-            elif category == "theme_doc":
-                matches["theme_doc"].append(match_data)
-
+        
+        # Fallback: general best match
+        first_result = results[0]
         return {
-            "matches": matches,
-            "strict_response": None
+            "source": first_result.metadata.get("source", "unknown"),
+            "title": first_result.metadata.get("title", "Untitled"),
+            "url": first_result.metadata.get("url", ""),
+            "content": first_result.page_content[:1000],
+            "is_strict": False,
+            "all_results": [
+                {
+                    "source": doc.metadata.get("source", "unknown"),
+                    "title": doc.metadata.get("title", "Untitled"),
+                    "url": doc.metadata.get("url", ""),
+                    "snippet": doc.page_content[:300]
+                }
+                for doc in results[1:3]
+            ]
         }

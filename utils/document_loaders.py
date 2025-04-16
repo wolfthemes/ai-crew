@@ -59,32 +59,34 @@ def load_common_issues():
         Document(
             page_content = (
                 f"COMMON TITLE: {item['title']}\n"
-                f"CUSTOMER MESSAGE: {item['customer_message']}\n"
-                f"SOLUTION: {item['expected_response']}"
+                f"CUSTOMER ISSUE: {item['issue']}\n"
+                f"SOLUTION: {item['solution']}"
             ),
             metadata={
                 "title": item["title"],
-                "issue_type": item.get("issue_type", "common_issue"),
-                "expected_response": item["expected_response"],
-                "source": "common_issue",
-                "human_validation": item.get("human_validation", False),
-                "customization_summary": item.get("customization_summary", "")
+                "source": item.get("source", "common_issue"),
+                "solution": item["solution"],
             }
         )
         for item in data
     ]
 
-def load_ticket_examples():
-    data = parse_json_file(os.path.join(DATA_FOLDER, "ticket_examples.json"))
+def load_reference_tickets():
+    data = parse_json_file(os.path.join(DATA_FOLDER, "static/reference_tickets.json"))
     return [
         Document(
-            page_content=f"CUSTOMER MESSAGE: {item.get('customer_message', '')} EXPECTED RESPONSE: {item.get('expected_response', '')}",
+            page_content = (
+                f"COMMON TITLE: {item['title']}\n"
+                f"CUSTOMER ISSUE: {item['issue']}\n"
+                f"SOLUTION: {item['solution']}"
+            ),
             metadata={
-                "title": item.get("title", "Untitled"),
-                "issue_type": item.get("issue_type", "unknown"),
-                "source": "ticket_example"
+                "title": item["title"],
+                "source": item.get("source", "reference_ticket"),
+                "solution": item["solution"],
             }
-        ) for item in data
+        )
+        for item in data
     ]
 
 def load_closed_tickets():
@@ -132,6 +134,8 @@ def load_closed_tickets():
             ))
     return documents
 
+# --- Load static prompts ---
+
 def load_support_agent_backstory(path="prompts/support_agent_backstory.md"):
     with open(path, encoding="utf-8") as f:
         return f.read()
@@ -148,7 +152,6 @@ def load_guidelines(path="prompts/support_task_guidelines.md"):
     with open(path, encoding="utf-8") as f:
         return f.read()
     
-
 def load_dev_agent_backstory(path="prompts/dev_agent_backstory.md"):
     with open(path, encoding="utf-8") as f:
         return f.read()

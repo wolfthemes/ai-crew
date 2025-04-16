@@ -11,6 +11,7 @@ class ReferenceTicketStore:
     def find_match(self, text):
         for ref in self.data:
             pattern = ref.get("pattern", "")
+            print(f"🧪 Trying pattern '{pattern}' against query: '{text}'")
             if re.search(pattern, text, re.IGNORECASE):
                 return {
                     "source": ref.get("source"),

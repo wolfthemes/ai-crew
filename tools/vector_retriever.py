@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 from utils.document_loaders import (
     load_common_issues,
+    load_reference_tickets,
     load_theme_meta,
     load_kb_articles,
     load_theme_docs,
@@ -33,15 +34,17 @@ MAX_WORKERS = max(1, multiprocessing.cpu_count() - 1)
 theme_meta_docs = load_theme_meta()
 articles = load_kb_articles()
 theme_docs = load_theme_docs()
-tickets = load_closed_tickets()
+closed_tickets = load_closed_tickets()
 common_issues = load_common_issues()
+reference_tickets = load_reference_tickets()
 support_agent_backstory_text = load_support_agent_backstory()
 support_agent_instructions_text = load_support_agent_instructions()
 reformulate_agent_instructions_text = load_reformulate_agent_instructions()
 
 dev_agent_backstory_text = load_dev_agent_backstory()
 
-all_docs = theme_meta_docs + common_issues + articles + theme_docs + tickets
+
+all_docs = common_issues + reference_tickets + articles + theme_docs + closed_tickets
 
 # Build or load retriever
 if USE_VECTORSTORE:
