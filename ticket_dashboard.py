@@ -12,7 +12,7 @@ from crews.support_crew import support_crew_with_research
 from tools import preprocess_tickets
 from utils.helpers import time_ago, strip_html_tags
 from utils.post_to_ticksy import post_to_ticksy
-from utils.tinymce_component import tinymce_editor, get_tinymce_content
+from utils.tinymce_component import tinymce_editor, get_tinymce_content, delete_tinymce_draft
 from uvicorn import Config, Server
 from utils.editor_api import app  # your FastAPI app
 
@@ -178,6 +178,9 @@ else:
                         st.success("✅ Reply posted to Ticksy.")
                         if editor_state_key in st.session_state:
                             del st.session_state[editor_state_key]
+
+                        delete_tinymce_draft(ticket_id)
+
                         st.rerun()
                     else:
                         st.error("❌ Failed to post. Check console/logs.")
