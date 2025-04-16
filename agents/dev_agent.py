@@ -6,6 +6,8 @@ from tools.fix_code_tool import FixCodeTool
 from tools.file_operations_tool import FileOperationsTool
 from tools.wp_toolkit import WordPressToolkit
 from tools.git_operations_tool import GitOperationsTool
+from tools.file_content_tool import FileContentTool
+from tools.wp_function_finder_tool import WordPressFunctionFinderTool
 
 dev_agent = Agent(
     role="Dev Agent",
@@ -16,7 +18,9 @@ dev_agent = Agent(
         FixCodeTool(),
         FileOperationsTool(),
         WordPressToolkit(),
-        GitOperationsTool()
+        GitOperationsTool(),
+        FileContentTool(),
+        WordPressFunctionFinderTool()
     ],
     backstory=dev_agent_backstory_text,
     verbose=True,
