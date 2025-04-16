@@ -30,7 +30,8 @@ class KnowledgeBaseSearcher:
         if reference_tickets:
             return {
                 "source": "reference_ticket",
-                "title": reference_tickets[0].metadata.get("title", "Ref ticket"),
+                "title": reference_tickets[0].metadata.get("title", "Reference ticket"),
+                "issue": reference_tickets[0].metadata.get("issue"),
                 "solution": f"STRICT_RESPONSE: {reference_tickets[0].metadata.get('solution')}",
             }
 
@@ -40,6 +41,7 @@ class KnowledgeBaseSearcher:
             return {
                 "source": "common_issue",
                 "title": common_issues[0].metadata.get("title", "Common Issue"),
+                "issue": reference_tickets[0].metadata.get("issue"),
                 "solution": f"STRICT_RESPONSE: {common_issues[0].metadata.get('solution')}",
             }
         
@@ -61,3 +63,5 @@ class KnowledgeBaseSearcher:
                 for doc in results[1:3]
             ]
         }
+    
+        # TODO web deep search as last fallback
