@@ -25,6 +25,7 @@ class KnowledgeBaseSearcher:
                 "solution": "No relevant results found in the knowledge base."
             }
         
+        # Return structured data for reference tickets
         reference_tickets = [doc for doc in results if doc.metadata.get("source") == "reference_ticket"]
         if reference_tickets:
             return {
@@ -33,7 +34,7 @@ class KnowledgeBaseSearcher:
                 "solution": f"STRICT_RESPONSE: {reference_tickets[0].metadata.get('solution')}",
             }
 
-        # Return structured data for common issues with a special prefix
+        # Return structured data for common issues
         common_issues = [doc for doc in results if doc.metadata.get("source") == "common_issue"]
         if common_issues:
             return {
