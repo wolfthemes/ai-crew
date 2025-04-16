@@ -3,15 +3,24 @@ import os
 import json
 from crewai import Task, Crew
 from agents.dev_agent import dev_agent  # from your code
-# Optional: import tools here if not auto-loaded by agent setup
+from dotenv import load_dotenv
+
+load_dotenv()
+
+REPO_ROOT = os.path.abspath("repos")
+GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 if "dev_context" not in st.session_state:
     st.session_state.dev_context = {
         "repo": None,
-        "owner": None,
+        "owner": GITHUB_USERNAME,
         "branch": "main",
         "last_file": None,
-        "last_function": None
+        "last_function": None,
+        "last_operation": None,
+        "working_repos": [],  # List of repos the agent has worked with
+        "recent_commits": []  # Track recent commit operations
     }
 
 
