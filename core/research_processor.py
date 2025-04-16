@@ -4,6 +4,8 @@ from tools.kb_tools import search_kb_structured
 from tools.vector_retriever import retriever
 
 def process_ticket_research(ticket_text: str, ticket_meta: dict = None) -> str:
+
+    print( ticket_meta )
         
     if ticket_meta:
         parts = [ticket_meta.get("last_message", ticket_text)]
