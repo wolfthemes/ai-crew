@@ -1,0 +1,148 @@
+[
+  {
+    "issue_type": "common_issue",
+    "title": "Theme activation issue",
+    "customer_message": "I can't activate the theme using my licence purchase code?",
+    "strict_response": "<p>It seems like there may be an issue that can sometimes happen with certain hosting providers. I'm currently working on improving the activation system to avoid this.</p><p>That's what site always recommed <a href=\"https://fr.siteground.com/?referrer_id=8486532\" target=\"_blank\" rel=\"noopener\">Siteground</a> as hoster among other <a href=\"https://wolfthemes.ticksy.com/article/13381/\" target=\"_blank\" rel=\"noopener\">recommeded hosts</a>.</p><p>To help you resolve it quickly, I&rsquo;ll need access to your WordPress dashboard.<br>Could you please provide your login credentials so I can apply a workaround ?</p>",
+    "plugin": []
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Can't import demos",
+    "customer_message": "Can't import demos?",
+    "strict_response": "also issue with some hosters that I don't recommend (strato, OVH mainly) please check https://wolfthemes.ticksy.com/article/11680/ also we provide install services http://wolfthemes.com/services. for Elementor theme, templates are included in the theme package is the easiest way"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Admin is slow",
+    "customer_message": "Admin is slow?",
+    "strict_response": "poor hoster like strato again Recommended WordPress Web Hosting"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "I can't edit my footer or header",
+    "customer_message": "I can't edit my footer?",
+    "strict_response": "Elementor: be sure to activate the content block post type (Elementor Troubleshooting https://wolfthemes.ticksy.com/article/20209/)",
+    "builder": "Elementor"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Something doesn't seem to work correctly, broken layout, no animation fired",
+    "customer_message": "Something doesn't seem to work correctly, broken layout, no animation fired?",
+    "strict_response": "Looks like a JS issue either theme missing in theme, or 3rd party plugin issue (non-theme-related plugins)"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Elementor editor not loading",
+    "customer_message": "Elementor editor not loading?",
+    "strict_response": "issue fixed, be sure to update Wolf Core plugin",
+    "builder": "Elementor"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Events order incorrectly or missing",
+    "customer_message": "Events order incorrectly or missing?",
+    "strict_response": "Be sure to update the 'Events' plugin to the latest verion.",
+    "plugin": ["Events"]
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "How to update WPBakery or Slider Revolution",
+    "customer_message": "How to update wpbakery or slider revolution?",
+    "strict_response": "Any time the plugin is updated, you will find the latest version of the plugin in the config/plugins (or includes/admin/plugins) folder of your theme.\n\nPlease note that we need several days to test the compatibility with our themes, and if the new plugin version doesn't include important updates, it may take more time before we update all our themes.\n\nTo update the plugin, you can simply deactivate & delete the plugin from your WordPress plugin panel, then reinstall the new version via the \"Appearance\" > \"Install Plugins\" panel. You will find more info here: https://wolfthemes.ticksy.com/article/11671/",
+    "plugin": ["WPBakery", "Slider Revolution"]
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "How to update theme",
+    "customer_message": "How to update theme?",
+    "strict_response": "You will find the intructions about how to update the theme here: https://wolfthemes.ticksy.com/article/11658/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Can not activate WPBakery or Slider Revolution or How to activate WPBakery or Slider Revolution",
+    "customer_message": "Can not activate wpbakery or slider revolution?",
+    "strict_response": "Bundled plugin don't need activation they'll work fully for you regardless of that.. We not allowed to sell their license more info here https://wolfthemes.ticksy.com/article/12629/",
+    "plugin": ["WPBakery", "Slider Revolution"]
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "404 error page",
+    "customer_message": "404 error page?",
+    "strict_response": "permalink issue https://wolfthemes.ticksy.com/article/11681/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Website too slow",
+    "customer_message": "Website too slow?",
+    "strict_response": "All WP install need speed optimization : tuto here https://wolfthemes.ticksy.com/article/13469/ also a good hoster is important. recommended hosts: https://wolfthemes.ticksy.com/article/13381/"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Sliders missing after demo import",
+    "customer_message": "Sliders missing after demo import?",
+    "strict_response": "need to be imported separately see https://wolfthemes.ticksy.com/article/12739/",
+    "plugin" : ["Slider Revolution"]
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Font and color not good on elementor",
+    "customer_message": "Font and color not good on elementor?",
+    "strict_response": "Disable Default Colors and Disable Default Fonts. see troubleshooting post https://wolfthemes.ticksy.com/article/20209/",
+    "builder":"Elementor"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Stylesheet is missing",
+    "customer_message": "Stylesheet is missing?",
+    "strict_response": "Be sure to do NOT install the whole downloaded package but only the theme zip file included. https://wolfthemes.ticksy.com/article/11682/"
+  },
+  {
+    "issue_type": "customization",
+    "title": "Wants a feature added (paid customization)",
+    "customer_message": "I want to add this feature?",
+    "strict_response": "Thanks for your message! This feature isn't included in the theme by default. However, we do offer customization services for our themes. I’ll check internally and get back to you shortly regarding the feasibility and cost.",
+    "human_validation": true,
+    "customization_summary": "User wants a feature added that's not part of the theme. Needs feasibility check and quote."
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Wpbakery frontend is missing",
+    "customer_message": "Wpbakery frontend is missing?",
+    "strict_response": "As specified in the theme description and for technical reasons, some default features like grid and frontend editor are disabled like in most big themes. However, we're working on the frontend editor compatibility.",
+    "builder":"WPbakery"
+  },
+  {
+    "issue_type": "info_gap",
+    "title": "Missing files/templates without explanation",
+    "customer_message": "I'm missing templates but I don't know how to install/get it.",
+    "strict_response": "Could you please clarify what you mean by missing Woo templates? If possible, share a link to the page, a screenshot of the issue, and confirm which theme you are using. That'll help me assist you faster!"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Can I use this theme for an online store?",
+    "customer_message": "Is this theme suitable for a professional WooCommerce store?",
+    "strict_response": "Yes, our themes are designed to support online stores using WooCommerce. They are flexible and customizable to fit various e-commerce needs."
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Theme animations not working with Elementor Pro header",
+    "customer_message": "All the animation doesn't work (appears on scroll / svg animation ecc) but the classic elementor animation works perfectly.",
+    "strict_response": "This may happen because the Elementor Pro custom header replaces the theme’s header.php, which prevents required scripts from loading. Use a Content Block for the header instead: https://wolfthemes.ticksy.com/article/12792/",
+    "builder":"Elementor"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Speaker Update from old version (prior to 2.0)",
+    "customer_message": "I updated from an old version of Speaker and I can't retrieve my content.",
+    "strict_response": "Speaker (2.0.0) has been re-designed a couple of years ago. The whole home page is now managed via Elementor in one single place. Users updating from older versions may need to manually rebuild the homepage layout.",
+    "theme":"Speaker"
+  },
+  {
+    "issue_type": "common_issue",
+    "title": "Instagram feed not displaying like the demo",
+    "customer_message": "How do I make the Instagram feed look like the demo? It's not pulling the right images and shows a blank screen.",
+    "strict_response": "To customize your Instagram feed to match the demo, open the Smash Balloon Instagram Feed plugin and go to Feed > Customize tab > Sections. For layout and media display, use the Images and Videos section. If you still see a blank screen, try clearing your browser cache and the plugin cache. For more help, contact the plugin author: https://smashballoon.com/instagram-feed/support/",
+    "plugin": ["Smash Balloon Instagram Feed"]
+  }
+]

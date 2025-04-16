@@ -79,29 +79,38 @@ else:
     ticket = tickets_data[selected_idx]
     with cols[0]:
     
-        with st.expander("📜 Show Full Discussion"):
-            comments = ticket["full_thread"]
+        # Only show discussion if there's more than one message
+        if len(ticket["full_thread"]) > 1:
+            with st.expander("📜 Show Full Discussion"):
+                comments = ticket["full_thread"]
 
-            # Remove last message (already shown separately)
-            comments = comments[1:]
+                # Remove last message (already shown separately)
+                comments = comments[1:]
 
-            # Remove what was originally the last (now first) before reversing
-            if comments:
-                comments = list(reversed(comments))    # reverse to get oldest first
+                # Remove what was originally the last (now first) before reversing
+                if comments:
+                    comments = list(reversed(comments))    # reverse to get oldest first
 
-            for c in comments:
-                name = c["commenter_name"]
-                role = "User" if c["user_type"] == "user" else "Support"
-                timestamp = c.get("time_stamp", "")
-                comment_html = unescape(c["comment"])
+                for c in comments:
+                    name = c["commenter_name"]
+                    role = "User" if c["user_type"] == "user" else "Support"
+                    timestamp = c.get("time_stamp", "")
+                    comment_html = unescape(c["comment"])
 
-                st.markdown(f"**[{role}] {name}** — *{timestamp}*", unsafe_allow_html=True)
-                st.markdown(comment_html, unsafe_allow_html=True)
-                st.markdown("---")
+                    # ⬇️ Display attachments if present
+                    # TODO display attachemnt
 
+                    st.markdown(f"**[{role}] {name}** — *{timestamp}*", unsafe_allow_html=True)
+                    st.markdown(comment_html, unsafe_allow_html=True)
+                    st.markdown("---")
+
+        
         single_summary_clean = strip_html_tags(ticket['full_thread_sumary'])
         st.subheader(f"🗨️ {single_summary_clean}")
         st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
+
+        # ⬇️ Display attachments if present
+        # TODO display attachemnt
 
         st.divider()
 
@@ -120,6 +129,7 @@ else:
         if st.button("🤖 Generate / Regenerate Reply"):
             with st.spinner("Generating reply..."):
                 try:
+                    
                     result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction, ticket_id=ticket_id)
                     reply_html = result["reply"].output if hasattr(result["reply"], "output") else str(result["reply"])
                     st.session_state[editor_state_key] = reply_html
