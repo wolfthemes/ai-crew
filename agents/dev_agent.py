@@ -27,6 +27,6 @@ dev_agent = Agent(
         PatchApplyTool()
     ],
     backstory=dev_agent_backstory_text,
-    verbose=True,
+    verbose=False,
     llm="gpt-4-turbo"
 )
