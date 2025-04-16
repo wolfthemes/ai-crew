@@ -358,9 +358,9 @@ def get_ticket_metadata(ticket_id):
         "contains_credentials" : ticket.get("contains_credentials"),
         "match_source": ticket.get("match_source"),
         "ai_reply": "",
-        "full_thread": ticket.get("customer_url"),
+        "full_thread": ticket.get("full_thread"),
         "flags": {
-            "needs_human": ticket.get("needs_human"),
+            "needs_human": ticket.get("needs_human", False),
             "private": ticket.get("private", False)
         }
     }
