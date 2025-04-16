@@ -87,7 +87,8 @@ if query := st.chat_input("Ask your dev agent..."):
         ctx = st.session_state.dev_context
         context_injection = (
             f"[Context]"
-            f"Repo: {ctx['owner']}/{ctx['repo'] or 'unknown'}"
+            #f"Repo: {ctx['owner']}/{ctx['repo'] or 'unknown'}"
+            f"Repo: {ctx['repo'] or 'unknown'}"
             f"Branch: {ctx['branch']}"
         )
         if ctx["last_file"]:
