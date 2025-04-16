@@ -15,6 +15,7 @@ from utils.document_loaders import (
     load_closed_tickets,
     load_support_agent_backstory,
     load_support_agent_instructions,
+    load_reformulate_agent_instructions,
     load_dev_agent_backstory
 )
 from utils.helpers import compute_all_file_hashes, hashes_changed
@@ -36,6 +37,7 @@ tickets = load_closed_tickets()
 common_issues = load_common_issues()
 support_agent_backstory_text = load_support_agent_backstory()
 support_agent_instructions_text = load_support_agent_instructions()
+reformulate_agent_instructions_text = load_reformulate_agent_instructions()
 
 dev_agent_backstory_text = load_dev_agent_backstory()
 

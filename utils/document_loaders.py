@@ -140,6 +140,10 @@ def load_support_agent_instructions(path="prompts/support_agent_instructions.md"
     with open(path, encoding="utf-8") as f:
         return f.read()
     
+def load_reformulate_agent_instructions(path="prompts/reformulate_agent_instructions.md"):
+    with open(path, encoding="utf-8") as f:
+        return f.read()
+    
 def load_guidelines(path="prompts/support_task_guidelines.md"):
     with open(path, encoding="utf-8") as f:
         return f.read()
