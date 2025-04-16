@@ -28,5 +28,5 @@ dev_agent = Agent(
     ],
     backstory=dev_agent_backstory_text,
     verbose=True,
-    llm="gpt-4"
+    llm="gpt-4-turbo"
 )
