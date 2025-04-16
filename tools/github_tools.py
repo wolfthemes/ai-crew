@@ -26,8 +26,6 @@ class GitHubTool(BaseTool):
             if not GITHUB_USERNAME or not GITHUB_TOKEN:
                 return "GITHUB_USERNAME and/or GITHUB_TOKEN not set in environment."
 
-            #https://github.com/wolfthemes/vinylparadise.git
-            #repo_url = f"https://{GITHUB_USERNAME}:{GITHUB_TOKEN}@github.com/{owner}/{repo_name}.git"
             repo_url = f"https://github.com/{GITHUB_USERNAME}/{repo_name}.git"
             clone_path = os.path.join(REPO_ROOT, repo_name)
 
@@ -36,18 +34,32 @@ class GitHubTool(BaseTool):
 
             os.makedirs(REPO_ROOT, exist_ok=True)
 
-            subprocess.run(
-                ["git", "clone", "--branch", branch, "--single-branch", repo_url, repo_name],
-                cwd=REPO_ROOT,
-                check=True
-            )
+            # First attempt: clone with specified branch (default: main)
+            try:
+                subprocess.run(
+                    ["git", "clone", "--branch", branch, "--single-branch", repo_url, repo_name],
+                    cwd=REPO_ROOT,
+                    check=True
+                )
+                return f"CLONE_STATUS: SUCCESS — Repo '{owner}/{repo_name}' cloned to {clone_path} on branch '{branch}'"
+            except subprocess.CalledProcessError as e:
+                if branch == "main":
+                    # Retry with 'master' as fallback
+                    try:
+                        subprocess.run(
+                            ["git", "clone", "--branch", "master", "--single-branch", repo_url, repo_name],
+                            cwd=REPO_ROOT,
+                            check=True
+                        )
+                        return f"CLONE_STATUS: SUCCESS — Repo '{owner}/{repo_name}' cloned to {clone_path} on fallback branch 'master'"
+                    except subprocess.CalledProcessError as e2:
+                        return f"CLONE_STATUS: FAILED — Tried 'main' and 'master'. Git error: {e2}"
+                else:
+                    return f"CLONE_STATUS: FAILED — Git error: {e}"
 
-            return f"CLONE_STATUS: SUCCESS — Repo '{owner}/{repo_name}' cloned to {clone_path} on branch '{branch}'"
-
-        except subprocess.CalledProcessError as e:
-            return f"CLONE_STATUS: FAILED — Git error: {e}"
         except Exception as e:
             return f"CLONE_STATUS: FAILED — Error: {e}"
+
 
     def run(self, query: str) -> str:
         return "Use structured input with 'repo_name', optional 'owner', and 'branch'."
