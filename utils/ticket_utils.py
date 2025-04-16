@@ -24,6 +24,7 @@ def reformulate_reply(reply_text: str, instruction: str = "", last_user_message:
     system_prompt = """
     Reformulate the support reply to be clearer, more concise, and professional.
     Fix typos if needed, preserve all important instructions, links, and HTML formatting.
+    Never reformulate the issue as an intro and get straight to the point.
 
     If Instructions are provided, be sure to use these to re-generate your reply.
 
