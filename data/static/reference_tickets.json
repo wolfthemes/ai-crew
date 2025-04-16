@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ref001",
+    "theme": "Kayo",
+    "tags": ["vimeo", "video", "player"],
+    "pattern": "vimeo not displaying|video player issue|embed not working",
+    "source": "reference_ticket",
+    "issue": "Vimeo player not displaying theme. Only URL visible instead",
+    "expected_response": "<p>To embed a Vimeo video, ensure to paste only the URL without the whole iframe code.</p>"
+  }
+]
