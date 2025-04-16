@@ -82,3 +82,10 @@ def get_tinymce_content(ticket_id: str) -> str:
     except FileNotFoundError:
         return ""
 
+def delete_tinymce_draft(ticket_id: str) -> None:
+    path = f"data/dynamic/editor/draft_{ticket_id}"
+    try:
+        os.remove(path)
+        print(f"Deleted: {path}")
+    except FileNotFoundError:
+        print(f"No draft found for ticket {ticket_id} (nothing to delete).")
