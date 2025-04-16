@@ -5,10 +5,16 @@ from tools.vector_retriever import retriever
 
 def process_ticket_research(ticket_text: str, ticket_meta: dict = None) -> str:
 
-    print( ticket_meta )
-        
     if ticket_meta:
-        parts = [ticket_meta.get("last_message", ticket_text)]
+        
+        last_msg = ticket_meta.get("last_message", ticket_text)
+
+        # Defensive: ensure it's a usable string
+        if not isinstance(last_msg, str) or not last_msg.strip():
+            last_msg = "[Empty or invalid last message]"
+
+        parts = [last_msg]
+
         context = {
             "theme": ticket_meta.get("theme"),
             "builder": ticket_meta.get("builder"),

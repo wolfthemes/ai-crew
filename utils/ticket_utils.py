@@ -332,6 +332,9 @@ def get_ticket_metadata(ticket_id):
     if not ticket:
         return {}
     
+
+    # TODO: strip attachements from comments
+
     return {
         "ticket_id": ticket_id,
         "ticket_type": ticket.get("ticket_type"),

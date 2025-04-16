@@ -41,7 +41,7 @@ class KnowledgeBaseSearcher:
             return {
                 "source": "common_issue",
                 "title": common_issues[0].metadata.get("title", "Common Issue"),
-                "issue": reference_tickets[0].metadata.get("issue"),
+                "issue": common_issues[0].metadata.get("issue"),
                 "solution": f"STRICT_RESPONSE: {common_issues[0].metadata.get('solution')}",
             }
         
