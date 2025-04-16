@@ -1,7 +1,7 @@
 from tools.vector_retriever import retriever
 from tools.kb_tools import run_kb_research_debug
 
-ticket_query = "Vimeo video not displaying correctly"
+ticket_query = "A got an issue with "
 
 context = {
     "customer": "Test Customer",

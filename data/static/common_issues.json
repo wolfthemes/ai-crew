@@ -144,5 +144,26 @@
     "issue": "How do I make the Instagram feed look like the demo? It's not pulling the right images and shows a blank screen.",
     "solution": "To customize your Instagram feed to match the demo, open the Smash Balloon Instagram Feed plugin and go to Feed > Customize tab > Sections. For layout and media display, use the Images and Videos section. If you still see a blank screen, try clearing your browser cache and the plugin cache. For more help, contact the plugin author: https://smashballoon.com/instagram-feed/support/",
     "plugin": ["Smash Balloon Instagram Feed"]
+  },
+  {
+    "source": "common_issue",
+    "title": "Outdated WooCommerce template files need updating",
+    "issue": "I got a notification saying that the theme contains outdated copies of some WooCommerce template files.",
+    "solution": "An update that will include the latest WooCommerce template version is already planned. In the meantime, this notification does not affect the theme's functionality, so you can safely ignore the message.",
+    "plugin": ["WooCommerce"]
+  },
+  {
+    "source": "common_issue",
+    "title": "PHP warnings preventing the theme to work correctly - if they are related to our themes or theme-related plugins)",
+    "issue": "I am getting errors on my website.",
+    "solution": "I’ll look into this and release a fix as soon as possible. In the meantime, I recommend disabling any PHP debug tools on your production site. These warnings are intended for developers and shouldn’t affect how the theme or plugin function.",
+    "plugin": []
+  },
+  {
+    "source": "common_issue",
+    "title": "PHP warnings preventing the theme to work correctly - if they are NOT related to our themes or theme-related plugins)",
+    "issue": "I am getting errors on my website.",
+    "solution": "It seems that these warnings are not realted to the theme or included plugins. Additionaly, These warnings are intended for developers and shouldn’t affect how the theme or plugin function.",
+    "plugin": []
   }
 ]
