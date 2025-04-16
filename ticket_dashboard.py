@@ -104,23 +104,25 @@ else:
         st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
 
         st.divider()
+
+        ticket_id = ticket["id"]
+        editor_state_key = f"editor_reply_{ticket_id}"
+        initial_content = ""
+
+        # TODO: store the editor history in session
+        # st.session_state[f"{ticket_id}_history"] = {
+        #     "original": ...,
+        #     "generated": ...,
+        #     "reformulated": ...,
+        # }
         
         crew_instruction = st.text_area("📝 Paste an optional note here:")
-
         if st.button("🤖 Generate / Regenerate Reply"):
             with st.spinner("Generating reply..."):
                 try:
-                    result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction, ticket_id=ticket["id"])
-
-                    raw_reply = result["reply"].output if hasattr(result["reply"], "output") else str(result["reply"])
-                    markdown_debug = html2text.html2text(raw_reply)
-
-                    print("🧠 Crew Reply (Markdown View) →")
-                    print(markdown_debug)
-
-                    # ✅ Store to session
-                    st.session_state.generated_reply = result["reply"]
-                    st.session_state.reply = result["reply"]  # Ensure it's in the editor too
+                    result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction, ticket_id=ticket_id)
+                    reply_html = result["reply"].output if hasattr(result["reply"], "output") else str(result["reply"])
+                    st.session_state[editor_state_key] = reply_html
                     st.rerun()
                 except Exception as e:
                     st.error(f"❌ Error running agent: {str(e)}")
@@ -128,24 +130,9 @@ else:
 
         st.subheader("✍️ Edit and Post Reply (HTML)")
 
-        # Determine initial content
-        if "reformulated_reply" in st.session_state:
-            st.session_state.reply = st.session_state.reformulated_reply
-            del st.session_state.reformulated_reply
-
-        elif "generated_reply" in st.session_state:
-            st.session_state.reply = st.session_state.generated_reply
-            del st.session_state.generated_reply
-
-        elif "reply" not in st.session_state:
-            # Fallback to file only if reply not yet in memory
-            st.session_state.reply = get_tinymce_content(ticket_id=ticket["id"])
-
-        # Final editor input
-        initial_content = st.session_state.reply
-
-        # Render TinyMCE with whatever is in session state
-        tinymce_editor(initial_content=initial_content, ticket_id=ticket["id"], height=450)
+        # Load latest draft, fallback to get_tinymce_content
+        initial_content = st.session_state.get(editor_state_key, get_tinymce_content(ticket_id))
+        tinymce_editor(initial_content=initial_content, ticket_id=ticket_id, height=450)
         
         col1, col2 = st.columns(2)
 
@@ -156,19 +143,17 @@ else:
         
         if st.button("♻️ Reformulate"):
             try:
-                current_editor_reply = get_tinymce_content(ticket["id"])
-                st.session_state.reply = current_editor_reply
-
-                if not isinstance(current_editor_reply, str):
-                    current_editor_reply = str(current_editor_reply)
-
-                reformulated = reformulate_reply(
-                    reply_text=current_editor_reply,
-                    instruction=reformulate_instruction,
-                    last_user_message=ticket["last_message"]
-                )
-                st.session_state.reformulated_reply = reformulated
-                st.rerun()
+                current_reply = get_tinymce_content(ticket_id)
+                if not current_reply.strip():
+                    st.warning("⚠️ Editor is empty.")
+                else:
+                    reformulated = reformulate_reply(
+                        reply_text=current_reply,
+                        instruction=reformulate_instruction,
+                        last_user_message=ticket["last_message"]
+                    )
+                    st.session_state[editor_state_key] = reformulated
+                    st.rerun()
             except Exception as e:
                 st.error(f"Reformulation error: {str(e)}")
 
@@ -184,19 +169,16 @@ else:
 
             if st.button("✅ Post Reply to Ticksy"):
                 
-                current_editor_reply = get_tinymce_content(ticket["id"])
-                st.session_state.reply = current_editor_reply
-                
-                if not isinstance(current_editor_reply, str):
+                current_reply = get_tinymce_content(ticket_id)
+                if not current_reply.strip():
                     st.warning("⚠️ Editor is empty — nothing to post.")
                 else:
-                    result = post_to_ticksy(ticket_id=ticket["id"], message=current_editor_reply)
-
+                    result = post_to_ticksy(ticket_id=ticket_id, message=current_reply)
                     if result.get("status") == "ok":
-
-                        # todo empty editor and delete current ticket draft file
-
                         st.success("✅ Reply posted to Ticksy.")
+                        if editor_state_key in st.session_state:
+                            del st.session_state[editor_state_key]
+                        st.rerun()
                     else:
                         st.error("❌ Failed to post. Check console/logs.")
 
