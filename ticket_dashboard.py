@@ -193,6 +193,9 @@ else:
                     result = post_to_ticksy(ticket_id=ticket["id"], message=current_editor_reply)
 
                     if result.get("status") == "ok":
+
+                        # todo empty editor and delete current ticket draft file
+
                         st.success("✅ Reply posted to Ticksy.")
                     else:
                         st.error("❌ Failed to post. Check console/logs.")
