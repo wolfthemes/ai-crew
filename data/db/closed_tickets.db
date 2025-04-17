@@ -1,0 +1,22 @@
+import sqlite3
+from pathlib import Path
+
+# Define the path to the database
+db_path = Path("closed_tickets.db")
+
+# Connect to the SQLite database (will create if it doesn't exist)
+conn = sqlite3.connect(db_path)
+cursor = conn.cursor()
+
+# Create a table for indexed tickets (we can expand this schema later for other uses)
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS indexed_tickets (
+    ticket_id TEXT PRIMARY KEY,
+    theme TEXT,
+    builder TEXT,
+    indexed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+""")
+
+conn.commit()
+conn.close()
