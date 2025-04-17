@@ -27,6 +27,7 @@ def review_support_reply_task(ticket_text: str, instruction: str = "", ticket_me
         3. Uses the additional instruction if provided
         4. Is helpful and accurate
         5. Has the right tone and format
+        6. Is formatted in HTML and NOT in markdown or plain text
         """,
         expected_output="Quality assessment report with specific feedback on the support reply.",
         agent=support_quality_control_agent

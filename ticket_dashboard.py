@@ -135,7 +135,14 @@ else:
                     try:
                         
                         result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction, ticket_id=ticket_id)
-                        reply_html = result["reply"].output if hasattr(result["reply"], "output") else str(result["reply"])
+                        
+                        reply_obj = result.get("reply", None)
+
+                        if hasattr(reply_obj, "output"):
+                            reply_html = reply_obj.output
+                        else:
+                            raise ValueError("Agent reply is not a valid HTML object with .output")
+                        
                         st.session_state[editor_state_key] = reply_html
                         st.rerun()
                     except Exception as e:

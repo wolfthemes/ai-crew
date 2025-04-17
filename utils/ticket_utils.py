@@ -35,10 +35,8 @@ def reformulate_reply(reply_text: str, instruction: str = "", last_user_message:
     {reply_text.strip()}
     """
 
-    print( SECONDARY_MODEL_KEY )
-
     response = openai_client.chat.completions.create(
-        model=SECONDARY_MODEL_KEY,
+        model="gpt-4.1-nano",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}

@@ -12,7 +12,7 @@ support_agent = Agent(
     allow_delegation=False,
     verbose=True,
     instructions=support_agent_instructions_text,
-    llm=get_llm("primary")
+    llm=get_llm("power")
 )
 
 if __name__ == "__main__":

@@ -44,7 +44,7 @@ support_quality_control_agent = Agent(
     tools=[review_response_quality],
     verbose=True,
     allow_delegation=False,
-    llm=get_llm("secondary"),
+    llm=get_llm("primary"),
     instructions="""
     - NEVER approve a response that includes steps not present in the source.
     - If a common issue match is found, the reply must reuse the `expected_response` exactly.
