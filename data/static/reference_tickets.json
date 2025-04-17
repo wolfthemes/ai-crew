@@ -14,5 +14,13 @@
     "title": "WooCommerce columns layout behavior",
     "issue": "Woocommerce issue setting columns",
     "solution": "To adjust the number of columns for your WooCommerce products shop page, go to Appearance > Customize > Shop tab. The number of column will always be reduced on mobile deviced below 500px as the theme handles responsiveness across all devices sizes automatically"
+  },
+  {
+    "id": "ref003",
+    "tags": ["woocommerce", "shop", "order", "sorting", "query", "product", "post", "blog"],
+    "source": "reference_ticket",
+    "title": "Post (or product) ordered by last modification",
+    "issue": "Is is possible to order my post/product by Last Modified ?",
+    "solution": "You can customize the default sorting by selecting \"Modified\" in the Post/Product page builder module under the \"Query\" settings. Please refer to the screenshot here: https://d.pr/i/wDVkp1"
   }
 ]
