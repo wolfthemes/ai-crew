@@ -370,7 +370,7 @@ def get_ticket_metadata(ticket_id):
         }
     }
 
-def preprocess_all_tickets(filepath):
+def preprocess_open_tickets(filepath):
     with open(filepath, encoding="utf-8") as f:
         data = json.load(f)
 
@@ -380,7 +380,7 @@ def preprocess_all_tickets(filepath):
             processed.append(preprocess_ticket(t))
     return processed
 
-def save_preprocessed_tickets(tickets, output_path="data/dynamic/tickets/preprocessed_tickets.json"):
+def save_preprocessed_open_tickets(tickets, output_path="data/dynamic/tickets/preprocessed_tickets.json"):
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"preprocessed_tickets": tickets}, f, indent=2, ensure_ascii=False)
