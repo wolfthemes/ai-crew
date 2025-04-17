@@ -1,5 +1,6 @@
 from crewai import Agent
 from tools.research_tools import SearchKnowledgeBaseTool
+from core.llm_config import get_llm
 
 research_agent = Agent(
     role="Support Research Assistant",
@@ -10,5 +11,6 @@ research_agent = Agent(
         "and finding existing solutions from the KB if available."
     ),
     tools=[SearchKnowledgeBaseTool()],
+    llm=get_llm("primary"),
     verbose=True,
 )

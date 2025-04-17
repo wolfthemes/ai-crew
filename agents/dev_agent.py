@@ -1,4 +1,5 @@
 from crewai import Agent
+from core.llm_config import get_llm
 from tools.vector_retriever import dev_agent_backstory_text
 from tools.code_search_tools import GetCodeSearchTool
 from tools.github_tools import GitHubTool
@@ -28,5 +29,5 @@ dev_agent = Agent(
     ],
     backstory=dev_agent_backstory_text,
     verbose=False,
-    llm="gpt-4-turbo"
+    llm=get_llm("primary")
 )

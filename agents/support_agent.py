@@ -1,6 +1,7 @@
 
 from crewai import Agent
 from tools.vector_retriever import support_agent_backstory_text, support_agent_instructions_text
+from core.llm_config import get_llm
 
 ### Agent
 support_agent = Agent(
@@ -10,7 +11,8 @@ support_agent = Agent(
     tools=[],
     allow_delegation=False,
     verbose=True,
-    instructions=support_agent_instructions_text
+    instructions=support_agent_instructions_text,
+    llm=get_llm("primary")
 )
 
 if __name__ == "__main__":
