@@ -23,6 +23,7 @@ if "dev_context" not in st.session_state:
         "recent_commits": []  # Track recent commit operations
     }
 
+st.set_page_config(page_title="Dev Agent Chat", layout="wide")
 
 st.sidebar.title("📂 Codebase Context")
 
