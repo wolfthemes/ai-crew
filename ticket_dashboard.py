@@ -2,14 +2,11 @@
 import streamlit as st
 import requests
 import threading
-import os
 import json
 import html
-import html2text
-import subprocess
 from html import unescape
 from crews.support_crew import support_crew_with_research
-from tools import preprocess_tickets
+from tools import preprocess_open_tickets
 from utils.helpers import time_ago, strip_html_tags
 from utils.post_to_ticksy import post_to_ticksy
 from utils.tinymce_component import tinymce_editor, get_tinymce_content, delete_tinymce_draft
@@ -27,7 +24,7 @@ if "fastapi_started" not in st.session_state:
     st.session_state.fastapi_started = True
 
 if "preprocessing_done" not in st.session_state:
-    preprocess_tickets.run_preprocessing()
+    preprocess_open_tickets.run_preprocessing()
     st.session_state.preprocessing_done = True
 
 # Load preprocessed tickets
@@ -63,7 +60,7 @@ st.sidebar.divider()
 
 if st.sidebar.button("🔄 Refresh Tickets"):
     with st.spinner("Refreshing ticket data..."):
-        preprocess_tickets.run_preprocessing()
+        preprocess_open_tickets.run_preprocessing()
         st.session_state.preprocessing_done = True
         st.success("✅ Ticket data refreshed!")
         st.rerun()
