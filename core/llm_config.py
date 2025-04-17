@@ -1,6 +1,6 @@
 # core/llm_config.py
 
-from langchain_community.chat_models import ChatOpenAI, ChatAnthropic
+from langchain_openai import ChatOpenAI
 
 # === Fallback to local config overrides ===
 try:
