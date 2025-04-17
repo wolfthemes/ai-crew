@@ -177,7 +177,8 @@ else:
             col1, col2 = st.columns([1, 2])
 
             with col1:
-                private_reply = st.checkbox("Private", value=False)
+                #private_reply = st.checkbox("Private", value=False)
+                close_ticket = st.checkbox("Close Ticket", value=False)
 
             with col2:
 
@@ -187,7 +188,7 @@ else:
                     if not current_reply.strip():
                         st.warning("⚠️ Editor is empty — nothing to post.")
                     else:
-                        result = post_to_ticksy(ticket_id=ticket_id, message=current_reply)
+                        result = post_to_ticksy(ticket_id=ticket_id, message=current_reply, close_ticket=close_ticket)
                         if result.get("status") == "ok":
                             st.success("✅ Reply posted to Ticksy.")
                             if editor_state_key in st.session_state:
