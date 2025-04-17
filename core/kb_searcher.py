@@ -22,7 +22,7 @@ class KnowledgeBaseSearcher:
             return {
                 "source": "none",
                 "title": "No Results",
-                "solution": "No relevant results found in the knowledge base."
+                "content": "No relevant results found in the knowledge base."
             }
         
         # Return structured data for reference tickets
@@ -33,6 +33,7 @@ class KnowledgeBaseSearcher:
                 "title": reference_tickets[0].metadata.get("title", "Reference ticket"),
                 "issue": reference_tickets[0].metadata.get("issue"),
                 "solution": f"STRICT_RESPONSE: {reference_tickets[0].metadata.get('solution')}",
+                "content": f"STRICT_RESPONSE: {reference_tickets[0].metadata.get('solution')}",
             }
 
         # Return structured data for common issues
@@ -43,6 +44,7 @@ class KnowledgeBaseSearcher:
                 "title": common_issues[0].metadata.get("title", "Common Issue"),
                 "issue": common_issues[0].metadata.get("issue"),
                 "solution": f"STRICT_RESPONSE: {common_issues[0].metadata.get('solution')}",
+                "content": f"STRICT_RESPONSE: {common_issues[0].metadata.get('solution')}",
             }
         
         # Fallback: general best match
