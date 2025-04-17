@@ -1,0 +1,3 @@
+PRIMARY_KEY = "gpt-4-1-nano"
+SECONDARY_KEY = "gpt-4o"
+FALLBACK_KEY = "gpt-4-turbo"

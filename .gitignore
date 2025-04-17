@@ -7,6 +7,7 @@ data/faiss_store/
 /data/dynamic/
 .env
 logs/
+llm_config_local.py
 
 # Ignore cloned or test repos
 repos/*
