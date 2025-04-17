@@ -64,7 +64,7 @@ def summarize_ticket(comments: list[str]) -> str:
 
     try:
         response = openai_client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4.1-nano",
             messages=[
                 {"role": "system", "content": "You are a support assistant summarizing support tickets."},
                 {"role": "user", "content": prompt}
@@ -101,7 +101,7 @@ def summarize_last_user_comment(comments: list[str], last_msg: str) -> str:
 
     try:
         response = openai_client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4.1-nano",
             messages=[
                 {"role": "system", "content": "You are a support assistant summarizing support tickets."},
                 {"role": "user", "content": prompt}
@@ -395,10 +395,11 @@ def save_preprocessed_open_tickets(tickets, output_path="data/dynamic/tickets/pr
         json.dump({"preprocessed_tickets": tickets}, f, indent=2, ensure_ascii=False)
 
 
-def save_preprocessed_closed_tickets(tickets):
-    # Dump in DB
-    print( tickets )
-    return
+def save_preprocessed_closed_tickets(tickets, output_path="data/dynamic/tickets/closed_tickets.json"):
+    # TODO dump in DB instead
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump({"closed_tickets": tickets}, f, indent=2, ensure_ascii=False)
 
 def load_ticket_by_id(ticket_id, path="data/dynamic/tickets/preprocessed_tickets.json"):
     """
