@@ -4,11 +4,11 @@ from langchain_community.chat_models import ChatOpenAI, ChatAnthropic
 
 # === Fallback to local config overrides ===
 try:
-    from llm_config_local import PRIMARY_KEY, SECONDARY_KEY, POWER_KEY
+    from llm_config_local import PRIMARY_MODEL_KEY, SECONDARY_MODEL_KEY, POWER_MODEL_KEY
 except ImportError:
-    PRIMARY_KEY = "gpt-4.1-mini"
-    SECONDARY_KEY = "gpt-4.1-nano"
-    POWER_KEY = "gpt-4.1"
+    PRIMARY_MODEL_KEY = "gpt-4.1-mini"
+    SECONDARY_MODEL_KEY = "gpt-4.1-nano"
+    POWER_MODEL_KEY = "gpt-4.1"
 
 # === Shared LLM settings ===
 DEFAULT_TEMPERATURE = 0.2
@@ -29,9 +29,9 @@ MODELS = {
 }
 
 # === Assigned Models Based on Config Keys ===
-PRIMARY_MODEL = MODELS.get(PRIMARY_KEY) # default
-SECONDARY_MODEL = MODELS.get(SECONDARY_KEY) # less powerful
-POWER_MODEL = MODELS.get(POWER_KEY) # full powaaa
+PRIMARY_MODEL = MODELS.get(PRIMARY_MODEL_KEY) # default
+SECONDARY_MODEL = MODELS.get(SECONDARY_MODEL_KEY) # less powerful
+POWER_MODEL = MODELS.get(POWER_MODEL_KEY) # full powaaa
 
 # === Model Retrieval Function ===
 def get_llm(name: str = "primary"):
@@ -49,6 +49,6 @@ def get_llm(name: str = "primary"):
         raise ValueError(f"❌ LLM key '{name}' is not a valid model key.")
     
     # ✅ Print the actual model name used
-    print(f"🧠 [LLM CONFIG] Using model key: '{name}' → model_name: '{model.model_name}'")
+    #print(f"🧠 [LLM CONFIG] Using model key: '{name}' → model_name: '{model.model_name}'")
     
     return model
