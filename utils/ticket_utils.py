@@ -388,8 +388,8 @@ def preprocess_closed_tickets(filepath):
 
     processed = []
     for t in data.get("closed-tickets", []):
-        # Skip invalid or unhelpful tickets
-        if t.get("theme") == "Unknown" or t.get("customer") == "[deleted]" or t.get("category") == "Uncategorized":
+        # Skip invalid or unhelpful tickets (non-theme-cateogry, deleted customer )
+        if t.get("user_name") == "[deleted]" or t.get("category_id") == "100010795":
             continue
         processed.append(preprocess_ticket(t))
 
