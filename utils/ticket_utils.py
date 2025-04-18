@@ -224,6 +224,7 @@ def preprocess_ticket(raw_ticket):
 
     return {
         "id": raw_ticket["ticket_id"],
+        "time_stamp": raw_ticket["time_stamp"],
         "subject": raw_ticket["ticket_title"],
         "customer": customer_name,
         "customer_url": customer_url,
@@ -339,6 +340,7 @@ def get_ticket_metadata(ticket_id):
 
     return {
         "ticket_id": ticket_id,
+        "timestamp": ticket.get("timestamp"),
         "ticket_type": ticket.get("ticket_type"),
         "user_site": ticket.get("user_site"),
         "subject": ticket.get("subject"),
