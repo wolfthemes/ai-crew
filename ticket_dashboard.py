@@ -28,8 +28,8 @@ if "preprocessing_done" not in st.session_state:
     st.session_state.preprocessing_done = True
 
 # Load preprocessed tickets
-with open("data/dynamic/tickets/open_ticket.json", encoding="utf-8") as f:
-    tickets_data = json.load(f)["open_ticket"]
+with open("data/dynamic/tickets/open_tickets.json", encoding="utf-8") as f:
+    tickets_data = json.load(f)["open_tickets"]
 
 st.set_page_config(page_title="WolfThemes Tickets", layout="wide")
 st.title("🛠️ Ticket Dashboard")

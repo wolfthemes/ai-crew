@@ -1,22 +1,59 @@
 import sqlite3
-from pathlib import Path
+import json
+from datetime import datetime
 
-# Define the path to the database
-db_path = Path("closed_tickets.db")
+# Load the closed_tickets JSON
+with open("data/dynamic/tickets/closed_tickets.json", "r", encoding="utf-8") as f:
+    closed_tickets_data = json.load(f)["closed_tickets"]
 
-# Connect to the SQLite database (will create if it doesn't exist)
+# Create and connect to SQLite database
+db_path = "data/db/support_tickets.db"
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
-# Create a table for indexed tickets (we can expand this schema later for other uses)
+# Create the minimal closed_tickets table
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS indexed_tickets (
+CREATE TABLE IF NOT EXISTS closed_tickets (
     ticket_id TEXT PRIMARY KEY,
     theme TEXT,
     builder TEXT,
-    indexed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+    formatted_text_thread TEXT,
+    full_thread_summary TEXT,
+    last_message_summary TEXT
+);
 """)
+
+# Create the lean ticket_insights table
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS ticket_insights (
+    ticket_id TEXT PRIMARY KEY,
+    case_study BOOLEAN DEFAULT 0,
+    match_source TEXT,
+    ticket_summary TEXT,
+    solution_summary TEXT,
+    created_at TEXT,
+    updated_at TEXT
+);
+""")
+
+# Insert data into closed_tickets table
+for ticket in closed_tickets_data:
+    cursor.execute("""
+    INSERT OR REPLACE INTO closed_tickets (
+        ticket_id, theme, builder, formatted_text_thread,
+        full_thread_summary, last_message_summary
+    ) VALUES (?, ?, ?, ?, ?, ?);
+    """, (
+        ticket["id"],
+        ticket.get("theme", ""),
+        ticket.get("builder", ""),
+        ticket.get("formatted_text_thread", ""),
+        ticket.get("full_thread_sumary", ""),
+        ticket.get("last_message_summary", "")
+    ))
 
 conn.commit()
 conn.close()
+
+db_path  # Return the path to the SQLite DB for reference
+
