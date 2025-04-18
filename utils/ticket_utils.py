@@ -388,6 +388,9 @@ def preprocess_closed_tickets(filepath):
 
     processed = []
     for t in data.get("closed-tickets", []):
+        # Skip invalid or unhelpful tickets
+        if t.get("theme") == "Unknown" or t.get("customer") == "[deleted]" or t.get("category") == "Uncategorized":
+            continue
         processed.append(preprocess_ticket(t))
     return processed
 
@@ -395,7 +398,6 @@ def save_preprocessed_open_tickets(tickets, output_path="data/dynamic/tickets/op
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"open_tickets": tickets}, f, indent=2, ensure_ascii=False)
-
 
 def save_preprocessed_closed_tickets(tickets, output_path="data/dynamic/tickets/closed_tickets.json"):
     # TODO dump in DB instead
