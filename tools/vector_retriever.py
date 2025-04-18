@@ -13,7 +13,7 @@ from utils.document_loaders import (
     load_theme_meta,
     load_kb_articles,
     load_theme_docs,
-    load_closed_tickets,
+    load_closed_tickets_from_db,
     load_support_agent_backstory,
     load_support_agent_instructions,
     load_reformulate_agent_instructions,
@@ -34,7 +34,7 @@ MAX_WORKERS = max(1, multiprocessing.cpu_count() - 1)
 theme_meta_docs = load_theme_meta()
 articles = load_kb_articles()
 theme_docs = load_theme_docs()
-closed_tickets = load_closed_tickets()
+closed_tickets_from_db = load_closed_tickets_from_db()
 common_issues = load_common_issues()
 reference_tickets = load_reference_tickets()
 support_agent_backstory_text = load_support_agent_backstory()
@@ -44,7 +44,7 @@ reformulate_agent_instructions_text = load_reformulate_agent_instructions()
 dev_agent_backstory_text = load_dev_agent_backstory()
 
 
-all_docs = common_issues + reference_tickets + articles + theme_docs + closed_tickets
+all_docs = common_issues + reference_tickets + articles + theme_docs + closed_tickets_from_db
 
 # Build or load retriever
 if USE_VECTORSTORE:
