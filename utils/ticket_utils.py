@@ -392,6 +392,7 @@ def preprocess_closed_tickets(filepath):
         if t.get("theme") == "Unknown" or t.get("customer") == "[deleted]" or t.get("category") == "Uncategorized":
             continue
         processed.append(preprocess_ticket(t))
+
     return processed
 
 def save_preprocessed_open_tickets(tickets, output_path="data/dynamic/tickets/open_tickets.json"):
