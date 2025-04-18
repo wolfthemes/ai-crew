@@ -13,8 +13,8 @@ def run_preprocessing():
         print("📦 Preprocessing open tickets...")
         subprocess.run(["python", "crawlers/crawl_open_tickets.py"], check=True)
         open_tickets = preprocess_open_tickets(filepath="data/crawled/open_tickets.json")
-        save_preprocessed_open_tickets(open_tickets, output_path="data/dynamic/tickets/preprocessed_tickets.json")
-        print(f"✅ {len(open_tickets)} tickets saved to preprocessed_tickets.json")
+        save_preprocessed_open_tickets(open_tickets, output_path="data/dynamic/tickets/open_tickets.json")
+        print(f"✅ {len(open_tickets)} tickets saved to open_tickets.json")
 
     except Exception as e:
         print(f"\n❌ Error running tickets preprocessor: {str(e)}")
