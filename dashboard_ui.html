@@ -45,14 +45,14 @@
 
 <body>
     <div class="tabs">
-        <div class="tab active" onclick="switchTab(0)">Fresh Ticket</div>
-        <div class="tab" onclick="switchTab(1)">Ticket Dashboard</div>
-        <div class="tab" onclick="switchTab(2)">Dev Agent</div>
+        <div class="tab" onclick="switchTab(0)">Dev Agent</div>
+        <div class="tab" onclick="switchTab(1)">Fresh Ticket</div>
+        <div class="tab active" onclick="switchTab(2)">Ticket Dashboard</div>
     </div>
 
-    <iframe class="active" src="http://localhost:8501"></iframe>
+    <iframe src="http://localhost:8501"></iframe>
     <iframe src="http://localhost:8502"></iframe>
-    <iframe src="http://localhost:8503"></iframe>
+    <iframe class="active" src="http://localhost:8503"></iframe>
 
     <script>
         function switchTab(index) {
