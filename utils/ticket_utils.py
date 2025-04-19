@@ -389,10 +389,10 @@ def preprocess_closed_tickets(filepath):
         processed.append(preprocess_ticket(t))
     return processed
 
-def save_preprocessed_open_tickets(tickets, output_path="data/dynamic/tickets/preprocessed_tickets.json"):
+def save_preprocessed_open_tickets(tickets, output_path="data/dynamic/tickets/open_tickets.json"):
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
-        json.dump({"preprocessed_tickets": tickets}, f, indent=2, ensure_ascii=False)
+        json.dump({"open_tickets": tickets}, f, indent=2, ensure_ascii=False)
 
 
 def save_preprocessed_closed_tickets(tickets, output_path="data/dynamic/tickets/closed_tickets.json"):
@@ -401,7 +401,7 @@ def save_preprocessed_closed_tickets(tickets, output_path="data/dynamic/tickets/
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"closed_tickets": tickets}, f, indent=2, ensure_ascii=False)
 
-def load_ticket_by_id(ticket_id, path="data/dynamic/tickets/preprocessed_tickets.json"):
+def load_ticket_by_id(ticket_id, path="data/dynamic/tickets/open_tickets.json"):
     """
     Load a specific ticket by ID from the preprocessed tickets file.
 
@@ -415,7 +415,7 @@ def load_ticket_by_id(ticket_id, path="data/dynamic/tickets/preprocessed_tickets
     try:
         with open(path, "r", encoding="utf-8") as f:
             all_data = json.load(f)
-            tickets = all_data.get("preprocessed_tickets", [])
+            tickets = all_data.get("open_tickets", [])
             for ticket in tickets:
                 if str(ticket["id"]) == str(ticket_id):
                     return ticket
