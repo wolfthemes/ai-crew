@@ -1,13 +1,21 @@
+# System stuffs
 .venv/
 __pycache__/
 *.pyc
 .DS_Store
-data/faiss_store/
-/data/crawled/
-/data/dynamic/
-.env
+
+# Ignore dynamic data
+data/faiss_store/*
+data/db/*.db
+data/dynamic/**/*.json
+data/crawled/*.json
+data/dynamic/editor/*
+*.log
 logs/
+
+# Confif files
 llm_config_local.py
+.env
 
 # Ignore cloned or test repos
 repos/*
