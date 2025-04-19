@@ -27,9 +27,11 @@ if "preprocessing_done" not in st.session_state:
     preprocess_open_tickets.run_preprocessing()
     st.session_state.preprocessing_done = True
 
-# Load preprocessed tickets
-with open("data/dynamic/tickets/open_tickets.json", encoding="utf-8") as f:
-    tickets_data = json.load(f)["open_tickets"]
+    # Load preprocessed tickets
+    with open("data/dynamic/tickets/open_tickets.json", encoding="utf-8") as f:
+        tickets_data = json.load(f)["open_tickets"]
+        st.session_state.tickets_data = tickets_data
+        tickets_data = st.session_state.tickets_data
 
 st.set_page_config(page_title="WolfThemes Tickets", layout="wide")
 st.title("🛠️ Ticket Dashboard")
@@ -194,6 +196,10 @@ else:
                                 del st.session_state[editor_state_key]
 
                             delete_tinymce_draft(ticket_id)
+
+                            # ⬇️ Remove ticket from session_state
+                            st.session_state.tickets_data.pop(selected_idx)
+                            st.session_state.selected_ticket = 0  # or adjust to avoid out-of-range
 
                             st.rerun()
                         else:
