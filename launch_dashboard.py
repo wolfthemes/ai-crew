@@ -10,7 +10,11 @@ apps = [
 ]
 
 def run_streamlit(script, port):
-    subprocess.Popen(["streamlit", "run", script, "--server.port", str(port)])
+    subprocess.Popen([
+        "streamlit", "run", script,
+        "--server.port", str(port),
+        "--server.headless", "true"
+    ])
 
 def start_all_apps():
     for app in apps:
