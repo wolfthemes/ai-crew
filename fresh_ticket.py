@@ -4,6 +4,7 @@ import streamlit as st
 from crewai import Crew
 from crews.support_crew import support_crew_with_research
 from utils.ticket_classifier import classify_ticket
+from utils.helpers import convert_html_to_plaintext_with_urls
 
 st.set_page_config(page_title="WolfThemes Support Agent", layout="centered")
 
@@ -30,7 +31,9 @@ if st.button("✉️ Generate Reply") and ticket_input.strip():
     #st.markdown(result["research"])
     
     st.markdown("### 💬 Suggested Reply:")
-    st.markdown(result["reply"])
+    html_reply = result["reply"]  # Your raw HTML reply
+    plain_text_reply = convert_html_to_plaintext_with_urls(html_reply)
+    st.markdown(plain_text_reply)
 
     #st.markdown("### 🕵️‍♂️ Quality Review:")
     #st.markdown(result["review"])

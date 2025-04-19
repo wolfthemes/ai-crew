@@ -5,6 +5,7 @@ import json
 import html
 import hashlib
 from functools import lru_cache
+import html2text
 from bs4 import BeautifulSoup
 import time
 from datetime import datetime
@@ -35,6 +36,41 @@ def clean_html_to_text(html_string) -> str:
         html_string = str(html_string)
     soup = BeautifulSoup(html.unescape(html_string), "html.parser")
     return soup.get_text(separator="\n", strip=True)
+
+def convert_html_to_markdown(html_string):
+    if not isinstance(html_string, str):
+        html_string = str(html_string)
+    handler = html2text.HTML2Text()
+    handler.ignore_links = False  # Keep links
+    handler.ignore_images = True
+    handler.body_width = 0  # Prevent line wrapping
+    return handler.handle(html_string).strip()
+
+def convert_html_to_plaintext_with_urls(html_string):
+    if not isinstance(html_string, str):
+        html_string = str(html_string)
+
+    soup = BeautifulSoup(html.unescape(html_string), "html.parser")
+
+    # Convert <br> to \n
+    for br in soup.find_all("br"):
+        br.replace_with("\n")
+
+    # Convert links: <a href="...">text</a> → text (URL)
+    for a in soup.find_all("a"):
+        text = a.get_text(" ", strip=True)
+        href = a.get("href", "").strip()
+        a.replace_with(f"{text} ({href})" if href else text)
+
+    # Extract text content with spacing logic
+    lines = []
+    for elem in soup.find_all(["p", "div", "li"]):
+        text = elem.get_text(" ", strip=True)
+        if text:
+            lines.append(text)
+
+    # Add paragraphs only once, separated by blank lines
+    return "\n\n".join(lines).strip()
 
 @lru_cache(maxsize=20)
 def parse_json_file(path):
