@@ -30,7 +30,9 @@ def compute_all_file_hashes(folder_path):
 def hashes_changed(stored_hashes, current_hashes):
     return stored_hashes != current_hashes
 
-def clean_html_to_text(html_string: str) -> str:
+def clean_html_to_text(html_string) -> str:
+    if not isinstance(html_string, (str, bytes)):
+        html_string = str(html_string)
     soup = BeautifulSoup(html.unescape(html_string), "html.parser")
     return soup.get_text(separator="\n", strip=True)
 
