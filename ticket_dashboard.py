@@ -27,11 +27,11 @@ if "preprocessing_done" not in st.session_state:
     preprocess_open_tickets.run_preprocessing()
     st.session_state.preprocessing_done = True
 
+# Load preprocessed tickets into session state if not already there
+if "tickets_data" not in st.session_state:
     # Load preprocessed tickets
     with open("data/dynamic/tickets/open_tickets.json", encoding="utf-8") as f:
-        tickets_data = json.load(f)["open_tickets"]
-        st.session_state.tickets_data = tickets_data
-        tickets_data = st.session_state.tickets_data
+        st.session_state.tickets_data = json.load(f)["open_tickets"]
 
 st.set_page_config(page_title="WolfThemes Tickets", layout="wide")
 st.title("🛠️ Ticket Dashboard")
@@ -39,10 +39,10 @@ st.title("🛠️ Ticket Dashboard")
 # Sidebar: ticket list
 st.sidebar.header("📬 Tickets")
 
-if not tickets_data:
+if not st.session_state.tickets_data:
     st.sidebar.markdown("🎉 No ticket left to process!", unsafe_allow_html=True)
 else:
-    for idx, ticket in enumerate(tickets_data):
+    for idx, ticket in enumerate(st.session_state.tickets_data):
         summary_clean = strip_html_tags(ticket['full_thread_sumary'])
         last_message_summary_clean = strip_html_tags(ticket['last_message_summary'])
         timestamp = time_ago(ticket.get("last_message_timestamp", "2025-01-01 00:00:00"))
@@ -70,18 +70,18 @@ if st.sidebar.button("🔄 Refresh Tickets"):
 cols = st.columns([2, 1])
 
 # === LEFT: Ticket content ===
-if not tickets_data:
+if not st.session_state.tickets_data:
     st.markdown("No ticket.", unsafe_allow_html=True)
 else:
     # Main panel: show selected ticket
     selected_idx = st.session_state.get("selected_ticket", 0)
-    if not tickets_data:
+    if not st.session_state.tickets_data:
         st.markdown("❌ No tickets available.", unsafe_allow_html=True)
-    elif selected_idx is None or selected_idx >= len(tickets_data):
+    elif selected_idx is None or selected_idx >= len(st.session_state.tickets_data):
         st.markdown("ℹ️ No ticket selected.", unsafe_allow_html=True)
     else:
         with cols[0]:
-            ticket = tickets_data[selected_idx]
+            ticket = st.session_state.tickets_data[selected_idx]
             # Only show discussion if there's more than one message
             if len(ticket["full_thread"]) > 1:
                 with st.expander("📜 Show Full Discussion"):
@@ -146,7 +146,8 @@ else:
             st.subheader("✍️ Edit and Post Reply (HTML)")
 
             # Load latest draft, fallback to get_tinymce_content
-            initial_content = st.session_state.get(editor_state_key, get_tinymce_content(ticket_id))
+            #initial_content = st.session_state.get(editor_state_key, get_tinymce_content(ticket_id))
+            initial_content = get_tinymce_content(ticket_id)
             tinymce_editor(initial_content=initial_content, ticket_id=ticket_id, height=450)
             
             col1, col2 = st.columns(2)
@@ -197,9 +198,12 @@ else:
 
                             delete_tinymce_draft(ticket_id)
 
-                            # ⬇️ Remove ticket from session_state
-                            st.session_state.tickets_data.pop(selected_idx)
-                            st.session_state.selected_ticket = 0  # or adjust to avoid out-of-range
+                            # Remove the ticket from session state
+                            st.session_state.tickets_data = [t for t in st.session_state.tickets_data if t['id'] != ticket_id]
+                            
+                            # Update the selected ticket if needed
+                            if st.session_state.selected_ticket >= len(st.session_state.tickets_data):
+                                st.session_state.selected_ticket = len(st.session_state.tickets_data) - 1 if st.session_state.tickets_data else None
 
                             st.rerun()
                         else:
