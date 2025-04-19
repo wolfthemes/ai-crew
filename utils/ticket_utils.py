@@ -224,6 +224,7 @@ def preprocess_ticket(raw_ticket):
 
     return {
         "id": raw_ticket["ticket_id"],
+        "time_stamp": raw_ticket["time_stamp"],
         "subject": raw_ticket["ticket_title"],
         "customer": customer_name,
         "customer_url": customer_url,
@@ -339,6 +340,7 @@ def get_ticket_metadata(ticket_id):
 
     return {
         "ticket_id": ticket_id,
+        "timestamp": ticket.get("timestamp"),
         "ticket_type": ticket.get("ticket_type"),
         "user_site": ticket.get("user_site"),
         "subject": ticket.get("subject"),
@@ -386,14 +388,17 @@ def preprocess_closed_tickets(filepath):
 
     processed = []
     for t in data.get("closed-tickets", []):
+        # Skip invalid or unhelpful tickets (non-theme-cateogry, deleted customer )
+        if t.get("user_name") == "[deleted]" or t.get("category_id") == "100010795":
+            continue
         processed.append(preprocess_ticket(t))
+
     return processed
 
 def save_preprocessed_open_tickets(tickets, output_path="data/dynamic/tickets/open_tickets.json"):
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"open_tickets": tickets}, f, indent=2, ensure_ascii=False)
-
 
 def save_preprocessed_closed_tickets(tickets, output_path="data/dynamic/tickets/closed_tickets.json"):
     # TODO dump in DB instead

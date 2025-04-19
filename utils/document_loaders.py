@@ -1,6 +1,7 @@
 
 import os
 import json
+import sqlite3
 from langchain_core.documents import Document
 from utils.helpers import parse_json_file, clean_html_to_text
 
@@ -89,6 +90,7 @@ def load_reference_tickets():
         for item in data
     ]
 
+# Legacy
 def load_closed_tickets():
     """Load closed support tickets from a JSON file."""
     path = os.path.join(DATA_FOLDER, "crawled/closed_tickets.json")
@@ -133,6 +135,28 @@ def load_closed_tickets():
                 }
             ))
     return documents
+
+def load_closed_tickets_from_db(db_path: str) -> list[Document]:
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT ticket_id, created_at, theme, builder, formatted_text_thread, full_thread_summary FROM closed_tickets")
+    rows = cursor.fetchall()
+    conn.close()
+
+    docs = []
+    for row in rows:
+        ticket_id, created_at, theme, builder, thread, summary = row
+        metadata = {
+            "ticket_id": ticket_id,
+            "created_at": created_at,
+            "theme": theme,
+            "builder": builder,
+            "summary": summary,
+            "source": "closed_ticket"
+        }
+        docs.append(Document(page_content=thread, metadata=metadata))
+
+    return docs
 
 # --- Load static prompts ---
 
