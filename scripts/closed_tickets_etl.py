@@ -2,8 +2,10 @@ import sys
 import os
 import json
 import sqlite3
+import shutil
 from pathlib import Path
 import subprocess
+from datetime import datetime
 
 # Add the parent directory to sys.path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
@@ -15,6 +17,7 @@ from utils.ticket_utils import preprocess_closed_tickets, save_preprocessed_clos
 DB_PATH = "data/db/closed_tickets.db"
 CRAWLED_PATH = "data/crawled/closed_tickets.json"
 PREPROCESSED_PATH = "data/dynamic/tickets/closed_tickets.json"
+BACKUP_DIR = r"G:\My Drive\DBBackup\ai-crew"
 
 def run_preprocessing():
     """Run the preprocessing step to prepare ticket data"""
@@ -84,9 +87,34 @@ def insert_into_db(tickets, db_path):
     conn.close()
     print(f"✅ Inserted {len(tickets)} tickets into {db_path}")
 
+def backup_database(db_path, backup_dir):
+    """Create a backup of the database in the specified backup directory"""
+    try:
+        # Make sure the backup directory exists
+        os.makedirs(backup_dir, exist_ok=True)
+        
+        # Create backup filename with timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        backup_filename = f"closed_tickets_{timestamp}.db"
+        backup_path = os.path.join(backup_dir, backup_filename)
+        
+        # Copy the database file
+        shutil.copy2(db_path, backup_path)
+        
+        # Also create a copy with a fixed name (latest version)
+        latest_backup_path = os.path.join(backup_dir, "closed_tickets_latest.db")
+        shutil.copy2(db_path, latest_backup_path)
+        
+        print(f"✅ Database backed up to {backup_path}")
+        print(f"✅ Latest version backed up to {latest_backup_path}")
+        return True
+    except Exception as e:
+        print(f"❌ Database backup failed: {str(e)}")
+        return False
+
 def main():
-    """Main function to preprocess tickets and insert them into the database"""
-    print("🔄 Starting combined ticket preprocessing and DB insertion...")
+    """Main function to preprocess tickets, insert them into the database, and create a backup"""
+    print("🔄 Starting combined ticket preprocessing, DB insertion, and backup...")
     
     # Step 1: Preprocess tickets
     if not run_preprocessing():
@@ -103,6 +131,12 @@ def main():
     # Step 3: Insert tickets into database
     insert_into_db(tickets, DB_PATH)
     
+    # Step 4: Backup the database
+    if backup_database(DB_PATH, BACKUP_DIR):
+        print("✅ Database backup completed successfully!")
+    else:
+        print("⚠️ Process completed but database backup failed.")
+        
     print("✅ Combined process completed successfully!")
 
 if __name__ == "__main__":
