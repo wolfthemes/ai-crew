@@ -1,6 +1,6 @@
 from crewai import Task
 from core.research_processor import process_ticket_research
-from agents.research_agent import research_agent
+from agents.support.research_agent import research_agent
 
 def create_research_task(ticket_text: str, instruction: str = "", ticket_meta: dict = None) -> Task:
     

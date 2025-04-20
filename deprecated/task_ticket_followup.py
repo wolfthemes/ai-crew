@@ -1,6 +1,6 @@
 from crewai import Task
 from crewai import Crew
-from agents.support_agent import support_agent
+from agents.support.support_agent import support_agent
 from utils.ticket_utils import load_ticket, extract_latest_user_comment, format_ticket_history, should_process_ticket
 from utils.ticket_classifier import classify_ticket
 

@@ -1,5 +1,5 @@
 from crewai import Task
-from agents.support_agent import support_agent
+from agents.support.support_agent import support_agent
 from utils.ticket_classifier import classify_ticket, split_ticket_into_parts
 from utils.document_loaders import load_guidelines
 

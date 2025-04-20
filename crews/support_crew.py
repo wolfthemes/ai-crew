@@ -1,14 +1,14 @@
 import json
 
 from crewai import Crew, Process
-from agents.research_agent import research_agent
-from agents.support_agent import support_agent
-from agents.quality_agent import support_quality_control_agent
+from agents.support.research_agent import research_agent
+from agents.support.support_agent import support_agent
+from agents.support.quality_agent import support_quality_control_agent
 
 from utils.ticket_utils import get_ticket_metadata
-from tasks.research_task import create_research_task
-from tasks.support_tasks import create_support_reply_task
-from tasks.quality_tasks import review_support_reply_task
+from tasks.support.research_task import create_research_task
+from tasks.support.support_tasks import create_support_reply_task
+from tasks.support.quality_tasks import review_support_reply_task
 
 def support_crew_with_research(ticket_text: str, instruction: str = "", ticket_id: str = ""):
     """

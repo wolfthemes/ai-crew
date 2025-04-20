@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import json
 from crewai import Task, Crew
-from agents.dev_agent import dev_agent  # from your code
+from agents.dev.dev_agent import dev_agent  # from your code
 from dotenv import load_dotenv
 
 load_dotenv()
