@@ -1,10 +1,15 @@
 # streamlit run streamlit_fresh_ticket.py
+from pathlib import Path
+import sys
+# Add the parent directory to sys.path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 import streamlit as st
 from crewai import Crew
 from crews.support_crew import support_crew_with_research
 from utils.ticket_classifier import classify_ticket
 from utils.helpers import convert_html_to_plaintext_with_urls
+
 
 st.set_page_config(page_title="WolfThemes Support Agent", layout="centered")
 

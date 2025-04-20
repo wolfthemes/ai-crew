@@ -1,9 +1,15 @@
+from pathlib import Path
+import sys
+# Add the parent directory to sys.path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
 import streamlit as st
 import os
 import json
 from crewai import Task, Crew
 from agents.dev.dev_agent import dev_agent  # from your code
 from dotenv import load_dotenv
+
 
 load_dotenv()
 

@@ -4,9 +4,9 @@ import threading
 import time
 
 apps = [
-    {"script": "chat_dev_agent.py", "port": 8501},
-    {"script": "fresh_ticket.py", "port": 8502},
-    {"script": "ticket_dashboard.py", "port": 8503},
+    {"script": "apps/chat_dev_agent.py", "port": 8501},
+    {"script": "apps/fresh_ticket.py", "port": 8502},
+    {"script": "apps/ticket_dashboard.py", "port": 8503},
 ]    
 
 def run_streamlit(script, port):

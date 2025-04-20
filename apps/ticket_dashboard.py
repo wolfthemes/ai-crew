@@ -1,4 +1,9 @@
 
+from pathlib import Path
+import sys
+# Add the parent directory to sys.path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
 import streamlit as st
 import requests
 import threading
@@ -12,6 +17,7 @@ from utils.post_to_ticksy import post_to_ticksy
 from utils.tinymce_component import tinymce_editor, get_tinymce_content, delete_tinymce_draft
 from uvicorn import Config, Server
 from utils.editor_api import app  # your FastAPI app
+
 
 def run_fastapi():
     config = Config(app=app, port=5050, log_level="info")
