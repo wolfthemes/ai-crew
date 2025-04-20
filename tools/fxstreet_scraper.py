@@ -14,14 +14,14 @@ class FetchFXNews(BaseTool):
     args_schema: Type[BaseModel] = FXStreetInput
 
     def _run(self, limit: int = 5) -> str:
-        url = "https://www.fxstreet.com/currencies/eurusd"
+        url = "https://www.fxstreet.com/news?q=&hPP=17&idx=FxsIndexPro&p=0&dFR%5BTags%5D%5B0%5D=EURUSD"
         headers = {"User-Agent": "Mozilla/5.0"}
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.content, "html.parser")
 
         articles = []
-        for article in soup.select(".news-item")[:limit]:
-            title = article.select_one(".title").text.strip()
+        for article in soup.select("article")[:limit]:
+            title = article.select_one(".fxs_headline_tiny").text.strip()
             link = article.select_one("a")["href"]
             summary = article.select_one(".description")
             summary_text = summary.text.strip() if summary else ""
