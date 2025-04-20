@@ -6,7 +6,7 @@ import json
 import html
 from html import unescape
 from crews.support_crew import support_crew_with_research
-from tools import preprocess_open_tickets
+from scripts import preprocess_open_tickets
 from utils.helpers import time_ago, strip_html_tags
 from utils.post_to_ticksy import post_to_ticksy
 from utils.tinymce_component import tinymce_editor, get_tinymce_content, delete_tinymce_draft
