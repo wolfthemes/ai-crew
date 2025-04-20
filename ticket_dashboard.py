@@ -146,8 +146,8 @@ else:
             st.subheader("✍️ Edit and Post Reply (HTML)")
 
             # Load latest draft, fallback to get_tinymce_content
-            #initial_content = st.session_state.get(editor_state_key, get_tinymce_content(ticket_id))
-            initial_content = get_tinymce_content(ticket_id)
+            initial_content = st.session_state.get(editor_state_key, get_tinymce_content(ticket_id))
+            #initial_content = get_tinymce_content(ticket_id)
             tinymce_editor(initial_content=initial_content, ticket_id=ticket_id, height=450)
             
             col1, col2 = st.columns(2)
