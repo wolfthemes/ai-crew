@@ -7,8 +7,6 @@ from datetime import date
 
 today_date = date.today().strftime("%Y-%m-%d")
 
-print( today_date )
-
 market_analyst_agent = Agent(
     role="Forex Market Analyst",
     goal="Create accurate and insightful daily market reports for EUR/USD",
