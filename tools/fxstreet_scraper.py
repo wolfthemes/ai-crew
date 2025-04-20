@@ -20,12 +20,12 @@ class FetchFXNews(BaseTool):
         soup = BeautifulSoup(response.content, "html.parser")
 
         articles = []
-        for article in soup.select("article")[:limit]:
-            title = article.select_one(".fxs_headline_tiny").text.strip()
+        for article in soup.select("#hits article")[:limit]:
+            title = article.select_one(".fxs_headline_tiny > a").text.strip()
             link = article.select_one("a")["href"]
-            summary = article.select_one(".description")
-            summary_text = summary.text.strip() if summary else ""
-            articles.append(f"- **{title}**\n{summary_text} ([Read more]({link}))")
+            time = article.select_one(".time")
+            #summary_text = summary.text.strip() if summary else ""
+            articles.append(f"- **{title}**\n{time} ([Read more]({link}))")
 
         return "\n\n".join(articles) if articles else "No articles found."
 
