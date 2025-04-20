@@ -24,7 +24,7 @@ daily_market_task = Task(
     
     FORMAT YOUR REPORT PROPERLY AS MARKDOWN before posting to Notion.
     
-    After creating your report, you MUST use the post_to_notion tool to save it to Notion.
+    After creating your report, you MUST use the PostToNotion tool to save it to Notion.
     """,
     expected_output="A comprehensive EUR/USD market report posted to Notion",
     agent=market_analyst_agent
