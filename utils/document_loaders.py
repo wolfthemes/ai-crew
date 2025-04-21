@@ -1,4 +1,3 @@
-
 import os
 import json
 import sqlite3
@@ -7,21 +6,42 @@ from utils.helpers import parse_json_file, clean_html_to_text
 
 DATA_FOLDER = "data"
 
-def format_documents(raw_data, source, content_key="content", title_key="title", url_key="url"):
+def format_documents(raw_data, source, content_key="content", title_key="title", url_key="url", 
+                   additional_metadata=None):
+    """
+    Create documents with consistent metadata structure.
+    additional_metadata is an optional dict of additional fields to include
+    """
     documents = []
     for item in raw_data:
         content = item.get(content_key)
         if not content:
             continue
+            
+        # Process content based on source type
         page_content = clean_html_to_text(content) if source == "kb_article" else content.strip()
+        
+        # Create base metadata
+        metadata = {
+            "title": item.get(title_key, "Untitled"),
+            "url": item.get(url_key, ""),
+            "source": source,
+        }
+        
+        # Add source-specific metadata if provided
+        if additional_metadata:
+            for key, value in additional_metadata.items():
+                if isinstance(value, str) and value.startswith("item."):
+                    # This is a reference to an item field
+                    field_name = value.split(".", 1)[1]
+                    metadata[key] = item.get(field_name, "")
+                else:
+                    # This is a static value
+                    metadata[key] = value
+        
         documents.append(Document(
             page_content=page_content,
-            metadata={
-                "title": item.get(title_key, "Untitled"),
-                "url": item.get(url_key, ""),
-                "source": source,
-                **({"slug": item.get("slug")} if source == "theme_doc" else {})
-            }
+            metadata=metadata
         ))
     return documents
 
@@ -37,6 +57,7 @@ def load_theme_meta():
                 "title": f"{name} Builder Info",
                 "slug": slug,
                 "builder": builder,
+                "theme": name,  # Add theme name for consistency
                 "version": meta.get("version"),
                 "updated": meta.get("updated"),
                 "url": meta.get("url"),
@@ -49,10 +70,25 @@ def load_theme_meta():
     return documents
 
 def load_kb_articles():
-    return format_documents(parse_json_file(os.path.join(DATA_FOLDER, "crawled/kb_articles.json")), "kb_article")
+    return format_documents(
+        parse_json_file(os.path.join(DATA_FOLDER, "crawled/kb_articles.json")), 
+        "kb_article",
+        additional_metadata={
+            # Extract any theme or builder mentions if possible
+            "theme": "",  # No default extraction
+            "builder": ""  # No default extraction
+        }
+    )
 
 def load_theme_docs():
-    return format_documents(parse_json_file(os.path.join(DATA_FOLDER, "crawled/theme_docs.json")), "theme_doc")
+    return format_documents(
+        parse_json_file(os.path.join(DATA_FOLDER, "crawled/theme_docs.json")), 
+        "theme_doc",
+        additional_metadata={
+            "slug": "item.slug",  # Reference to the item's slug field
+            "theme": ""  # This could be derived from slug if needed
+        }
+    )
 
 def load_common_issues():
     data = parse_json_file(os.path.join(DATA_FOLDER, "static/common_issues.json"))
@@ -65,8 +101,14 @@ def load_common_issues():
             ),
             metadata={
                 "title": item["title"],
-                "source": item.get("source", "common_issue"),
+                "source": "common_issue",
+                "issue": item["issue"],
                 "solution": item["solution"],
+                "plugin": item.get("plugin", []),
+                "builder": item.get("builder", ""),
+                "theme": item.get("theme", ""),
+                "human_validation": item.get("human_validation", False),
+                "customization_summary": item.get("customization_summary", "")
             }
         )
         for item in data
@@ -77,64 +119,23 @@ def load_reference_tickets():
     return [
         Document(
             page_content = (
-                f"COMMON TITLE: {item['title']}\n"
+                f"REFERENCE TITLE: {item['title']}\n"
                 f"CUSTOMER ISSUE: {item['issue']}\n"
                 f"SOLUTION: {item['solution']}"
             ),
             metadata={
                 "title": item["title"],
-                "source": item.get("source", "reference_ticket"),
+                "source": "reference_ticket",
+                "issue": item["issue"],
                 "solution": item["solution"],
+                "plugin": item.get("plugin", []),
+                "builder": item.get("builder", ""),
+                "theme": item.get("theme", ""),
+                "human_validation": item.get("human_validation", False)
             }
         )
         for item in data
     ]
-
-# Legacy
-def load_closed_tickets():
-    """Load closed support tickets from a JSON file."""
-    path = os.path.join(DATA_FOLDER, "crawled/closed_tickets.json")
-    data = parse_json_file(path)
-
-    if isinstance(data, dict) and "closed-tickets" in data:
-        data = data["closed-tickets"]
-
-    documents = []
-    for t in data:
-        if not isinstance(t, dict) or not t.get("ticket_comments"):
-            continue
-
-        text_blocks = []
-        for c in t["ticket_comments"]:
-            comment = clean_html_to_text(c.get("comment", ""))
-            if comment:
-                is_private = c.get("private") == "1"
-                prefix = f"[PRIVATE] " if is_private else ""
-                text_blocks.append(f"{prefix}{c.get('commenter_name', 'User')}:\n{comment}")
-        conversation = "\n\n---\n\n".join(text_blocks)
-        if conversation.strip():
-            theme = "Unknown Theme"
-            envato_str = t.get("envato_verified_string")
-            if isinstance(envato_str, str):
-                try:
-                    theme_data = json.loads(envato_str)
-                    theme = theme_data.get("item_name", theme)
-                except json.JSONDecodeError:
-                    print(f"⚠️ Invalid JSON in envato_verified_string for ticket {t.get('ticket_id', 'unknown')}")
-                except Exception as e:
-                    print(f"⚠️ Error parsing envato_verified_string for ticket {t.get('ticket_id', 'unknown')}: {e}")
-
-            documents.append(Document(
-                page_content=conversation.strip(),
-                metadata={
-                    "title": t.get("ticket_title", "Untitled Ticket"),
-                    "url": t.get("related_url", ""),
-                    "ticket_id": t.get("ticket_id"),
-                    "theme": theme,
-                    "source": "support_ticket"
-                }
-            ))
-    return documents
 
 def load_closed_tickets_from_db(db_path: str) -> list[Document]:
     conn = sqlite3.connect(db_path)
@@ -152,7 +153,8 @@ def load_closed_tickets_from_db(db_path: str) -> list[Document]:
             "theme": theme,
             "builder": builder,
             "summary": summary,
-            "source": "closed_ticket"
+            "source": "support_ticket",
+            "title": f"Ticket #{ticket_id}: {summary[:30]}..."
         }
         docs.append(Document(page_content=thread, metadata=metadata))
 

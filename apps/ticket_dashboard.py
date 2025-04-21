@@ -49,7 +49,7 @@ if not st.session_state.tickets_data:
     st.sidebar.markdown("🎉 No ticket left to process!", unsafe_allow_html=True)
 else:
     for idx, ticket in enumerate(st.session_state.tickets_data):
-        summary_clean = strip_html_tags(ticket['full_thread_sumary'])
+        summary_clean = strip_html_tags(ticket['full_thread_summary'])
         last_message_summary_clean = strip_html_tags(ticket['last_message_summary'])
         timestamp = time_ago(ticket.get("last_message_timestamp", "2025-01-01 00:00:00"))
 
@@ -122,7 +122,7 @@ else:
                         st.markdown("---")
 
             
-            single_summary_clean = strip_html_tags(ticket['full_thread_sumary'])
+            single_summary_clean = strip_html_tags(ticket['full_thread_summary'])
             st.subheader(f"🗨️ {single_summary_clean}")
             st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
 
