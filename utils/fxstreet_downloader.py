@@ -1,5 +1,6 @@
 # utils/fxstreet_downloader.py
 import json
+import os
 import requests
 import pandas as pd
 from datetime import datetime
@@ -24,22 +25,20 @@ def download_fxstreet_csv_authenticated():
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
     }
 
+    os.makedirs("data/crawled", exist_ok=True)
+    filename = "data/crawled/calendar-event-list.csv"
+
     response = requests.get(url, headers=headers)
     response.raise_for_status()
-
-    filename = "calendar-event-list.csv"
-    cd = response.headers.get("Content-Disposition", "")
-    if "filename=" in cd:
-        filename = cd.split("filename=")[-1].strip('"')
 
     with open(filename, "wb") as f:
         f.write(response.content)
 
-    print(f"✅ CSV downloaded: {filename}")
+    print(f"✅ CSV saved to: {filename}")
     return filename
 
 
-def parse_fxstreet_csv_to_json(filepath="calendar-event-list.csv"):
+def parse_fxstreet_csv_to_json(filepath="data/crawled/calendar-event-list.csv"):
     df = pd.read_csv(filepath)
     events = []
 
