@@ -117,6 +117,7 @@ def json_exists(for_week: str):
     filename = f"data/crawled/fxstreet_{for_week}.json"
     return os.path.exists(filename)
 
+# Not used as random.choice(USER_AGENTS) is used directly
 def get_random_headers():
     return {
         "accept": "text/csv",
