@@ -10,12 +10,14 @@
             font-family: sans-serif;
             background: #121212;
             color: white;
+            overflow: hidden;
         }
 
         .tabs {
             display: flex;
             background: #1e1e1e;
             height: 42px;
+            border-bottom: 1px solid #333;
         }
 
         .tab {
@@ -24,21 +26,50 @@
             background: #1e1e1e;
             color: white;
             border-right: 1px solid #333;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .tab:hover {
+            background: #2a2a2a;
         }
 
         .tab.active {
             background: #333;
+            font-weight: bold;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: calc(100vh - 43px);
+            overflow: hidden;
+            position: relative;
         }
 
         iframe {
             width: 100%;
-            height: calc(100vh - 42px);
+            height: 100%;
             border: none;
-            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
         iframe.active {
-            display: block;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: #aaa;
         }
     </style>
 </head>
@@ -50,17 +81,57 @@
         <div class="tab active" onclick="switchTab(2)">Ticket Dashboard</div>
     </div>
 
-    <iframe src="http://localhost:8501"></iframe>
-    <iframe src="http://localhost:8502"></iframe>
-    <iframe class="active" src="http://localhost:8503"></iframe>
+    <div class="iframe-container">
+        <div class="loading-indicator">Loading apps...</div>
+        <iframe data-src="http://localhost:8501" loading="lazy"></iframe>
+        <iframe data-src="http://localhost:8502" loading="lazy"></iframe>
+        <iframe data-src="http://localhost:8503" class="active" src="http://localhost:8503"></iframe>
+    </div>
 
     <script>
+        // Lazy load iframes to improve performance
         function switchTab(index) {
             const tabs = document.querySelectorAll('.tab');
             const frames = document.querySelectorAll('iframe');
+
+            // Update active tab
             tabs.forEach((tab, i) => tab.classList.toggle('active', i === index));
-            frames.forEach((frame, i) => frame.classList.toggle('active', i === index));
+
+            // Update active iframe
+            frames.forEach((frame, i) => {
+                const isActive = i === index;
+                frame.classList.toggle('active', isActive);
+
+                // Load iframe content if not loaded yet
+                if (isActive && !frame.src && frame.dataset.src) {
+                    frame.src = frame.dataset.src;
+                }
+            });
         }
+
+        // Hide loading indicator when active iframe loads
+        window.addEventListener('load', function () {
+            const loadingIndicator = document.querySelector('.loading-indicator');
+            const activeFrame = document.querySelector('iframe.active');
+
+            function checkIframeLoaded() {
+                try {
+                    // This will throw an error if iframe isn't loaded
+                    if (activeFrame.contentDocument.readyState === 'complete') {
+                        loadingIndicator.style.display = 'none';
+                    } else {
+                        setTimeout(checkIframeLoaded, 500);
+                    }
+                } catch (e) {
+                    // Access error means iframe is loading from different origin
+                    // Wait and try again
+                    setTimeout(checkIframeLoaded, 1000);
+                }
+            }
+
+            // Start checking if iframe is loaded
+            setTimeout(checkIframeLoaded, 1000);
+        });
     </script>
 </body>
 
