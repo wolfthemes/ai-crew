@@ -11,7 +11,7 @@ research_agent = Agent(
         "and finding existing solutions from the KB if available."
     ),
     tools=[SearchKnowledgeBaseTool()],
-    llm=get_llm("primary"),
+    llm=get_llm("power"),
     verbose=True,
     allow_delegation=False,
 )

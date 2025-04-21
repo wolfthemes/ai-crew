@@ -1,4 +1,4 @@
-# tools/preprocess_tickets.py
+# scripts/preprocess_tickets.py
 import sys
 import os
 from pathlib import Path
