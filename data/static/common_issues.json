@@ -8,6 +8,13 @@
   },
   {
     "source": "common_issue",
+    "title": "Find theme purchase code",
+    "issue": "Where can I find my licence purchase code?",
+    "solution": "You will find the instructions to find your purchase code here: https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code",
+    "plugin": []
+  },
+  {
+    "source": "common_issue",
     "title": "Can't import demos",
     "issue": "Can't import demos?",
     "solution": "also issue with some hosters that I don't recommend (strato, OVH mainly) please check https://wolfthemes.ticksy.com/article/11680/ also we provide install services http://wolfthemes.com/services. for Elementor theme, templates are included in the theme package is the easiest way"
@@ -80,7 +87,7 @@
   {
     "source": "common_issue",
     "title": "Sliders missing after demo import",
-    "issue": "Sliders missing after demo import?",
+    "issue": "Sliders missing after demo import. How ot import the sliders from the demo?",
     "solution": "need to be imported separately see https://wolfthemes.ticksy.com/article/12739/",
     "plugin" : ["Slider Revolution"]
   },
