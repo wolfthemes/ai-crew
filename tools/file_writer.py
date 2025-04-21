@@ -41,8 +41,8 @@ class SaveToMarkdown(BaseTool):
                 filename = f"{clean_title}_{today}.md"
             
             # Make sure the reports directory exists
-            os.makedirs("reports", exist_ok=True)
-            save_path = os.path.join("reports", filename)
+            os.makedirs("data/reports", exist_ok=True)
+            save_path = os.path.join("data/reports", filename)
         
         # Create parent directories if they don't exist
         os.makedirs(os.path.dirname(os.path.abspath(save_path)), exist_ok=True)

@@ -62,7 +62,7 @@ def main():
         
         # Always save the report if requested via command line
         if args.save:
-            reports_dir = Path("reports")
+            reports_dir = Path("data/reports")
             reports_dir.mkdir(exist_ok=True)
             
             file_path = reports_dir / f"eurusd_weekly_report_{today}.md"

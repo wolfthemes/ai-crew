@@ -40,7 +40,7 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True):
     
     # Initialize report saving directory if needed
     if save_to_file:
-        os.makedirs("reports", exist_ok=True)
+        os.makedirs("data/reports", exist_ok=True)
     
     # Current date information for file naming and report content
     today_date = date.today()
@@ -59,7 +59,7 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True):
             print(f"⚠️ Failed to initialize Notion tool: {e}")
     
     if save_to_file:
-        file_path = f"reports/eurusd_weekly_report_{today_date_str}.md"
+        file_path = f"data/reports/eurusd_weekly_report_{today_date_str}.md"
         file_tool = SaveToMarkdown(default_path=file_path)
         report_writer_tools.append(file_tool)
         print("✅ File saving tool initialized")
@@ -129,7 +129,7 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True):
                 "report_length": len(result_str) if result else 0
             }
             
-            metadata_path = f"reports/metadata_{today_date_str}.json"
+            metadata_path = f"data/reports/metadata_{today_date_str}.json"
             with open(metadata_path, "w") as f:
                 json.dump(metadata, f, indent=2)
             

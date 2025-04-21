@@ -21,7 +21,7 @@ class FetchFXStreetNews(BaseTool):
     args_schema: Type[BaseModel] = FXStreetQueryInput
     
     # Add cache property
-    _cache_file: str = "fxstreet_cache.json"
+    _cache_file: str = "data/cache/fxstreet_cache.json"
     _cache_expiry: int = 3600  # 1 hour in seconds
     
     class Config:
