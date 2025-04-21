@@ -103,6 +103,8 @@ if st.sidebar.button("🔄 Refresh Tickets"):
     with st.spinner("Refreshing ticket data..."):
         preprocess_open_tickets.run_preprocessing()
         st.session_state.preprocessing_done = True
+        if "tickets_data" in st.session_state:
+            del st.session_state.tickets_data
         st.success("✅ Ticket data refreshed!")
         st.rerun()
 
