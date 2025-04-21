@@ -44,7 +44,10 @@ if "post_success" not in st.session_state:
     
 if "clear_instruction" not in st.session_state:
     st.session_state.clear_instruction = False
-    
+
+if "close_ticket_checkbox" not in st.session_state:
+    st.session_state.close_ticket_checkbox = False
+
 if "selected_ticket" not in st.session_state:
     st.session_state.selected_ticket = 0 if st.session_state.tickets_data else None
 
@@ -59,6 +62,7 @@ reformulate_instruction_key = "reformulate_instruction"
 if st.session_state.clear_instruction:
     st.session_state[crew_instruction_key] = ""
     st.session_state[reformulate_instruction_key] = ""
+    st.session_state.close_ticket_checkbox = False  # Reset the checkbox
     st.session_state.clear_instruction = False  # Reset flag
     
 # Reset post success flag (used to notify user)
@@ -245,7 +249,7 @@ else:
             col1, col2 = st.columns([1, 2])
 
             with col1:
-                close_ticket = st.checkbox("Close Ticket", value=False)
+                close_ticket = st.checkbox("Close Ticket", value=st.session_state.close_ticket_checkbox, key="close_ticket_checkbox")
 
             with col2:
                 # Callback to handle posting
