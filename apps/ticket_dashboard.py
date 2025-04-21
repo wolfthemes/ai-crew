@@ -150,8 +150,12 @@ else:
             #     "generated": ...,
             #     "reformulated": ...,
             # }
-            
+
+            # Set default before widget
             crew_instruction_key = "crew_instruction"
+            if crew_instruction_key not in st.session_state:
+                st.session_state[crew_instruction_key] = ""
+            
             crew_instruction = st.text_area("📝 Paste an optional note here:", key=crew_instruction_key)
             if st.button("🤖 Generate / Regenerate Reply"):
                 with st.spinner("Generating reply..."):
@@ -180,7 +184,11 @@ else:
             from utils.ticket_utils import reformulate_reply
 
             st.markdown("### ✏️ Reformulate Reply")
+
+            # Set default before widget
             reformulate_instruction_key = "reformulate_instruction"
+            if reformulate_instruction_key not in st.session_state:
+                st.session_state[reformulate_instruction_key] = ""
             reformulate_instruction = st.text_area("Optional reformulation", key=reformulate_instruction_key)
             
             if st.button("♻️ Reformulate"):
