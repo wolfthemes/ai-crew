@@ -29,5 +29,5 @@ dev_agent = Agent(
     ],
     backstory=dev_agent_backstory_text,
     verbose=False,
-    llm=get_llm("power")
+    llm=get_llm("coding")
 )
