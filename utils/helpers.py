@@ -1,4 +1,5 @@
 
+import logging
 import os
 import re
 import json
@@ -10,26 +11,116 @@ from bs4 import BeautifulSoup
 import time
 from datetime import datetime
 
-@lru_cache(maxsize=100)
-def compute_file_hash(filepath):
-    """Compute MD5 hash of a file with caching."""
-    hash_md5 = hashlib.md5()
-    with open(filepath, "rb") as f:
-        while chunk := f.read(8192):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
+logger = logging.getLogger(__name__)
 
-def compute_all_file_hashes(folder_path):
-    file_hashes = {}
-    for root, _, files in sorted(os.walk(folder_path)):
-        for fname in sorted(files):
-            fpath = os.path.join(root, fname)
-            if os.path.isfile(fpath):
-                file_hashes[os.path.relpath(fpath, folder_path)] = compute_file_hash(fpath)
-    return file_hashes
+def compute_file_hash(file_path):
+    """
+    Compute SHA-256 hash of a file
+    """
+    try:
+        if not os.path.isfile(file_path):
+            return None
+        
+        # Skip files larger than 100MB
+        if os.path.getsize(file_path) > 100 * 1024 * 1024:
+            return f"large_file_{os.path.getsize(file_path)}"
+        
+        h = hashlib.sha256()
+        with open(file_path, 'rb') as f:
+            for chunk in iter(lambda: f.read(4096), b''):
+                h.update(chunk)
+        return h.hexdigest()
+    except Exception as e:
+        logger.error(f"Error hashing file {file_path}: {e}")
+        # Return modified time as fallback
+        try:
+            return f"mtime_{os.path.getmtime(file_path)}"
+        except:
+            return f"error_{time.time()}"
 
-def hashes_changed(stored_hashes, current_hashes):
-    return stored_hashes != current_hashes
+def compute_all_file_hashes(base_path, ignore_dirs=None):
+    """
+    Compute hashes for all files in directory tree
+    
+    Args:
+        base_path: Root directory to scan
+        ignore_dirs: List of directory names to ignore
+        
+    Returns:
+        Dictionary of {file_path: hash_value}
+    """
+    if ignore_dirs is None:
+        ignore_dirs = ['.git', '__pycache__', 'node_modules', 'faiss_store']
+    
+    hashes = {}
+    try:
+        start_time = time.time()
+        file_count = 0
+        
+        # Walk directory tree
+        for root, dirs, files in os.walk(base_path):
+            # Skip ignored directories
+            dirs[:] = [d for d in dirs if d not in ignore_dirs]
+            
+            for file in files:
+                # Skip temporary files
+                if file.startswith('.') or file.endswith('~'):
+                    continue
+                
+                # Skip large binary files and certain extensions
+                if file.endswith(('.pyc', '.pyo', '.so', '.dll', '.exe')):
+                    continue
+                
+                file_path = os.path.join(root, file)
+                rel_path = os.path.relpath(file_path, base_path)
+                
+                # Compute file hash
+                file_hash = compute_file_hash(file_path)
+                if file_hash:
+                    hashes[rel_path] = file_hash
+                    file_count += 1
+        
+        duration = time.time() - start_time
+        logger.info(f"Computed hashes for {file_count} files in {duration:.2f} seconds")
+        return hashes
+    
+    except Exception as e:
+        logger.error(f"Error computing file hashes: {e}")
+        return {}
+
+def hashes_changed(old_hashes, new_hashes):
+    """
+    Compare two hash dictionaries and detect if files have changed
+    
+    Returns:
+        Boolean: True if changes detected, False otherwise
+    """
+    try:
+        # Check for added or modified files
+        for file_path, new_hash in new_hashes.items():
+            # File is new
+            if file_path not in old_hashes:
+                logger.info(f"New file detected: {file_path}")
+                return True
+            
+            # File was modified
+            if old_hashes[file_path] != new_hash:
+                logger.info(f"Modified file detected: {file_path}")
+                return True
+        
+        # Check for deleted files that matter
+        for file_path in old_hashes:
+            key_files = ['common_issues.json', 'reference_tickets.json']
+            if file_path not in new_hashes and any(kf in file_path for kf in key_files):
+                logger.info(f"Key file removed: {file_path}")
+                return True
+        
+        return False
+    
+    except Exception as e:
+        logger.error(f"Error comparing hashes: {e}")
+        # Default to changed if comparison fails
+        return True
 
 def clean_html_to_text(html_string) -> str:
     if not isinstance(html_string, (str, bytes)):

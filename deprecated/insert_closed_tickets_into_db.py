@@ -19,7 +19,7 @@ for ticket in data["closed_tickets"]:
         INSERT OR REPLACE INTO closed_tickets (
             id, subject, customer, theme, builder, version, updated,
             category, ticket_url, first_message, last_message, formatted_text_thread,
-            last_message_timestamp, last_message_summary, full_thread_sumary,
+            last_message_timestamp, last_message_summary, full_thread_summary,
             contains_credentials, match_source, ai_reply, needs_human
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -38,7 +38,7 @@ for ticket in data["closed_tickets"]:
         ticket["formatted_text_thread"],
         ticket["last_message_timestamp"],
         ticket["last_message_summary"],
-        ticket["full_thread_sumary"],
+        ticket["full_thread_summary"],
         ticket["contains_credentials"],
         ticket["match_source"],
         ticket["ai_reply"],
