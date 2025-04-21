@@ -87,7 +87,7 @@
   {
     "source": "common_issue",
     "title": "Sliders missing after demo import",
-    "issue": "Sliders missing after demo import. How ot import the sliders from the demo?",
+    "issue": "Sliders missing after demo import. How to add/import the sliders from the demo?",
     "solution": "need to be imported separately see https://wolfthemes.ticksy.com/article/12739/",
     "plugin" : ["Slider Revolution"]
   },

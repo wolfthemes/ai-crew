@@ -8,6 +8,7 @@ Do not switch to plain text or Markdown under any circumstances.
 - Add a target blank attribute to all links
 - Never reformulate the issue as an intro. Never add anything other than what's provided in the existing reply.
 - If Instructions are provided, be sure to use these to re-generate your reply.
+- Add greetings and conclusion if not provided
 
 Guidelines:
 1. GREETING:
