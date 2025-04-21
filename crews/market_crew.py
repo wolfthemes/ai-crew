@@ -1,6 +1,11 @@
 
-from crewai import Crew
+from crewai import Crew, Process
 from agents.market.market_analyst_agent import market_analyst_agent
+from agents.market.economic_news_agent import economic_news_agent
+from agents.market.fundamental_analyst_agent import fundamental_analyst_agent
+from agents.market.report_writer_agent import report_writer_agent
+from tasks.market.market_tasks import collect_economic_news, conduct_funamental_analysis_of_eurusd, create_report
+
 from tasks.market.market_tasks import daily_market_task
 
 def run_market_analysis(verbose=True):
@@ -14,9 +19,16 @@ def run_market_analysis(verbose=True):
         The result from the crew execution
     """
 
+    # market_crew = Crew(
+    #     agents=[market_analyst_agent],
+    #     tasks=[daily_market_task],
+    #     verbose=True
+    # )
+
     market_crew = Crew(
-        agents=[market_analyst_agent],
-        tasks=[daily_market_task],
+        agents=[economic_news_agent, fundamental_analyst_agent, report_writer_agent],
+        tasks=[collect_economic_news, conduct_funamental_analysis_of_eurusd, create_report],
+        process=Process.sequential,  # Tasks executed in order, with outputs passed to report writer
         verbose=True
     )
 
