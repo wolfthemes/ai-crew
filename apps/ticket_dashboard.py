@@ -38,12 +38,15 @@ if "tickets_data" not in st.session_state:
     with open("data/dynamic/tickets/open_tickets.json", encoding="utf-8") as f:
         st.session_state.tickets_data = json.load(f)["open_tickets"]
 
-# Session state for tracking UI operations
+# Initialize all required session state variables
 if "post_success" not in st.session_state:
     st.session_state.post_success = False
     
 if "clear_instruction" not in st.session_state:
     st.session_state.clear_instruction = False
+    
+if "selected_ticket" not in st.session_state:
+    st.session_state.selected_ticket = 0 if st.session_state.tickets_data else None
 
 st.set_page_config(page_title="WolfThemes Tickets", layout="wide")
 st.title("🛠️ Ticket Dashboard")
@@ -107,15 +110,21 @@ if post_success:
 
 # === LEFT: Ticket content ===
 if not st.session_state.tickets_data:
-    st.markdown("No ticket.", unsafe_allow_html=True)
+    st.markdown("No ticket left to process. All done! 🎉", unsafe_allow_html=True)
 else:
     # Main panel: show selected ticket
-    selected_idx = st.session_state.get("selected_ticket", 0)
-    if not st.session_state.tickets_data:
-        st.markdown("❌ No tickets available.", unsafe_allow_html=True)
-    elif selected_idx is None or selected_idx >= len(st.session_state.tickets_data):
-        st.markdown("ℹ️ No ticket selected.", unsafe_allow_html=True)
-    else:
+    selected_idx = st.session_state.selected_ticket
+    if selected_idx is None or selected_idx >= len(st.session_state.tickets_data):
+        # Reset to a valid index or None
+        if len(st.session_state.tickets_data) > 0:
+            st.session_state.selected_ticket = 0
+            selected_idx = 0
+        else:
+            st.session_state.selected_ticket = None
+            st.markdown("ℹ️ No ticket selected.", unsafe_allow_html=True)
+    
+    # Only proceed if we have a valid ticket
+    if selected_idx is not None and selected_idx < len(st.session_state.tickets_data):
         with cols[0]:
             ticket = st.session_state.tickets_data[selected_idx]
             # Only show discussion if there's more than one message
@@ -178,13 +187,6 @@ else:
             ticket_id = ticket["id"]
             editor_state_key = f"editor_reply_{ticket_id}"
             initial_content = ""
-
-            # TODO: store the editor history in session
-            # st.session_state[f"{ticket_id}_history"] = {
-            #     "original": ...,
-            #     "generated": ...,
-            #     "reformulated": ...,
-            # }
 
             # Use text area with default values
             if crew_instruction_key not in st.session_state:
@@ -269,8 +271,12 @@ else:
                         st.session_state.tickets_data = [t for t in st.session_state.tickets_data if t['id'] != ticket_id]
                         
                         # Update the selected ticket if needed
-                        if st.session_state.selected_ticket >= len(st.session_state.tickets_data):
-                            st.session_state.selected_ticket = len(st.session_state.tickets_data) - 1 if st.session_state.tickets_data else None
+                        if st.session_state.tickets_data:
+                            # If we have remaining tickets, select the first one
+                            st.session_state.selected_ticket = 0
+                        else:
+                            # If no tickets left, set to None
+                            st.session_state.selected_ticket = None
 
                         st.rerun()
                     else:
