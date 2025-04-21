@@ -9,6 +9,7 @@ data/faiss_store/*
 data/db/*.db
 data/dynamic/**/*.json
 data/crawled/*.json
+data/crawled/*.csv
 data/cache/*.json
 data/reports/*.json
 data/dynamic/editor/*
