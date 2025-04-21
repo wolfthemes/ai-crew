@@ -1,4 +1,3 @@
-
 from pathlib import Path
 import sys
 # Add the parent directory to sys.path
@@ -39,8 +38,30 @@ if "tickets_data" not in st.session_state:
     with open("data/dynamic/tickets/open_tickets.json", encoding="utf-8") as f:
         st.session_state.tickets_data = json.load(f)["open_tickets"]
 
+# Session state for tracking UI operations
+if "post_success" not in st.session_state:
+    st.session_state.post_success = False
+    
+if "clear_instruction" not in st.session_state:
+    st.session_state.clear_instruction = False
+
 st.set_page_config(page_title="WolfThemes Tickets", layout="wide")
 st.title("🛠️ Ticket Dashboard")
+
+# Initialize text area values by checking flags from previous run
+crew_instruction_key = "crew_instruction"
+reformulate_instruction_key = "reformulate_instruction"
+
+# Clear text areas if needed based on flags from previous run
+if st.session_state.clear_instruction:
+    st.session_state[crew_instruction_key] = ""
+    st.session_state[reformulate_instruction_key] = ""
+    st.session_state.clear_instruction = False  # Reset flag
+    
+# Reset post success flag (used to notify user)
+post_success = st.session_state.post_success
+if post_success:
+    st.session_state.post_success = False
 
 # Sidebar: ticket list
 st.sidebar.header("📬 Tickets")
@@ -49,15 +70,20 @@ if not st.session_state.tickets_data:
     st.sidebar.markdown("🎉 No ticket left to process!", unsafe_allow_html=True)
 else:
     for idx, ticket in enumerate(st.session_state.tickets_data):
-        summary_clean = strip_html_tags(ticket['full_thread_summary'])
-        last_message_summary_clean = strip_html_tags(ticket['last_message_summary'])
+        # Handle potential key errors safely
+        full_thread_key = 'full_thread_summary'
+        if full_thread_key not in ticket:
+            full_thread_key = 'full_thread_sumary'  # Try the alternate spelling
+            
+        summary_clean = strip_html_tags(ticket.get(full_thread_key, "No summary available"))
+        last_message_summary_clean = strip_html_tags(ticket.get('last_message_summary', "No message"))
         timestamp = time_ago(ticket.get("last_message_timestamp", "2025-01-01 00:00:00"))
 
         st.sidebar.markdown(f"""
         <div style='text-align: left; padding-bottom: 0.2em;'>
-            {"🔒 " if ticket["needs_human"] else ""}<strong>{summary_clean}</strong><br>
+            {"🔒 " if ticket.get("needs_human", False) else ""}<strong>{summary_clean}</strong><br>
             <span>{last_message_summary_clean}</span><br>
-            <small>{ticket['customer']} ({ticket['theme']}) · {timestamp}</small><br>
+            <small>{ticket.get('customer', 'Unknown')} ({ticket.get('theme', 'Unknown')}) · {timestamp}</small><br>
         </div>
         """, unsafe_allow_html=True)
 
@@ -75,6 +101,10 @@ if st.sidebar.button("🔄 Refresh Tickets"):
 
 cols = st.columns([2, 1])
 
+# Show success message if post was successful
+if post_success:
+    st.success("✅ Reply posted to Ticksy successfully!")
+
 # === LEFT: Ticket content ===
 if not st.session_state.tickets_data:
     st.markdown("No ticket.", unsafe_allow_html=True)
@@ -89,7 +119,7 @@ else:
         with cols[0]:
             ticket = st.session_state.tickets_data[selected_idx]
             # Only show discussion if there's more than one message
-            if len(ticket["full_thread"]) > 1:
+            if len(ticket.get("full_thread", [])) > 1:
                 with st.expander("📜 Show Full Discussion"):
                     comments = ticket["full_thread"]
 
@@ -101,10 +131,10 @@ else:
                         comments = list(reversed(comments))    # reverse to get oldest first
 
                     for c in comments:
-                        name = c["commenter_name"]
-                        role = "User" if c["user_type"] == "user" else "Support"
+                        name = c.get("commenter_name", "Unknown")
+                        role = "User" if c.get("user_type") == "user" else "Support"
                         timestamp = c.get("time_stamp", "")
-                        comment_html = unescape(c["comment"])
+                        comment_html = unescape(c.get("comment", ""))
 
                         # ⬇️ Display attachments if present
                         if "attachments" in c and c["attachments"]:
@@ -112,8 +142,8 @@ else:
                             for file in c["attachments"]:
                                 st.markdown(
                                     f'<div style="border-left: 3px solid #ddd; padding-left: 10px; margin: 5px 0;">'
-                                    f'📎 <a href="{file["file_url"]}" target="_blank" style="text-decoration: none; color: #0073aa;">'
-                                    f'{file["file_name"]}</a></div>',
+                                    f'📎 <a href="{file.get("file_url", "#")}" target="_blank" style="text-decoration: none; color: #0073aa;">'
+                                    f'{file.get("file_name", "Attachment")}</a></div>',
                                     unsafe_allow_html=True
                                 )
 
@@ -121,22 +151,27 @@ else:
                         st.markdown(comment_html, unsafe_allow_html=True)
                         st.markdown("---")
 
-            
-            single_summary_clean = strip_html_tags(ticket['full_thread_summary'])
+            # Handle potential key errors safely
+            full_thread_key = 'full_thread_summary'
+            if full_thread_key not in ticket:
+                full_thread_key = 'full_thread_sumary'  # Try the alternate spelling
+                
+            single_summary_clean = strip_html_tags(ticket.get(full_thread_key, "No summary available"))
             st.subheader(f"🗨️ {single_summary_clean}")
-            st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
+            st.markdown(html.unescape(ticket.get("last_message", "")), unsafe_allow_html=True)
 
             # ⬇️ Display attachments if present
-            first_comment = ticket["full_thread"][0]
-            if "attachments" in first_comment and first_comment["attachments"]:
-                st.markdown("**Attached file(s):**")
-                for file in first_comment["attachments"]:
-                    st.markdown(
-                        f'<div style="border-left: 3px solid #ddd; padding-left: 10px; margin: 5px 0;">'
-                        f'📎 <a href="{file["file_url"]}" target="_blank" style="text-decoration: none; color: #0073aa;">'
-                        f'{file["file_name"]}</a></div>',
-                        unsafe_allow_html=True
-                    )
+            if "full_thread" in ticket and ticket["full_thread"]:
+                first_comment = ticket["full_thread"][0]
+                if "attachments" in first_comment and first_comment["attachments"]:
+                    st.markdown("**Attached file(s):**")
+                    for file in first_comment["attachments"]:
+                        st.markdown(
+                            f'<div style="border-left: 3px solid #ddd; padding-left: 10px; margin: 5px 0;">'
+                            f'📎 <a href="{file.get("file_url", "#")}" target="_blank" style="text-decoration: none; color: #0073aa;">'
+                            f'{file.get("file_name", "Attachment")}</a></div>',
+                            unsafe_allow_html=True
+                        )
 
             st.divider()
 
@@ -151,32 +186,28 @@ else:
             #     "reformulated": ...,
             # }
 
-            # Set default before widget
-            crew_instruction_key = "crew_instruction"
+            # Use text area with default values
             if crew_instruction_key not in st.session_state:
                 st.session_state[crew_instruction_key] = ""
             
             crew_instruction = st.text_area("📝 Paste an optional note here:", key=crew_instruction_key)
+            
             if st.button("🤖 Generate / Regenerate Reply"):
                 with st.spinner("Generating reply..."):
                     try:
-                        
                         result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction, ticket_id=ticket_id)
                         
                         reply_html = result["reply"].output if hasattr(result["reply"], "output") else result["reply"]
                         
                         st.session_state[editor_state_key] = reply_html
-
                         st.rerun()
                     except Exception as e:
                         st.error(f"❌ Error running agent: {str(e)}")
-
 
             st.subheader("✍️ Edit and Post Reply (HTML)")
 
             # Load latest draft, fallback to get_tinymce_content
             initial_content = st.session_state.get(editor_state_key, get_tinymce_content(ticket_id))
-            #initial_content = get_tinymce_content(ticket_id)
             tinymce_editor(initial_content=initial_content, ticket_id=ticket_id, height=450)
             
             col1, col2 = st.columns(2)
@@ -186,9 +217,9 @@ else:
             st.markdown("### ✏️ Reformulate Reply")
 
             # Set default before widget
-            reformulate_instruction_key = "reformulate_instruction"
             if reformulate_instruction_key not in st.session_state:
                 st.session_state[reformulate_instruction_key] = ""
+                
             reformulate_instruction = st.text_area("Optional reformulation", key=reformulate_instruction_key)
             
             if st.button("♻️ Reformulate"):
@@ -207,51 +238,51 @@ else:
                 except Exception as e:
                     st.error(f"Reformulation error: {str(e)}")
 
-
             st.divider()
 
             col1, col2 = st.columns([1, 2])
 
             with col1:
-                #private_reply = st.checkbox("Private", value=False)
                 close_ticket = st.checkbox("Close Ticket", value=False)
 
             with col2:
-
-                if st.button("✅ Post Reply to Ticksy"):
-                    
+                # Callback to handle posting
+                def handle_post_reply():
                     current_reply = get_tinymce_content(ticket_id)
                     if not current_reply.strip():
                         st.warning("⚠️ Editor is empty — nothing to post.")
-                    else:
-                        result = post_to_ticksy(ticket_id=ticket_id, message=current_reply, close_ticket=close_ticket)
-                        if result.get("status") == "ok":
-                            st.success("✅ Reply posted to Ticksy.")
-                            if editor_state_key in st.session_state:
-                                del st.session_state[editor_state_key]
-
-                            delete_tinymce_draft(ticket_id)
-
-                            # Remove the ticket from session state
-                            st.session_state.tickets_data = [t for t in st.session_state.tickets_data if t['id'] != ticket_id]
+                        return
+                        
+                    result = post_to_ticksy(ticket_id=ticket_id, message=current_reply, close_ticket=close_ticket)
+                    if result.get("status") == "ok":
+                        # Set flag to clear inputs on next rerun
+                        st.session_state.clear_instruction = True
+                        st.session_state.post_success = True
                             
-                            # Update the selected ticket if needed
-                            if st.session_state.selected_ticket >= len(st.session_state.tickets_data):
-                                st.session_state.selected_ticket = len(st.session_state.tickets_data) - 1 if st.session_state.tickets_data else None
+                        # Clean up editor state
+                        if editor_state_key in st.session_state:
+                            del st.session_state[editor_state_key]
 
-                             # Clear the text_area inputs
-                            st.session_state[crew_instruction_key] = ""
-                            st.session_state[reformulate_instruction_key] = ""
+                        delete_tinymce_draft(ticket_id)
 
-                            st.rerun()
-                        else:
-                            st.error("❌ Failed to post. Check console/logs.")
+                        # Remove the ticket from session state
+                        st.session_state.tickets_data = [t for t in st.session_state.tickets_data if t['id'] != ticket_id]
+                        
+                        # Update the selected ticket if needed
+                        if st.session_state.selected_ticket >= len(st.session_state.tickets_data):
+                            st.session_state.selected_ticket = len(st.session_state.tickets_data) - 1 if st.session_state.tickets_data else None
+
+                        st.rerun()
+                    else:
+                        st.error("❌ Failed to post. Check console/logs.")
+
+                if st.button("✅ Post Reply to Ticksy"):
+                    handle_post_reply()
 
         # === RIGHT: Ticket metadata ===
         with cols[1]:
-            
             st.markdown("### 🧾 Ticket Info")
-            st.markdown(f"**Theme:** {ticket['theme']}")
-            st.markdown(f"**Customer:** [{ticket['customer']}]({ticket['customer_url']})")
-            st.markdown(f"**Website:** {ticket['user_site']}")
-            st.markdown(f"**Ticket Link:** [#{ticket['id']}]({ticket['ticket_url']})")
+            st.markdown(f"**Theme:** {ticket.get('theme', 'Unknown')}")
+            st.markdown(f"**Customer:** [{ticket.get('customer', 'Unknown')}]({ticket.get('customer_url', '#')})")
+            st.markdown(f"**Website:** {ticket.get('user_site', 'Not specified')}")
+            st.markdown(f"**Ticket Link:** [#{ticket_id}]({ticket.get('ticket_url', '#')})")
