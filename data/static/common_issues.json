@@ -1,16 +1,16 @@
 [
   {
     "source": "common_issue",
-    "title": "Theme activation issue",
-    "issue": "I can't activate the theme using my licence purchase code?",
-    "solution": "<p>It seems like there may be an issue that can sometimes happen with certain hosting providers. I'm currently working on improving the activation system to avoid this.</p><p>That's what site always recommed <a href=\"https://fr.siteground.com/?referrer_id=8486532\" target=\"_blank\" rel=\"noopener\">Siteground</a> as hoster among other <a href=\"https://wolfthemes.ticksy.com/article/13381/\" target=\"_blank\" rel=\"noopener\">recommeded hosts</a>.</p><p>To help you resolve it quickly, I&rsquo;ll need access to your WordPress dashboard.<br>Could you please provide your login credentials so I can apply a workaround ?</p>",
+    "title": "Find theme purchase code",
+    "issue": "Where can I find my licence purchase code?",
+    "solution": "You will find the instructions to find your purchase code here: https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code",
     "plugin": []
   },
   {
     "source": "common_issue",
-    "title": "Find theme purchase code",
-    "issue": "Where can I find my licence purchase code?",
-    "solution": "You will find the instructions to find your purchase code here: https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code",
+    "title": "Theme activation issue",
+    "issue": "I can't activate the theme using my licence purchase code?",
+    "solution": "<p>It seems like there may be an issue that can sometimes happen with certain hosting providers. I'm currently working on improving the activation system to avoid this.</p><p>That's what site always recommed <a href=\"https://fr.siteground.com/?referrer_id=8486532\" target=\"_blank\" rel=\"noopener\">Siteground</a> as hoster among other <a href=\"https://wolfthemes.ticksy.com/article/13381/\" target=\"_blank\" rel=\"noopener\">recommeded hosts</a>.</p><p>To help you resolve it quickly, I&rsquo;ll need access to your WordPress dashboard.<br>Could you please provide your login credentials so I can apply a workaround ?</p>",
     "plugin": []
   },
   {

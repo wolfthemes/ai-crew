@@ -12,7 +12,7 @@ class TicketParser:
 
     def extract_theme_slug(self):
         # Dummy value for now
-        return "herion"
+        return "Unknow"
 
     def extract_url(self):
         urls = re.findall(r'https?://[^\s]+', self.ticket_text)

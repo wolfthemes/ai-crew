@@ -107,7 +107,15 @@ else:
                         comment_html = unescape(c["comment"])
 
                         # ⬇️ Display attachments if present
-                        # TODO display attachemnt
+                        if "attachments" in c and c["attachments"]:
+                            st.markdown("**Attached file(s):**")
+                            for file in c["attachments"]:
+                                st.markdown(
+                                    f'<div style="border-left: 3px solid #ddd; padding-left: 10px; margin: 5px 0;">'
+                                    f'📎 <a href="{file["file_url"]}" target="_blank" style="text-decoration: none; color: #0073aa;">'
+                                    f'{file["file_name"]}</a></div>',
+                                    unsafe_allow_html=True
+                                )
 
                         st.markdown(f"**[{role}] {name}** — *{timestamp}*", unsafe_allow_html=True)
                         st.markdown(comment_html, unsafe_allow_html=True)
@@ -119,7 +127,16 @@ else:
             st.markdown(html.unescape(ticket["last_message"]), unsafe_allow_html=True)
 
             # ⬇️ Display attachments if present
-            # TODO display attachemnt
+            first_comment = ticket["full_thread"][0]
+            if "attachments" in first_comment and first_comment["attachments"]:
+                st.markdown("**Attached file(s):**")
+                for file in first_comment["attachments"]:
+                    st.markdown(
+                        f'<div style="border-left: 3px solid #ddd; padding-left: 10px; margin: 5px 0;">'
+                        f'📎 <a href="{file["file_url"]}" target="_blank" style="text-decoration: none; color: #0073aa;">'
+                        f'{file["file_name"]}</a></div>',
+                        unsafe_allow_html=True
+                    )
 
             st.divider()
 
@@ -163,7 +180,7 @@ else:
             from utils.ticket_utils import reformulate_reply
 
             st.markdown("### ✏️ Reformulate Reply")
-            reformulate_instruction_key = "crew_instruction"
+            reformulate_instruction_key = "reformulate_instruction"
             reformulate_instruction = st.text_area("Optional reformulation", key=reformulate_instruction_key)
             
             if st.button("♻️ Reformulate"):
