@@ -79,7 +79,7 @@ def insert_into_db(tickets, db_path):
             ticket.get("theme", ""),
             ticket.get("builder", ""),
             ticket.get("formatted_text_thread", ""),
-            ticket.get("full_thread_summary", ""),  # Note: typo preserved from original code "sumary"
+            ticket.get("full_thread_summary", ""),
             ticket.get("time_stamp", "")
         ))
     

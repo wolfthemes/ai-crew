@@ -35,7 +35,7 @@ def classify_ticket(ticket_text: str) -> str:
         top_doc, score = results[0]
         top_issue_type = top_doc.metadata.get("issue_type")
 
-        print(f"    ⚙️ Score: {score:.2f}")
+        print(f"⚙️ Score: {score:.2f}")
         if top_issue_type == "common_issue" and score > 0.6:
             return "common_issue"
 
