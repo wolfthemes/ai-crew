@@ -134,7 +134,8 @@ else:
             #     "reformulated": ...,
             # }
             
-            crew_instruction = st.text_area("📝 Paste an optional note here:")
+            crew_instruction_key = "crew_instruction"
+            crew_instruction = st.text_area("📝 Paste an optional note here:", key=crew_instruction_key)
             if st.button("🤖 Generate / Regenerate Reply"):
                 with st.spinner("Generating reply..."):
                     try:
@@ -144,6 +145,7 @@ else:
                         reply_html = result["reply"].output if hasattr(result["reply"], "output") else result["reply"]
                         
                         st.session_state[editor_state_key] = reply_html
+
                         st.rerun()
                     except Exception as e:
                         st.error(f"❌ Error running agent: {str(e)}")
@@ -161,7 +163,8 @@ else:
             from utils.ticket_utils import reformulate_reply
 
             st.markdown("### ✏️ Reformulate Reply")
-            reformulate_instruction = st.text_area("Optional reformulation")
+            reformulate_instruction_key = "crew_instruction"
+            reformulate_instruction = st.text_area("Optional reformulation", key=reformulate_instruction_key)
             
             if st.button("♻️ Reformulate"):
                 try:
@@ -210,6 +213,10 @@ else:
                             # Update the selected ticket if needed
                             if st.session_state.selected_ticket >= len(st.session_state.tickets_data):
                                 st.session_state.selected_ticket = len(st.session_state.tickets_data) - 1 if st.session_state.tickets_data else None
+
+                             # Clear the text_area inputs
+                            st.session_state[crew_instruction_key] = ""
+                            st.session_state[reformulate_instruction_key] = ""
 
                             st.rerun()
                         else:
