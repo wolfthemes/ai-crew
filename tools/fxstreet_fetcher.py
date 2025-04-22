@@ -5,7 +5,8 @@ from datetime import date, datetime, timedelta
 import os
 import json
 import time
-from utils.fxstreet_events_downloader import get_fxstreet_events, filter_events_by_date
+from utils.fxstreet_events_downloader import get_fxstreet_events
+from utils.fxstreet_news_scraper import get_eurusd_news
 
 class FXStreetQueryInput(BaseModel):
     currency_pair: str = Field(default="EUR/USD", description="Currency pair to fetch news for")
@@ -158,7 +159,7 @@ class FetchFXStreetNews(BaseTool):
         economic_events.sort(key=lambda x: (x.get('date', ''), x.get('time', '')))
         
         # Add news articles (currently using mock data)
-        news_articles = self._get_mock_news_articles(start_date, end_date, today)
+        news_articles = get_eurusd_news()
         
         # For daily reports, filter news to only show today's news
         if report_type == "daily":
