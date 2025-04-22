@@ -183,6 +183,10 @@ class PostToNotion(BaseTool):
             # Create the page with the blocks
             self.notion.pages.create(
                 parent={"database_id": self.database_id},
+                icon= {
+                    "type": "emoji",
+                    "emoji": "🏛️"
+                },
                 properties={
                     "Name": {"title": [{"text": {"content": title_text}}]},
                     "Date": {"date": {"start": today}},

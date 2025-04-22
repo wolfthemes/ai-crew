@@ -1,6 +1,6 @@
 from crewai import Agent
 from tools.notion_writer import PostToNotion
-from tools.fxstreet_scraper import FetchFXNews
+from tools.fxstreet_fetcher import FetchFXStreetNews
 from core.llm_config import get_llm
 
 from datetime import date
@@ -12,7 +12,7 @@ market_analyst_agent = Agent(
     goal="Create accurate and insightful daily market reports for EUR/USD",
     backstory="You are a seasoned forex analyst with 15 years of experience. You specialize in analyzing EUR/USD movements and providing actionable insights.",
     verbose=True,
-    tools=[FetchFXNews(), PostToNotion()],
+    tools=[FetchFXStreetNews(), PostToNotion()],
     llm=get_llm("power"),
     # Try to provide a complete template that doesn't rely on CrewAI's internal templates
     system_prompt=f"""
