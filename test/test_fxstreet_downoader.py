@@ -4,7 +4,7 @@ from pathlib import Path
 # Add the parent directory to sys.path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from utils.fxstreet_downloader import get_fxstreet_events
+from utils.fxstreet_events_downloader import get_fxstreet_events
 from datetime import datetime, timedelta, UTC
 
 # Generate date range for the week

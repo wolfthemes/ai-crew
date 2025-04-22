@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 import os
 import json
 import time
-from utils.fxstreet_downloader import get_fxstreet_events, filter_events_by_date
+from utils.fxstreet_events_downloader import get_fxstreet_events, filter_events_by_date
 
 class FXStreetQueryInput(BaseModel):
     currency_pair: str = Field(default="EUR/USD", description="Currency pair to fetch news for")
