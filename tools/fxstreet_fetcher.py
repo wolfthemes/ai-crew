@@ -150,7 +150,7 @@ class FetchFXStreetNews(BaseTool):
             # Regular weekly report
             economic_events = get_fxstreet_events(period="week")
         
-        # Filter by impact level if not 'all'
+        # Filter by impact level if not 'all' <- Not relevant as we only need the major news
         if impact_level != 'all':
             economic_events = [e for e in economic_events if e.get('impact', '').lower() == impact_level.lower()]
             
