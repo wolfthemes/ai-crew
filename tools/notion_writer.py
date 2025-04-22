@@ -217,4 +217,20 @@ class PostToNotion(BaseTool):
             return f"NOTION_POST_STATUS: FAILED — {str(e)}"
 
     def run(self, query: str) -> str:
-        return "Use structured input with `content`, optional `title`, and `date_str`."
+        # This is the method that CrewAI will call when using the tool directly
+        try:
+            # For direct tool usage without structured input, extract content
+            content = query
+            title = None
+            date_str = None
+            
+            # Try to extract title from first line if it starts with # 
+            lines = content.split('\n')
+            if lines and lines[0].startswith('# '):
+                title = lines[0][2:].strip()
+            
+            return self._run(content=content, title=title, date_str=date_str)
+        except Exception as e:
+            import traceback
+            print(traceback.format_exc())
+            return f"NOTION_POST_STATUS: FAILED — {str(e)}"

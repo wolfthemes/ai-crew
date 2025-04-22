@@ -53,8 +53,11 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True):
     if post_to_notion:
         try:
             notion_tool = PostToNotion()
-            report_writer_tools.append(notion_tool)
-            print("✅ Notion posting tool initialized")
+            if notion_tool.notion and notion_tool.database_id:
+                report_writer_tools.append(notion_tool)
+                print("✅ Notion posting tool initialized and ready")
+            else:
+                print("⚠️ Notion tool initialized but missing credentials")
         except Exception as e:
             print(f"⚠️ Failed to initialize Notion tool: {e}")
     
@@ -66,7 +69,14 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True):
     
     # Update report writer agent with tools
     if report_writer_tools:
+        print(f"📝 Adding {len(report_writer_tools)} tools to report writer agent")
+        for tool in report_writer_tools:
+            print(f"   - {tool.name}: {tool.description[:60]}...")
+        
+        # This is the key line - make sure it's setting the tools correctly
         report_writer_agent.tools = report_writer_tools
+    else:
+        print("⚠️ No tools added to report writer agent")
     
     # Create the crew with all agents and tasks
     market_crew = Crew(
