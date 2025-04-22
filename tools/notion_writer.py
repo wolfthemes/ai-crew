@@ -1,5 +1,7 @@
-from typing import Type, Optional, List, Dict, Any
-from pydantic import BaseModel, Field
+import markdown2
+from bs4 import BeautifulSoup
+from typing import Type, Optional, List, Dict, Any, Annotated
+from pydantic import BaseModel, Field, ConfigDict
 from crewai.tools import BaseTool
 from notion_client import Client
 from datetime import date
@@ -20,152 +22,195 @@ class PostToNotion(BaseTool):
     args_schema: Type[BaseModel] = NotionPostInput
     
     # Add these as proper model fields
-    notion: Optional[Client] = None
-    database_id: Optional[str] = None
+    notion: Optional[Client] = Field(default=None, exclude=True)
+    database_id: Optional[str] = Field(default=None, exclude=True)
+    
+    # Add configuration for arbitrary types
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     def __init__(self):
-        super().__init__()  # Required in some BaseTool setups
+        super().__init__()
+        
         try:
-            self.notion = Client(auth=os.getenv("NOTION_API_KEY"))
-            self.database_id = os.getenv("NOTION_MARKET_REPORTS_DB_KEY")
-            if not self.notion or not self.database_id:
+            notion_api_key = os.getenv("NOTION_API_KEY")
+            database_id = os.getenv("NOTION_MARKET_REPORTS_DB_KEY")
+            
+            if not notion_api_key or not database_id:
                 print("⚠️ Notion API key or database ID not found in environment variables")
+                self.notion = None
+                self.database_id = None
+            else:
+                self.notion = Client(auth=notion_api_key)
+                self.database_id = database_id
         except Exception as e:
             print(f"⚠️ Failed to initialize Notion client: {e}")
             self.notion = None
             self.database_id = None
 
-    class Config:
-        arbitrary_types_allowed = True  # This allows the Client object to be stored
-    
-    def _markdown_to_notion_blocks(self, markdown_content: str) -> List[Dict[str, Any]]:
-        """
-        Convert markdown content to Notion blocks format
-        
-        This is a simplified conversion that handles:
-        - Headers (# to ######)
-        - Paragraphs
-        - Bullet lists
-        - Numbered lists
-        - Bold and italic text (limited support)
-        """
+    def html_to_notion_blocks(self, soup) -> List[Dict[str, Any]]:
+        """Convert HTML elements to Notion blocks."""
         blocks = []
-        current_list_items = []
-        current_list_type = None
         
-        # Split content into lines
-        lines = markdown_content.split('\n')
-        
-        for line in lines:
-            # Skip empty lines
-            if not line.strip():
-                # If we're in a list, add the list and reset
-                if current_list_items:
-                    if current_list_type == "bulleted":
-                        blocks.append({
-                            "object": "block",
-                            "type": "bulleted_list_item",
-                            "bulleted_list_item": current_list_items[0]["bulleted_list_item"]
-                        })
-                    elif current_list_type == "numbered":
-                        blocks.append({
-                            "object": "block",
-                            "type": "numbered_list_item",
-                            "numbered_list_item": current_list_items[0]["numbered_list_item"]
-                        })
-                    current_list_items = []
-                    current_list_type = None
+        # Process all top-level elements
+        for element in soup.children:
+            if element.name is None:
+                # Skip empty text nodes
                 continue
-            
-            # Check for headers
-            header_match = re.match(r'^(#{1,6})\s+(.+)$', line)
-            if header_match:
-                # Determine header level
-                level = len(header_match.group(1))
-                header_text = header_match.group(2).strip()
                 
-                # Map to Notion header types
+            # Handle headings (h1 to h6)
+            if element.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+                level = int(element.name[1])
                 header_type = f"heading_{level}"
-                
                 blocks.append({
                     "object": "block",
                     "type": header_type,
                     header_type: {
-                        "rich_text": [{"type": "text", "text": {"content": header_text}}],
+                        "rich_text": [{"type": "text", "text": {"content": element.get_text()}}],
                         "color": "default"
                     }
                 })
-                continue
-            
-            # Check for bullet lists
-            bullet_match = re.match(r'^\s*[-*+]\s+(.+)$', line)
-            if bullet_match:
-                list_text = bullet_match.group(1).strip()
                 
-                # If we're switching list types, add the previous list
-                if current_list_type and current_list_type != "bulleted":
-                    # Add the previous list
-                    for item in current_list_items:
-                        blocks.append(item)
-                    current_list_items = []
-                
-                current_list_type = "bulleted"
-                current_list_items.append({
+            # Handle paragraphs
+            elif element.name == 'p':
+                blocks.append({
                     "object": "block",
-                    "type": "bulleted_list_item",
-                    "bulleted_list_item": {
-                        "rich_text": [{"type": "text", "text": {"content": list_text}}],
+                    "type": "paragraph",
+                    "paragraph": {
+                        "rich_text": [{"type": "text", "text": {"content": element.get_text()}}],
                         "color": "default"
                     }
                 })
-                continue
-            
-            # Check for numbered lists
-            numbered_match = re.match(r'^\s*(\d+)\.?\s+(.+)$', line)
-            if numbered_match:
-                list_text = numbered_match.group(2).strip()
                 
-                # If we're switching list types, add the previous list
-                if current_list_type and current_list_type != "numbered":
-                    # Add the previous list
-                    for item in current_list_items:
-                        blocks.append(item)
-                    current_list_items = []
-                
-                current_list_type = "numbered"
-                current_list_items.append({
+            # Handle unordered lists
+            elif element.name == 'ul':
+                for li in element.find_all('li', recursive=False):
+                    blocks.append({
+                        "object": "block",
+                        "type": "bulleted_list_item",
+                        "bulleted_list_item": {
+                            "rich_text": [{"type": "text", "text": {"content": li.get_text()}}],
+                            "color": "default"
+                        }
+                    })
+                    
+            # Handle ordered lists
+            elif element.name == 'ol':
+                for li in element.find_all('li', recursive=False):
+                    blocks.append({
+                        "object": "block",
+                        "type": "numbered_list_item",
+                        "numbered_list_item": {
+                            "rich_text": [{"type": "text", "text": {"content": li.get_text()}}],
+                            "color": "default"
+                        }
+                    })
+                    
+            # Handle blockquotes
+            elif element.name == 'blockquote':
+                blocks.append({
                     "object": "block",
-                    "type": "numbered_list_item",
-                    "numbered_list_item": {
-                        "rich_text": [{"type": "text", "text": {"content": list_text}}],
+                    "type": "quote",
+                    "quote": {
+                        "rich_text": [{"type": "text", "text": {"content": element.get_text()}}],
                         "color": "default"
                     }
                 })
-                continue
-            
-            # If we're in a list and the line is not a list item, add the list and reset
-            if current_list_items:
-                # Add all list items
-                for item in current_list_items:
-                    blocks.append(item)
-                current_list_items = []
-                current_list_type = None
-            
-            # Default to paragraph
-            blocks.append({
-                "object": "block",
-                "type": "paragraph",
-                "paragraph": {
-                    "rich_text": [{"type": "text", "text": {"content": line}}],
-                    "color": "default"
-                }
-            })
-        
-        # Add any remaining list items
-        if current_list_items:
-            for item in current_list_items:
-                blocks.append(item)
-        
+                
+            # Handle code blocks
+            elif element.name == 'pre':
+                code = element.find('code')
+                if code:
+                    language = "plain text"
+                    # Try to extract language from class (e.g., "language-python")
+                    if code.get('class'):
+                        for cls in code.get('class'):
+                            if cls.startswith('language-'):
+                                language = cls[9:]
+                                break
+                                
+                    blocks.append({
+                        "object": "block",
+                        "type": "code",
+                        "code": {
+                            "language": language,
+                            "rich_text": [{"type": "text", "text": {"content": code.get_text()}}]
+                        }
+                    })
+                else:
+                    blocks.append({
+                        "object": "block",
+                        "type": "code",
+                        "code": {
+                            "language": "plain text",
+                            "rich_text": [{"type": "text", "text": {"content": element.get_text()}}]
+                        }
+                    })
+                    
+            # Handle tables
+            elif element.name == 'table':
+                rows = []
+                # Get all rows
+                table_rows = element.find_all('tr', recursive=False)
+                if table_rows:
+                    # Determine table width from the first row
+                    first_row = table_rows[0]
+                    cells = first_row.find_all(['th', 'td'], recursive=False)
+                    table_width = len(cells)
+                    
+                    # Process all rows
+                    for row in table_rows:
+                        cells = row.find_all(['th', 'td'], recursive=False)
+                        # Ensure consistent number of cells
+                        cell_list = []
+                        for i in range(table_width):
+                            if i < len(cells) and cells[i]:
+                                cell_text = cells[i].get_text()
+                            else:
+                                cell_text = ""  # Empty cell for padding
+                            
+                            cell_list.append([{
+                                "type": "text", 
+                                "text": {"content": cell_text}
+                            }])
+                            
+                        rows.append({
+                            "type": "table_row",
+                            "table_row": {
+                                "cells": cell_list
+                            }
+                        })
+                    
+                    # Add the table block
+                    blocks.append({
+                        "object": "block",
+                        "type": "table",
+                        "table": {
+                            "table_width": table_width,
+                            "has_column_header": True,  # Assume first row is header
+                            "has_row_header": False,
+                            "children": rows
+                        }
+                    })
+                    
+            # Handle horizontal rules
+            elif element.name == 'hr':
+                blocks.append({
+                    "object": "block",
+                    "type": "divider",
+                    "divider": {}
+                })
+                
+            # Handle any other elements as paragraphs
+            elif element.name:
+                blocks.append({
+                    "object": "block",
+                    "type": "paragraph",
+                    "paragraph": {
+                        "rich_text": [{"type": "text", "text": {"content": element.get_text()}}],
+                        "color": "default"
+                    }
+                })
+                
         return blocks
 
     def _run(self, content: str, title: str = None, date_str: str = None) -> str:
@@ -177,8 +222,19 @@ class PostToNotion(BaseTool):
         title_text = title or f"EUR/USD Weekly Report – {today}"
         
         try:
-            # Convert markdown to Notion blocks
-            blocks = self._markdown_to_notion_blocks(content)
+            print(f"Converting markdown to HTML...")
+            
+            # Convert Markdown to HTML
+            html = markdown2.markdown(
+                content,
+                extras=["tables", "fenced-code-blocks", "code-friendly"]
+            )
+            
+            # Parse HTML with BeautifulSoup
+            soup = BeautifulSoup(html, "html.parser")
+            
+            # Convert HTML to Notion blocks
+            blocks = self.html_to_notion_blocks(soup)
             
             # Split blocks into chunks of 100 (Notion API limit)
             block_chunks = [blocks[i:i+100] for i in range(0, len(blocks), 100)]
@@ -196,7 +252,7 @@ class PostToNotion(BaseTool):
                     "Name": {"title": [{"text": {"content": title_text}}]},
                     "Date": {"date": {"start": today}},
                 },
-                children=block_chunks[0]  # First chunk only
+                children=block_chunks[0] if block_chunks else []  # First chunk only
             )
             
             page_id = response["id"]
