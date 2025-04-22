@@ -263,7 +263,7 @@ class PostToNotion(BaseTool):
                     
             # Handle tables
             elif element.name == 'table':
-                print(f"Processing table element: {element}")
+                #print(f"Processing table element: {element}")
                 rows = []
                 # Get all rows, including those within thead, tbody, tfoot
                 table_rows = []
