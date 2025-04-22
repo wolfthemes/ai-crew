@@ -1,6 +1,6 @@
 import markdown2
 from bs4 import BeautifulSoup
-from typing import Type, Optional, List, Dict, Any, Annotated
+from typing import Type, Optional, List, Dict, Any
 from pydantic import BaseModel, Field, ConfigDict
 from crewai.tools import BaseTool
 from notion_client import Client
@@ -27,6 +27,117 @@ class PostToNotion(BaseTool):
     
     # Add configuration for arbitrary types
     model_config = ConfigDict(arbitrary_types_allowed=True)
+    
+    def extract_tables_from_markdown(self, markdown_text: str) -> List[Dict[str, Any]]:
+        """
+        Extract tables directly from markdown text in case the HTML conversion didn't work.
+        Returns a list of Notion blocks for each detected table.
+        """
+        table_blocks = []
+        
+        # Split the markdown into lines
+        lines = markdown_text.split('\n')
+        
+        # Define regex pattern for markdown table rows
+        header_pattern = re.compile(r'^\s*\|(.+)\|\s*$')
+        separator_pattern = re.compile(r'^\s*\|([\s\-:|]+)\|\s*$')
+        
+        i = 0
+        while i < len(lines):
+            # Look for a potential table header
+            header_match = header_pattern.match(lines[i]) if i < len(lines) else None
+            
+            # If we found a header, check if the next line is a separator
+            if header_match and i + 1 < len(lines):
+                separator_match = separator_pattern.match(lines[i + 1])
+                
+                if separator_match:
+                    print(f"Found markdown table at line {i}")
+                    # We found a table! Process it
+                    header_cells = self._split_table_row(header_match.group(1))
+                    table_width = len(header_cells)
+                    rows = []
+                    
+                    # Add header row
+                    header_row = {
+                        "type": "table_row",
+                        "table_row": {
+                            "cells": [[{"type": "text", "text": {"content": cell.strip()}}] for cell in header_cells]
+                        }
+                    }
+                    rows.append(header_row)
+                    
+                    # Process data rows
+                    row_index = i + 2  # Start after the separator line
+                    while row_index < len(lines):
+                        row_match = header_pattern.match(lines[row_index])
+                        if not row_match:
+                            break  # End of table
+                        
+                        data_cells = self._split_table_row(row_match.group(1))
+                        # Pad or truncate cells to match table_width
+                        while len(data_cells) < table_width:
+                            data_cells.append("")
+                        if len(data_cells) > table_width:
+                            data_cells = data_cells[:table_width]
+                        
+                        data_row = {
+                            "type": "table_row",
+                            "table_row": {
+                                "cells": [[{"type": "text", "text": {"content": cell.strip()}}] for cell in data_cells]
+                            }
+                        }
+                        rows.append(data_row)
+                        row_index += 1
+                    
+                    # Create the table block
+                    table_block = {
+                        "object": "block",
+                        "type": "table",
+                        "table": {
+                            "table_width": table_width,
+                            "has_column_header": True,
+                            "has_row_header": False,
+                            "children": rows
+                        }
+                    }
+                    table_blocks.append(table_block)
+                    
+                    # Skip ahead to after this table
+                    i = row_index
+                    continue
+            
+            i += 1
+        
+        print(f"Extracted {len(table_blocks)} tables directly from markdown")
+        return table_blocks
+    
+    def _split_table_row(self, row: str) -> List[str]:
+        """
+        Split a markdown table row into cells, handling escaped pipes.
+        """
+        # Split by pipe character, but not if it's escaped with backslash
+        cells = []
+        current_cell = ""
+        escape_next = False
+        
+        for char in row:
+            if escape_next:
+                current_cell += char
+                escape_next = False
+            elif char == '\\':
+                escape_next = True
+            elif char == '|':
+                cells.append(current_cell)
+                current_cell = ""
+            else:
+                current_cell += char
+        
+        # Add the last cell if not empty
+        if current_cell:
+            cells.append(current_cell)
+        
+        return cells
 
     def __init__(self):
         super().__init__()
@@ -51,8 +162,12 @@ class PostToNotion(BaseTool):
         """Convert HTML elements to Notion blocks."""
         blocks = []
         
+        # Find all tables in the document first, regardless of nesting
+        all_tables = soup.find_all('table')
+        print(f"Found {len(all_tables)} tables in the HTML")
+        
         # Process all top-level elements
-        for element in soup.children:
+        for element in soup.body.children if soup.body else soup.children:
             if element.name is None:
                 # Skip empty text nodes
                 continue
@@ -148,30 +263,72 @@ class PostToNotion(BaseTool):
                     
             # Handle tables
             elif element.name == 'table':
+                print(f"Processing table element: {element}")
                 rows = []
-                # Get all rows
-                table_rows = element.find_all('tr', recursive=False)
+                # Get all rows, including those within thead, tbody, tfoot
+                table_rows = []
+                
+                # Check for thead/tbody/tfoot sections
+                thead = element.find('thead')
+                tbody = element.find('tbody')
+                tfoot = element.find('tfoot')
+                
+                # Get rows from thead if it exists
+                if thead:
+                    thead_rows = thead.find_all('tr')
+                    table_rows.extend(thead_rows)
+                    print(f"Found {len(thead_rows)} rows in thead")
+                
+                # Get rows from tbody if it exists
+                if tbody:
+                    tbody_rows = tbody.find_all('tr')
+                    table_rows.extend(tbody_rows)
+                    print(f"Found {len(tbody_rows)} rows in tbody")
+                
+                # Get rows from tfoot if it exists
+                if tfoot:
+                    tfoot_rows = tfoot.find_all('tr')
+                    table_rows.extend(tfoot_rows)
+                    print(f"Found {len(tfoot_rows)} rows in tfoot")
+                
+                # If no structured sections, get rows directly
+                if not table_rows:
+                    table_rows = element.find_all('tr')
+                    print(f"Found {len(table_rows)} direct rows in table")
+                
                 if table_rows:
                     # Determine table width from the first row
                     first_row = table_rows[0]
-                    cells = first_row.find_all(['th', 'td'], recursive=False)
+                    cells = first_row.find_all(['th', 'td'])
                     table_width = len(cells)
+                    print(f"Table width: {table_width}")
                     
-                    # Process all rows
+                                            # Process all rows
                     for row in table_rows:
-                        cells = row.find_all(['th', 'td'], recursive=False)
+                        cells = row.find_all(['th', 'td'])
                         # Ensure consistent number of cells
                         cell_list = []
                         for i in range(table_width):
                             if i < len(cells) and cells[i]:
-                                cell_text = cells[i].get_text()
+                                cell_text = cells[i].get_text().strip()
+                                # Check if the original text contains bold or other formatting
+                                original_html = str(cells[i])
+                                is_bold = '<strong>' in original_html or '<b>' in original_html
                             else:
                                 cell_text = ""  # Empty cell for padding
+                                is_bold = False
                             
-                            cell_list.append([{
-                                "type": "text", 
+                            # Create text with appropriate formatting
+                            text_obj = {
+                                "type": "text",
                                 "text": {"content": cell_text}
-                            }])
+                            }
+                            
+                            # Add bold annotation if needed
+                            if is_bold:
+                                text_obj["annotations"] = {"bold": True}
+                            
+                            cell_list.append([text_obj])
                             
                         rows.append({
                             "type": "table_row",
@@ -191,6 +348,7 @@ class PostToNotion(BaseTool):
                             "children": rows
                         }
                     })
+                    print(f"Added table with {len(rows)} rows to blocks")
                     
             # Handle horizontal rules
             elif element.name == 'hr':
@@ -224,17 +382,49 @@ class PostToNotion(BaseTool):
         try:
             print(f"Converting markdown to HTML...")
             
-            # Convert Markdown to HTML
+            # Convert Markdown to HTML with enhanced table support
             html = markdown2.markdown(
                 content,
-                extras=["tables", "fenced-code-blocks", "code-friendly"]
+                extras=[
+                    "tables",
+                    "fenced-code-blocks", 
+                    "code-friendly",
+                    "cuddled-lists",
+                    "footnotes",
+                    "header-ids",
+                    "html-classes",
+                    "markdown-in-html",
+                    "strike",
+                    "target-blank-links"
+                ]
             )
+            
+            # Output HTML to a file for debugging
+            debug_html_path = "debug/debug_markdown_output.html"
+            with open(debug_html_path, "w", encoding="utf-8") as f:
+                f.write(html)
+            print(f"Saved HTML output to {debug_html_path} for debugging")
             
             # Parse HTML with BeautifulSoup
             soup = BeautifulSoup(html, "html.parser")
             
+            # Output pretty-printed HTML structure for debugging
+            debug_structure_path = "debug/debug_html_structure.txt"
+            with open(debug_structure_path, "w", encoding="utf-8") as f:
+                f.write(soup.prettify())
+            print(f"Saved pretty HTML structure to {debug_structure_path} for debugging")
+            
+            # Check if we need to manually handle tables from the markdown
+            # Some markdown tables may not be properly converted to HTML tables
+            manual_table_blocks = self.extract_tables_from_markdown(content)
+            
             # Convert HTML to Notion blocks
             blocks = self.html_to_notion_blocks(soup)
+            
+            # Add any manually detected tables
+            if manual_table_blocks:
+                print(f"Adding {len(manual_table_blocks)} manually detected tables")
+                blocks.extend(manual_table_blocks)
             
             # Split blocks into chunks of 100 (Notion API limit)
             block_chunks = [blocks[i:i+100] for i in range(0, len(blocks), 100)]

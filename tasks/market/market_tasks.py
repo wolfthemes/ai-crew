@@ -177,7 +177,7 @@ create_weekly_report = Task(
     
     YOUR REPORT MUST INCLUDE THE FOLLOWING SECTIONS:
     
-    1. TITLE: "EUR/USD Weekly Market Report – {today_date_str}"
+    1. TITLE: "EUR/USD Weekly Report – {today_date_str}"
     
     2. EXECUTIVE SUMMARY (150-200 words)
        - Brief overview of current EUR/USD status and key points
