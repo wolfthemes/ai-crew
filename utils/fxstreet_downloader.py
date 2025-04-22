@@ -43,7 +43,7 @@ def download_fxstreet_csv_authenticated():
         }
 
         os.makedirs("data/crawled", exist_ok=True)
-        filename = "fxstreet_{week_id}.json" # <- TODO save the file with week_id in it
+        filename = f"data/crawled/fxstreet_{week_id}.json"
 
         response = requests.get(url, headers=headers)
         response.raise_for_status()
