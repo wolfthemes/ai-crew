@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import random
+from utils.fxstreet_downloader import get_fxstreet_events
 
 class FXStreetQueryInput(BaseModel):
     currency_pair: str = Field(default="EUR/USD", description="Currency pair to fetch news for")
@@ -241,14 +242,52 @@ class FetchFXStreetNews(BaseTool):
         Attempt to fetch actual news from FXStreet
         This is a template - actual implementation would need to use their API or scrape the site
         """
-        # NOTE: This is a placeholder. In a real implementation, you'd need to:
-        # 1. Use FXStreet's API if available
-        # 2. Or scrape their economic calendar and news pages
-        # 3. Handle authentication, rate limiting, etc.
+        today = date.today()
+        start_date = today - timedelta(days=days_back)
+        end_date = today + timedelta(days=days_forward)
         
-        # For now, we'll just return mock data
-        print("⚠️ Using mock FXStreet data - replace with actual API/scraping in production")
-        return self._fetch_mock_news(currency_pair, days_back, days_forward, impact_level)
+        # Fetch Events
+        events = get_fxstreet_events()
+
+        # Add news articles
+        news_articles = [
+            {
+                "date": (start_date + timedelta(days=2)).strftime("%Y-%m-%d"),
+                "title": "EUR/USD struggles to maintain upward momentum as US dollar recovers",
+                "source": "FXStreet",
+                "url": "https://www.fxstreet.com/example-article-1",
+                "summary": "EUR/USD faced resistance near 1.0850 as the US dollar found support following strong economic data."
+            },
+            {
+                "date": (start_date + timedelta(days=4)).strftime("%Y-%m-%d"),
+                "title": "ECB signals potential rate cuts as inflation pressures ease",
+                "source": "FXStreet",
+                "url": "https://www.fxstreet.com/example-article-2",
+                "summary": "European Central Bank officials hinted at possible rate cuts later this year as inflation continues to moderate."
+            },
+            {
+                "date": (today - timedelta(days=2)).strftime("%Y-%m-%d"),
+                "title": "Federal Reserve maintains hawkish stance, USD gains across the board",
+                "source": "FXStreet",
+                "url": "https://www.fxstreet.com/example-article-3",
+                "summary": "Fed officials pushed back against early rate cut expectations, boosting the US dollar against major currencies."
+            },
+            {
+                "date": today.strftime("%Y-%m-%d"),
+                "title": "EUR/USD technical analysis: Key support at 1.0700 under pressure",
+                "source": "FXStreet",
+                "url": "https://www.fxstreet.com/example-article-4",
+                "summary": "The EUR/USD pair is testing critical support at 1.0700, with bears targeting a move toward 1.0650 if broken."
+            }
+        ]
+        
+        return {
+            "economic_events": events,
+            "news_articles": news_articles,
+            "currency_pair": currency_pair,
+            "generated_at": datetime.now().isoformat(),
+            "note": "This data is generated for testing purposes"
+        }
     
     def _run(self, currency_pair: str = "EUR/USD", days_back: int = 7, days_forward: int = 7, impact_level: str = "high") -> str:
         """Fetch news and economic events from FXStreet"""
