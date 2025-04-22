@@ -7,7 +7,9 @@ from datetime import date
 import argparse
 
 # Add the parent directory to sys.path
-sys.path.append(str(Path(__file__).resolve().parents[1]))
+current_file = Path(__file__).resolve()
+parent_directory = current_file.parents[1]
+sys.path.append(str(parent_directory))
 
 from tools.notion_writer import PostToNotion
 from dotenv import load_dotenv

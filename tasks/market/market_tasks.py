@@ -171,8 +171,6 @@ analyze_market_sentiment = Task(
     expected_output="Detailed 400-600 word sentiment analysis covering positioning data, social media trends, and institutional vs. retail sentiment dynamics."
 )
 
-# In tasks/market/market_tasks.py, update the create_weekly_report task
-
 create_weekly_report = Task(
     description=f"""
     Compile a comprehensive professional EUR/USD weekly market report for the period {past_week_start} to {upcoming_week_end}.
@@ -236,10 +234,6 @@ create_weekly_report = Task(
     - Ensure all analysis is data-driven and well-reasoned
     - This is a PROFESSIONAL report - avoid vague language and ensure all claims are substantiated
     - Make sure NOTHING is cut off or incomplete - the entire report must be delivered in full
-    
-    AFTER COMPLETING THE REPORT:
-    1. Post the complete report to Notion using the post_to_notion tool
-    2. Confirm that the report has been successfully posted
     """,
     agent=report_writer_agent,
     expected_output="Complete, professional EUR/USD weekly market report in properly formatted Markdown, approximately 2000-3000 words with all sections fully completed."
