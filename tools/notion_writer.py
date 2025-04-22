@@ -170,7 +170,7 @@ class PostToNotion(BaseTool):
 
     def _run(self, content: str, title: str = None, date_str: str = None) -> str:
         # Check if Notion client is initialized
-        if not self.notion or not self.database_id:
+        if not self.notion:
             return "NOTION_POST_STATUS: FAILED — Notion client not properly initialized"
         
         today = date.today().isoformat() if not date_str else date_str
@@ -180,8 +180,13 @@ class PostToNotion(BaseTool):
             # Convert markdown to Notion blocks
             blocks = self._markdown_to_notion_blocks(content)
             
-            # Create the page with the blocks
-            self.notion.pages.create(
+            # Split blocks into chunks of 100 (Notion API limit)
+            block_chunks = [blocks[i:i+100] for i in range(0, len(blocks), 100)]
+            
+            print(f"Report will be posted in {len(block_chunks)} chunks ({len(blocks)} total blocks)")
+            
+            # Create the page with the first chunk of blocks
+            response = self.notion.pages.create(
                 parent={"database_id": self.database_id},
                 icon= {
                     "type": "emoji",
@@ -191,11 +196,24 @@ class PostToNotion(BaseTool):
                     "Name": {"title": [{"text": {"content": title_text}}]},
                     "Date": {"date": {"start": today}},
                 },
-                children=blocks
+                children=block_chunks[0]  # First chunk only
             )
+            
+            page_id = response["id"]
+            print(f"Created initial page with ID: {page_id}")
+            
+            # If there are more chunks, append them
+            for i, chunk in enumerate(block_chunks[1:], 1):
+                print(f"Appending chunk {i+1}/{len(block_chunks)}...")
+                self.notion.blocks.children.append(
+                    block_id=page_id,
+                    children=chunk
+                )
             
             return f"NOTION_POST_STATUS: SUCCESS — Report posted to Notion on {today}"
         except Exception as e:
+            import traceback
+            print(traceback.format_exc())
             return f"NOTION_POST_STATUS: FAILED — {str(e)}"
 
     def run(self, query: str) -> str:
