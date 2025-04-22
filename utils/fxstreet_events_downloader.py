@@ -1,4 +1,4 @@
-# utils/fxstreet_downloader.py
+# utils/fxstreet_events_downloader.py
 import json
 import os
 import requests
@@ -25,6 +25,9 @@ def get_fxstreet_events(period="week", force_refresh=False):
     Returns:
         list: A list of economic event dictionaries
     """
+
+    print(period)
+
     # Determine date range based on period
     if period == "week":
         start, end = get_current_week_range()
@@ -191,14 +194,7 @@ def load_json_events(week_id):
         print(f"❌ Error loading cached data: {e}")
         return []
 
-def download_fxstreet_csv_authenticated():
-    """Legacy function for backward compatibility"""
-    start, end = get_current_week_range()
-    week_id = start.strftime("%Y-%m-%d")
-    
-    events = get_fxstreet_events(period="week", force_refresh=True)
-    
-    return f"data/crawled/fxstreet_{week_id}.json"
+# REMOVED duplicate function definition here
 
 def parse_fxstreet_csv_to_json(filepath=None):
     """Legacy function for backward compatibility"""
@@ -238,41 +234,6 @@ def parse_fxstreet_csv_to_json(filepath=None):
     
     # If no file exists and none provided, return empty list
     return []
-
-def parse_fxstreet_csv(csv_content):
-    """Parse CSV content to structured JSON format"""
-    # Use StringIO to parse the CSV content without saving to disk
-    from io import StringIO
-    df = pd.read_csv(StringIO(csv_content))
-    events = []
-
-    for _, row in df.iterrows():
-        start_str = row["Start"]
-        dt = datetime.strptime(start_str, "%m/%d/%Y %H:%M:%S")
-
-        events.append({
-            "date": dt.strftime("%Y-%m-%d"),
-            "time": dt.strftime("%H:%M"),
-            "currency": row["Currency"],
-            "event": row["Name"],
-            "impact": row["Impact"].lower(),
-            "actual": "",
-            "forecast": "",
-            "previous": "",
-            "market_reaction": ""
-        })
-    
-    return events
-
-def load_json_events(week_id):
-    """Load events from cached JSON file"""
-    filename = f"data/crawled/fxstreet_{week_id}.json"
-    try:
-        with open(filename, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        print(f"❌ Error loading cached data: {e}")
-        return []
 
 def get_current_week_range():
     today = datetime.now(timezone.utc)
