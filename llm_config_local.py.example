@@ -1,3 +1,4 @@
-PRIMARY_MODEL_KEY = "gpt-4.1-mini"
-SECONDARY_MODEL_KEY = "gpt-4.1-nano"
-POWER_MODEL_KEY = "gpt-4.1"
+PRIMARY_MODEL_KEY="gpt-4.1-mini"
+SECONDARY_MODEL_KEY="gpt-4.1-nano"
+POWER_MODEL_KEY="gpt-4.1"
+CODING_MODEL_KEY = "claude-sonnet"
