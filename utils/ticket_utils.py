@@ -148,20 +148,20 @@ def extract_first_user_comment(comments):
     """Return the last user comment from the comments list, unescaped and formatted."""
     user_comments = [c for c in comments if c.get('user_type') == 'user']
     if user_comments:
-        return unescape(user_comments[-1].get('comment', '').replace('\\n', '\n'))
+        return unescape(user_comments[0].get('comment', '').replace('\\n', '\n'))
     return ""
 
 def extract_latest_user_comment(comments):
     """Return the first user comment from the comments list, unescaped and formatted."""
     user_comments = [c for c in comments if c.get('user_type') == 'user']
     if user_comments:
-        return unescape(user_comments[0].get('comment', '').replace('\\n', '\n'))
+        return unescape(user_comments[-1].get('comment', '').replace('\\n', '\n'))
     return ""
 
 def extract_latest_user_comment_timestamp(comments):
     user_comments = [c for c in comments if c.get('user_type') == 'user']
     if user_comments:
-        return unescape(user_comments[0].get('time_stamp', '').replace('\\n', '\n'))
+        return unescape(user_comments[-1].get('time_stamp', '').replace('\\n', '\n'))
     return ""
 
 def should_process_ticket(ticket):
@@ -192,7 +192,7 @@ def preprocess_ticket(raw_ticket):
     TICKSY_DOMAIN = os.getenv("TICKSY_DOMAIN")
 
     # Tickets info
-    comments = raw_ticket["ticket_comments"]
+    comments = list(reversed(raw_ticket["ticket_comments"])) # order is reversed from ticksy crawled data
     first_msg = extract_first_user_comment(comments)
     last_msg = extract_latest_user_comment(comments)
     last_msg_timestamp = extract_latest_user_comment_timestamp(comments)

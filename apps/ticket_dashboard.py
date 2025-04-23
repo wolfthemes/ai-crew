@@ -139,11 +139,7 @@ else:
                     comments = ticket["full_thread"]
 
                     # Remove last message (already shown separately)
-                    comments = comments[1:]
-
-                    # Remove what was originally the last (now first) before reversing
-                    if comments:
-                        comments = list(reversed(comments))    # reverse to get oldest first
+                    comments = comments[:-1]
 
                     for c in comments:
                         name = c.get("commenter_name", "Unknown")
