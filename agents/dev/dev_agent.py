@@ -1,12 +1,14 @@
 from crewai import Agent
 from core.llm_config import get_llm
 from tools.git.github_operations_tool import GitHubTool, GitOperationsTool
-from tools.code_operations.code_search_tools import GetCodeSearchTool  
+
+from tools.code_operations.code_search_tools import CodeSearchTool  
 from tools.code_operations.fix_code_tool import FixCodeTool
-from tools.code_operations.patch_preview_tool import PatchPreviewTool
-from tools.code_operations.patch_apply_tool import PatchApplyTool
+from tools.code_operations.patch_tool import PatchTool
+
 from tools.file_operations.file_content_tool import FileContentTool
 from tools.file_operations.file_operations_tool import FileOperationsTool
+
 from tools.wp_operations.wp_toolkit import WordPressToolkit
 from tools.wp_operations.wp_function_finder_tool import WordPressFunctionFinderTool
 
@@ -51,10 +53,9 @@ dev_agent = Agent(
         GitOperationsTool(),
         
         # Code operation tools
-        GetCodeSearchTool(),
+        CodeSearchTool(),
         FixCodeTool(),
-        PatchPreviewTool(),
-        PatchApplyTool(),
+        PatchTool(),
         
         # File operation tools
         FileContentTool(),
