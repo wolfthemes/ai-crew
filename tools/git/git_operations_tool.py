@@ -41,26 +41,6 @@ class GitOperationsTool(BaseTool):
         if not os.path.exists(repo_path):
             return f"❌ Repository not found: {repo_path}"
         
-        def get_current_branch():
-            result = subprocess.run(
-                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-                cwd=repo_path,
-                check=True,
-                capture_output=True,
-                text=True
-            )
-            return result.stdout.strip()
-
-        # Only allow certain operations on branches containing "ai"
-        restricted_ops = ["commit", "push", "pull"]
-        if operation in restricted_ops:
-            try:
-                branch_name = get_current_branch()
-            except Exception as e:
-                return f"❌ Could not determine current branch: {str(e)}"
-            if "ai" not in branch_name:
-                return f"❌ Operation '{operation}' is only allowed on branches containing 'ai' in their name (current: '{branch_name}')"
-
         try:
             if operation == "commit":
                 message = params.get("message", "Automated commit")
