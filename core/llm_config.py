@@ -23,7 +23,7 @@ GPT_4_1_MINI = ChatOpenAI(model_name="gpt-4.1-mini", temperature=DEFAULT_TEMPERA
 
 # Claude models - using correct parameter names for the ChatAnthropic class
 CLAUDE_SONNET = ChatAnthropic(
-    model="claude-3-sonnet-20240229",  # Removed "anthropic/" prefix
+    model="claude-3-sonnet-20240229",
     temperature=DEFAULT_TEMPERATURE,
     max_tokens=2048
 )
