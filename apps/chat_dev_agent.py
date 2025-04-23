@@ -1,3 +1,4 @@
+# streamlit run apps/chat_dev_agent.py --server.runOnSave=true
 from pathlib import Path
 import sys
 # Add the parent directory to sys.path
