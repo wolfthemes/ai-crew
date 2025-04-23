@@ -22,7 +22,7 @@ if "dev_context" not in st.session_state:
     st.session_state.dev_context = {
         "repo": None,
         "owner": GITHUB_USERNAME,
-        "branch": "ai-dev",
+        "branch": "dev-ai",
         "last_file": None,
         "last_function": None,
         "last_operation": None,
