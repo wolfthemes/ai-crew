@@ -1,0 +1,111 @@
+{
+  "categories": [
+    {
+      "id": "music",
+      "name": "Music",
+      "description": "Professional themes for label and artists",
+      "subcategories": [
+        {
+          "id": "banc",
+          "name": "Band",
+          "description": ""
+        },
+        {
+          "id": "label",
+          "name": "Label",
+          "description": ""
+        },
+        {
+          "id": "events",
+          "name": "Events",
+          "description": ""
+        }
+      ],
+      "related_keywords": ["music"],
+      "typical_features": ["discography", "events list", "artists profiles", "playlisy manager"],
+      "marketing_angle": "",
+      "content_tone": "Professional, confident, reliable"
+    },
+    {
+      "id": "creative",
+      "name": "Creative",
+      "description": "Expressive themes for artists, designers, and creative professionals",
+      "subcategories": [
+        {
+          "id": "portfolio",
+          "name": "Portfolio",
+          "description": "Showcase-oriented themes for displaying creative work"
+        },
+        {
+          "id": "photography",
+          "name": "Photography",
+          "description": "Visual-focused themes optimized for displaying photographs"
+        }
+      ],
+      "related_keywords": ["artistic", "gallery", "portfolio", "showcase"],
+      "typical_features": ["gallery layouts", "lightbox", "masonry grid", "filterable portfolios"],
+      "marketing_angle": "Showcase your work beautifully and attract new clients",
+      "content_tone": "Artistic, inspirational, visual"
+    },
+    {
+      "id": "ecommerce",
+      "name": "E-Commerce",
+      "description": "Selling-focused themes for online stores and marketplaces",
+      "subcategories": [
+        {
+          "id": "retail",
+          "name": "Retail",
+          "description": "General-purpose themes for retail product stores"
+        },
+        {
+          "id": "digital",
+          "name": "Digital Products",
+          "description": "Specialized themes for selling digital goods and downloads"
+        }
+      ],
+      "related_keywords": ["shop", "store", "products", "checkout", "cart"],
+      "typical_features": ["product galleries", "shopping cart", "wishlist", "product variations"],
+      "marketing_angle": "Convert visitors into customers with optimized sales funnels",
+      "content_tone": "Persuasive, action-oriented, customer-focused"
+    }
+  ],
+  "tags": [
+    {
+      "id": "responsive",
+      "name": "Responsive",
+      "description": "Adapts perfectly to all screen sizes and devices"
+    },
+    {
+      "id": "customizable",
+      "name": "Highly Customizable",
+      "description": "Easy to modify without coding knowledge"
+    },
+    {
+      "id": "fast",
+      "name": "Fast-Loading",
+      "description": "Optimized for speed and performance"
+    },
+    {
+      "id": "seo-friendly",
+      "name": "SEO-Friendly",
+      "description": "Built with search engine optimization in mind"
+    }
+  ],
+  "styles": [
+    {
+      "id": "minimal",
+      "name": "Minimal",
+      "description": "Clean, simple designs with focus on content"
+    },
+    {
+      "id": "modern",
+      "name": "Modern",
+      "description": "Contemporary designs with current trends"
+    },
+    {
+      "id": "classic",
+      "name": "Classic",
+      "description": "Timeless designs with traditional elements"
+    }
+  ]
+}
