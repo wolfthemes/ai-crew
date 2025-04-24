@@ -50,10 +50,14 @@ def extract_metadata(config):
         "url": config.get("url"),
         "demourl": config.get("demourl"),
         "shortlink": config.get("shortlink"),
+        "itemId": config.get("itemId"),
         "version": config.get("version"),
         "updated": config.get("updated"),
-        "category": config.get("category"),
-        "itemId": config.get("itemId"),
+        "category": config.get("category", []),
+        "features": config.get("features", []),
+        "screenshots": config.get("screenshots", []),
+        "customer_sites": config.get("customer_sites", []),
+        "selling_points": config.get("selling_points", []),
     }
 
 def main():
