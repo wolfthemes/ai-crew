@@ -21,6 +21,7 @@ def review_response_quality(reply: str, ticket: str, source_doc: str, guidelines
 
     ### 3. Tone and Formatting:
     - Is the tone warm and professional?
+    - Does it uses 'I' and not 'we'
     - Does it use markdown for emphasis and steps?
     - Does it end with an approved phrase (e.g., "I hope it helps", "Best regards")?
 

@@ -10,6 +10,8 @@ from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv
 
+load_dotenv()
+
 from utils.document_loaders import (
     load_common_issues,
     load_reference_tickets,
@@ -22,13 +24,12 @@ from utils.document_loaders import (
     load_reformulate_agent_instructions,
     load_dev_agent_backstory
 )
-from utils.helpers import compute_all_file_hashes, hashes_changed
+from utils.helpers import compute_all_file_hashes, hashes_changed, setup_logging
 
 # Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
-load_dotenv()
+DEBUG_MODE = os.getenv("DEBUG_MODE", "0") in ["1", "true", "yes"]
+logger = setup_logging()
+logger.setLevel(logging.DEBUG if DEBUG_MODE else logging.INFO)
 
 # Config
 DATA_FOLDER = "data"

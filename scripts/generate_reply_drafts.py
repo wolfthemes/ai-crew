@@ -6,13 +6,14 @@ import json
 import os
 from pathlib import Path
 import subprocess
+from datetime import date
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from utils.ticket_utils import preprocess_open_tickets, save_preprocessed_open_tickets
 from crews.support_crew import support_crew_with_research
-
-# Import utility functions
+from utils.helpers import setup_logging
+logger = setup_logging()
 
 # Constants
 DB_PATH = "data/db/open_tickets.db"
@@ -42,7 +43,10 @@ def load_tickets_from_json(json_path):
 
 def main():
     """Main function to preprocess tickets, generate reply and save into drafts"""
-    print("🔄 Starting combined ticket preprocessing, generate reply, and save drafts...")
+    print("🔄 Starting open ticket preprocessing, generate reply, and save drafts...")
+
+    today = date.today().strftime("%Y-%m-%d")
+    logger.info(f"Starting generatting drafts for {today}")
     
     # 1. Preprocess tickets
     if not run_preprocessing():
@@ -88,6 +92,7 @@ def main():
             f.write(reply_html)
 
     # Step 3: Generate replies
+    logger.info(f"✅ Drafts generated successfully!")
     print("✅ Drafts generated successfully!")
 
 if __name__ == "__main__":

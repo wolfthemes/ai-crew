@@ -11,7 +11,40 @@ from bs4 import BeautifulSoup
 import time
 from datetime import datetime
 
-logger = logging.getLogger(__name__)
+import logging
+import os
+from datetime import datetime
+import sys
+
+def setup_logging(log_dir="logs"):
+    """Set up basic logging configuration with UTF-8 safe console output"""
+    os.makedirs(log_dir, exist_ok=True)
+
+    timestamp = datetime.now().strftime("%Y%m%d")
+    log_filename = f"{log_dir}/process_{timestamp}.log"
+
+    file_handler = logging.FileHandler(log_filename, encoding="utf-8")
+
+    # Ensure UTF-8 support for console
+    console_handler = logging.StreamHandler(stream=sys.stdout)
+    console_handler.setFormatter(logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    ))
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
+        handlers=[file_handler, console_handler]
+    )
+
+    logger = logging.getLogger(__name__)
+    logger.info(f"Logging initialized. Log file: {log_filename}")
+    return logger
+
+# Set up logging for current file
+logger = setup_logging()
 
 def compute_file_hash(file_path):
     """

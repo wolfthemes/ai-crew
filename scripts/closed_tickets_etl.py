@@ -7,13 +7,15 @@ import sqlite3
 import shutil
 from pathlib import Path
 import subprocess
-from datetime import datetime
+from datetime import date, datetime
 
 # Add the parent directory to sys.path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 # Import utility functions
 from utils.ticket_utils import preprocess_closed_tickets, save_preprocessed_closed_tickets
+from utils.helpers import setup_logging
+logger = setup_logging()
 
 # Constants
 DB_PATH = "data/db/closed_tickets.db"
@@ -117,14 +119,19 @@ def backup_database(db_path, backup_dir):
 def main():
     """Main function to preprocess tickets, insert them into the database, and create a backup"""
     print("🔄 Starting combined ticket preprocessing, DB insertion, and backup...")
+
+    today = date.today().strftime("%Y-%m-%d")
+    logger.info(f"Starting Closed tickets ETL for {today}")
     
     # Step 1: Preprocess tickets
     if not run_preprocessing():
+        #logger.error(f"❌ Preprocessing failed. Database insertion skipped.")
         print("❌ Preprocessing failed. Database insertion skipped.")
         return
     
     # Step 2: Load preprocessed tickets
     if not os.path.exists(PREPROCESSED_PATH):
+        #logger.error(f"❌ Preprocessed JSON file not found: {PREPROCESSED_PATH}")
         print(f"❌ Preprocessed JSON file not found: {PREPROCESSED_PATH}")
         return
         
@@ -135,10 +142,13 @@ def main():
     
     # Step 4: Backup the database
     if backup_database(DB_PATH, BACKUP_DIR):
+        #logger.info(f"✅ Database backup completed successfully!")
         print("✅ Database backup completed successfully!")
     else:
+        #logger.error(f"⚠️ Process completed but database backup failed.")
         print("⚠️ Process completed but database backup failed.")
         
+    logger.info(f"✅ Combined process completed successfully!")
     print("✅ Combined process completed successfully!")
 
 if __name__ == "__main__":

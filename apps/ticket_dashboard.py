@@ -173,7 +173,7 @@ else:
 
             # ⬇️ Display attachments if present
             if "full_thread" in ticket and ticket["full_thread"]:
-                first_comment = ticket["full_thread"][0]
+                first_comment = ticket["full_thread"][-1]
                 if "attachments" in first_comment and first_comment["attachments"]:
                     st.markdown("**Attached file(s):**")
                     for file in first_comment["attachments"]:

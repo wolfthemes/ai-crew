@@ -5,10 +5,13 @@ import sys
 from pathlib import Path
 from notion_client import Client
 from dotenv import load_dotenv
+from datetime import date
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from utils.fxstreet_events_downloader import get_fxstreet_events
+from utils.helpers import setup_logging
+logger = setup_logging()
 
 def post_single_event_to_notion(event, notion_client, database_id, emoji="🚨"):
     """Post a single economic event to Notion as its own page"""
@@ -33,6 +36,9 @@ def post_single_event_to_notion(event, notion_client, database_id, emoji="🚨")
 def main():
     """Post economic events to Notion"""
     load_dotenv()
+
+    today = date.today().strftime("%Y-%m-%d")
+    logger.info(f"Starting posting economic events for {today}")
     
     # Verify environment variables
     notion_api_key = os.getenv("NOTION_API_KEY")
@@ -56,6 +62,7 @@ def main():
     if all_events:
         for event in all_events:
             post_single_event_to_notion(event, notion, notion_db_key)
+        logger.info(f"✅ Posted {len(all_events)} events to Notion")
         print(f"✅ Posted {len(all_events)} events to Notion")
     else:
         print("❌ No events found")

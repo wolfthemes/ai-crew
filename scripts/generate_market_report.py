@@ -16,14 +16,8 @@ from datetime import date
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from crews.market_crew import run_market_analysis
-
-def setup_logging():
-    """Set up basic logging configuration"""
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
+from utils.helpers import setup_logging
+logger = setup_logging()
 
 def main():
     """Run the market analysis with command line arguments"""
@@ -40,10 +34,8 @@ def main():
     
     args = parser.parse_args()
     
-    setup_logging()
-    
     today = date.today().strftime("%Y-%m-%d")
-    logging.info(f"Starting EUR/USD {args.period} report generation for {today}")
+    logger.info(f"Starting EUR/USD {args.period} report generation for {today}")
     
     # Run the market analysis with command line options
     result = run_market_analysis(
@@ -54,10 +46,10 @@ def main():
     )
     
     if result:
-        logging.info(f"{args.period.capitalize()} report generation completed successfully")
+        logger.info(f"{args.period.capitalize()} report generation completed successfully")
         return 0
     else:
-        logging.error(f"{args.period.capitalize()} report generation failed")
+        logger.error(f"{args.period.capitalize()} report generation failed")
         return 1
 
 if __name__ == "__main__":
