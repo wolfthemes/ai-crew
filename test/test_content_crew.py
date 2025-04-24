@@ -8,7 +8,7 @@ from crews import content_crew
 
 def main():
     # Test generating social posts
-    theme_slug = "decibel"  # From your theme_catalog.json
+    theme_slug = "poize"  # From your theme_catalog.json
     posts = content_crew.generate_social_campaign(theme_slug, post_count=2)
     
     print(f"Generated posts for {theme_slug}:")

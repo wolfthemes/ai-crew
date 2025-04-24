@@ -47,3 +47,19 @@ def run_theme_promotion(theme_slug, platforms=None, post_count=1, schedule=True)
         results["scheduling"] = scheduling_results
     
     return results
+
+def generate_blog_post(theme_slug, post_type="review"):
+    """Generate a blog post for a theme"""
+    from agents.content import blog_writer_agent
+    
+    # Load shared data
+    data = blog_writer_agent.load_data()
+    
+    # Generate blog post
+    post = blog_writer_agent.generate_blog_post(
+        theme_slug,
+        post_type=post_type,
+        data=data
+    )
+    
+    return post
