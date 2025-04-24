@@ -1,34 +1,46 @@
-class ContentCrew:
-    def __init__(self):
-        self.agents = {
-            'social': None,  # Will be replaced with social_post_agent instance
-            'strategy': None,  # Will be replaced with content_strategy_agent instance
-            'buffer': None    # Will be replaced with buffer_integration_agent instance
-        }
-        self.theme_data = {}
-        self.theme_categories = {}
-        self.content_templates = {}
+# crews/content_crew.py
+
+import json
+import os
+from agents.content import social_post_agent
+
+def generate_social_campaign(theme_slug, platforms=None, post_count=1):
+    """Generate a social media campaign for a specific theme
+    
+    Args:
+        theme_slug (str): The theme's slug
+        platforms (list): Platforms to generate content for
+        post_count (int): Number of posts per platform
         
-    def initialize(self):
-        """Initialize all agents and load required data"""
-        # Load theme data, categories, and templates
-        self._load_data()
+    Returns:
+        dict: Generated posts by platform
+    """
+    # Load shared data once
+    data = social_post_agent.load_data()
+    
+    # Generate posts using the shared data
+    posts = social_post_agent.generate_posts(
+        theme_slug, 
+        platforms=platforms, 
+        count=post_count,
+        data=data
+    )
+    
+    return posts
+
+def schedule_to_buffer(posts, schedule_times=None):
+    """Schedule posts to Buffer (placeholder for now)
+    
+    Args:
+        posts (dict): Posts to schedule by platform
+        schedule_times (dict): Optional scheduling times
         
-        # Initialize agents (will be implemented later)
-        # self._initialize_agents()
-        
-    def _load_data(self):
-        """Load theme data, categories, and templates from files"""
-        # This will be implemented to load your theme_catalog.json,
-        # theme_categories.json, and content_templates.json
-        pass
-        
-    def generate_social_campaign(self, theme_slug, platforms=None, post_count=3):
-        """Generate a social media campaign for a specific theme"""
-        # This will be implemented to use the social_post_agent
-        pass
-        
-    def schedule_to_buffer(self, posts, schedule_times=None):
-        """Schedule a list of posts to Buffer"""
-        # This will be implemented to use the buffer_integration_agent
-        pass
+    Returns:
+        dict: Scheduling results
+    """
+    # This would be implemented later with Buffer API integration
+    return {
+        "status": "simulated",
+        "message": "Posts would be scheduled to Buffer (not implemented yet)",
+        "post_count": sum(len(platform_posts) for platform_posts in posts.values())
+    }
