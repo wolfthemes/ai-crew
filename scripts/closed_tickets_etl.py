@@ -7,21 +7,61 @@ import sqlite3
 import shutil
 from pathlib import Path
 import subprocess
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 # Add the parent directory to sys.path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 # Import utility functions
 from utils.ticket_utils import preprocess_closed_tickets, save_preprocessed_closed_tickets
+from utils.post_to_ticksy import close_ticksy_ticket
 from utils.helpers import setup_logging
 logger = setup_logging()
+today = date.today().strftime("%Y-%m-%d")
 
 # Constants
 DB_PATH = "data/db/closed_tickets.db"
 CRAWLED_PATH = "data/crawled/closed_tickets.json"
 PREPROCESSED_PATH = "data/dynamic/tickets/closed_tickets.json"
 BACKUP_DIR = r"G:\My Drive\DBBackup\ai-crew"
+STALE_TICKETS_DAYS_LIMIT = 7
+
+def close_stale_tickets():
+    """Close tickets that don't need response and that are open since more than 7 days"""
+
+    try:
+        print("📦 Crawling open tickets...")
+        subprocess.run(["python", "crawlers/crawl_open_tickets.py"], check=True)
+        filepath = 'data/crawled/open_tickets.json'
+        with open(filepath, encoding="utf-8") as f:
+            data = json.load(f)
+
+        for t in data.get("open-tickets", []):
+            # Skip invalid or unhelpful tickets (non-theme-cateogry, deleted customer )
+            stale = int(t.get("needs_response", "1")) == 0
+            ticket_id = t.get("ticket_id")
+            comments = t.get( "ticket_comments" )
+            today_date = datetime.today().date()
+            last_comment_time_stamp = comments[0]["time_stamp"]
+            try:
+                last_comment_date = datetime.strptime(last_comment_time_stamp, "%Y-%m-%d %H:%M:%S").date()
+                ticket_age = (today_date - last_comment_date).days
+              
+                # Close ticket older than X days
+                if stale and ticket_age > STALE_TICKETS_DAYS_LIMIT:
+                    print(f"🚮 Closing ticket {ticket_id} ({ticket_age} days old)")
+                    close_ticksy_ticket(ticket_id=ticket_id)
+            
+            except Exception as e:
+                print(f"⚠️ Failed to parse date for ticket {ticket_id}: {e}")
+        return True
+
+    except Exception as e:
+        print(f"\n❌ Error running tickets preprocessor: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return False
+
 
 def run_preprocessing():
     """Run the preprocessing step to prepare ticket data"""
@@ -120,32 +160,43 @@ def main():
     """Main function to preprocess tickets, insert them into the database, and create a backup"""
     print("🔄 Starting combined ticket preprocessing, DB insertion, and backup...")
 
-    today = date.today().strftime("%Y-%m-%d")
-    logger.info(f"Starting Closed tickets ETL for {today}")
     
-    # Step 1: Preprocess tickets
+    logger.info(f"Starting Closed tickets ETL for {today}")
+
+    # Step 1: Close stale tickets
+    if not close_stale_tickets():
+        print("❌ Closing stale tickets failed. Task skipped")
+        return
+    else:
+        logger.info(f"✅ Stale tickets closed")
+    
+    # Step 2: Preprocess tickets
     if not run_preprocessing():
         #logger.error(f"❌ Preprocessing failed. Database insertion skipped.")
         print("❌ Preprocessing failed. Database insertion skipped.")
         return
+    else:
+        logger.info(f"✅ Closed tickets crawled")
     
-    # Step 2: Load preprocessed tickets
+    # Step 3: Load preprocessed tickets
     if not os.path.exists(PREPROCESSED_PATH):
         #logger.error(f"❌ Preprocessed JSON file not found: {PREPROCESSED_PATH}")
         print(f"❌ Preprocessed JSON file not found: {PREPROCESSED_PATH}")
         return
+    else:
+        logger.info(f"✅ Closed tickets preprocessed")
         
     tickets = load_tickets_from_json(PREPROCESSED_PATH)
     
-    # Step 3: Insert tickets into database
+    # Step 4: Insert tickets into database
     insert_into_db(tickets, DB_PATH)
     
-    # Step 4: Backup the database
+    # Step 5: Backup the database
     if backup_database(DB_PATH, BACKUP_DIR):
-        #logger.info(f"✅ Database backup completed successfully!")
+        logger.info(f"✅ Database backup completed successfully!")
         print("✅ Database backup completed successfully!")
     else:
-        #logger.error(f"⚠️ Process completed but database backup failed.")
+        logger.error(f"⚠️ Process completed but database backup failed.")
         print("⚠️ Process completed but database backup failed.")
         
     logger.info(f"✅ Combined process completed successfully!")
