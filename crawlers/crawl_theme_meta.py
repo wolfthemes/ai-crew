@@ -10,7 +10,7 @@ GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 REPO = "wolfthemes/wolf-supertheme"
 SLUGS_PATH = "theme-slugs.json"
-OUTPUT_PATH = "data/themes/theme_metadata/theme_catalog.json"
+OUTPUT_PATH = "data/themes/theme_catalog.json"
 
 def get_theme_slugs():
     print("📥 Fetching theme slugs from private GitHub repo via API...")
@@ -61,7 +61,7 @@ def extract_metadata(config):
     }
 
 def main():
-    os.makedirs("data/themes/theme_metadata", exist_ok=True)
+    os.makedirs("data/themes", exist_ok=True)
     theme_meta = {}
 
     slugs = get_theme_slugs()

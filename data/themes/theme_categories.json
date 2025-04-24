@@ -1,0 +1,51 @@
+{
+  "categories": [
+    {
+      "id": "music",
+      "name": "Music",
+      "description": "WordPress themes optimized for musicians, bands, record labels, and music industry professionals",
+      "subcategories": [
+        {"id": "band", "name": "Band"},
+        {"id": "dj", "name": "DJ"},
+        {"id": "label", "name": "Record Label"},
+        {"id": "studio", "name": "Recording Studio"}
+      ],
+      "related_keywords": ["music", "band", "artist", "album", "concert", "tour", "recording"],
+      "marketing_angle": "Showcase your music and connect with fans through a professional online presence",
+      "content_tone": "Creative, passionate, energetic"
+    },
+    {
+      "id": "portfolio",
+      "name": "Portfolio",
+      "description": "Showcase themes for creative professionals and artists",
+      "subcategories": [
+        {"id": "photography", "name": "Photography"},
+        {"id": "creative", "name": "Creative Arts"}
+      ],
+      "related_keywords": ["portfolio", "showcase", "gallery", "creative", "artist"],
+      "marketing_angle": "Display your work with stunning visuals that capture attention",
+      "content_tone": "Sophisticated, artistic, minimal"
+    },
+    {
+      "id": "shop",
+      "name": "Shop",
+      "description": "E-commerce themes for online stores and product sales",
+      "subcategories": [
+        {"id": "merchandise", "name": "Merchandise"},
+        {"id": "digital", "name": "Digital Products"}
+      ],
+      "related_keywords": ["shop", "store", "products", "ecommerce", "woocommerce"],
+      "marketing_angle": "Sell your products with a beautiful and conversion-optimized store",
+      "content_tone": "Professional, trustworthy, straightforward"
+    },
+    {
+      "id": "agency",
+      "name": "Agency",
+      "description": "Professional themes for creative and service agencies",
+      "subcategories": [],
+      "related_keywords": ["agency", "services", "creative", "business", "professional"],
+      "marketing_angle": "Present your services with a polished and professional online presence",
+      "content_tone": "Professional, confident, results-oriented"
+    }
+  ]
+}
