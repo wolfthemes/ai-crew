@@ -22,16 +22,16 @@ def load_data():
         data["templates"] = {
             "social_posts": {
                 "facebook": [
-                    "Check out {theme_name}, our {category} WordPress theme: {demourl}",
-                    "Looking for a {category} theme? Try {theme_name}: {demourl}"
+                    "Check out {theme_name}, our {category_text} WordPress theme: {demourl}",
+                    "Looking for a {category_text} theme? Try {theme_name}: {demourl}"
                 ],
                 "instagram": [
-                    "{theme_name} - Premium {category} WordPress theme\n\n#WordPress #{category}",
-                    "Introducing {theme_name} for {category} websites\n\n#WebDesign #WordPress"
+                    "{theme_name} - Premium {category_text} WordPress theme\n\n#WordPress #{category_hashtags}",
+                    "Introducing {theme_name} for {category_text} websites\n\n#WebDesign #WordPress"
                 ],
                 "x": [
-                    "{theme_name}: Professional {category} WordPress theme. See demo: {shortlink}",
-                    "Just launched: {theme_name} for {category} websites. {shortlink}"
+                    "{theme_name}: Professional {category_text} WordPress theme. See demo: {shortlink}",
+                    "Just launched: {theme_name} for {category_text} websites. {shortlink}"
                 ]
             }
         }
@@ -57,6 +57,99 @@ def load_data():
         
     return data
 
+def format_category(category):
+    """Format category text properly"""
+    if isinstance(category, list):
+        if len(category) == 1:
+            return category[0]
+        elif len(category) == 2:
+            return f"{category[0]} and {category[1]}"
+        else:
+            return ", ".join(category[:-1]) + f", and {category[-1]}"
+    return category if category else "WordPress"
+
+def format_hashtags(category):
+    """Format category for hashtags"""
+    if isinstance(category, list):
+        return " ".join([f"#{cat.replace(' ', '')}" for cat in category])
+    elif category:
+        return f"#{category.replace(' ', '')}"
+    return "#WordPress"
+
+def is_new_theme(theme):
+    """Determine if a theme is new based on version and update date"""
+    version = theme.get("version", "1.0.0")
+    updated = theme.get("updated", "")
+    
+    # Check if version is below 1.5 (relatively new)
+    is_early_version = version.startswith("1.0") or version.startswith("1.1")
+    
+    # Check if updated within last 3 months
+    if updated:
+        try:
+            updated_date = datetime.strptime(updated, "%Y-%m-%d")
+            today = datetime.now()
+            days_since_update = (today - updated_date).days
+            recently_updated = days_since_update < 90
+        except ValueError:
+            recently_updated = False
+    else:
+        recently_updated = False
+    
+    return is_early_version or recently_updated
+
+def get_theme_templates(theme, platform, data):
+    """Get appropriate templates based on theme characteristics"""
+    # Get base templates
+    all_templates = data["templates"].get("social_posts", {}).get(platform, [])
+    
+    # Check if we should use established or new templates
+    if is_new_theme(theme):
+        # Templates for new themes
+        if platform == "facebook":
+            return [
+                "Just launched: {theme_name}, a new {category_text} WordPress theme built with {builder}. Check out the demo: {demourl}",
+                "Introducing {theme_name} - our latest {category_text} WordPress theme with stunning design and powerful features. See it here: {demourl}",
+                "New release: {theme_name} - a fresh {category_text} WordPress theme for creating professional websites. Demo: {demourl}"
+            ]
+        elif platform == "instagram":
+            return [
+                "🔥 NEW THEME ALERT 🔥\n\n{theme_name} - The ultimate WordPress solution for {category_text} websites\n\n#WordPressTheme #{category_hashtags} #WebDesign",
+                "✨ Just Released: {theme_name} ✨\n\nOur newest {category_text} WordPress theme\n\n#WordPress #{category_hashtags} #WebDesign #NewRelease",
+                "Introducing {theme_name} - our latest {category_text} WordPress theme!\n\nBuilt with {builder} for maximum flexibility\n\n#WordPress #WebDesign #{category_hashtags}"
+            ]
+        elif platform == "x":
+            return [
+                "🚀 Just launched: {theme_name} - our newest {category_text} WordPress theme! Built with {builder}. Check it out: {shortlink}",
+                "Introducing {theme_name} v{version} - A brand new {category_text} WordPress theme now available! {shortlink}",
+                "New release: {theme_name}, the perfect {category_text} WordPress theme for your next project. {shortlink}"
+            ]
+    else:
+        # Templates for established themes
+        if platform == "facebook":
+            return [
+                "Looking for a professional {category_text} WordPress theme? {theme_name} has everything you need. See it in action: {demourl}",
+                "{theme_name} continues to be one of our most popular {category_text} WordPress themes. Find out why: {demourl}",
+                "Create a stunning {category_text} website with our {theme_name} WordPress theme. Trusted by professionals worldwide. Preview: {demourl}"
+            ]
+        elif platform == "instagram":
+            return [
+                "Create stunning {category_text} websites with {theme_name} 💯\n\nPowered by {builder} for unlimited customization\n\n#WordPress #{category_hashtags} #WebDesign",
+                "{theme_name}: Professional {category_text} WordPress theme ✨\n\nTrusted by creators worldwide\n\n#WordPress #WebDesign #{category_hashtags}",
+                "Transform your {category_text} website with {theme_name} 🔥\n\nBuilt for professionals and beginners alike\n\n#WordPress #{category_hashtags} #WebDesign"
+            ]
+        elif platform == "x":
+            return [
+                "Create a professional {category_text} website with {theme_name}, our popular WordPress theme. Preview: {shortlink}",
+                "{theme_name} v{version} - Trusted by {category_text} professionals worldwide. See what makes it special: {shortlink}",
+                "Looking for a reliable {category_text} WordPress theme? {theme_name} has you covered with its powerful features. {shortlink}"
+            ]
+    
+    # Fall back to default templates if no specific ones match
+    return all_templates if all_templates else [
+        f"Check out {theme.get('name', '')}, our {format_category(theme.get('category', ''))} WordPress theme! {theme.get('demourl', '')}"
+    ]
+
 def generate_posts(theme_slug, platforms=None, count=1, data=None):
     """Generate social media posts for a theme
     
@@ -81,16 +174,22 @@ def generate_posts(theme_slug, platforms=None, count=1, data=None):
     if not theme:
         return {"error": f"Theme '{theme_slug}' not found"}
     
+    # Format category properly
+    category = theme.get("category", "")
+    category_text = format_category(category)
+    category_hashtags = format_hashtags(category)
+    
     # Prepare context for template filling
     ctx = {
         "theme_name": theme.get("name", ""),
-        "category": theme.get("category", "WordPress"),
-        "subcategory": "",  # Could be enhanced later
-        "builder": theme.get("builder", ""),
+        "category": category,
+        "category_text": category_text,
+        "category_hashtags": category_hashtags,
+        "builder": theme.get("builder", "WordPress"),
         "demourl": theme.get("demourl", ""),
         "shortlink": theme.get("shortlink", ""),
         "url": theme.get("url", ""),
-        "version": theme.get("version", ""),
+        "version": theme.get("version", "1.0"),
         "updated": theme.get("updated", "")
     }
     
@@ -98,10 +197,8 @@ def generate_posts(theme_slug, platforms=None, count=1, data=None):
     results = {}
     
     for platform in platforms:
-        platform_templates = data["templates"].get("social_posts", {}).get(platform, [])
-        if not platform_templates:
-            results[platform] = [f"Check out our {ctx['theme_name']} theme! {ctx['demourl']}"]
-            continue
+        # Get templates appropriate for this theme and platform
+        platform_templates = get_theme_templates(theme, platform, data)
         
         # Select random templates
         selected_templates = random.sample(

@@ -4,22 +4,33 @@ from pathlib import Path
 
 # Add the parent directory to sys.path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
-from crews import content_crew
+# test_improved_posts.py
+
+from agents.content import social_post_agent
 
 def main():
-    # Test generating social posts
-    theme_slug = "poize"  # From your theme_catalog.json
-    posts = content_crew.generate_social_campaign(theme_slug, post_count=2)
+    # Load data once
+    data = social_post_agent.load_data()
     
-    print(f"Generated posts for {theme_slug}:")
+    # Test with a newer theme
+    new_theme = "poize"  # One of your newer themes
+    print(f"\n=== Generated posts for {new_theme} (newer theme) ===")
+    posts = social_post_agent.generate_posts(new_theme, count=2, data=data)
+    
     for platform, platform_posts in posts.items():
         print(f"\n{platform.upper()}:")
         for post in platform_posts:
             print(f"  - {post}")
     
-    # Test scheduling (simulation)
-    result = content_crew.schedule_to_buffer(posts)
-    print(f"\nScheduling result: {result}")
+    # Test with an established theme
+    established_theme = "decibel"  # One of your older themes
+    print(f"\n\n=== Generated posts for {established_theme} (established theme) ===")
+    posts = social_post_agent.generate_posts(established_theme, count=2, data=data)
+    
+    for platform, platform_posts in posts.items():
+        print(f"\n{platform.upper()}:")
+        for post in platform_posts:
+            print(f"  - {post}")
 
 if __name__ == "__main__":
     main()

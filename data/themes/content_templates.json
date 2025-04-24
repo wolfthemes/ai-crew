@@ -1,35 +1,56 @@
 {
   "social_posts": {
-    "facebook": [
-      "Introducing {theme_name}: Our {category} WordPress theme perfect for {subcategory} websites. Check out the demo: {demourl}",
-      "Looking for a professional {category} WordPress theme? {theme_name} has everything you need for your {subcategory} website. See it in action: {demourl}",
-      "Upgrade your {category} website with our {theme_name} WordPress theme. Designed specifically for {subcategory} sites. Preview: {demourl}"
-    ],
-    "instagram": [
-      "🔥 NEW THEME ALERT 🔥\n\n{theme_name} - The ultimate WordPress solution for {category} websites\n\n#WordPressTheme #{category} #{subcategory} #WebDesign",
-      "Elevate your online presence with {theme_name}, our premium {category} WordPress theme ✨\n\nPerfect for: {subcategory}\n\n#WebDesign #WordPress #{category}",
-      "Swipe to see {theme_name} in action! 👉\nOur latest {category} WordPress theme\n\n#WebDesign #WordPress #{subcategory}"
-    ],
-    "x": [
-      "Just launched: {theme_name} - A premium WordPress theme for {category} websites. Built with {builder}. Check out the demo: {shortlink}",
-      "Need a professional {category} WordPress theme? {theme_name} is now available! Perfect for {subcategory}. Preview: {shortlink}",
-      "{theme_name} v{version} is live! The ultimate {category} WordPress theme for {subcategory} websites. Built with {builder}. See it here: {shortlink}"
-    ]
+      "facebook": {
+          "new": [
+              "Just launched: {theme_name}, a new {category_text} WordPress theme built with {builder}. Check out the demo: {demourl}",
+              "Introducing {theme_name} - our latest {category_text} WordPress theme with stunning design and powerful features. See it here: {demourl}",
+              "New release: {theme_name} - a fresh {category_text} WordPress theme for creating professional websites. Demo: {demourl}"
+          ],
+          "established": [
+              "Looking for a professional {category_text} WordPress theme? {theme_name} has everything you need. See it in action: {demourl}",
+              "{theme_name} continues to be one of our most popular {category_text} WordPress themes. Find out why: {demourl}",
+              "Create a stunning {category_text} website with our {theme_name} WordPress theme. Trusted by professionals worldwide. Preview: {demourl}"
+          ]
+      },
+      "instagram": {
+          "new": [
+              "🔥 NEW THEME ALERT 🔥\n\n{theme_name} - The ultimate WordPress solution for {category_text} websites\n\n#WordPressTheme #{category_hashtags} #WebDesign",
+              "✨ Just Released: {theme_name} ✨\n\nOur newest {category_text} WordPress theme\n\n#WordPress #{category_hashtags} #WebDesign #NewRelease",
+              "Introducing {theme_name} - our latest {category_text} WordPress theme!\n\nBuilt with {builder} for maximum flexibility\n\n#WordPress #WebDesign #{category_hashtags}"
+          ],
+          "established": [
+              "Create stunning {category_text} websites with {theme_name} 💯\n\nPowered by {builder} for unlimited customization\n\n#WordPress #{category_hashtags} #WebDesign",
+              "{theme_name}: Professional {category_text} WordPress theme ✨\n\nTrusted by creators worldwide\n\n#WordPress #WebDesign #{category_hashtags}",
+              "Transform your {category_text} website with {theme_name} 🔥\n\nBuilt for professionals and beginners alike\n\n#WordPress #{category_hashtags} #WebDesign"
+          ]
+      },
+      "x": {
+          "new": [
+              "🚀 Just launched: {theme_name} - our newest {category_text} WordPress theme! Built with {builder}. Check it out: {shortlink}",
+              "Introducing {theme_name} v{version} - A brand new {category_text} WordPress theme now available! {shortlink}",
+              "New release: {theme_name}, the perfect {category_text} WordPress theme for your next project. {shortlink}"
+          ],
+          "established": [
+              "Create a professional {category_text} website with {theme_name}, our popular WordPress theme. Preview: {shortlink}",
+              "{theme_name} v{version} - Trusted by {category_text} professionals worldwide. See what makes it special: {shortlink}",
+              "Looking for a reliable {category_text} WordPress theme? {theme_name} has you covered with its powerful features. {shortlink}"
+          ]
+      }
   },
   "blog_posts": {
-    "intro": [
-      "Looking for the perfect {category} WordPress theme? {theme_name} might be exactly what you need.",
-      "In today's digital landscape, having a professional {category} website is essential. Our {theme_name} WordPress theme is designed to help you stand out.",
-      "Choosing the right WordPress theme for your {category} website can make all the difference. Let's explore what makes {theme_name} special."
-    ],
-    "features": [
-      "## Key Features of {theme_name}\n\n- Built with {builder} for easy customization\n- Optimized for {category} websites\n- Mobile-responsive design\n- Regular updates (last updated: {updated})",
-      "## What Makes {theme_name} Stand Out\n\n- Powered by {builder} for ultimate flexibility\n- Specifically designed for {subcategory} websites\n- Fast-loading and SEO-friendly\n- Continuous improvements (version {version})"
-    ],
-    "cta": [
-      "Ready to take your {category} website to the next level? [Check out {theme_name} today]({url}).",
-      "Don't settle for a generic WordPress theme. [Preview {theme_name} now]({demourl}) and see the difference.",
-      "Upgrade your {subcategory} website today with {theme_name}. [View the demo]({demourl}) or [purchase now]({url})."
-    ]
+      "intro": [
+          "Looking for the perfect {category_text} WordPress theme? {theme_name} might be exactly what you need.",
+          "In today's digital landscape, having a professional {category_text} website is essential. Our {theme_name} WordPress theme is designed to help you stand out.",
+          "Choosing the right WordPress theme for your {category_text} website can make all the difference. Let's explore what makes {theme_name} special."
+      ],
+      "features": [
+          "## Key Features of {theme_name}\n\n- Built with {builder} for easy customization\n- Optimized for {category_text} websites\n- Mobile-responsive design\n- Regular updates (last updated: {updated})",
+          "## What Makes {theme_name} Stand Out\n\n- Powered by {builder} for ultimate flexibility\n- Specifically designed for {category_text} websites\n- Fast-loading and SEO-friendly\n- Continuous improvements (version {version})"
+      ],
+      "cta": [
+          "Ready to take your {category_text} website to the next level? [Check out {theme_name} today]({url}).",
+          "Don't settle for a generic WordPress theme. [Preview {theme_name} now]({demourl}) and see the difference.",
+          "Upgrade your {category_text} website today with {theme_name}. [View the demo]({demourl}) or [purchase now]({url})."
+      ]
   }
 }
