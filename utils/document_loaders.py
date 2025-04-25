@@ -46,7 +46,7 @@ def format_documents(raw_data, source, content_key="content", title_key="title",
     return documents
 
 def load_theme_meta():
-    data = parse_json_file(os.path.join(DATA_FOLDER, "data/themes/theme_catalog.json"))
+    data = parse_json_file(os.path.join(DATA_FOLDER, "themes/theme_catalog.json"))
     documents = []
     for slug, meta in data.items():
         builder = meta.get("builder", "Unknown")

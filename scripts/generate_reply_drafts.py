@@ -52,6 +52,8 @@ def main():
     if not run_preprocessing():
         print("❌ Preprocessing failed. Database insertion skipped.")
         return
+    else:
+        logger.info(f"✅ Preprocessed tickets done")
         
     # 2. Load preprocessed tickets
     if not os.path.exists(PREPROCESSED_PATH):
