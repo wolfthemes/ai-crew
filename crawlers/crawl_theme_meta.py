@@ -89,6 +89,7 @@ def extract_metadata(config):
         "version": config.get("version"),
         "updated": config.get("updated"),
         "description": config.get("description", ""),
+        "longdescription": config.get("longdescription", ""),
         "category": config.get("category", []),
         "features": config.get("features", []),
         "selling_points": config.get("selling_points", []),
@@ -123,7 +124,7 @@ def main():
             if description:
                 text_only = re.sub(r'<[^>]+>', '', description)
                 clean_description = re.sub(r'\s+', ' ', text_only).strip()
-                config["description"] = clean_description
+                config["longdescription"] = clean_description
 
             theme_meta[slug] = extract_metadata(config)
 
