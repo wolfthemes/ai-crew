@@ -1,0 +1,52 @@
+{
+  "features": [
+    "Import demo content with one simple click",
+    "Fully responsive design",
+    "SEO optimized structure",
+    "Regular theme updates",
+    "Comprehensive documentation",
+    "WooCommerce compatible"
+  ],
+  "selling_points": [
+    "Discography Management \u2013 Easily manage and showcase your music albums, singles, and EPs with customizable discography layouts.",
+    "Event and Tour Management \u2013 Promote your concerts, tours, and music festivals with built-in event management tools.",
+    "Artist Management \u2013 Highlight individual band members or manage multiple artists, giving them the spotlight they deserve.",
+    "Mobile-Ready Design \u2013 Herion\u2019s responsive design ensures your music site looks great on any device.",
+    "WooCommerce Integration \u2013 Sell music, merchandise, or tickets directly from your website.",
+    "SEO Optimized \u2013 Boost your online presence and attract more fans with built-in SEO tools.",
+    "Fully customizable with WPBakery Page Builder for music for easy drag-and-drop design and custom music related widgets"
+  ],
+  "theme_style": [
+    "Modern",
+    "Clean",
+    "Creative"
+  ],
+  "target_audience": [
+    "The Specific Needs Of Music Professionals"
+  ],
+  "key_benefits": [
+    "Showcase your music with integrated audio players",
+    "Display upcoming tour dates and concert information",
+    "Sell merchandise directly through your website",
+    "Connect with fans through social media integration",
+    "Present your discography in an appealing layout"
+  ],
+  "compatible_plugins": [
+    "Woocommerce",
+    "Wpbakery"
+  ],
+  "design_features": [
+    "Responsive Support",
+    "Discography Layout"
+  ],
+  "use_cases": [
+    "Band & Musician Websites",
+    "Music Festival & Event Websites",
+    "Record Label Websites",
+    "WordPress Online Stores"
+  ],
+  "testimonials": [],
+  "customer_sites": [],
+  "category": "WordPress",
+  "is_music_theme": true
+}

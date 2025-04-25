@@ -23,7 +23,7 @@ def main():
             print(f"  - {post}")
     
     # Test with an established theme
-    established_theme = "decibel"  # One of your older themes
+    established_theme = "poize"  # One of your older themes
     print(f"\n\n=== Generated posts for {established_theme} (established theme) ===")
     posts = social_post_agent.generate_posts(established_theme, count=2, data=data)
     

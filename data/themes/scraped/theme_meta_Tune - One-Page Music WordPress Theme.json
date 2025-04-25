@@ -1,0 +1,63 @@
+{
+  "features": [
+    "8 Ready-to-use Demos",
+    "One-Click Demo Installation",
+    "Logo PSD Files Included",
+    "One-Page Smooth Scroll Effect",
+    "Automatic Menu Based on Page Builder Sections",
+    "Slider Revolution Included ($109 value)",
+    "4 Blog Layouts",
+    "Discography",
+    "WooCommerce Ready",
+    "Event List"
+  ],
+  "selling_points": [
+    "WPBakery Page Builder ($64 value) + Exclusive Wolf Extension with custom admin and tons of additional elements",
+    "Social Sharing (facebook, twitter, reddit, pinterest, tumblr, google, linkedin, stumbleupon, vk, xing, and email)",
+    "WPBakery Page Builder is \u201cset as theme\u201d. The frontend editor and grid builder module is not active.",
+    "Minimum server requirements: PHP 7.4 or greater, max_execution_time 120, memory_limit 96M, max_input_vars 3000, post_max_size 32M, upload_max_filesize 32M.",
+    "Recommended server requirements to use the 1-click demo import feature: PHP 7.4, max_execution_time 300, memory_limit 128M, max_input_vars 3000, post_max_size 128M, upload_max_filesize 128M.",
+    "The whole demo content is available to download via your admin panel in one click, and 6 months of support are included in the theme package.",
+    "Recommended server requirements to use the 1-click demo import feature: PHP 7."
+  ],
+  "theme_style": [
+    "Clean",
+    "Creative"
+  ],
+  "target_audience": [
+    "Bands",
+    "Musicians",
+    "Music Artists"
+  ],
+  "key_benefits": [
+    "Showcase your music with integrated audio players",
+    "Display upcoming tour dates and concert information",
+    "Sell merchandise directly through your website",
+    "Connect with fans through social media integration",
+    "Present your discography in an appealing layout"
+  ],
+  "compatible_plugins": [
+    "Woocommerce",
+    "Wpbakery",
+    "WPML",
+    "Slider Revolution"
+  ],
+  "design_features": [
+    "Responsive Support",
+    "Retina Support",
+    "Animation",
+    "Parallax",
+    "Video Background",
+    "Slider",
+    "Music Player"
+  ],
+  "use_cases": [
+    "Band & Musician Websites",
+    "Music Festival & Event Websites",
+    "WordPress Online Stores"
+  ],
+  "testimonials": [],
+  "customer_sites": [],
+  "category": "WordPress",
+  "is_music_theme": true
+}

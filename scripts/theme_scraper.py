@@ -480,44 +480,75 @@ async def extract_theme_data(url):
             "compatible_plugins": compatible_plugins[:7],  # Limit to top 7
             "design_features": design_features[:7],  # Limit to top 7
             "use_cases": use_cases[:5],  # Limit to top 5
-            "testimonials": testimonials,  # Empty array - user will handle manually
+            "testimonials": [],  # Empty array - user will handle manually
+            "customer_sites": [],  # Empty array for customer sites
+            "category": category,  # The category extracted from breadcrumbs
             "is_music_theme": is_music_theme
         }
         
         return theme_name, output
 
 async def main():
+    
     parser = argparse.ArgumentParser(description='Scrape ThemeForest page for theme metadata with enhanced content classification')
-    parser.add_argument('url', help='ThemeForest theme URL')
-    parser.add_argument('--output', '-o', help='Output file path', default='')
+    parser.add_argument('url', nargs='?', help='ThemeForest theme URL')
+    parser.add_argument('--output', '-o',help='Output file path', default='')
+    parser.add_argument('--batch', '-b',  action='store_true', help='Process all themes in theme catalog')
     
     args = parser.parse_args()
     
-    theme_name, data = await extract_theme_data(args.url)
-    
-    # Generate output filename if not provided
-    if not args.output:
-        theme_slug = theme_name.lower().replace(' ', '_')
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        output_file = f"data/themes/scraped/{theme_slug}_scraped_{timestamp}.json"
+    if args.batch:
+        print("Batch theme meta")
+        catalog_path = os.path.abspath('data/themes/theme_catalog.json')
+        with open(catalog_path, 'r', encoding='utf-8') as f:
+            catalog = json.load(f)
+            print(f"Loaded theme catalog with {len(catalog)} themes")
+
+            for theme_slug, theme_data in catalog.items():
+                if 'url' not in theme_data:
+                    print(f"Skipping {theme_slug}: No URL found")
+                    continue
+                url = theme_data['url']
+                print(f"\n{'='*50}")
+                print(f"Processing {theme_slug}: {url}")
+                theme_slug, data = await extract_theme_data(url)
+
+                #return
+                output_dir  ="data/themes/scraped"
+                output_file = os.path.join(output_dir, f"theme_meta_{theme_slug}.json")
+                # Save to file
+                with open(output_file, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, indent=2)
+        return
     else:
-        output_file = args.output
     
-    # Save to file
-    with open(output_file, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=2)
-    
-    print(f"Scraped data saved to {output_file}")
-    
-    # Print summary
-    print("\nExtraction Summary:")
-    print(f"- Features: {len(data['features'])}")
-    print(f"- Selling Points: {len(data['selling_points'])}")
-    print(f"- Use Cases: {len(data['use_cases'])}")
-    print(f"- Compatible Plugins: {len(data['compatible_plugins'])}")
-    
-    if data["is_music_theme"]:
-        print("✓ Music theme detected and music-specific content generated")
+        theme_name, data = await extract_theme_data(args.url)
+
+        # Generate output filename if not provided
+        if not args.output:
+            theme_slug = theme_name.lower().replace(' ', '_')
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            output_file = rf"C:\Users\const\Local Sites\wolf-core-supertheme\app\public\wp-content\themes\wolf-supertheme\THEMES/unimate/theme_meta.json"
+            base_dir = r"C:\Users\const\Local Sites\wolf-core-supertheme\app\public\wp-content\themes\wolf-supertheme\THEMES"
+            output_file = os.path.join(base_dir, "unimate", "theme_meta.json")
+        else:
+            output_file = args.output
+        
+        # Save to file
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2)
+        
+        print(f"Scraped data saved to {output_file}")
+        
+        # Print summary
+        print("\nExtraction Summary:")
+        print(f"- Features: {len(data['features'])}")
+        print(f"- Selling Points: {len(data['selling_points'])}")
+        print(f"- Use Cases: {len(data['use_cases'])}")
+        print(f"- Compatible Plugins: {len(data['compatible_plugins'])}")
+        
+        if data["is_music_theme"]:
+            print("✓ Music theme detected and music-specific content generated")
 
 if __name__ == "__main__":
     asyncio.run(main())
