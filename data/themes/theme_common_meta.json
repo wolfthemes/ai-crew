@@ -1,0 +1,52 @@
+{
+    "common_features": [
+      "Slider Revolution plugin ($85 value) included",
+      "WooCommerce compatible for online sales",
+      "Contact Form 7 integration for lead generation",
+      "One-click demo importer for quick setup",
+      "Complete demo content included",
+      "Extensive customization options (colors, typography, layouts)",
+      "Responsive design for all devices",
+      "SEO optimized structure",
+      "6 months of professional support included",
+      "Regular updates and improvements"
+    ],
+    "elementor_features": [
+      "Built with Elementor page builder",
+      "Wolf Core plugin included with extra widgets",
+      "Custom header and footer builder",
+      "Reusable content blocks system",
+      "Drag-and-drop interface for easy editing"
+    ],
+    "wpbakery_features": [
+      "Built with WPBakery Page Builder ($64 value)",
+      "Wolf WPBakery Extension plugin included",
+      "Advanced row and column options",
+      "Reusable content templates",
+      "Custom shortcodes and elements"
+    ],
+    "music_features": [
+      "Discography display with audio player",
+      "Tour date/event management",
+      "Artist profiles with social links",
+      "Music playlist manager",
+      "Video gallery integration",
+      "Album release showcase"
+    ],
+    "shop_features": [
+      "WooCommerce wishlist functionality",
+      "Quick view product displays",
+      "Advanced product filtering",
+      "Optimized checkout process",
+      "Multiple gallery layouts for products",
+      "Sale countdown timers"
+    ],
+    "portfolio_features": [
+      "Filterable portfolio gallery",
+      "Multiple portfolio layout options",
+      "Project detail pages with custom fields",
+      "Lightbox integration for images",
+      "Video integration for motion projects",
+      "Client and category taxonomies"
+    ]
+}

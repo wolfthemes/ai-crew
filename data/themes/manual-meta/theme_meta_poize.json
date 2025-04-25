@@ -1,0 +1,73 @@
+{
+    "category": ["Events", "Music"],
+	"features": [
+        "Slider Revolution plugin ($109 value) included",
+        "Advanced event management system with calendar",
+        "Artist profiles linked to events via custom taxonomies",
+        "Built with Elementor page builder for easy customization",
+        "Wolf Core plugin with music & event specific widgets",
+        "Festival lineup display with sorting options",
+        "WooCommerce integration for ticket sales",
+        "Event countdown timers and schedule displays",
+        "Custom header and footer builder",
+        "One-click demo import with complete content",
+        "Mobile-optimized responsive design for all devices"
+    ],
+    "selling_points": [
+        "Create professional music event and festival websites with minimal setup time",
+        "Engage visitors with dynamic event calendars and artist showcases",
+        "Sell tickets directly through your website with WooCommerce integration",
+        "Build excitement with countdown timers and lineup announcements",
+        "Customize every aspect of your site without coding knowledge",
+        "Optimize for mobile users purchasing tickets on the go",
+        "Connect artists to events for comprehensive event promotion"
+    ],
+    "theme_style": [
+        "Modern",
+        "Bold",
+        "Dynamic"
+    ],
+    "target_audience": [
+        "Festival Organizers",
+        "Concert Venues",
+        "Event Promotion Companies",
+        "Music Venues",
+        "Event Managers"
+    ],
+    "key_benefits": [
+        "Create an engaging event website that sells more tickets",
+        "Showcase your event lineup with artist connections and profiles",
+        "Manage multiple events with an organized calendar system",
+        "Promote upcoming events with visual countdown displays",
+        "Mobile-optimized design for visitors purchasing on mobile devices"
+    ],
+	"compatible_plugins": [
+		"Elementor",
+		"WooCommerce",
+		"Contact Form 7",
+		"Slider Revolution",
+		"Wolf Events",
+		"Wolf Artists",
+		"Wolf Core"
+	],
+	"design_features": [
+		"Festival-inspired color schemes",
+		"Multiple header layout options",
+		"Dynamic event grid layouts",
+		"Artist showcase templates",
+		"Ticket display widgets",
+		"Video background support",
+		"Bold typography options"
+	],
+	"use_cases": [
+		"Music Festival Websites",
+		"Concert Venue Online Presence",
+		"Event Management Platform",
+		"Artist Showcase & Event Promotion",
+		"Ticket Sales Portal"
+	],
+	"customer_sites": [],
+	"testimonials": [
+		{"text": "Poize is hands down one of the best WordpPress themes I’ve ever worked with to date! The design is fantastic, the layout is intuitive, and it comes packed with a variety of great features. Especially the custom Events plugin by Wolf Theme that I love. The theme integrates seamlessly with Elementor, making customization an absolute breeze. What truly makes this theme stand out is the exceptional support provided by Wolf Themes. Their team is quick to respond, incredibly helpful, and provide detailed solutions to any questions you throw at them. Wolf Themes has truly knocked it out of the park with Poize. It’s the perfect theme for anyone working on musicians, music events, festivals, or event websites. Thank you so much Wolf Themes team for creating such an exceptional theme! Keep up the great work!", "author": "GINGALLEY", "rating": 5}
+	]
+}
