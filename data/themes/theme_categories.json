@@ -29,7 +29,7 @@
     {
       "id": "shop",
       "name": "Shop",
-      "description": "E-commerce themes for online stores and product sales",
+      "description": "WooCommerce themes for online stores and product sales",
       "subcategories": [
         {"id": "merchandise", "name": "Merchandise"},
         {"id": "digital", "name": "Digital Products"}
