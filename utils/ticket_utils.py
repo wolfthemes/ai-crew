@@ -253,7 +253,7 @@ def preprocess_ticket(raw_ticket):
     }
 
 def get_theme_url(theme_name):
-    with open(os.path.join("data", "data/themes/theme_catalog.json"), encoding="utf-8") as f:
+    with open(os.path.join("data", "themes/theme_catalog.json"), encoding="utf-8") as f:
         data = json.load(f)
     
     # Loop through all themes to match by name
@@ -264,7 +264,7 @@ def get_theme_url(theme_name):
     return f"Unknown"
 
 def get_theme_envato_id(theme_name):
-    with open(os.path.join("data", "data/themes/theme_catalog.json"), encoding="utf-8") as f:
+    with open(os.path.join("data", "themes/theme_catalog.json"), encoding="utf-8") as f:
         data = json.load(f)
     
     # Loop through all themes to match by name
@@ -275,7 +275,7 @@ def get_theme_envato_id(theme_name):
     return f"Unknown"
 
 def get_theme_demo_url(theme_name):
-    with open(os.path.join("data", "data/themes/theme_catalog.json"), encoding="utf-8") as f:
+    with open(os.path.join("data", "themes/theme_catalog.json"), encoding="utf-8") as f:
         data = json.load(f)
     
     # Loop through all themes to match by name
@@ -286,7 +286,7 @@ def get_theme_demo_url(theme_name):
     return f"Unknown"
 
 def get_theme_builder(theme_name):
-    with open(os.path.join("data", "data/themes/theme_catalog.json"), encoding="utf-8") as f:
+    with open(os.path.join("data", "themes/theme_catalog.json"), encoding="utf-8") as f:
         data = json.load(f)
     
     # Loop through all themes to match by name
@@ -297,7 +297,7 @@ def get_theme_builder(theme_name):
     return f"Unknown"
     
 def get_theme_category(theme_name):
-    with open(os.path.join("data", "data/themes/theme_catalog.json"), encoding="utf-8") as f:
+    with open(os.path.join("data", "themes/theme_catalog.json"), encoding="utf-8") as f:
         data = json.load(f)
     
     # Loop through all themes to match by name
@@ -308,7 +308,7 @@ def get_theme_category(theme_name):
     return f"Uncategorized"
 
 def get_theme_last_update(theme_name):
-    with open(os.path.join("data", "data/themes/theme_catalog.json"), encoding="utf-8") as f:
+    with open(os.path.join("data", "themes/theme_catalog.json"), encoding="utf-8") as f:
         data = json.load(f)
     
     # Loop through all themes to match by name
@@ -319,7 +319,7 @@ def get_theme_last_update(theme_name):
     return f"No date available"
     
 def get_theme_version(theme_name):
-    with open(os.path.join("data", "data/themes/theme_catalog.json"), encoding="utf-8") as f:
+    with open(os.path.join("data", "themes/theme_catalog.json"), encoding="utf-8") as f:
         data = json.load(f)
     
     # Loop through all themes to match by name
