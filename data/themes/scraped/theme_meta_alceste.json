@@ -1,0 +1,67 @@
+[
+  "Alceste - A Clean and Modern WooCommerce Theme",
+  {
+    "features": [
+      "One-Click Demo Installation",
+      "No coding knowledge required",
+      "Slider Revolution ($109) \u2013 Demo sliders included",
+      "Big set of homepage layouts",
+      "Big set of inner page layouts",
+      "WooCommerce Ready",
+      "Multiple customizable layouts for single product page",
+      "Easy stock management",
+      "Order Tracking",
+      "Product Zoom"
+    ],
+    "selling_points": [
+      "Boosted WPBakery Page Builder ($64) with many additional elements and modules",
+      "Product list with many layout options (grid, masonry, metro)",
+      "Blog with many layout options and custom single post layouts",
+      "Numerci and \u201cload more\u201d pagination for all post types (shop, portfolio, blog)",
+      "Beautiful Sliders, Carousels & Galleries with size, layout and hover effect options",
+      "Content Blocks system to create your own header and footer and re-usable section with unlimited possibilities",
+      "Social Medias integration \u2013 Twitter, Facebook and Instagram feed"
+    ],
+    "theme_style": [
+      "Modern",
+      "Clean",
+      "Professional"
+    ],
+    "target_audience": [
+      "Musicians",
+      "Bands",
+      "Music Industry Professionals"
+    ],
+    "key_benefits": [
+      "Showcase your music with integrated audio players",
+      "Display upcoming tour dates and concert information",
+      "Sell merchandise directly through your website",
+      "Connect with fans through social media integration",
+      "Present your discography in an appealing layout"
+    ],
+    "compatible_plugins": [
+      "Woocommerce",
+      "Wpbakery",
+      "Contact Form 7",
+      "WPML",
+      "Slider Revolution"
+    ],
+    "design_features": [
+      "Responsive Support",
+      "Retina Support",
+      "Animation",
+      "Parallax",
+      "Video Background",
+      "Slider"
+    ],
+    "use_cases": [
+      "Music Industry Websites",
+      "WordPress Portfolio Websites",
+      "WordPress Online Stores"
+    ],
+    "testimonials": [],
+    "customer_sites": [],
+    "category": "WordPress",
+    "is_music_theme": true
+  }
+]

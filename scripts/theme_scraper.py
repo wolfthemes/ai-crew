@@ -511,11 +511,12 @@ async def main():
                 url = theme_data['url']
                 print(f"\n{'='*50}")
                 print(f"Processing {theme_slug}: {url}")
-                theme_slug, data = await extract_theme_data(url)
-
-                #return
                 output_dir  ="data/themes/scraped"
                 output_file = os.path.join(output_dir, f"theme_meta_{theme_slug}.json")
+                empty, data = await extract_theme_data(url)
+                print(f"Processing {theme_slug}")
+                #return
+                
                 # Save to file
                 with open(output_file, 'w', encoding='utf-8') as f:
                     json.dump(data, f, indent=2)
