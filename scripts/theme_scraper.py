@@ -520,7 +520,19 @@ async def main():
                 # Save to file
                 with open(output_file, 'w', encoding='utf-8') as f:
                     json.dump(data, f, indent=2)
-        return
+
+                print(f"Scraped data saved to {output_file}")
+        
+                # Print summary
+                print("\nExtraction Summary:")
+                print(f"- Features: {len(data['features'])}")
+                print(f"- Selling Points: {len(data['selling_points'])}")
+                print(f"- Use Cases: {len(data['use_cases'])}")
+                print(f"- Compatible Plugins: {len(data['compatible_plugins'])}")
+                
+                if data["is_music_theme"]:
+                    print("✓ Music theme detected and music-specific content generated")
+                #return
     else:
     
         theme_name, data = await extract_theme_data(args.url)

@@ -12,6 +12,7 @@ data/crawled/*.json
 data/crawled/*.csv
 data/cache/*.json
 data/reports/*.json
+data/themes/scraped/*.json
 data/dynamic/editor/*
 *.log
 logs/
