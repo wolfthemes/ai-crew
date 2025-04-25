@@ -2,6 +2,7 @@ import os
 import json
 import base64
 import requests
+import re
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -33,11 +34,45 @@ def fetch_theme_config(slug):
         "Authorization": f"token {GITHUB_TOKEN}"
     }
     
-    print(f"🔗 Fetching: {api_url}")
+    print(f"🔗 Fetching {slug} config")
     try:
         res = requests.get(api_url, headers=headers, timeout=10)
         res.raise_for_status()
         return res.json()
+    except Exception as e:
+        print(f"⚠️ Error fetching config for {slug}: {e}")
+        return None
+    
+def fetch_theme_meta(slug):
+    # Use GitHub API endpoint instead of raw URL
+    api_url = f"https://api.github.com/repos/{REPO}/contents/THEMES/{slug}/theme_meta.json"
+    headers = {
+        "Accept": "application/vnd.github.raw",
+        "Authorization": f"token {GITHUB_TOKEN}"
+    }
+    
+    print(f"🔗 Fetching {slug} meta")
+    try:
+        res = requests.get(api_url, headers=headers, timeout=10)
+        res.raise_for_status()
+        return res.json()
+    except Exception as e:
+        print(f"⚠️ Error fetching meta for {slug}: {e}")
+        return None
+    
+def fetch_theme_description(slug):
+    # Use GitHub API endpoint instead of raw URL
+    api_url = f"https://api.github.com/repos/{REPO}/contents/THEMES/{slug}/html/description.html"
+    headers = {
+        "Accept": "application/vnd.github.raw",
+        "Authorization": f"token {GITHUB_TOKEN}"
+    }
+    
+    print(f"🔗 Fetching {slug} description")
+    try:
+        res = requests.get(api_url, headers=headers, timeout=10)
+        res.raise_for_status()
+        return res.text
     except Exception as e:
         print(f"⚠️ Error fetching config for {slug}: {e}")
         return None
@@ -53,6 +88,7 @@ def extract_metadata(config):
         "itemId": config.get("itemId"),
         "version": config.get("version"),
         "updated": config.get("updated"),
+        "description": config.get("description", ""),
         "category": config.get("category", []),
         "features": config.get("features", []),
         "selling_points": config.get("selling_points", []),
@@ -76,8 +112,21 @@ def main():
     for i, slug in enumerate(slugs, 1):
         print(f"[{i}/{len(slugs)}] Processing: {slug}")
         config = fetch_theme_config(slug)
+        meta = fetch_theme_meta(slug)
+        description = fetch_theme_description(slug)
+        
         if config:
+
+            if meta:
+                config = {**config, **meta}
+
+            if description:
+                text_only = re.sub(r'<[^>]+>', '', description)
+                clean_description = re.sub(r'\s+', ' ', text_only).strip()
+                config["description"] = clean_description
+
             theme_meta[slug] = extract_metadata(config)
+
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(theme_meta, f, indent=2, ensure_ascii=False)
