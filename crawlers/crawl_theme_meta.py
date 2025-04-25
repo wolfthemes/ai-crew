@@ -55,7 +55,6 @@ def extract_metadata(config):
         "updated": config.get("updated"),
         "category": config.get("category", []),
         "features": config.get("features", []),
-        "customer_sites": config.get("customer_sites", []),
         "selling_points": config.get("selling_points", []),
         "theme_style": config.get("theme_style", []),
         "target_audience": config.get("target_audience", []),
@@ -63,6 +62,8 @@ def extract_metadata(config):
         "compatible_plugins": config.get("compatible_plugins", []),
         "design_features": config.get("design_features", []),
         "use_cases": config.get("use_cases", []),
+        "customer_sites": config.get("customer_sites", []),
+        "testimonials": config.get("testimonials", []),
     }
 
 def main():
