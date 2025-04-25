@@ -55,9 +55,14 @@ def extract_metadata(config):
         "updated": config.get("updated"),
         "category": config.get("category", []),
         "features": config.get("features", []),
-        "screenshots": config.get("screenshots", []),
         "customer_sites": config.get("customer_sites", []),
         "selling_points": config.get("selling_points", []),
+        "theme_style": config.get("theme_style", []),
+        "target_audience": config.get("target_audience", []),
+        "key_benefits": config.get("key_benefits", []),
+        "compatible_plugins": config.get("compatible_plugins", []),
+        "design_features": config.get("design_features", []),
+        "use_cases": config.get("use_cases", []),
     }
 
 def main():
