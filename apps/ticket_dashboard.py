@@ -290,6 +290,7 @@ else:
         # === RIGHT: Ticket metadata ===
         with cols[1]:
             st.markdown("### 🧾 Ticket Info")
+            st.markdown(f"**Type:** {ticket.get('ticket_type', '')}")
             st.markdown(f"**Theme:** {ticket.get('theme', 'Unknown')}")
             st.markdown(f"**Customer:** [{ticket.get('customer', 'Unknown')}]({ticket.get('customer_url', '#')})")
             st.markdown(f"**Website:** {ticket.get('user_site', 'Not specified')}")
