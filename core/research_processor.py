@@ -3,7 +3,6 @@ import logging
 from core.ticket_parser import TicketParser
 from tools.kb_tools import search_kb_structured
 from tools.vector_retriever import retriever
-
 from utils.helpers import setup_logging
 from datetime import date
 logger = setup_logging()
@@ -34,14 +33,15 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
             # Get ticket segments from metadata if available
             ticket_segments = []
             if "ticket_parts" in ticket_meta and ticket_meta["ticket_parts"]:
-                ticket_segments = ticket_meta["ticket_parts"]
+                # Just extract the issue text from each segment
+                ticket_segments = [segment.get("issue", "") for segment in ticket_meta["ticket_parts"] if segment.get("issue")]
                 logger.info(f"Using {len(ticket_segments)} ticket segments from metadata")
             else:
                 # Fallback to using the last message as a single segment
                 last_msg = ticket_text
                 if "last_message" in ticket_meta and ticket_meta["last_message"]:
                     last_msg = str(ticket_meta["last_message"])
-                ticket_segments = [{"issue": last_msg, "resolved": False}]
+                ticket_segments = [last_msg]
                 logger.info("No segments found in metadata, using last message as single segment")
             
             # Create safe context from ticket_meta
@@ -54,10 +54,7 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
                 context["match_source"] = str(ticket_meta["match_source"]) if ticket_meta["match_source"] else ""
             
             # Process each segment
-            for segment in ticket_segments:
-                segment_text = segment.get("issue", "")
-                is_resolved = segment.get("resolved", False)
-                
+            for segment_text in ticket_segments:
                 if not segment_text:
                     continue
                 
@@ -75,10 +72,9 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
                     logger.error(f"KB search error: {e}")
                     kb_match = {"error": f"KB search failed: {str(e)}"}
                 
-                # Add to results with resolved status
+                # Add to results
                 results.append({
                     "part": segment_text[:500],  # Limit length for safety
-                    "resolved": is_resolved,
                     "match": kb_match
                 })
             
@@ -134,10 +130,9 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
                     logger.error(f"KB search error: {e}")
                     kb_match = {"error": f"KB search failed: {str(e)}"}
                 
-                # Add to results with default resolved status
+                # Add to results
                 results.append({
                     "part": safe_part[:500],  # Limit length for safety
-                    "resolved": False,
                     "match": kb_match
                 })
             
@@ -164,7 +159,7 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
             # Critical fallback - ultra-safe minimal JSON
             return json.dumps({
                 "error": "JSON serialization failed",
-                "results": [{"part": "Error processing ticket", "match": {}, "resolved": False}]
+                "results": [{"part": "Error processing ticket", "match": {}}]
             })
     
     except Exception as e:
@@ -172,5 +167,5 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
         # Last resort fallback
         return json.dumps({
             "error": f"Critical processing error: {str(e)}",
-            "results": [{"part": "Error processing ticket", "match": {}, "resolved": False}]
+            "results": [{"part": "Error processing ticket", "match": {}}]
         })

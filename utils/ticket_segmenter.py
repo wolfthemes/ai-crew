@@ -32,7 +32,7 @@ Do NOT include any explanation or extra commentary.
 """
 
     response = openai_client.chat.completions.create(
-        model="gpt-4.1-mini",  # or your chosen model
+        model="gpt-4.1",  # or your chosen model
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
