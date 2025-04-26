@@ -6,6 +6,7 @@ from openai import OpenAI
 from html import unescape
 from pathlib import Path
 from dotenv import load_dotenv
+from utils.ticket_segmenter import segment_ticket_with_ai
 from utils.ticket_classifier import classify_ticket
 from tools.vector_retriever import reformulate_agent_instructions_text
 
@@ -200,6 +201,9 @@ def preprocess_ticket(raw_ticket):
     full_thread_summary = summarize_ticket(full_thread)
     last_msg_summary = summarize_last_user_comment(full_thread,last_msg)
     ticket_type = raw_ticket["ticket_type"]
+    
+    # A summry of the issue reamining in the ticket
+    ticket_parts = segment_ticket_with_ai( full_thread_summary )
 
     # Theme info
     theme = extract_theme_from_envato(raw_ticket.get("envato_verified_string", "{}"))
@@ -245,6 +249,7 @@ def preprocess_ticket(raw_ticket):
         "last_message_summary": last_msg_summary,
         "full_thread_summary": full_thread_summary,
         "formatted_text_thread": full_thread,
+        "ticket_parts" : ticket_parts,
         "contains_credentials" : contains_credentials_value,
         "match_source": match_source,
         "ai_reply": "",
@@ -335,9 +340,6 @@ def get_ticket_metadata(ticket_id):
     if not ticket:
         return {}
     
-
-    # TODO: strip attachements from comments
-
     return {
         "ticket_id": ticket_id,
         "timestamp": ticket.get("timestamp"),

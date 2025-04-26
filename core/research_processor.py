@@ -4,9 +4,10 @@ from core.ticket_parser import TicketParser
 from tools.kb_tools import search_kb_structured
 from tools.vector_retriever import retriever
 
-# Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+from utils.helpers import setup_logging
+from datetime import date
+logger = setup_logging()
+today = date.today().strftime("%Y-%m-%d")
 
 def process_ticket_research(ticket_text: str, ticket_meta: dict = None, additional_instructions: str = "") -> str:
     """
@@ -30,45 +31,56 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
         if ticket_meta and isinstance(ticket_meta, dict):
             logger.info("Processing with ticket metadata")
             
-            # Get the last message or use ticket_text as fallback
-            last_msg = ticket_text
-            if "last_message" in ticket_meta and ticket_meta["last_message"]:
-                last_msg = str(ticket_meta["last_message"])
+            # Get ticket segments from metadata if available
+            ticket_segments = []
+            if "ticket_parts" in ticket_meta and ticket_meta["ticket_parts"]:
+                ticket_segments = ticket_meta["ticket_parts"]
+                logger.info(f"Using {len(ticket_segments)} ticket segments from metadata")
+            else:
+                # Fallback to using the last message as a single segment
+                last_msg = ticket_text
+                if "last_message" in ticket_meta and ticket_meta["last_message"]:
+                    last_msg = str(ticket_meta["last_message"])
+                ticket_segments = [{"issue": last_msg, "resolved": False}]
+                logger.info("No segments found in metadata, using last message as single segment")
             
             # Create safe context from ticket_meta
             context = {}
-            # Note: Handle both spellings of summary due to typo in dashboard
             if "theme" in ticket_meta:
                 context["theme"] = str(ticket_meta["theme"]) if ticket_meta["theme"] else ""
             if "builder" in ticket_meta:
                 context["builder"] = str(ticket_meta["builder"]) if ticket_meta["builder"] else ""
             if "match_source" in ticket_meta:
                 context["match_source"] = str(ticket_meta["match_source"]) if ticket_meta["match_source"] else ""
-            if "full_thread_summary" in ticket_meta:
-                context["full_thread_summary"] = str(ticket_meta["full_thread_summary"]) if ticket_meta["full_thread_summary"] else ""
-            # Handle typo in field name that exists in ticket_dashboard.py
-            elif "full_thread_summary" in ticket_meta:
-                context["full_thread_summary"] = str(ticket_meta["full_thread_summary"]) if ticket_meta["full_thread_summary"] else ""
             
-            # Search KB with safe error handling
-            try:
-                kb_match = search_kb_structured(last_msg, retriever, context=context)
-                # Ensure kb_match is a dict
-                if not isinstance(kb_match, dict):
-                    kb_match = {"error": "Invalid KB match format"}
-                # Ensure all values are JSON serializable
-                for key in list(kb_match.keys()):
-                    if kb_match[key] is None:
-                        kb_match[key] = ""
-            except Exception as e:
-                logger.error(f"KB search error: {e}")
-                kb_match = {"error": f"KB search failed: {str(e)}"}
-            
-            # Add to results
-            results.append({
-                "part": last_msg[:500],  # Limit length for safety
-                "match": kb_match
-            })
+            # Process each segment
+            for segment in ticket_segments:
+                segment_text = segment.get("issue", "")
+                is_resolved = segment.get("resolved", False)
+                
+                if not segment_text:
+                    continue
+                
+                # Search KB with safe error handling for this segment
+                try:
+                    kb_match = search_kb_structured(segment_text, retriever, context=context)
+                    # Ensure kb_match is a dict
+                    if not isinstance(kb_match, dict):
+                        kb_match = {"error": "Invalid KB match format"}
+                    # Ensure all values are JSON serializable
+                    for key in list(kb_match.keys()):
+                        if kb_match[key] is None:
+                            kb_match[key] = ""
+                except Exception as e:
+                    logger.error(f"KB search error: {e}")
+                    kb_match = {"error": f"KB search failed: {str(e)}"}
+                
+                # Add to results with resolved status
+                results.append({
+                    "part": segment_text[:500],  # Limit length for safety
+                    "resolved": is_resolved,
+                    "match": kb_match
+                })
             
             # Build output with safe fallbacks for all fields
             output_data = {
@@ -122,9 +134,10 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
                     logger.error(f"KB search error: {e}")
                     kb_match = {"error": f"KB search failed: {str(e)}"}
                 
-                # Add to results
+                # Add to results with default resolved status
                 results.append({
                     "part": safe_part[:500],  # Limit length for safety
+                    "resolved": False,
                     "match": kb_match
                 })
             
@@ -151,7 +164,7 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
             # Critical fallback - ultra-safe minimal JSON
             return json.dumps({
                 "error": "JSON serialization failed",
-                "results": [{"part": "Error processing ticket", "match": {}}]
+                "results": [{"part": "Error processing ticket", "match": {}, "resolved": False}]
             })
     
     except Exception as e:
@@ -159,5 +172,5 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
         # Last resort fallback
         return json.dumps({
             "error": f"Critical processing error: {str(e)}",
-            "results": [{"part": "Error processing ticket", "match": {}}]
+            "results": [{"part": "Error processing ticket", "match": {}, "resolved": False}]
         })
