@@ -47,8 +47,9 @@ def open_brave(url):
         
         subprocess.Popen([
             brave_path,
-            "--new-window",
-            url
+            f"--app={url}"
+            #"--new-window",
+            #url
         ])
     except Exception as e:
         print(f"Could not open Brave automatically: {e}")
