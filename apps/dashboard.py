@@ -47,7 +47,11 @@ def open_brave(url):
         
         subprocess.Popen([
             brave_path,
-            f"--app={url}"
+            "--new-window",
+            "--window-size=1280,800",
+            #f"--app={url}",
+            f"--app=http://localhost:8000/dashboard_ui.html",
+            #"--window-position=100,100"
             #"--new-window",
             #url
         ])
