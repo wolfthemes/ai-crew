@@ -1,5 +1,6 @@
 from crewai import Agent
 from crewai.tools import tool
+from tools.vector_retriever import support_agent_backstory_text, support_agent_instructions_text
 from core.llm_config import get_llm
 
 @tool("ReviewSupportReply")
@@ -24,6 +25,7 @@ def review_response_quality(reply: str, ticket: str, source_doc: str, guidelines
     - Does it uses 'I' and not 'we'
     - Does it use markdown for emphasis and steps?
     - Does it end with an approved phrase (e.g., "I hope it helps", "Best regards")?
+    - Verify that the reply tone matches the examples from previous closed tickets (professional, warm, concise).
 
     ### 4. Final Feedback:
     - Suggestions for improvement, if any.
