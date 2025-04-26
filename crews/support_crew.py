@@ -29,9 +29,9 @@ def support_crew_with_research(ticket_text: str, instruction: str = "", ticket_i
     research_task.name = "Research"
     research_data = research_task._output["research_output"]
     
-    print( ticket_meta )
-    print( research_data )
-    print( instruction )
+    #print( ticket_meta )
+    #print( research_data )
+    #print( instruction )
 
     # 2. Generate the support reply using research result
     support_task = create_support_reply_task(
