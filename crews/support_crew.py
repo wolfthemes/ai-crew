@@ -7,6 +7,10 @@ from utils.ticket_utils import get_ticket_metadata
 from tasks.support.research_task import create_research_task
 from tasks.support.support_tasks import create_support_reply_task
 from tasks.support.quality_tasks import review_support_reply_task
+from datetime import date
+from utils.helpers import setup_logging
+logger = setup_logging()
+today = date.today().strftime("%Y-%m-%d")
 
 def support_crew_with_research(ticket_text: str, instruction: str = "", ticket_id: str = ""):
     """
@@ -28,6 +32,8 @@ def support_crew_with_research(ticket_text: str, instruction: str = "", ticket_i
     )
     research_task.name = "Research"
     research_data = research_task._output["research_output"]
+
+    logger.info(f"Crew: Research data {research_data}")
     
     #print( ticket_meta )
     #print( research_data )
