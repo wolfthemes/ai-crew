@@ -193,6 +193,7 @@ def main():
     
     # Step 5: Backup the database
     if backup_database(DB_PATH, BACKUP_DIR):
+        # TODO returns the total number of tickets in the DB
         logger.info(f"✅ Database backup completed successfully!")
         print("✅ Database backup completed successfully!")
     else:
