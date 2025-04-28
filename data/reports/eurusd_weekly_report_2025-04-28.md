@@ -1,14 +1,8 @@
 # EUR/USD Weekly Report – 2025-04-28
 
----
-
 ## Executive Summary
 
-The EUR/USD pair experienced heightened volatility over the past week, oscillating between bullish optimism and renewed US Dollar strength. Early in the period, the Euro rallied to a multi-year high of 1.1573, buoyed by cautious optimism in the Eurozone and initial US Dollar softness. However, the rally was short-lived as stronger-than-expected US economic data and easing US-China trade tensions triggered a sharp USD rebound. The pair retraced, closing the week near 1.1350–1.1370, with a modest net loss.
-
-Key drivers included mixed Eurozone inflation and growth data, robust US employment and manufacturing figures, and nuanced central bank communications. Technical analysis revealed a failed breakout above 1.1570, a bearish engulfing pattern, and a developing descending triangle, all pointing to increased downside risk. Sentiment has shifted from bullish to defensive, with retail traders heavily long and institutional outlooks turning cautious.
-
-Looking ahead, the upcoming week is packed with high-impact economic events, including Eurozone GDP and US Nonfarm Payrolls. These releases are likely to drive significant volatility and determine the next directional move. The 1.1370–1.1300 support zone is critical; a break below could trigger further downside, while a sustained move above 1.1420 would be needed to revive bullish momentum.
+The EUR/USD currency pair concluded a volatile week marked by sharp swings and heightened sensitivity to both economic data and geopolitical developments. After reaching a multi-year high of 1.1573—the highest since November 2021—the pair failed to sustain gains above the critical 1.1400–1.1450 resistance zone, ultimately retreating to close the week with modest losses. The US Dollar regained strength on the back of robust economic data and easing US-China trade tensions, while the Euro struggled amid persistent concerns over Eurozone growth and inflation dynamics. Technical indicators confirm a loss of bullish momentum, with a bearish reversal pattern emerging midweek. Sentiment has shifted decisively bearish-to-neutral, as institutional and retail positioning diverge. Looking ahead, a packed economic calendar featuring Eurozone GDP and inflation data, alongside key US employment and inflation releases, is expected to drive significant volatility. The prevailing bias is bearish-to-neutral, with downside risks toward 1.1300/1.1260 unless the Euro can reclaim the 1.1450 level on a sustained basis. Traders should prepare for choppy price action and remain nimble around upcoming high-impact events.
 
 ---
 
@@ -16,48 +10,48 @@ Looking ahead, the upcoming week is packed with high-impact economic events, inc
 
 ### Past Week's Major Economic Events and Impact
 
-The EUR/USD pair was shaped by a series of influential economic releases and geopolitical developments:
+The week of 2025-04-21 to 2025-04-28 saw EUR/USD trade in a broad 1.1300–1.1570 range, with volatility driven by a mix of macroeconomic releases and shifting risk sentiment. The absence of major central bank policy announcements placed the focus squarely on data and geopolitical headlines:
 
-- **Eurozone Data:** Inflation and growth figures were mixed, with headline HICP inflation at ~2.3% YoY and GDP growth subdued. The lack of a clear directional bias kept traders cautious.
-- **US Data:** The US Dollar was bolstered by stronger-than-expected employment and manufacturing PMI data. The ISM Manufacturing PMI surprised to the upside, and employment figures reinforced the narrative of a resilient US economy.
-- **Central Bank Communications:** ECB and Federal Reserve officials maintained their respective stances—ECB cautious and data-dependent, Fed hawkish and "higher for longer." Market participants parsed speeches for clues on future rate paths.
-- **Geopolitical Developments:** Easing US-China trade tensions supported risk sentiment and the USD, while ongoing Russia-Ukraine concerns weighed on Eurozone confidence.
+- **US Economic Data:** Strong US economic indicators, including robust labor market and consumer spending figures, underpinned the US Dollar. The Dollar Index (DXY) rebounded from recent lows, pressuring EUR/USD lower.
+- **Eurozone Fragility:** The Eurozone continued to show signs of economic fragility, with resistance at 1.1400 capping gains. Market participants remained cautious ahead of upcoming GDP and inflation data.
+- **Geopolitical Developments:** Easing US-China trade tensions provided a modest boost to risk sentiment, but failed to translate into sustained Euro strength.
+- **Market Positioning:** The Euro’s inability to break decisively above 1.1400 despite initial upside momentum suggested underlying weakness, while the Dollar’s resilience reflected strong demand amid global uncertainty.
 
 **Market Reaction:**
-- EUR/USD rallied early in the week but faced stiff resistance at 1.1570, retracing sharply as US data outperformed expectations.
-- The pair traded in a broad 1.1300–1.1570 range, reflecting uncertainty and mixed signals.
-- Technical rejection at key resistance levels and a bearish engulfing pattern signaled a shift in sentiment.
+- EUR/USD initially rallied, peaking at 1.1573, before a sharp midweek reversal triggered by a bearish engulfing candle on the daily chart.
+- Sellers reasserted control near 1.1400–1.1450, with the pair rebounding modestly from 1.1350 but unable to regain lost ground.
+- The market adopted a cautious stance ahead of a data-heavy week, with positioning reflecting heightened sensitivity to upcoming releases.
 
-### Upcoming Economic Events (2025-04-28 to 2025-05-05)
+### Upcoming High-Impact Economic Events (2025-04-28 to 2025-05-05)
 
-| Date       | Currency | Event                                               | Expected Impact | Previous | Forecast |
-|------------|----------|----------------------------------------------------|-----------------|----------|----------|
-| 2025-04-30 | EUR      | Gross Domestic Product s.a. (QoQ)                  | High            | N/A      | N/A      |
-| 2025-04-30 | EUR      | Gross Domestic Product s.a. (YoY)                  | High            | N/A      | N/A      |
-| 2025-04-30 | USD      | ADP Employment Change                              | High            | N/A      | N/A      |
-| 2025-04-30 | USD      | Core PCE Price Index (MoM)                         | High            | N/A      | N/A      |
-| 2025-04-30 | USD      | Core PCE Price Index (YoY)                         | High            | N/A      | N/A      |
-| 2025-04-30 | USD      | Gross Domestic Product Annualized                  | High            | N/A      | N/A      |
-| 2025-05-01 | USD      | ISM Manufacturing PMI                              | High            | N/A      | N/A      |
-| 2025-05-02 | EUR      | Core HICP (MoM)                                    | High            | N/A      | N/A      |
-| 2025-05-02 | EUR      | Core HICP (YoY)                                    | High            | N/A      | N/A      |
-| 2025-05-02 | EUR      | HICP (MoM)                                         | High            | N/A      | N/A      |
-| 2025-05-02 | EUR      | HICP (YoY)                                         | High            | N/A      | N/A      |
-| 2025-05-02 | USD      | Average Hourly Earnings (MoM)                      | High            | N/A      | N/A      |
-| 2025-05-02 | USD      | Average Hourly Earnings (YoY)                      | High            | N/A      | N/A      |
-| 2025-05-02 | USD      | Nonfarm Payrolls                                   | High            | N/A      | N/A      |
+| Date       | Currency | Event                                             | Expected Impact | 
+|------------|----------|--------------------------------------------------|-----------------|
+| 2025-04-30 | EUR      | Gross Domestic Product s.a. (QoQ)                | High            |
+| 2025-04-30 | EUR      | Gross Domestic Product s.a. (YoY)                | High            |
+| 2025-04-30 | USD      | ADP Employment Change                            | High            |
+| 2025-04-30 | USD      | Core PCE Price Index (MoM)                       | High            |
+| 2025-04-30 | USD      | Core PCE Price Index (YoY)                       | High            |
+| 2025-04-30 | USD      | Gross Domestic Product Annualized                | High            |
+| 2025-05-01 | USD      | ISM Manufacturing PMI                            | High            |
+| 2025-05-02 | EUR      | Core HICP (MoM)                                  | High            |
+| 2025-05-02 | EUR      | Core HICP (YoY)                                  | High            |
+| 2025-05-02 | EUR      | HICP (MoM)                                       | High            |
+| 2025-05-02 | EUR      | HICP (YoY)                                       | High            |
+| 2025-05-02 | USD      | Average Hourly Earnings (MoM)                    | High            |
+| 2025-05-02 | USD      | Average Hourly Earnings (YoY)                    | High            |
+| 2025-05-02 | USD      | Nonfarm Payrolls                                 | High            |
 
 **Key Focus:**
-- **Eurozone GDP (Apr 30):** Will set the tone for ECB policy expectations. A strong print could support the Euro, while a miss would reinforce downside risk.
-- **US Core PCE & NFP (Apr 30, May 2):** Critical for Fed policy outlook. Strong data will likely boost the USD and pressure EUR/USD lower.
-- **Eurozone HICP (May 2):** Inflation readings will influence ECB rate cut expectations.
+- **Eurozone GDP (Apr 30):** A critical gauge of Eurozone growth. Weak prints could reinforce EUR downside.
+- **US Core PCE & GDP (Apr 30):** The Fed’s preferred inflation metric and growth data will shape rate expectations.
+- **US ISM Manufacturing PMI (May 1):** A leading indicator of US economic momentum.
+- **Eurozone HICP (May 2):** Inflation data will influence ECB policy expectations.
+- **US NFP & Earnings (May 2):** The most closely watched US labor market data; strong numbers will bolster the Dollar.
 
 **Expected Impact:**
-- High-impact events are likely to drive sharp moves. Surprises in either direction could trigger breakouts from the current range.
-- Volatility is expected to rise, especially around US NFP and Eurozone inflation data.
-
-**Actionable Insight:**
-- Traders should monitor event outcomes closely and be prepared for volatility spikes. Key levels (1.1370, 1.1300, 1.1420) may be tested in response to data surprises.
+- **High volatility** is anticipated, especially around April 30–May 2. Data surprises could trigger sharp directional moves.
+- **Downside risks** for EUR/USD if US data outperforms or Eurozone data disappoints.
+- **Potential for short-covering rallies** if Eurozone data surprises to the upside or US data underwhelms.
 
 ---
 
@@ -65,77 +59,58 @@ The EUR/USD pair was shaped by a series of influential economic releases and geo
 
 ### Price Action Analysis
 
-EUR/USD displayed pronounced volatility last week, reflecting a tug-of-war between bullish Euro sentiment and resurgent US Dollar strength. The pair opened with upward momentum, rallying from 1.1300 and peaking at 1.1573—its highest since November 2021. This bullish advance was sharply rejected as stronger US data and easing US-China tensions fueled a USD rebound. The pair retraced, closing near 1.1350–1.1370, with a modest net loss.
+EUR/USD traded with pronounced volatility, oscillating between 1.1300 and 1.1570. Early-week bullish momentum propelled the pair to 1.1573, but a failure to clear the 1.1400–1.1450 resistance zone led to a sharp reversal. The midweek session featured a bearish engulfing candle on the daily chart, signaling exhaustion of the uptrend and a likely reversal. A minor double bottom formed at 1.1350 on the 4H chart, but the lack of follow-through above 1.1400 weakened its bullish implications.
 
-**Key Observations:**
-- **Rally Stalled:** The 1.1570–1.1573 zone formed a clear rejection wick on the daily chart—a classic supply zone.
-- **Interim Resistance:** 1.1400–1.1420 acted as interim resistance, with multiple intraday rejections.
-- **Bearish Engulfing:** The sharp retracement from the highs created a bearish engulfing pattern (April 24–25), signaling a potential short-term reversal.
-- **Descending Triangle:** On the hourly chart, a descending triangle formed between 1.1370 support and lower highs, suggesting increased downside risk if 1.1370 is breached.
+**Notable Patterns:**
+- **Double Top (Daily):** 1.1570–1.1400, neckline at 1.1350. Bearish implications if 1.1350 breaks.
+- **Bearish Engulfing (Daily, 2025-04-24):** Confirmed reversal from highs.
+- **Doji (Daily, 2025-04-25):** Indecision after sharp drop.
 
-### Support and Resistance Levels
+### Support & Resistance Levels
 
-**Support:**
-- **1.1300:** Strong multi-session support, tested repeatedly. Critical downside pivot.
-- **1.1370:** Near-term support, base of the descending triangle and Friday close. Break below exposes 1.1300.
-- **1.1250:** Secondary support, coinciding with the 100-day MA and prior breakout level.
+**Key Support:**
+- **1.1350:** Immediate, critical support (tested multiple times).
+- **1.1300:** Stronger support, lower end of recent range.
+- **1.1260:** Next major support, aligns with March swing low.
 
-**Resistance:**
-- **1.1420:** Immediate resistance, capped multiple rallies. Close above signals renewed bullish interest.
-- **1.1500:** Psychological round number and minor supply zone.
-- **1.1570–1.1573:** Major resistance, weekly high and multi-year pivot.
+**Key Resistance:**
+- **1.1400–1.1450:** Major resistance zone, capped all rallies.
+- **1.1500:** Psychological resistance.
+- **1.1570–1.1573:** Multi-year high, double top formation.
 
-> **Key Levels:**
-> - **Support:** `1.1370`, `1.1300`, `1.1250`
-> - **Resistance:** `1.1420`, `1.1500`, `1.1570`
+> **Support:** `1.1350`, `1.1300`, `1.1260`
+> **Resistance:** `1.1400–1.1450`, `1.1500`, `1.1570–1.1573`
 
-### Indicator Readings and Interpretation
+### Indicator Readings & Interpretation
 
-**Moving Averages:**
-- **50 MA (Daily):** ~1.1385; price oscillated around this level, indicating indecision.
-- **100 MA (Daily):** ~1.1250; medium-term support.
-- **200 MA (Daily):** ~1.1180; confirms longer-term uptrend.
-- No bullish/bearish crossovers; 50 MA flattening suggests waning bullish momentum.
+- **Moving Averages (Daily):**
+  - 50 MA: ~1.1375 (dynamic support)
+  - 100 MA: ~1.1330 (additional support)
+  - 200 MA: ~1.1405 (aligns with resistance)
+  - MAs are flattening, indicating loss of trend momentum.
+- **RSI (14, Daily):** 48–52 (neutral). Mild bearish divergence as price made higher highs but RSI failed to confirm.
+- **MACD (Daily):** Bearish crossover midweek; histogram negative and widening, confirming downside momentum.
+- **Bollinger Bands (Daily):** Bands widening, reflecting increased volatility. Price rejected upper band near 1.1570, now near midline (~1.1370).
 
-**RSI (14, Daily):**
-- Peaked at 68, dropped to 48–50 after retracement—now neutral.
-- No clear divergence; failure to sustain above 60 signals fading bullish momentum.
+### Chart Patterns & Scenarios
 
-**MACD:**
-- MACD line crossed above signal line early in week, but histogram has flattened, indicating momentum loss.
-- No clear bearish crossover yet; a turn lower would reinforce downside risk.
+- **Double Top:** Bearish, confirmed on break of 1.1350, targets 1.1300/1.1260.
+- **Double Bottom (4H):** Minor, but lacks confirmation above 1.1400.
+- **Bearish Engulfing:** Confirms reversal from highs.
 
-**Bollinger Bands (Daily):**
-- Bands widened during rally, then contracted as volatility subsided.
-- Price rejected upper band (1.1570), reverted toward midline (~1.1380).
-- A break below lower band (~1.1340) would signal potential volatility expansion to the downside.
+### Technical Outlook & Targets
 
-### Chart Patterns and Breakout/Breakdown Scenarios
+- **Short-Term (1–3 Days):** Choppy trading between 1.1350 and 1.1400. Break below 1.1350 targets 1.1300, then 1.1260. Upside capped at 1.1400–1.1450.
+- **Medium-Term (1–2 Weeks):** Bearish-to-neutral bias unless 1.1450 is reclaimed. Key data releases could trigger volatility.
 
-- **Descending Triangle:** Formed on lower timeframes between 1.1370 support and lower highs. A break below 1.1370 could trigger a sharp move to 1.1300.
-- **Bearish Engulfing:** Daily pattern (April 24–25) signals short-term reversal risk.
-- **Failed Breakout:** Above 1.1570, followed by lower high near 1.1420, hints at developing bearish bias.
+> **Technical Price Targets:**
+> - **Downside:** `1.1300` (primary), `1.1260` (secondary), `1.1200` (extended)
+> - **Upside:** `1.1450` (primary), `1.1500` (secondary), `1.1570` (extended)
 
-### Technical Outlook and Targets
-
-**Short-Term (1–3 Days):**
-- Expect choppy, range-bound trading between 1.1300 and 1.1420 ahead of key economic releases.
-- A break below 1.1370 targets 1.1300, with potential for a quick flush to 1.1250 if US data surprises to the upside.
-- Upside moves likely capped at 1.1420–1.1450 unless a strong bullish catalyst emerges.
-
-**Medium-Term (1–2 Weeks):**
-- High-impact events could trigger a decisive breakout.
-- Sustained closes below 1.1300 shift bias to bearish, targeting 1.1250 and then 1.1180 (200 MA).
-- A daily close above 1.1420 opens a retest of 1.1500, with 1.1570 as next major resistance.
-
-> **Price Targets:**
-> - **Downside:** `1.1370` (initial), `1.1300` (primary), `1.1250` (secondary), `1.1180` (major)
-> - **Upside:** `1.1420` (initial), `1.1500` (secondary), `1.1570` (major)
-
-**Actionable Summary:**
-- **Short-term traders:** Watch for a break of 1.1370 for potential short setups targeting 1.1300, with stops above 1.1420.
-- **Medium-term traders:** Await confirmation from key data. Sustained move below 1.1300 favors further downside; close above 1.1420 negates bearish bias and favors move toward 1.1500–1.1570.
-- **Risk:** Volatility expected to rise with upcoming data—manage risk accordingly and avoid overexposure ahead of major releases.
+**Actionable Insights:**
+- Short setups favored on break of 1.1350, targeting 1.1300/1.1260, with stops above 1.1400.
+- Bulls should await daily close above 1.1450 before considering longs, targeting 1.1500/1.1570.
+- Expect heightened volatility; manage risk around data releases.
 
 ---
 
@@ -143,113 +118,110 @@ EUR/USD displayed pronounced volatility last week, reflecting a tug-of-war betwe
 
 ### Monetary Policy Comparison
 
-**ECB:**
-- Main refinancing rate at 4.00%, on hold since late 2024.
-- Data-dependent, patient, and vigilant; no imminent cuts, but open to adjustment if growth falters or inflation undershoots.
-- QT continues at a measured pace.
-
-**Federal Reserve:**
-- Fed funds target range at 5.25–5.50%, unchanged since mid-2024.
-- "Higher for longer" approach; no cuts until inflation is clearly under control.
-- Balance sheet runoff continues, but at a slower pace.
-
-**Interest Rate Differential:**
-- US–Eurozone policy rate differential at 125–150 bps in favor of USD.
-- Markets price in higher probability of ECB cuts in H2 2025; Fed expected to delay easing until late 2025/early 2026.
+- **ECB:** Main refinancing rate at 3.75%, cautious and data-dependent. No imminent rate cuts; focus on inflation returning to 2% target. Quantitative tightening continues at a measured pace.
+- **Fed:** Policy rate at 5.25%, hawkish bias. "Higher for longer" stance, with no cuts expected before Q3 2025. Aggressive balance sheet reduction supports USD.
+- **Rate Differential:** Wide (Fed 5.25% vs. ECB 3.75%), favoring USD carry trades and limiting EUR/USD upside.
 
 ### Economic Data Analysis
 
-**GDP Growth:**
-- **Eurozone:** Q1 2025 GDP growth expected at ~0.2% QoQ, ~0.8% YoY; weak industrial activity and subdued consumer spending.
-- **US:** Q1 2025 GDP forecast at ~0.6% QoQ, ~2.2% YoY; robust consumer demand and strong labor markets.
-
-**Inflation:**
-- **Eurozone:** Headline HICP ~2.3% YoY, core ~2.1%; gradual deceleration but services inflation sticky.
-- **US:** Core PCE ~2.7% YoY, headline CPI ~3.0%; inflation persistent, especially in shelter and services.
-
-**Employment:**
-- **Eurozone:** Unemployment stable at ~6.5%, but job creation sluggish.
-- **US:** Unemployment at 3.7%, strong payroll growth, rising average hourly earnings (~4.1% YoY).
-
-**Manufacturing & Services:**
-- **Eurozone:** Manufacturing PMI <50 (contraction), services barely expansionary (~51).
-- **US:** ISM Manufacturing PMI ~53, services robust (~54–55).
-
-**Consumer Confidence:**
-- **Eurozone:** Subdued, retail sales flat, savings rates elevated.
-- **US:** Resilient, spending strong.
+- **GDP Growth:** US Q1 2025 at ~2.2% annualized (robust); Eurozone Q1 expected at 0.3% QoQ (tepid).
+- **Inflation:** US Core PCE at 2.8% YoY (sticky); Eurozone HICP at 2.2% YoY (moderating).
+- **Employment:** US unemployment at 3.7%, strong NFP; Eurozone at 6.3%, job creation slowing.
+- **Manufacturing/Services:** US PMIs in expansion; Eurozone manufacturing contracts, services marginally expand.
+- **Consumer Confidence:** US at 108.5; Eurozone at -14.2.
 
 ### Geopolitical Factors
 
-- **Eurozone:** Russia-Ukraine conflict, EU political fragmentation, and trade tensions with China weigh on sentiment.
-- **US:** Easing US-China tensions support USD; fiscal concerns are background risks.
-- **Trade:** Easing US-China tensions buoy USD; no major new EU-US trade initiatives.
+- **Eurozone:** Russia-Ukraine tensions, EU political fragmentation, and China trade concerns weigh on growth and sentiment.
+- **US:** Stable, with US-China trade risks receding for now. Fiscal policy debates beginning ahead of 2026 midterms.
 
 ### Flow Analysis
 
-- **Capital Flows:** US attracts strong portfolio inflows into equities and Treasuries; Eurozone sees modest outflows.
-- **Trade Balance:** Eurozone surplus narrowed; US deficit persists but offset by capital inflows.
-- **Portfolio Flows:** US markets remain magnets for global capital; Eurozone FDI sluggish.
-- **Central Bank Reserves:** USD remains dominant; modest increases in EUR reserves.
+- **Capital Flows:** Strong inflows into US assets; Eurozone sees modest outflows.
+- **Trade Balance:** US deficit offset by capital inflows; Eurozone surplus narrowing.
+- **Central Bank Reserves:** USD remains dominant; no significant EUR reserve increase.
 
 ### Fundamental Outlook
 
-**Short-Term (1–2 Weeks):**
-- EUR/USD likely volatile, trading in 1.1300–1.1420 range ahead of key data.
-- Upside surprises in US data reinforce USD strength, risking a break below 1.1370 and test of 1.1300.
-- Eurozone data would need to decisively beat expectations to support a rally above 1.1420.
+- **Short-Term (1–2 Weeks):** Volatility expected around April 30–May 2 data. Stronger US data and hawkish Fed keep EUR/USD capped below 1.1400–1.1450. Downside risk toward 1.1300/1.1260.
+- **Medium-Term (1–3 Months):** Bearish bias unless Eurozone data surprises or Fed pivots dovish. US outperformance, rate differentials, and capital flows support USD.
 
-**Medium-Term (1–3 Months):**
-- Fundamental bias favors USD, given stronger US growth, persistent inflation, and hawkish Fed.
-- ECB signaling readiness to cut rates could push EUR/USD below 1.1300, targeting 1.1250 and 1.1180.
-- Only a dovish Fed pivot or sharp US data disappointment would materially shift bias toward Euro strength.
+> **Fundamental Price Targets:**
+> - **Short-term:** `1.1300` (support), `1.1260` (secondary); resistance at `1.1400–1.1450`.
+> - **Medium-term:** `1.1200` possible if bearish momentum persists; upside capped at `1.1500`.
 
-> **Potential Price Targets:**
-> - **Downside:** `1.1370` (initial), `1.1300` (primary), `1.1250` (secondary), `1.1180` (major)
-> - **Upside:** `1.1420` (initial), `1.1500` (secondary), `1.1570` (major, unlikely without major catalyst)
-
-**Conclusion:** Fundamentals currently favor the US Dollar. The 1.1300 support is critical; a break below opens the door to 1.1250 and 1.1180. Upside is likely capped at 1.1420–1.1500 unless the Fed pivots or Eurozone data surprises strongly.
+**Conclusion:**
+Fundamentals favor the US Dollar over the Euro. The combination of a hawkish Fed, resilient US data, and capital inflows contrasts with Eurozone weakness and a dovish ECB. Unless data or rhetoric surprises, EUR/USD likely remains under pressure, with rallies toward 1.1400–1.1450 seen as selling opportunities.
 
 ---
 
 ## Sentiment Analysis
 
-### Positioning Data (COT & Institutional/Speculative Flows)
+### Positioning Data
 
-- **COT Report:** Leveraged funds have trimmed net long positions for the third consecutive week (+45,000 contracts, down from +62,000). Asset managers remain net long but have moderated exposure.
-- **Implication:** Unwind in speculative longs, with no surge in shorts, points to a market in transition—bullish enthusiasm fading, but no aggressive bearish consensus. Sets the stage for two-way volatility, especially if data surprises.
+- **COT (as of 2025-04-22):** Leveraged funds net long EUR trimmed to +32,500 contracts (down 21% WoW). Asset managers also reduced longs. Commercials increased shorts.
+- **Interpretation:** Waning bullish conviction; no extremes yet, but trend is toward neutral/bearish.
 
 ### Social Media Sentiment
 
-- **X (Twitter):** Shift from bullish optimism to cautious neutrality. Bearish and neutral posts outnumber bullish by 2:1 as of April 28.
-- **Reddit:** Retail traders divided; 58% expect further downside, 29% neutral, 13% bullish.
-- **StockTwits:** Bearish tag outpaces bullish 65:35; increased chatter about stop-loss triggers below 1.1370.
-- **Implication:** Social sentiment defensive, consensus shifting from "buy the dip" to "wait and see" or "sell rallies."
+- **X (Twitter):** Shift from bullish to bearish/neutral after midweek reversal. Bearish commentary outpaces bullish 2:1.
+- **Reddit:** 58% bearish, 27% neutral, 15% bullish. Focus on downside risks and upcoming US data.
+- **StockTwits:** Sentiment meter now 54% bearish (was 62% bullish last week).
 
 ### Institutional Outlook
 
-- **Major Banks:**
-    - Goldman Sachs: 3-month target 1.1200 (USD strength).
-    - J.P. Morgan: Neutral short-term, downside risk if Eurozone data disappoints.
-    - Deutsche Bank: Expects EUR/USD to hold above 1.1300 barring major US data beat.
-    - SocGen, Citi: Risk of range breakdown if ECB signals cuts.
-- **Consensus:** Cautious-to-bearish, with focus on downside risks.
+- **Goldman Sachs:** Bearish, targets 1.1200.
+- **JP Morgan:** Neutral-bearish, sees range 1.1300–1.1450.
+- **UBS:** Cautious, bounce possible on Eurozone data surprise.
+- **Citi:** Sell rallies toward 1.1400, target 1.1260.
 
 ### Retail Sentiment
 
-- **Broker Data:** 68–72% of retail traders are long EUR/USD, up from 60% last week. Heavy retail long skew is a contrarian bearish signal.
-- **Implication:** Retail sentiment stretched on long side; risk of further downside if key supports break and stops are triggered.
+- **IG/OANDA/Forex.com:** 59–64% of retail traders are net long EUR/USD, up from last week. Historically a contrarian bearish signal.
 
 ### Sentiment Indicators
 
-- **Fear & Greed:** Index at 38 (mild risk aversion but not panic).
-- **Put/Call Ratios:** 1-week risk reversal skews in favor of USD calls (EUR puts), 25-delta risk reversal at -0.45 (most bearish in two months).
-- **Implied Volatility:** 8.2% annualized for the upcoming week, up from 7.5% last week; options market pricing in 100–120 pip move post-NFP.
+- **Fear & Greed:** 38 (mild fear), down from 52. Implied vol at 8.2% (up from 6.9%).
+- **Options:** Put/Call ratio at 1.21; risk reversals skewed bearish (-0.45).
 
-**Implication:** Sentiment indicators point to rising caution and a bias toward downside protection, but not extreme fear. Volatility is expected to spike around data releases.
+### Sentiment Outlook
 
-### Sentiment Outlook & Trading Opportunities
+- **Consensus:** Bearish-to-neutral across institutional, social, and derivatives markets. Retail long bias is a contrarian bearish signal.
+- **Contrarian Opportunity:** If EUR/USD drops below 1.1300 and retail longs surge above 70%, a bounce could materialize. For now, path of least resistance is lower.
 
-- **Consensus View:** Market shifting from bullish to neutral/bearish. Institutional and social sentiment are cautious, retail traders increasingly long (contrarian bearish). Positioning not at extremes, but risk skewed to downside if 1.1370/1.1300 breaks.
-- **Contrarian Opportunities:** With retail traders heavily long and institutional sentiment cautious, a break below 1.1370 could trigger a cascade of stop-losses, accelerating a move to 1.1300 or lower. Contrarians may look to fade any sharp, panic-driven selloff near 1.1250–1.1300, especially if sentiment becomes extremely bearish and positioning flips.
-- **Stretched
+> **Sentiment-Driven Levels:**
+> - Break below `1.1350` targets `1.1300/1.1260`.
+> - Only a sustained move above `1.1450` would flip sentiment bullish.
+
+---
+
+## Trading Scenarios
+
+### Bullish Scenario
+- **Entry:** Buy on daily close above 1.1450.
+- **Targets:** 1.1500 (primary), 1.1570 (extended).
+- **Stop:** Below 1.1400 (tight risk), or 1.1350 (wider risk).
+- **Rationale:** Confirmation of breakout above multi-month resistance; likely driven by Eurozone data surprise or US data disappointment.
+
+### Bearish Scenario
+- **Entry:** Sell on break and close below 1.1350.
+- **Targets:** 1.1300 (primary), 1.1260 (secondary), 1.1200 (extended).
+- **Stop:** Above 1.1400 (tight risk), or 1.1450 (wider risk).
+- **Rationale:** Confirmation of double top and bearish reversal; aligns with fundamental and sentiment bias.
+
+### Key Risk Events
+- Eurozone GDP and HICP (Apr 30, May 2)
+- US Core PCE, ISM PMI, NFP, and wage data (Apr 30–May 2)
+- Geopolitical headlines (Russia-Ukraine, US-China)
+
+### Risk Management Considerations
+- **Volatility:** Expect sharp moves around data releases; use wider stops or reduce position size.
+- **Liquidity:** Avoid trading during illiquid periods (e.g., pre-data, late NY session).
+- **Position Sizing:** Adjust for increased volatility; risk no more than 1–2% of capital per trade.
+- **Scenario Planning:** Be prepared to flip bias if data surprises or technical levels break.
+
+---
+
+## Conclusion
+
+EUR/USD enters the week of April 28, 2025, at a technical and fundamental crossroads. The pair has failed to sustain gains above the critical 1.1400–1.1450 resistance zone, with bearish reversal patterns and a shift in sentiment pointing to further downside risks. The US Dollar is supported by robust economic data, a hawkish Fed, and strong capital inflows, while the Euro faces headwinds from weak growth, moderating inflation, and geopolitical uncertainty. Sentiment is now bearish-to-neutral, with retail traders increasingly long—a classic contrarian signal. The upcoming week’s packed economic calendar is likely to trigger heightened volatility and potential breakout moves. The primary outlook is bearish-to-neutral, with downside targets at 1.1300/1.1260 unless the Euro can reclaim 1.1450 on a sustained basis. Traders should remain nimble, manage risk carefully, and watch for data-driven opportunities on both sides of the market.
