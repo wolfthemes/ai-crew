@@ -9,7 +9,6 @@ weekly EUR/USD market report and optionally posts it to Notion.
 import sys
 import argparse
 from pathlib import Path
-import logging
 from datetime import date
 
 # Add the parent directory to sys.path
