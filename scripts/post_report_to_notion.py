@@ -15,7 +15,16 @@ from tools.notion_writer import PostToNotion
 from dotenv import load_dotenv
 
 def post_report_to_notion(file_path=None, title=None):
-    """Post an existing report to Notion"""
+    """
+    Posts a markdown report file to Notion.
+    
+    Args:
+        file_path (str): Path to the markdown file to post
+        title (str, optional): Title for the Notion page. If None, will use filename.
+        
+    Returns:
+        bool: True if posting was successful, False otherwise
+    """
     load_dotenv()
     
     # Verify environment variables
@@ -45,6 +54,13 @@ def post_report_to_notion(file_path=None, title=None):
         print(f"❌ Error reading report file: {str(e)}")
         return False
     
+    # Determine the period based on the file path or title
+    period = "Weekly"  # Default
+    if "daily" in file_path.lower() or (title and "daily" in title.lower()):
+        period = "Daily"
+
+    print( period )
+    
     # Initialize the Notion tool
     notion_tool = PostToNotion()
     
@@ -54,11 +70,12 @@ def post_report_to_notion(file_path=None, title=None):
         if lines and lines[0].startswith('# '):
             title = lines[0][2:].strip()
         else:
-            title = f"EUR/USD Weekly Report – {date.today().strftime('%Y-%m-%d')}"
+            basename = os.path.basename(file_path)
+            title = os.path.splitext(basename)[0].replace('_', ' ').title()
     
     # Post to Notion
     print(f"📝 Posting to Notion with title: {title}")
-    result = notion_tool._run(content=report_content, title=title)
+    result = notion_tool._run(content=report_content, title=title, period=period)
     
     print(f"\nResult: {result}")
     return "SUCCESS" in result

@@ -15,6 +15,7 @@ class NotionPostInput(BaseModel):
     content: str = Field(..., description="The Markdown-formatted report content to post")
     title: str = Field(default=None, description="Optional title for the Notion entry (defaults to date)")
     date_str: str = Field(default=None, description="Optional date string in YYYY-MM-DD format")
+    period: str = Field(default="Weekly", description="Report period type: 'Daily' or 'Weekly'")
 
 class PostToNotion(BaseTool):
     name: str = "post_to_notion"
@@ -371,13 +372,19 @@ class PostToNotion(BaseTool):
                 
         return blocks
 
-    def _run(self, content: str, title: str = None, date_str: str = None) -> str:
+    def _run(self, content: str, title: str = None, date_str: str = None, period: str = None) -> str:
         # Check if Notion client is initialized
         if not self.notion:
             return "NOTION_POST_STATUS: FAILED — Notion client not properly initialized"
         
+        # Ensure period is capitalized and valid
+        period = period.capitalize()
+        if period not in ["Daily", "Weekly"]:
+            print(f"Warning: Invalid period '{period}', defaulting to 'Weekly'")
+            period = "Weekly"
+        
         today = date.today().isoformat() if not date_str else date_str
-        title_text = title or f"EUR/USD Weekly Report – {today}"
+        title_text = title or f"EUR/USD {period} Report – {today}"
         
         try:
             print(f"Converting markdown to HTML...")
@@ -441,6 +448,7 @@ class PostToNotion(BaseTool):
                 properties={
                     "Name": {"title": [{"text": {"content": title_text}}]},
                     "Date": {"date": {"start": today}},
+                    "Period": {"select": {"name": period}}
                 },
                 children=block_chunks[0] if block_chunks else []  # First chunk only
             )
@@ -456,7 +464,7 @@ class PostToNotion(BaseTool):
                     children=chunk
                 )
             
-            return f"NOTION_POST_STATUS: SUCCESS — Report posted to Notion on {today}"
+            return f"NOTION_POST_STATUS: SUCCESS — {period} Report posted to Notion on {today}"
         except Exception as e:
             import traceback
             print(traceback.format_exc())
@@ -469,13 +477,20 @@ class PostToNotion(BaseTool):
             content = query
             title = None
             date_str = None
+            period = "Weekly"  # Default period
             
             # Try to extract title from first line if it starts with # 
             lines = content.split('\n')
             if lines and lines[0].startswith('# '):
                 title = lines[0][2:].strip()
+
+                # Try to determine period from title
+                if "daily" in title.lower():
+                    period = "Daily"
+                elif "weekly" in title.lower():
+                    period = "Weekly"
             
-            return self._run(content=content, title=title, date_str=date_str)
+            return self._run(content=content, title=title, date_str=date_str, period=period)
         except Exception as e:
             import traceback
             print(traceback.format_exc())

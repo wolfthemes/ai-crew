@@ -34,7 +34,7 @@ def test_notion_posting():
         return False
     
     # Path to the report file
-    report_path = "data/reports/eurusd_weekly_report_2025-04-22.md"
+    report_path = "data/reports/eurusd_weekly_report_2025-04-28.md"
     
     # Check if the file exists
     if not os.path.exists(report_path):
@@ -66,7 +66,8 @@ def test_notion_posting():
         result = notion_tool._run(
             content=report_content,
             title="EUR/USD Weekly Report - TEST POST",
-            date_str="2025-04-22"
+            date_str="2025-04-22",
+            period="weekly"
         )
         
         print(f"\nResult: {result}")
