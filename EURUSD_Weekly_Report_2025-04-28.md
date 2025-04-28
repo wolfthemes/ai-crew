@@ -79,7 +79,6 @@ EUR/USD traded with pronounced volatility, oscillating between 1.1300 and 1.1570
 - **1.1570–1.1573:** Multi-year high, double top formation.
 
 > **Support:** `1.1350`, `1.1300`, `1.1260`
-> 
 > **Resistance:** `1.1400–1.1450`, `1.1500`, `1.1570–1.1573`
 
 ### Indicator Readings & Interpretation

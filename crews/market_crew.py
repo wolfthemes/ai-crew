@@ -53,26 +53,26 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
     today_date_str = today_date.strftime("%Y-%m-%d")
     
     # Initialize tools list for report writer
-    # report_writer_tools = []
+    report_writer_tools = []
     
-    # if save_to_file:
-    #     folder_name = "daily_reports" if period == "daily" else "reports"
-    #     file_name = f"eurusd_{period}_report_{today_date_str}.md"
-    #     file_path = f"data/{folder_name}/{file_name}"
-    #     file_tool = SaveToMarkdown(default_path=file_path)
-    #     #report_writer_tools.append(file_tool)
-    #     print(f"✅ File saving tool initialized for {period} report")
+    if save_to_file:
+        folder_name = "daily_reports" if period == "daily" else "reports"
+        file_name = f"eurusd_{period}_report_{today_date_str}.md"
+        file_path = f"data/{folder_name}/{file_name}"
+        file_tool = SaveToMarkdown(default_path=file_path)
+        report_writer_tools.append(file_tool)  # Uncommented this line
+        print(f"✅ File saving tool initialized for {period} report")
     
     # Update report writer agent with tools for file saving
-    # if report_writer_tools:
-    #     print(f"📝 Adding {len(report_writer_tools)} tools to report writer agent")
-    #     for tool in report_writer_tools:
-    #         print(f"   - {tool.name}: {tool.description[:60]}...")
+    if report_writer_tools:
+        print(f"📝 Adding {len(report_writer_tools)} tools to report writer agent")
+        for tool in report_writer_tools:
+            print(f"   - {tool.name}: {tool.description[:60]}...")
         
-    #     # Set the tools for the report writer agent
-    #     report_writer_agent.tools = report_writer_tools
-    # else:
-    #     print("⚠️ No tools added to report writer agent")
+        # Set the tools for the report writer agent
+        report_writer_agent.tools = report_writer_tools
+    else:
+        print("⚠️ No tools added to report writer agent")
     
     # Get appropriate tasks based on period
     if period == "daily":
@@ -131,6 +131,18 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         print(f"✅ EUR/USD {period.upper()} MARKET ANALYSIS COMPLETE")
         print("="*50 + "\n")
         
+        # Manually save the report to file if save_to_file is True
+        if save_to_file and result:
+            folder_name = "daily_reports" if period == "daily" else "reports"
+            file_name = f"eurusd_{period}_report_{today_date_str}.md"
+            file_path = f"data/{folder_name}/{file_name}"
+            
+            # Write the report content to the file
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(str(result))
+                
+            print(f"📝 Report saved to {file_path}")
+        
         # Save metadata about the report execution
         if save_to_file:
             # Convert result to string for length measurement
@@ -147,7 +159,8 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
                     "Report Writer Agent"
                 ],
                 "posted_to_notion": post_to_notion,
-                "report_length": len(result_str) if result else 0
+                "report_length": len(result_str) if result else 0,
+                "report_file_path": f"data/{folder_name}/{file_name}" if result else None
             }
             
             folder_name = "daily_reports" if period == "daily" else "reports"
