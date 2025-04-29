@@ -38,9 +38,9 @@ def start_streamlit_apps():
 
 def open_brave(url):
     try:
-        brave_path = "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
+        brave_path = "/mnt/c/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
         if not os.path.exists(brave_path):
-            brave_path = "C:/Program Files (x86)/BraveSoftware/Brave-Browser/Application/brave.exe"
+            brave_path = "/mnt/c/Program Files (x86)/BraveSoftware/Brave-Browser/Application/brave.exe"
         
         if not os.path.exists(brave_path):
             raise FileNotFoundError("Brave browser not found.")
