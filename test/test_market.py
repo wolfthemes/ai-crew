@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# test/test_market.py
 """
 EUR/USD Market Analysis Generator
 
@@ -26,12 +26,17 @@ def main():
                         help="Run in quiet mode (less verbose output)")
     parser.add_argument("--save", action="store_true",
                         help="Save report to a markdown file")
+    parser.add_argument("--period", type=str, choices=["daily", "weekly"], default="weekly",
+                        help="Type of report to generate (daily or weekly)")
     
     args = parser.parse_args()
     
+    period = args.period
+    period_upper = period.upper()
+    
     print("\n")
     print("="*70)
-    print("🚀 STARTING EUR/USD MARKET ANALYSIS".center(70))
+    print(f"🚀 STARTING EUR/USD {period_upper} MARKET ANALYSIS".center(70))
     print("="*70)
     print("\n")
     
@@ -40,7 +45,7 @@ def main():
         verbose=not args.quiet,
         post_to_notion=not args.no_notion,
         save_to_file=args.save,
-        period="daily"
+        period=period
     )
     
     if report:
@@ -63,10 +68,11 @@ def main():
         
         # Always save the report if requested via command line
         if args.save:
-            reports_dir = Path("data/reports")
-            reports_dir.mkdir(exist_ok=True)
+            folder_name = "daily_reports" if period == "daily" else "reports"
+            reports_dir = Path(f"data/{folder_name}")
+            reports_dir.mkdir(exist_ok=True, parents=True)
             
-            file_path = reports_dir / f"eurusd_daily_report_{today}.md"
+            file_path = reports_dir / f"eurusd_{period}_report_{today}.md"
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(report_text)
             

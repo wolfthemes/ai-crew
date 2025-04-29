@@ -3,6 +3,12 @@ from datetime import date, datetime, timedelta
 import pytz
 from crewai import Task
 
+# Import agents - this ensures the agents are available for assignment
+from agents.market.economic_news_agent import economic_news_agent  
+from agents.market.technical_analyst_agent import technical_analyst_agent
+from agents.market.session_analyst_agent import session_analyst_agent
+from agents.market.report_writer_agent import report_writer_agent
+
 # Calculate relevant dates
 paris_tz = pytz.timezone('Europe/Paris')
 paris_now = datetime.now(paris_tz)
@@ -11,7 +17,7 @@ yesterday_date = today_date - timedelta(days=1)
 today_str = today_date.strftime("%Y-%m-%d")
 yesterday_str = yesterday_date.strftime("%Y-%m-%d")
 
-# Define tasks
+# Define tasks with explicit agent assignments
 collect_daily_news = Task(
     description=f"""
     Collect and analyze the latest EUR/USD news from the past 24 hours, focusing on events that will impact today's London session.
@@ -51,6 +57,8 @@ collect_daily_news = Task(
     
     The analysis should be actionable and specifically focused on the London session.
     """,
+    agent=economic_news_agent,
+    async_execution=False
 )
 
 analyze_daily_bias = Task(
@@ -108,6 +116,8 @@ analyze_daily_bias = Task(
     
     The analysis should be data-driven and immediately actionable for a London session trader.
     """,
+    agent=session_analyst_agent,
+    async_execution=False
 )
 
 create_daily_report = Task(
@@ -170,4 +180,6 @@ create_daily_report = Task(
     The report should provide clear, actionable trading guidance specifically for today's London session,
     with explicit references to the Daily Bias framework and Next Day model.
     """,
+    agent=report_writer_agent,
+    async_execution=False
 )

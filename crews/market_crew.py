@@ -12,7 +12,7 @@ from agents.market.fundamental_analyst_agent import fundamental_analyst_agent
 from agents.market.technical_analyst_agent import technical_analyst_agent
 from agents.market.sentiment_analyst_agent import sentiment_analyst_agent
 from agents.market.report_writer_agent import report_writer_agent
-from agents.market.session_analyst_agent import create_session_analyst_agent
+from agents.market.session_analyst_agent import session_analyst_agent
 from scripts.post_report_to_notion import post_report_to_notion
 
 # Import tasks
@@ -91,10 +91,10 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
     framework_context = None
     
     if period == "daily":
-        # Load trading frameworks from PDFs in data/static/market/pdf
+        # Load trading frameworks from PDFs
         try:
             print("📚 Loading trading frameworks from PDFs...")
-            framework_reader = DailyBiasFramework(framework_dir="data/static/market/pdf")
+            framework_reader = DailyBiasFramework()
             framework_context = framework_reader.get_all_frameworks_context()
             print("✅ Loaded trading frameworks")
         except Exception as e:
@@ -120,33 +120,21 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         # Use combined context
         economic_events_context = combined_context
     
-    # Create session analyst agent for daily reports
-    session_analyst_agent = None
-    if period == "daily":
-        session_analyst_agent = create_session_analyst_agent(technical_analyst_agent.llm)
-        print("✅ Session analyst agent created for daily report")
-    
     # Get appropriate tasks based on period
     if period == "daily":
         # For daily reports, we use the session analyst for daily bias analysis
-        if session_analyst_agent:
-            tasks = [
-                collect_daily_news,  # Using the task directly as in weekly_report_tasks.py
-                analyze_daily_bias,  # Using the task directly as in weekly_report_tasks.py
-                create_daily_report  # Using the task directly as in weekly_report_tasks.py
-            ]
-            
-            # Assign agents to tasks
-            tasks[0].agent = economic_news_agent
-            tasks[1].agent = session_analyst_agent
-            tasks[2].agent = report_writer_agent
-            
-            # Add context to tasks
-            for task in tasks:
-                task.context = economic_events_context
-        else:
-            print("⚠️ Session analyst agent not created, cannot run daily tasks")
-            return None
+        tasks = [
+            collect_daily_news,
+            analyze_daily_bias,
+            create_daily_report
+        ]
+
+        # Create the agent list based on period
+        agents = [
+            economic_news_agent, 
+            session_analyst_agent,
+            report_writer_agent
+        ]
     else:  # weekly
         tasks = [
             collect_fxstreet_news,
@@ -156,12 +144,12 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
             create_weekly_report
         ]
     
-    # Create the agent list based on period
-    agents = [
-        economic_news_agent, 
-        technical_analyst_agent,
-        report_writer_agent
-    ]
+        # Create the agent list based on period
+        agents = [
+            economic_news_agent, 
+            technical_analyst_agent,
+            report_writer_agent
+        ]
     
     if period == "weekly":
         agents.extend([
