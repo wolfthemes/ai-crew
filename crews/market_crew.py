@@ -3,7 +3,8 @@ from pathlib import Path
 import sys
 import os
 import json
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
+import pytz
 
 # Import agents
 from agents.market.economic_news_agent import economic_news_agent
@@ -11,10 +12,11 @@ from agents.market.fundamental_analyst_agent import fundamental_analyst_agent
 from agents.market.technical_analyst_agent import technical_analyst_agent
 from agents.market.sentiment_analyst_agent import sentiment_analyst_agent
 from agents.market.report_writer_agent import report_writer_agent
+from agents.market.session_analyst_agent import create_session_analyst_agent
 from scripts.post_report_to_notion import post_report_to_notion
 
 # Import tasks
-from tasks.market.market_tasks import (
+from tasks.market.weekly_report_tasks import (
     collect_fxstreet_news,
     analyze_technical_factors,
     conduct_fundamental_analysis,
@@ -22,8 +24,16 @@ from tasks.market.market_tasks import (
     create_weekly_report
 )
 
+from tasks.market.daily_report_tasks import (
+    collect_daily_news,
+    analyze_daily_bias,
+    create_daily_report
+)
+
 # Tools import
 from tools.file_writer import SaveToMarkdown
+from utils.fxstreet_events_downloader import get_fxstreet_events
+from utils.pdf_framework_reader import DailyBiasFramework
 
 def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, period="weekly"):
     """
@@ -49,7 +59,9 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         os.makedirs(f"data/{folder_name}", exist_ok=True)
     
     # Current date information for file naming and report content
-    today_date = date.today()
+    paris_tz = pytz.timezone('Europe/Paris')
+    paris_now = datetime.now(paris_tz)
+    today_date = paris_now.date()
     today_date_str = today_date.strftime("%Y-%m-%d")
     
     # Initialize tools list for report writer
@@ -60,7 +72,7 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         file_name = f"eurusd_{period}_report_{today_date_str}.md"
         file_path = f"data/{folder_name}/{file_name}"
         file_tool = SaveToMarkdown(default_path=file_path)
-        report_writer_tools.append(file_tool)  # Uncommented this line
+        report_writer_tools.append(file_tool)
         print(f"✅ File saving tool initialized for {period} report")
     
     # Update report writer agent with tools for file saving
@@ -74,15 +86,67 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
     else:
         print("⚠️ No tools added to report writer agent")
     
+    # Pre-fetch economic events and trading frameworks for context
+    economic_events_context = None
+    framework_context = None
+    
+    if period == "daily":
+        # Load trading frameworks from PDFs in data/static/market/pdf
+        try:
+            print("📚 Loading trading frameworks from PDFs...")
+            framework_reader = DailyBiasFramework(framework_dir="data/static/market/pdf")
+            framework_context = framework_reader.get_all_frameworks_context()
+            print("✅ Loaded trading frameworks")
+        except Exception as e:
+            print(f"⚠️ Error loading trading frameworks: {e}")
+            framework_context = "Unable to load trading frameworks."
+        
+        # Fetch economic events
+        try:
+            print("📊 Pre-fetching economic events for context...")
+            economic_events = get_fxstreet_events()
+            economic_events_context = f"Economic events for this week: {json.dumps(economic_events)}"
+            print(f"✅ Fetched {len(economic_events)} economic events")
+        except Exception as e:
+            print(f"⚠️ Error fetching economic events: {e}")
+            economic_events_context = "Unable to fetch economic events."
+            
+        # Combine contexts
+        if framework_context and economic_events_context:
+            combined_context = f"{framework_context}\n\n{economic_events_context}"
+        else:
+            combined_context = framework_context or economic_events_context or ""
+        
+        # Use combined context
+        economic_events_context = combined_context
+    
+    # Create session analyst agent for daily reports
+    session_analyst_agent = None
+    if period == "daily":
+        session_analyst_agent = create_session_analyst_agent(technical_analyst_agent.llm)
+        print("✅ Session analyst agent created for daily report")
+    
     # Get appropriate tasks based on period
     if period == "daily":
-        tasks = [
-            # TODO: adapt task to daily report
-            #collect_overnight_news,
-            #analyze_intraday_technicals,
-            #identify_key_levels,
-            #create_daily_report
-        ]
+        # For daily reports, we use the session analyst for daily bias analysis
+        if session_analyst_agent:
+            tasks = [
+                collect_daily_news,  # Using the task directly as in weekly_report_tasks.py
+                analyze_daily_bias,  # Using the task directly as in weekly_report_tasks.py
+                create_daily_report  # Using the task directly as in weekly_report_tasks.py
+            ]
+            
+            # Assign agents to tasks
+            tasks[0].agent = economic_news_agent
+            tasks[1].agent = session_analyst_agent
+            tasks[2].agent = report_writer_agent
+            
+            # Add context to tasks
+            for task in tasks:
+                task.context = economic_events_context
+        else:
+            print("⚠️ Session analyst agent not created, cannot run daily tasks")
+            return None
     else:  # weekly
         tasks = [
             collect_fxstreet_news,
@@ -92,15 +156,24 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
             create_weekly_report
         ]
     
+    # Create the agent list based on period
+    agents = [
+        economic_news_agent, 
+        technical_analyst_agent,
+        report_writer_agent
+    ]
+    
+    if period == "weekly":
+        agents.extend([
+            fundamental_analyst_agent,
+            sentiment_analyst_agent
+        ])
+    elif period == "daily" and session_analyst_agent:
+        agents.append(session_analyst_agent)
+    
     # Create the crew with all agents and tasks
     market_crew = Crew(
-        agents=[
-            economic_news_agent, 
-            technical_analyst_agent,
-            fundamental_analyst_agent,
-            sentiment_analyst_agent,
-            report_writer_agent
-        ],
+        agents=agents,
         tasks=tasks,
         process=Process.sequential,  # Tasks executed in order
         verbose=verbose,
@@ -118,6 +191,10 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         
         print("\n" + "="*50)
         print(f"🚀 STARTING EUR/USD {period.upper()} MARKET ANALYSIS")
+        if period == "daily":
+            print(f"📅 Report Date: {today_date_str}")
+            print(f"🕗 Generated at: {paris_now.strftime('%H:%M')} Paris Time")
+            print(f"🎯 Focus: London Session")
         print("="*50 + "\n")
         
         # Kick off the crew's work
@@ -148,20 +225,37 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
             # Convert result to string for length measurement
             result_str = str(result)
             
+            # Build the metadata based on period
             metadata = {
                 "generated_on": today_date_str,
                 "report_type": period,
-                "agents_used": [
-                    "Economic News Agent",
-                    "Technical Analyst Agent",
-                    "Fundamental Analyst Agent",
-                    "Sentiment Analyst Agent",
-                    "Report Writer Agent"
-                ],
                 "posted_to_notion": post_to_notion,
                 "report_length": len(result_str) if result else 0,
                 "report_file_path": f"data/{folder_name}/{file_name}" if result else None
             }
+            
+            # Add period-specific metadata
+            if period == "daily":
+                metadata.update({
+                    "session_focus": "London",
+                    "generation_time": paris_now.strftime('%H:%M'),
+                    "agents_used": [
+                        "Economic News Agent",
+                        "Technical Analyst Agent",
+                        "Session Analyst Agent",
+                        "Report Writer Agent"
+                    ]
+                })
+            else:  # weekly
+                metadata.update({
+                    "agents_used": [
+                        "Economic News Agent",
+                        "Technical Analyst Agent",
+                        "Fundamental Analyst Agent",
+                        "Sentiment Analyst Agent",
+                        "Report Writer Agent"
+                    ]
+                })
             
             folder_name = "daily_reports" if period == "daily" else "reports"
             metadata_path = f"data/{folder_name}/metadata_{today_date_str}.json"
@@ -178,9 +272,16 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
                 folder_name = "daily_reports" if period == "daily" else "reports"
                 file_name = f"eurusd_{period}_report_{today_date_str}.md"
                 file_path = f"data/{folder_name}/{file_name}"
+                
+                # Create a title based on period
+                if period == "daily":
+                    title = f"EUR/USD Daily Report (London Session) – {today_date_str}"
+                else:
+                    title = f"EUR/USD Weekly Report – {today_date_str}"
+                    
                 notion_result = post_report_to_notion(
                     file_path=file_path,
-                    title=f"EUR/USD {period.capitalize()} Report – {today_date_str}"
+                    title=title
                 )
                 if notion_result:
                     print(f"✅ Successfully posted {period} report to Notion")
@@ -196,3 +297,14 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         import traceback
         traceback.print_exc()
         return None
+
+if __name__ == "__main__":
+    # This allows running the market crew directly with python market_crew.py
+    # You can specify the period with a command line argument
+    # Example: python market_crew.py daily
+    period = "weekly"  # Default period
+    if len(sys.argv) > 1 and sys.argv[1].lower() in ["daily", "weekly"]:
+        period = sys.argv[1].lower()
+    
+    print(f"Running {period} market analysis...")
+    run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, period=period)

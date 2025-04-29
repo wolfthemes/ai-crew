@@ -39,7 +39,8 @@ def main():
     report = run_market_analysis(
         verbose=not args.quiet,
         post_to_notion=not args.no_notion,
-        save_to_file=args.save
+        save_to_file=args.save,
+        period="daily"
     )
     
     if report:
@@ -65,7 +66,7 @@ def main():
             reports_dir = Path("data/reports")
             reports_dir.mkdir(exist_ok=True)
             
-            file_path = reports_dir / f"eurusd_weekly_report_{today}.md"
+            file_path = reports_dir / f"eurusd_daily_report_{today}.md"
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(report_text)
             
