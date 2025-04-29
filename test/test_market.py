@@ -68,8 +68,8 @@ def main():
         
         # Always save the report if requested via command line
         if args.save:
-            folder_name = "daily_reports" if period == "daily" else "reports"
-            reports_dir = Path(f"data/{folder_name}")
+            folder_name = "daily" if period == "daily" else "weekly"
+            reports_dir = Path(f"data/reports/{folder_name}")
             reports_dir.mkdir(exist_ok=True, parents=True)
             
             file_path = reports_dir / f"eurusd_{period}_report_{today}.md"

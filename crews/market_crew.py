@@ -55,8 +55,8 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
     
     # Initialize report saving directory if needed
     if save_to_file:
-        folder_name = "daily_reports" if period == "daily" else "reports"
-        os.makedirs(f"data/{folder_name}", exist_ok=True)
+        folder_name = "daily" if period == "daily" else "weekly"
+        os.makedirs(f"data/reports/{folder_name}", exist_ok=True)
     
     # Current date information for file naming and report content
     paris_tz = pytz.timezone('Europe/Paris')
@@ -68,9 +68,9 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
     report_writer_tools = []
     
     if save_to_file:
-        folder_name = "daily_reports" if period == "daily" else "reports"
+        folder_name = "daily" if period == "daily" else "weekly"
         file_name = f"eurusd_{period}_report_{today_date_str}.md"
-        file_path = f"data/{folder_name}/{file_name}"
+        file_path = f"data/reports/{folder_name}/{file_name}"
         file_tool = SaveToMarkdown(default_path=file_path)
         report_writer_tools.append(file_tool)
         print(f"✅ File saving tool initialized for {period} report")
@@ -198,9 +198,9 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         
         # Manually save the report to file if save_to_file is True
         if save_to_file and result:
-            folder_name = "daily_reports" if period == "daily" else "reports"
+            folder_name = "daily" if period == "daily" else "weekly"
             file_name = f"eurusd_{period}_report_{today_date_str}.md"
-            file_path = f"data/{folder_name}/{file_name}"
+            file_path = f"data/reports/{folder_name}/{file_name}"
             
             # Write the report content to the file
             with open(file_path, "w", encoding="utf-8") as f:
@@ -245,8 +245,8 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
                     ]
                 })
             
-            folder_name = "daily_reports" if period == "daily" else "reports"
-            metadata_path = f"data/{folder_name}/metadata_{today_date_str}.json"
+            folder_name = "daily" if period == "daily" else "weekly"
+            metadata_path = f"data/reports/{folder_name}/metadata_{today_date_str}.json"
             with open(metadata_path, "w") as f:
                 json.dump(metadata, f, indent=2)
             
@@ -257,9 +257,9 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
             try:
                 print("\n" + "="*50)
                 print(f"📄 POSTING {period.upper()} REPORT TO NOTION")
-                folder_name = "daily_reports" if period == "daily" else "reports"
+                folder_name = "daily" if period == "daily" else "weekly"
                 file_name = f"eurusd_{period}_report_{today_date_str}.md"
-                file_path = f"data/{folder_name}/{file_name}"
+                file_path = f"data/reports/{folder_name}/{file_name}"
                 
                 # Create a title based on period
                 if period == "daily":
