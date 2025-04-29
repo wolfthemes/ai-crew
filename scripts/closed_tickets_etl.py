@@ -23,7 +23,8 @@ today = date.today().strftime("%Y-%m-%d")
 DB_PATH = "data/db/closed_tickets.db"
 CRAWLED_PATH = "data/crawled/closed_tickets.json"
 PREPROCESSED_PATH = "data/dynamic/tickets/closed_tickets.json"
-BACKUP_DIR = r"G:\My Drive\DBBackup\ai-crew"
+#BACKUP_DIR = r"G:\My Drive\DBBackup\ai-crew"
+BACKUP_DIR = "/mnt/g/My Drive/DBBackup/ai-crew"
 STALE_TICKETS_DAYS_LIMIT = 7
 
 def close_stale_tickets():

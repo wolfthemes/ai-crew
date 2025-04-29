@@ -60,23 +60,24 @@ def main():
         print(f"❌ Preprocessed JSON file not found: {PREPROCESSED_PATH}")
         return
     
-    # 3. Empty the draft folder
-    if os.path.exists(DRAFT_PATH):
-        for item in os.listdir(DRAFT_PATH):
-            item_path = os.path.join(DRAFT_PATH, item)
-            if os.path.isfile(item_path):
-                os.remove(item_path)
-            elif os.path.isdir(item_path):
-                shutil.rmtree(item_path)
-    else:
+    # 3. Check the draft folder exists, but don't empty it
+    if not os.path.exists(DRAFT_PATH):
         # Create the directory if it doesn't exist
         os.makedirs(DRAFT_PATH, exist_ok=True)
-        
-    tickets = load_tickets_from_json(PREPROCESSED_PATH)
+            
+        tickets = load_tickets_from_json(PREPROCESSED_PATH)
 
     # 4. Loop through each ticket and save reply
     for ticket in tickets:
-        print(f"Ticket #{ticket['id']}: {ticket['subject']}")
+        # Check if draft already exists and is not empty
+        draft_file = os.path.join(DRAFT_PATH, f"draft_{ticket['id']}")
+        
+        # Skip if file exists and has content
+        if os.path.exists(draft_file) and os.path.getsize(draft_file) > 0:
+            print(f"Skipping Ticket #{ticket['id']}: Draft already exists")
+            continue
+            
+        print(f"Processing Ticket #{ticket['id']}: {ticket['subject']}")
         
         result = support_crew_with_research(ticket["last_message"], instruction="", ticket_id=ticket['id'])
         # Extract the actual string content from the TaskOutput object
@@ -89,7 +90,6 @@ def main():
             reply_html = str(result["reply"])
 
         # Save in draft DRAFT_PATH/draft_ticket['id']
-        draft_file = os.path.join(DRAFT_PATH, f"draft_{ticket['id']}")
         with open(draft_file, "w", encoding="utf-8") as f:
             f.write(reply_html)
 
