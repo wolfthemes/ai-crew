@@ -1,15 +1,18 @@
-# tasks/market/daily_report_tasks.py
+# tasks/market/updated_daily_report_tasks.py
 from datetime import date, datetime, timedelta
 import pytz
 from crewai import Task
 
-# Import agents - this ensures the agents are available for assignment
+# Import agents
 from agents.market.cisd_pattern_analyst_agent import cisd_pattern_analyst_agent
 from agents.market.economic_news_agent import economic_news_agent
 from agents.market.weekly_profile_analyst_agent import weekly_profile_analyst_agent
 from agents.market.session_analyst_agent import session_analyst_agent
 from agents.market.daily_bias_analyst_agent import daily_bias_analyst_agent
 from agents.market.daily_report_writer_agent import daily_report_writer_agent
+
+# Import the template
+from tasks.market.daily_report_template import DAILY_REPORT_TEMPLATE
 
 # Calculate relevant dates
 paris_tz = pytz.timezone('Europe/Paris')
@@ -211,63 +214,68 @@ analyze_cisd_patterns = Task(
 
 create_daily_report = Task(
     description=f"""
-    Compile a comprehensive EUR/USD daily market report for the London session on {today_str}.
+    Compile a EUR/USD daily market report for the London session on {today_str}.
+
+    CRITICAL INSTRUCTIONS:
+    1. You MUST use EXACTLY the template format provided at the end of this description.
+    2. You MUST only reference analytical frameworks that were actually mentioned in the inputs:
+       - Daily Bias framework with PDH/PDL, swing points, failure to displace, and Next Day Model
+       - Weekly Profile categories (Classic Expansion, Consolidation Reversal, Midweek Reversal)
+       - CISD patterns in M30 and M5 timeframes
+    3. DO NOT invent, hallucinate or make up:
+       - Price levels that weren't provided
+       - Technical indicators not mentioned in inputs
+       - Pattern classifications not supported by actual analysis
+       - Any form of price prediction not based on the specific frameworks
     
-    YOUR REPORT MUST INCLUDE THE FOLLOWING SECTIONS:
+    YOUR REPORT MUST STRICTLY FOLLOW THIS STRUCTURE:
     
-    1. TITLE: "EUR/USD Daily Report (London Session) – {today_str}"
+    ## EURUSD Pre-London Session Report
     
-    2. EXECUTIVE SUMMARY (100-150 words)
-       - Session bias statement (bullish/bearish/neutral) with confidence level
-       - Key price levels for today (previous day high/low, key targets)
-       - Major news impact assessment
-       - Trading viability assessment (high/medium/low probability environment)
+    ### Summary
+    [Brief summary of current market situation, weekly profile classification, Daily Bias framework results]
     
-    3. RECENT NEWS ANALYSIS (200-250 words)
-       - Summary of yesterday's events and their impact
-       - Early morning developments
-       - Today's scheduled high-impact events
-       - News-based market sentiment assessment
+    **The recommended bias for today is [bullish/bearish/neutral] with [low/medium/high] confidence.**
     
-    4. SESSION BIAS ANALYSIS (300-350 words)
-       - Next Day Model application and results
-       - Technical assessment of current conditions
-       - Volatility and trend metrics (ATR, Choppiness Index)
-       - London session-specific probabilities
+    ### Fundamental Context
+    [Brief reference to weekly outlook and how it connects to current price action]
     
-    5. SESSION TRADING FRAMEWORK (200-250 words)
-       - Sequential decision tree for trading approach
-       - Specific entry criteria and levels
-       - Target levels with clear price points
-       - Stop placement and risk management
+    ### Weekly profile
+    [Detailed analysis of the weekly profile pattern - Classic Expansion, Consolidation Reversal, or Midweek Reversal]
     
-    6. ACTION PLAN (100-150 words)
-       - Concrete, actionable trading guidance
-       - Timeframe-specific approach
-       - Key decision points during the session
-       - Final recommendation
+    ### Daily price action
+    [Analysis using the Daily Bias framework - PDH/PDL, swing points, failure to displace, Next Day Model]
     
-    FORMATTING REQUIREMENTS:
-    - Use proper Markdown formatting with headers, lists, tables
-    - Make key levels and price targets stand out (bold)
-    - Include section headers and sub-sections for readability
-    - Ensure the report is well-structured and professional
-    - Report should be concise but comprehensive, approximately 900-1200 words total
+    ### Asian/Frankfurt Session
+    [Recap of overnight and early morning price action]
+    
+    ### Technical specifics
+    [CISD pattern analysis for M30 and M5 timeframes, focus on 09:30-11:00 London entry window]
     
     IMPORTANT:
     - Be specific with price levels, times, and targets
-    - Focus specifically on the London session (08:00-16:00 London time)
-    - Explicitly reference the Daily Bias framework and Next Day model
-    - Provide actionable, time-specific insights for traders
-    - Ensure all analysis is data-driven and well-reasoned
-    - This is a PROFESSIONAL report - avoid vague language and ensure all claims are substantiated
+    - Focus on the London session (08:00-16:00)
+    - Only use the Daily Bias framework, Weekly Profile classifications, and CISD pattern methodology
+    - Make your analysis evidence-based using ONLY the inputs provided from the specialist agents
+    - If certain information is not available, acknowledge this in the report rather than making it up
+    - This report is generated at 07:45 London time to prepare for the London session
+    
+    YOUR REFERENCE TEMPLATE:
+    
+    {DAILY_REPORT_TEMPLATE}
     """,
     expected_output="""
-    Complete, professional EUR/USD daily market report for the London session in properly formatted Markdown,
-    approximately 900-1200 words with all sections fully completed.
+    A complete EUR/USD daily market report following the exact template structure:
+    - Title: "EURUSD Pre-London Session Report"
+    - Summary with clear bias statement
+    - Fundamental Context section
+    - Weekly profile section
+    - Daily price action section
+    - Asian/Frankfurt Session section
+    - Technical specifics section
     
-    The report should provide clear, actionable trading guidance specifically for today's London session,
-    with explicit references to the Daily Bias framework and Next Day model.
+    The report must only reference frameworks from the inputs (Daily Bias, Weekly Profile, CISD patterns)
+    and not include any fabricated technical analysis or price levels.
     """,
     agent=daily_report_writer_agent,
     async_execution=False
