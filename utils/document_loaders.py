@@ -71,7 +71,7 @@ def load_theme_meta():
 
 def load_kb_articles():
     return format_documents(
-        parse_json_file(os.path.join(DATA_FOLDER, "crawled/kb_articles.json")), 
+        parse_json_file(os.path.join(DATA_FOLDER, "crawled/ticksy_kb_articles.json")), 
         "kb_article",
         additional_metadata={
             # Extract any theme or builder mentions if possible

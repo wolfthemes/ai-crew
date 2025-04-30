@@ -60,7 +60,7 @@ def main():
             articles.append(article)
         time.sleep(1)  # be nice to the server
 
-    with open("data/crawled/wolfthemes_kb_articles.json", "w", encoding="utf-8") as f:
+    with open("data/crawled/ticksy_kb_articles.json", "w", encoding="utf-8") as f:
         json.dump(articles, f, indent=2, ensure_ascii=False)
     print(f"✅ Saved {len(articles)} articles to data/crawled/kb_articles.json")
 
