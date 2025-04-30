@@ -9,7 +9,7 @@ from agents.market.economic_news_agent import economic_news_agent
 from agents.market.weekly_profile_analyst_agent import weekly_profile_analyst_agent
 from agents.market.session_analyst_agent import session_analyst_agent
 from agents.market.daily_bias_analyst_agent import daily_bias_analyst_agent
-from agents.market.report_writer_agent import report_writer_agent
+from agents.market.daily_report_writer_agent import report_writer_agent
 
 # Calculate relevant dates
 paris_tz = pytz.timezone('Europe/Paris')

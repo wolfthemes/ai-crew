@@ -6,7 +6,7 @@ from agents.market.economic_news_agent import economic_news_agent
 from agents.market.fundamental_analyst_agent import fundamental_analyst_agent
 from agents.market.technical_analyst_agent import technical_analyst_agent
 from agents.market.sentiment_analyst_agent import sentiment_analyst_agent
-from agents.market.report_writer_agent import report_writer_agent
+from agents.market.daily_report_writer_agent import report_writer_agent
 
 # Calculate relevant dates
 today_date = date.today()

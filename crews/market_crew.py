@@ -11,7 +11,10 @@ from agents.market.economic_news_agent import economic_news_agent
 from agents.market.fundamental_analyst_agent import fundamental_analyst_agent 
 from agents.market.technical_analyst_agent import technical_analyst_agent
 from agents.market.sentiment_analyst_agent import sentiment_analyst_agent
-from agents.market.report_writer_agent import report_writer_agent
+from agents.market.weekly_report_writer_agent import weekly_report_writer_agent
+
+
+from agents.market.daily_report_writer_agent import daily_report_writer_agent
 from agents.market.session_analyst_agent import session_analyst_agent
 from agents.market.weekly_profile_analyst_agent import weekly_profile_analyst_agent
 from agents.market.daily_bias_analyst_agent import daily_bias_analyst_agent
@@ -87,7 +90,8 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
             print(f"   - {tool.name}: {tool.description[:60]}...")
         
         # Set the tools for the report writer agent
-        report_writer_agent.tools = report_writer_tools
+        weekly_report_writer_agent.tools = report_writer_tools
+        daily_report_writer_agent.tools = report_writer_tools
     else:
         print("⚠️ No tools added to report writer agent")
     
@@ -142,7 +146,7 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
             weekly_profile_analyst_agent,
             daily_bias_analyst_agent,
             cisd_pattern_analyst_agent,
-            report_writer_agent
+            daily_report_writer_agent
         ]
     else:  # weekly
         tasks = [
@@ -157,7 +161,7 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         agents = [
             economic_news_agent, 
             technical_analyst_agent,
-            report_writer_agent
+            weekly_report_writer_agent
         ]
     
     if period == "weekly":

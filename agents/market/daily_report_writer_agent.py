@@ -6,7 +6,7 @@ from tools.file_writer import SaveToMarkdown
 from crewai import Agent
 from core.llm_config import get_llm
 
-report_writer_agent = Agent(
+daily_report_writer_agent = Agent(
     role="Report Writer Agent",
     goal="Compile comprehensive, well-structured EUR/USD London session analysis reports",
     tools=[],  # Tools will be added in the run_market_analysis function
