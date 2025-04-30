@@ -7,13 +7,29 @@ __pycache__/
 # Ignore dynamic data
 data/faiss_store/*
 data/db/*.db
+!data/db/.gitkeep
+
 data/dynamic/**/*.json
+!data/dynamic/.gitkeep
+
 data/crawled/*.json
 data/crawled/*.csv
+!data/dynamic/.gitkeep
+
 data/cache/*.json
+
 data/reports/*.json
+!data/reports/.gitkeep
+!data/reports/daily/.gitkeep
+!data/reports/weekly/.gitkeep
+
 data/themes/scraped/*.json
+
 data/dynamic/editor/*
+!data/dynamic/editor/.gitkeep
+data/dynamic/tickets/*
+!data/dynamic/tickets/.gitkeep
+
 *.log
 logs/
 
