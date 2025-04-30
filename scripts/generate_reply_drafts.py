@@ -65,7 +65,7 @@ def main():
         # Create the directory if it doesn't exist
         os.makedirs(DRAFT_PATH, exist_ok=True)
             
-        tickets = load_tickets_from_json(PREPROCESSED_PATH)
+    tickets = load_tickets_from_json(PREPROCESSED_PATH)
 
     # 4. Loop through each ticket and save reply
     for ticket in tickets:
