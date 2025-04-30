@@ -4,9 +4,11 @@ import pytz
 from crewai import Task
 
 # Import agents - this ensures the agents are available for assignment
-from agents.market.economic_news_agent import economic_news_agent  
-from agents.market.technical_analyst_agent import technical_analyst_agent
+from agents.market.cisd_pattern_analyst_agent import cisd_pattern_analyst_agent
+from agents.market.economic_news_agent import economic_news_agent
+from agents.market.weekly_profile_analyst_agent import weekly_profile_analyst_agent
 from agents.market.session_analyst_agent import session_analyst_agent
+from agents.market.daily_bias_analyst_agent import daily_bias_analyst_agent
 from agents.market.report_writer_agent import report_writer_agent
 
 # Calculate relevant dates
@@ -61,62 +63,149 @@ collect_daily_news = Task(
     async_execution=False
 )
 
-analyze_daily_bias = Task(
+analyze_weekly_profile = Task(
     description=f"""
-    Analyze today's EUR/USD trading bias for the London session ({today_str}) using the Daily Bias framework and Next Day model.
+    Analyze EUR/USD to determine the current weekly profile pattern and how it impacts today's ({today_str}) London session bias.
     
     YOUR ANALYSIS MUST INCLUDE:
     
-    1. PREVIOUS DAY ANALYSIS
-       - Previous day's high, low, open, close prices
-       - Range calculation and assessment
-       - Close position within the daily range
+    1. WEEKLY PROFILE IDENTIFICATION
+       - Current weekly profile classification (Classic Expansion, Consolidation Reversal, or Midweek Reversal)
+       - Assessment of Monday-Tuesday price action
+       - How Wednesday's action confirms or changes the profile
+       - Projected development for the remainder of the week
     
-    2. NEXT DAY MODEL APPLICATION
+    2. PROFILE-SPECIFIC CHARACTERISTICS
+       - Key characteristics of the identified weekly profile
+       - Typical progression of the identified pattern
+       - High-probability days within the current profile
+       - Potential reversal points based on profile structure
+    
+    3. WEEKLY RANGE DEVELOPMENT
+       - Current week's range relative to previous week
+       - Range expansion or consolidation assessment
+       - Key range boundaries and potential extension targets
+    
+    4. TODAY'S SESSION CONTEXT
+       - How today's London session fits within the weekly profile
+       - Session-specific probabilities based on the current day of week
+       - Optimal trading approach given the weekly context
+       - Key levels to monitor for profile confirmation or invalidation
+    
+    Provide specific references to scenarios illustrated in the Weekly Profile Guide when applicable.
+    Focus on practical, actionable insights for today's London session.
+    """,
+    expected_output="""
+    A comprehensive analysis of EUR/USD's current weekly profile with:
+    1. Clear weekly profile identification
+    2. Detailed profile characteristics
+    3. Weekly range development assessment
+    4. Today's London session context within the weekly profile
+    
+    The analysis should be data-driven and immediately actionable for a London session trader.
+    """,
+    agent=weekly_profile_analyst_agent,
+    async_execution=False
+)
+
+analyze_daily_bias = Task(
+    description=f"""
+    Analyze EUR/USD using the Daily Bias framework to determine the directional bias for today's London session ({today_str}).
+    
+    YOUR ANALYSIS MUST INCLUDE:
+    
+    1. PREVIOUS DAY HIGH & LOW
+       - Previous day's high, low, open, close prices
+       - Analysis of how these levels might function as liquidity draws
+       - Potential for reversals framed off PDH and PDL
+    
+    2. PREVIOUS WEEK HIGH & LOW
+       - How current price relates to previous week's range
+       - Potential for weekly range expansion or contraction
+    
+    3. SWING POINTS
+       - Identification of significant swing highs and lows
+       - Assessment of potential liquidity draws at these points
+       - Framework for reversals off key swing points
+    
+    4. FAILURE TO DISPLACE
+       - Analysis of any failure to displace over old highs/lows
+       - How these failures might frame potential reversals
+    
+    5. NEXT DAY MODEL
        - Apply the Next Day Model based on previous day's close position
        - Determine immediate directional bias (bullish/bearish/neutral)
        - Calculate confidence level based on close extremity
        - Identify key price targets based on the model
     
-    3. CURRENT TECHNICAL ASSESSMENT
-       - Current price relative to previous day's range
-       - H4 chart trend direction
-       - Key support/resistance levels
-       - Volatility assessment using ATR
-       - Choppiness Index reading to determine trend vs. ranging conditions
-    
-    4. LONDON SESSION FRAMEWORK
-       - Explicit London session bias statement (bullish/bearish/neutral)
-       - Confidence level assessment (high/medium/low)
-       - Key levels for session entries and exits
-       - Potential price targets for the session
-       - Risk management parameters
-    
-    5. SEQUENTIAL DECISION TREE
-       - Create a step-by-step trading plan for the session
-       - Specify confirmation and invalidation levels
-       - Provide multiple scenarios based on early price action
-    
-    6. PDF FRAMEWORK IMPLEMENTATION
-       - Reference concepts from the Daily Bias PDF framework
-       - Apply the Weekly Profile concept if relevant
-       - Utilize specific terminology from the framework documents
-       - Clearly mark when you're applying framework-specific concepts
-    
     Your analysis should be detailed, precise, and actionable, with specific price levels mentioned throughout.
-    Focus on creating a clear roadmap for trading the London session today.
+    Focus on creating a clear bias directive for trading the London session today.
     """,
     expected_output="""
     A comprehensive analysis of today's EUR/USD London session trading bias with:
     1. Clear directional bias statement with confidence level
-    2. Specific price levels for entry, stop, and targets
-    3. Session-specific probabilities and scenarios
-    4. Complete sequential trading framework
-    5. Explicit references to the Daily Bias framework and Next Day model
+    2. Specific price levels for the Previous Day High & Low
+    3. Analysis of Previous Week High & Low relevance
+    4. Identification of key Swing Points
+    5. Assessment of any Failure To Displace scenarios
+    6. Next Day Model application and projection
     
     The analysis should be data-driven and immediately actionable for a London session trader.
     """,
-    agent=session_analyst_agent,
+    agent=daily_bias_analyst_agent,
+    async_execution=False
+)
+
+analyze_cisd_patterns = Task(
+    description=f"""
+    Analyze the current M30 and M5 charts for EUR/USD to identify potential CISD patterns
+    for today's London session trading on {today_str}.
+    
+    YOUR ANALYSIS MUST INCLUDE:
+    
+    1. M30 CISD IDENTIFICATION
+       - Current Change in State of Delivery on M30 timeframe
+       - Key breaker blocks, order blocks, and fair value gaps
+       - Direction bias relative to daily trend
+       - Key levels within the CISD range (support/resistance points)
+    
+    2. M5 ENTRY PATTERN SETUP
+       - Potential M5 CISD formation zones
+       - Optimal entry criteria within the M30 CISD range
+       - Trigger conditions for entry execution
+       - Confirmation signals for direction validation
+    
+    3. DAILY BIAS ALIGNMENT
+       - How the current CISD aligns with the Daily Bias framework
+       - Previous Day High & Low analysis
+       - Failure to Displace considerations
+       - Next Day Model application
+    
+    4. WEEKLY PROFILE CONTEXT
+       - Current weekly profile classification (classic expansion, consolidation reversal, or midweek reversal)
+       - Key pattern characteristics observed this week
+       - How today's CISD fits into the weekly structure
+    
+    5. PROBABILITY ASSESSMENT
+       - Confidence rating for identified patterns
+       - Alignment with daily/weekly bias direction
+       - Time window considerations for optimal execution (09:30-11:00 London)
+    
+    Focus specifically on identifying actionable patterns for the 09:30-11:00 London
+    entry window, with clear entry, stop and target parameters.
+    """,
+    expected_output="""
+    Detailed analysis of current CISD pattern opportunities with:
+    1. Clear identification of active M30 CISD patterns
+    2. Specific M5 entry zones within these patterns
+    3. Precise price levels for entry, stop and targets
+    4. Daily Bias framework alignment
+    5. Weekly profile context
+    6. Probability assessment for pattern completion
+    
+    The analysis should be immediately actionable for London session trading.
+    """,
+    agent=cisd_pattern_analyst_agent,
     async_execution=False
 )
 

@@ -13,6 +13,9 @@ from agents.market.technical_analyst_agent import technical_analyst_agent
 from agents.market.sentiment_analyst_agent import sentiment_analyst_agent
 from agents.market.report_writer_agent import report_writer_agent
 from agents.market.session_analyst_agent import session_analyst_agent
+from agents.market.weekly_profile_analyst_agent import weekly_profile_analyst_agent
+from agents.market.daily_bias_analyst_agent import daily_bias_analyst_agent
+from agents.market.cisd_pattern_analyst_agent import cisd_pattern_analyst_agent
 from scripts.post_report_to_notion import post_report_to_notion
 
 # Import tasks
@@ -26,7 +29,9 @@ from tasks.market.weekly_report_tasks import (
 
 from tasks.market.daily_report_tasks import (
     collect_daily_news,
+    analyze_weekly_profile,
     analyze_daily_bias,
+    analyze_cisd_patterns,
     create_daily_report
 )
 
@@ -125,14 +130,18 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         # For daily reports, we use the session analyst for daily bias analysis
         tasks = [
             collect_daily_news,
+            analyze_weekly_profile,
             analyze_daily_bias,
+            analyze_cisd_patterns,
             create_daily_report
         ]
 
         # Create the agent list based on period
         agents = [
-            economic_news_agent, 
-            session_analyst_agent,
+            economic_news_agent,
+            weekly_profile_analyst_agent,
+            daily_bias_analyst_agent,
+            cisd_pattern_analyst_agent,
             report_writer_agent
         ]
     else:  # weekly
