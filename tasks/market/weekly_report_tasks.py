@@ -1,240 +1,315 @@
 # tasks/market/weekly_report_tasks.py
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
+import pytz
 from crewai import Task
 
+# Import agents
 from agents.market.economic_news_agent import economic_news_agent
 from agents.market.fundamental_analyst_agent import fundamental_analyst_agent
 from agents.market.technical_analyst_agent import technical_analyst_agent
 from agents.market.sentiment_analyst_agent import sentiment_analyst_agent
-from agents.market.daily_report_writer_agent import report_writer_agent
+from agents.market.weekly_report_writer_agent import weekly_report_writer_agent
 
 # Calculate relevant dates
-today_date = date.today()
-past_week_start = (today_date - timedelta(days=7)).strftime("%Y-%m-%d")
-today_date_str = today_date.strftime("%Y-%m-%d")
-upcoming_week_end = (today_date + timedelta(days=7)).strftime("%Y-%m-%d")
+paris_tz = pytz.timezone('Europe/Paris')
+paris_now = datetime.now(paris_tz)
+today_date = paris_now.date()
+today_str = today_date.strftime("%Y-%m-%d")
+week_start = today_date - timedelta(days=today_date.weekday())
+week_end = week_start + timedelta(days=6)
+week_start_str = week_start.strftime("%Y-%m-%d")
+week_end_str = week_end.strftime("%Y-%m-%d")
 
-# Define tasks
+# Define tasks with explicit agent assignments
 collect_fxstreet_news = Task(
     description=f"""
-    Collect and analyze the latest EUR/USD news from FXStreet, focusing on high-impact red news events.
+    Collect and analyze upcoming EUR/USD economic events from FXStreet for the week of {week_start_str} to {week_end_str}.
     
-    Focus on:
-    1. Major economic data releases for both EUR and USD
-    2. ECB and Federal Reserve policy announcements and member speeches
-    3. Market reaction to these events in the past week ({past_week_start} to {today_date_str})
-    4. Upcoming high-impact events for next week ({today_date_str} to {upcoming_week_end})
+    YOUR ANALYSIS MUST INCLUDE:
     
-    Create two separate sections in your analysis:
+    1. HIGH-IMPACT EVENTS
+       - All high-impact events for EUR and USD during the week
+       - Expected market impact and analysis of potential outcomes
+       - Previous readings and market reactions for similar events
+       - Analysis of potential volatility around these events
     
-    SECTION 1: PAST WEEK REVIEW
-    - Major economic events that impacted EUR/USD
-    - Market reactions to these events
-    - Surprises or deviations from expectations
+    2. CENTRAL BANK FOCUS
+       - Any ECB or Federal Reserve communications
+       - Key speakers and their historical market impact
+       - Policy expectations and potential surprises
+       - Policy divergence analysis between ECB and Fed
     
-    SECTION 2: UPCOMING EVENTS
-    - Create a table of upcoming events with:
-      * Date
-      * Currency affected (EUR or USD)
-      * Event name
-      * Expected impact (High, Medium, Low) - focus on High impact (red) news
-      * Previous reading and forecast if available
+    3. ECONOMIC DATA TRENDS
+       - Compare current data releases to previous periods
+       - Identify trends in economic indicators
+       - Analyze surprise potential based on economist forecasts
+       - Potential market reaction scenarios to different outcomes
     
-    Filter for the most important events that are likely to move EUR/USD significantly.
-    Use FXStreet's categorization of "red" high-impact news as your primary filter.
+    4. MARKET POSITIONING AHEAD OF EVENTS
+       - How traders are likely positioned before key events
+       - Potential for liquidity events around major releases
+       - Risk scenarios for unexpected outcomes
+    
+    Use the get_fxstreet_events utility function to retrieve the current week's economic events.
+    Your analysis should be comprehensive but focused on the most market-moving events.
+    """,
+    expected_output="""
+    A detailed analysis of upcoming economic events for EUR/USD with:
+    1. All high-impact events listed chronologically
+    2. Central bank communications and implications
+    3. Economic data trend analysis 
+    4. Market positioning insights
+    
+    The analysis should be concise, specific, and actionable for trading decisions.
     """,
     agent=economic_news_agent,
-    expected_output="Comprehensive analysis of past and upcoming EUR/USD economic events from FXStreet, with special focus on high-impact red news."
+    async_execution=False
 )
 
 analyze_technical_factors = Task(
     description=f"""
-    Conduct a detailed technical analysis of EUR/USD focusing on:
+    Conduct a comprehensive technical analysis of EUR/USD across multiple timeframes for the week ahead.
     
-    1. PRICE ACTION ANALYSIS
-       - Recent price action from {past_week_start} to {today_date_str}
-       - Major price levels that were tested/broken
-       - Chart patterns (e.g., head and shoulders, double tops/bottoms, triangles)
-       - Candlestick patterns (e.g., dojis, hammers, engulfing patterns)
+    YOUR ANALYSIS MUST INCLUDE:
     
-    2. SUPPORT & RESISTANCE ANALYSIS
-       - Identify key support levels with specific price points
-       - Identify key resistance levels with specific price points
-       - Note which levels are stronger based on historical tests/rejections
+    1. MULTIPLE TIMEFRAME ASSESSMENT
+       - Monthly chart: long-term trend and major structural levels
+       - Weekly chart: intermediate trend and key weekly levels
+       - Daily chart: short-term trend and daily supply/demand zones
+       - 4-hour chart: near-term market structure and potential trading setups
     
-    3. INDICATOR ANALYSIS
-       - Moving averages (50 MA, 100 MA, 200 MA) - positions and crossovers
-       - RSI (Relative Strength Index) - overbought/oversold conditions, divergences
-       - MACD - signal line crossovers, histogram trends
-       - Bollinger Bands - squeezes, breakouts, trend direction
+    2. KEY PRICE LEVELS
+       - Major support and resistance zones
+       - Previous week's high and low
+       - Monthly/quarterly opens and closes
+       - Psychological round numbers
+       - Daily swing points and their significance
     
-    4. TREND ANALYSIS
-       - Current trend direction (bullish, bearish, or ranging)
-       - Trend strength (strong, moderate, weak)
-       - Potential trend reversal signals
+    3. MARKET STRUCTURE ANALYSIS
+       - Higher timeframe market structure
+       - Liquidity levels and potential liquidity engineering
+       - Change in character analysis
+       - Support/resistance flips and their implications
     
-    5. TECHNICAL OUTLOOK
-       - Provide short-term (1-3 days) technical outlook
-       - Provide medium-term (1-2 weeks) technical outlook
-       - Identify key technical levels to watch
-       - Technical-based price targets (both upside and downside scenarios)
+    4. TECHNICAL INDICATORS
+       - Moving average relationships (20/50/200)
+       - Relative Strength Index conditions
+       - Potential divergences on multiple timeframes
+       - Volatility indicators (ATR, Bollinger Bands)
+    
+    5. WEEKLY PATTERN PROJECTIONS
+       - Classic Expansion potential
+       - Consolidation Reversal scenarios
+       - Midweek Reversal possibilities
+       - Optimal day-of-week entry probabilities
     
     Your analysis should be detailed, precise, and actionable, with specific price levels mentioned throughout.
-    Use technical analysis terminology correctly and explain your reasoning.
+    Focus on creating a clear technical framework for the coming week's trading.
+    """,
+    expected_output="""
+    A comprehensive technical analysis of EUR/USD with:
+    1. Multiple timeframe assessment
+    2. Specific price levels for support, resistance, and targets
+    3. Detailed market structure analysis
+    4. Technical indicator readings across timeframes
+    5. Weekly pattern projections
+    
+    The analysis should provide a complete technical picture for the coming trading week.
     """,
     agent=technical_analyst_agent,
-    expected_output="Comprehensive 500-700 word technical analysis with precise support/resistance levels, indicator readings, and actionable outlook."
+    async_execution=False
 )
 
 conduct_fundamental_analysis = Task(
     description=f"""
-    Conduct a comprehensive fundamental analysis of EUR/USD, focusing on:
+    Analyze the fundamental factors affecting EUR/USD for the week ahead, focusing on both short and medium-term drivers.
     
-    1. MONETARY POLICY ANALYSIS
-       - Current ECB monetary policy stance and recent changes
-       - Current Federal Reserve monetary policy stance and recent changes
-       - Interest rate differentials and expectations
-       - Balance sheet policies and quantitative measures
-       - Forward guidance from both central banks
+    YOUR ANALYSIS MUST INCLUDE:
     
-    2. ECONOMIC DATA ANALYSIS
-       - Comparative GDP growth between Eurozone and US
-       - Inflation differentials and trends
-       - Employment data comparison
-       - Manufacturing and services sector performance
-       - Consumer confidence and spending metrics
+    1. MONETARY POLICY DIVERGENCE
+       - ECB vs Fed policy stance comparison
+       - Interest rate differential analysis
+       - Quantitative tightening/easing programs
+       - Forward guidance expectations
+       - Policy meeting schedules and potential outcomes
     
-    3. GEOPOLITICAL FACTORS
-       - Current geopolitical risks affecting the Euro
-       - Current geopolitical risks affecting the US Dollar
-       - Trade tensions or agreements
-       - Political stability and election impacts (if relevant)
+    2. ECONOMIC GROWTH DYNAMICS
+       - GDP growth comparison between Eurozone and US
+       - Leading economic indicators differential
+       - Recovery trajectories post-pandemic
+       - Business sentiment in both regions
+       - Consumer strength comparison
     
-    4. FLOW ANALYSIS
-       - Capital flows between Eurozone and US
-       - Trade balance dynamics
-       - Portfolio and investment flows
-       - Central bank reserves and currency diversification
+    3. INFLATION OUTLOOK
+       - CPI/PCE trends in both economies
+       - Core vs headline inflation divergence
+       - Producer price developments
+       - Wage growth pressures
+       - Inflation expectations
     
-    5. FUNDAMENTAL OUTLOOK
-       - Provide a short-term (1-2 weeks) fundamental outlook
-       - Provide a medium-term (1-3 months) fundamental outlook
-       - Identify key fundamental factors likely to drive EUR/USD
-       - Potential fundamental-based price targets or ranges
+    4. GEOPOLITICAL CONSIDERATIONS
+       - Trade relationships
+       - Energy dependency in Europe
+       - Political stability factors
+       - Regulatory developments
+       - Global risk sentiment drivers
     
-    Your analysis should be detailed, data-driven, and focus on how these fundamental factors translate into potential currency movements.
-    Use specific data points and statistics where relevant.
+    5. FUNDAMENTAL BIAS PROJECTION
+       - Short-term (1-2 weeks) fundamental bias
+       - Medium-term (1-3 months) outlook
+       - Potential fundamental shifts on the horizon
+       - Key data to watch that could change the outlook
+    
+    Your analysis should be thorough but focused on factors most likely to drive EUR/USD price action.
+    Include a clear fundamental bias statement with rationale.
+    """,
+    expected_output="""
+    A comprehensive fundamental analysis of EUR/USD with:
+    1. Detailed monetary policy divergence assessment
+    2. Economic growth comparison between regions
+    3. Inflation trajectory analysis for both economies
+    4. Relevant geopolitical factors affecting the pair
+    5. Clear fundamental bias projection with timeframes
+    
+    The analysis should be well-reasoned and directly tied to potential price movement.
     """,
     agent=fundamental_analyst_agent,
-    expected_output="Detailed 500-700 word fundamental analysis covering monetary policy, economic data, geopolitical factors, and data-driven outlook."
+    async_execution=False
 )
 
 analyze_market_sentiment = Task(
     description=f"""
-    Conduct a thorough sentiment analysis for EUR/USD currency pair, focusing on:
+    Analyze the current market sentiment for EUR/USD, including positioning, sentiment indicators, and risk drivers.
+    
+    YOUR ANALYSIS MUST INCLUDE:
     
     1. POSITIONING DATA
-       - CFTC Commitment of Traders (COT) data for EUR/USD
-       - Changes in net positioning from institutional and speculative traders
-       - Identify potential extreme positioning that could lead to reversals
+       - COT (Commitment of Traders) report analysis
+       - Large speculator net positioning
+       - Commercial hedger activity
+       - Retail sentiment indicators
+       - Position adjustments over recent weeks
     
-    2. SOCIAL MEDIA SENTIMENT
-       - Analyze sentiment on X (Twitter) from major forex accounts and hashtags
-       - Monitor Reddit communities (r/Forex, r/Trading, etc.)
-       - Track StockTwits and other retail trading platforms
-       - Identify sentiment shifts and consensus views
+    2. RISK SENTIMENT ASSESSMENT
+       - Risk-on/risk-off environment
+       - Correlation with equity markets
+       - Safe haven flows
+       - Volatility regime analysis
+       - Dollar strength/weakness context
     
-    3. INSTITUTIONAL OUTLOOK
-       - Summarize major bank forecasts for EUR/USD
-       - Note recent changes in institutional outlook
-       - Highlight consensus views and contrarian opinions
+    3. SENTIMENT INDICATORS
+       - Put/call ratios relevant to FX markets
+       - Economic surprise indices for EUR and USD
+       - Consumer/business confidence comparisons
+       - Institutional outlook surveys
+       - Social media sentiment trends
     
-    4. RETAIL SENTIMENT
-       - Analyze broker positioning ratios (percentage of clients long vs. short)
-       - Identify changes in retail positioning
-       - Look for extreme readings that might signal contrarian opportunities
+    4. CONTRARIAN SIGNALS
+       - Extreme positioning situations
+       - Sentiment divergence from price
+       - Potential capitulation signals
+       - Complacency indicators
+       - Consensus trade identification
     
-    5. SENTIMENT INDICATORS
-       - Fear & Greed indicators for forex markets
-       - Put/Call ratios or similar derivatives sentiment metrics
-       - Volatility expectations
+    5. SENTIMENT BIAS PROJECTION
+       - Short-term sentiment direction
+       - Potential sentiment shifts on the horizon
+       - Data releases that could change sentiment
+       - Sentiment-driven price targets
+       - Contrarian trade opportunities
     
-    6. SENTIMENT OUTLOOK
-       - Identify consensus view and potential contrarian opportunities
-       - Note markets where sentiment appears stretched or vulnerable to reversal
-       - Provide insights on how sentiment might influence price action
+    Your analysis should provide a clear picture of market sentiment and its potential impact on price.
+    Include both quantitative and qualitative sentiment measures.
+    """,
+    expected_output="""
+    A comprehensive market sentiment analysis for EUR/USD with:
+    1. Detailed positioning data interpretation
+    2. Current risk sentiment assessment
+    3. Key sentiment indicator readings
+    4. Potential contrarian signals
+    5. Clear sentiment bias projection
     
-    Your analysis should be data-driven where possible, noting specific sentiment readings or percentages.
-    Focus on how sentiment differs between retail and institutional traders, and where it might be providing trading opportunities.
+    The analysis should connect sentiment factors directly to trading implications.
     """,
     agent=sentiment_analyst_agent,
-    expected_output="Detailed 400-600 word sentiment analysis covering positioning data, social media trends, and institutional vs. retail sentiment dynamics."
+    async_execution=False
 )
 
 create_weekly_report = Task(
     description=f"""
-    Compile a comprehensive professional EUR/USD weekly market report for the period {past_week_start} to {upcoming_week_end}.
+    Compile a comprehensive EUR/USD weekly market report for the week of {week_start_str} to {week_end_str}.
     
     YOUR REPORT MUST INCLUDE THE FOLLOWING SECTIONS:
     
-    1. TITLE: "EUR/USD Weekly Report – {today_date_str}"
+    1. TITLE: "EUR/USD Weekly Report – {today_str}"
     
     2. EXECUTIVE SUMMARY (150-200 words)
-       - Brief overview of current EUR/USD status and key points
-       - Major price movements from past week
-       - Key drivers (summarize most important fundamental and technical factors)
-       - Short outlook statement
+       - Weekly bias statement (bullish/bearish/neutral) with confidence level
+       - Key price levels to watch (support, resistance, targets)
+       - Major news events for the coming week
+       - Weekly trading strategy recommendation
     
-    3. ECONOMIC EVENTS REVIEW AND FORECAST (400-500 words)
-       - Summary of past week's major economic events and their impact
-       - Table of upcoming economic events with dates, currency affected, and expected impact
-       - Focus especially on high-impact "red" FXStreet events
+    3. PREVIOUS WEEK RECAP (150-200 words)
+       - Price action review of the previous week
+       - Key levels that were tested
+       - Important news events and market reactions
+       - Weekly close assessment
     
-    4. TECHNICAL ANALYSIS (500-700 words)
-       - Price action analysis with specific price points
-       - Support and resistance levels (with exact numbers)
-       - Indicator readings and interpretation
-       - Chart patterns and potential breakout/breakdown scenarios
-       - Technical outlook with specific targets
+    4. FUNDAMENTAL OUTLOOK (250-300 words)
+       - Monetary policy comparison (ECB vs Fed)
+       - Economic growth dynamics
+       - Inflation outlook for both economies
+       - Geopolitical factors affecting EUR/USD
+       - Fundamental bias statement with rationale
     
-    5. FUNDAMENTAL ANALYSIS (500-700 words)
-       - Monetary policy comparison
-       - Economic data analysis
-       - Geopolitical factors
-       - Flow analysis
-       - Fundamental outlook with reasoning
+    5. TECHNICAL ANALYSIS (300-350 words)
+       - Multiple timeframe assessment
+       - Key support and resistance zones
+       - Market structure analysis
+       - Technical indicator readings
+       - Weekly pattern identification (Classic Expansion, Consolidation Reversal, or Midweek Reversal)
     
-    6. SENTIMENT ANALYSIS (400-500 words)
-       - Positioning data and extremes
-       - Social media sentiment trends
-       - Institutional vs. retail outlook
-       - Contrarian opportunities
+    6. MARKET SENTIMENT (200-250 words)
+       - Positioning data analysis
+       - Risk sentiment assessment
+       - Sentiment indicators review
+       - Contrarian signals
+       - Sentiment bias projection
     
-    7. TRADING SCENARIOS (300-400 words)
-       - Bullish scenario with entry points, targets, and stop levels
-       - Bearish scenario with entry points, targets, and stop levels
-       - Key risk events to watch
-       - Risk management considerations
+    7. ECONOMIC CALENDAR (150-200 words)
+       - Table of key economic events for the week
+       - Impact assessment for each major release
+       - Volatility expectations around events
+       - Watch points for potential surprises
     
-    8. CONCLUSION (150-200 words)
-       - Summary of main points
-       - Primary outlook for EUR/USD
-       - Final thoughts and recommendation
+    8. WEEKLY TRADING PLAN (200-250 words)
+       - Day-by-day approach for the week
+       - Key levels for entries and exits
+       - Risk management parameters
+       - Session-specific opportunities (London, NY)
+       - Contingency scenarios
     
     FORMATTING REQUIREMENTS:
     - Use proper Markdown formatting with headers, lists, tables
-    - Make support/resistance levels and price targets stand out
+    - Make key levels and price targets stand out (bold)
     - Include section headers and sub-sections for readability
     - Ensure the report is well-structured and professional
-    - Report should be comprehensive, approximately 2000-3000 words total
+    - Report should be comprehensive, approximately 1400-1750 words total
     
     IMPORTANT:
-    - Be specific with price levels, dates, and targets
-    - Provide actionable insights for traders
+    - Be specific with price levels, times, and targets
+    - Provide both weekly context and day-specific insights
     - Ensure all analysis is data-driven and well-reasoned
     - This is a PROFESSIONAL report - avoid vague language and ensure all claims are substantiated
-    - Make sure NOTHING is cut off or incomplete - the entire report must be delivered in full
+    - Focus on actionable insights that can be implemented in a trading plan
     """,
-    agent=report_writer_agent,
-    expected_output="Complete, professional EUR/USD weekly market report in properly formatted Markdown, approximately 2000-3000 words with all sections fully completed."
+    expected_output="""
+    Complete, professional EUR/USD weekly market report in properly formatted Markdown,
+    approximately 1400-1750 words with all sections fully completed.
+    
+    The report should provide clear, actionable trading guidance for the coming week,
+    with specific levels, strategies, and a day-by-day approach.
+    """,
+    agent=weekly_report_writer_agent,
+    async_execution=False
 )

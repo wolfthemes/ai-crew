@@ -2,14 +2,16 @@
   "generated_on": "2025-04-30",
   "report_type": "daily",
   "posted_to_notion": true,
-  "report_length": 7126,
+  "report_length": 6413,
   "report_file_path": "data/daily/eurusd_daily_report_2025-04-30.md",
+  "tradable_day": true,
   "session_focus": "London",
-  "generation_time": "15:14",
+  "generation_time": "15:44",
   "agents_used": [
     "Economic News Agent",
-    "Technical Analyst Agent",
-    "Session Analyst Agent",
-    "Report Writer Agent"
+    "Weekly Profile Analyst Agent",
+    "Daily Bias Analyst Agent",
+    "CISD Pattern Analyst Agent",
+    "Daily Report Writer Agent"
   ]
 }

@@ -9,7 +9,7 @@ from agents.market.economic_news_agent import economic_news_agent
 from agents.market.weekly_profile_analyst_agent import weekly_profile_analyst_agent
 from agents.market.session_analyst_agent import session_analyst_agent
 from agents.market.daily_bias_analyst_agent import daily_bias_analyst_agent
-from agents.market.daily_report_writer_agent import report_writer_agent
+from agents.market.daily_report_writer_agent import daily_report_writer_agent
 
 # Calculate relevant dates
 paris_tz = pytz.timezone('Europe/Paris')
@@ -269,6 +269,6 @@ create_daily_report = Task(
     The report should provide clear, actionable trading guidance specifically for today's London session,
     with explicit references to the Daily Bias framework and Next Day model.
     """,
-    agent=report_writer_agent,
+    agent=daily_report_writer_agent,
     async_execution=False
 )

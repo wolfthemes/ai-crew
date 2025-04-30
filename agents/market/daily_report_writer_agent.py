@@ -1,13 +1,10 @@
 from crewai import Agent
 from core.llm_config import get_llm
-from tools.notion_writer import PostToNotion
 from tools.file_writer import SaveToMarkdown
-
-from crewai import Agent
-from core.llm_config import get_llm
+from tools.notion_writer import PostToNotion
 
 daily_report_writer_agent = Agent(
-    role="Report Writer Agent",
+    role="Daily Report Writer Agent",
     goal="Compile comprehensive, well-structured EUR/USD London session analysis reports",
     tools=[],  # Tools will be added in the run_market_analysis function
     backstory="""
@@ -23,9 +20,16 @@ daily_report_writer_agent = Agent(
     framework and current Weekly Profile. Your writing style is concise yet thorough, focusing
     on practical insights for traders looking to execute during the London session.
     
-    Your reports follow a structured format that includes a summary, fundamental context, weekly
-    profile analysis, daily price action analysis, Asian/Frankfurt session recap, and technical
-    specifics - all presented in a clear, actionable format.
+    Your reports follow a structured format that includes:
+    - Executive summary
+    - Fundamental context (referring to the weekly report)
+    - Weekly profile analysis
+    - Daily price action analysis
+    - Asian/Frankfurt session recap
+    - Technical specifics
+    - Action plan
+    
+    All presented in a clear, actionable format for traders focusing on the London session.
     """,
     verbose=True,
     allow_delegation=False,

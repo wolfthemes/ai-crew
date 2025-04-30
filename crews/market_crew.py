@@ -11,10 +11,8 @@ from agents.market.economic_news_agent import economic_news_agent
 from agents.market.fundamental_analyst_agent import fundamental_analyst_agent 
 from agents.market.technical_analyst_agent import technical_analyst_agent
 from agents.market.sentiment_analyst_agent import sentiment_analyst_agent
-from agents.market.weekly_report_writer_agent import weekly_report_writer_agent
-
-
 from agents.market.daily_report_writer_agent import daily_report_writer_agent
+from agents.market.weekly_report_writer_agent import weekly_report_writer_agent
 from agents.market.session_analyst_agent import session_analyst_agent
 from agents.market.weekly_profile_analyst_agent import weekly_profile_analyst_agent
 from agents.market.daily_bias_analyst_agent import daily_bias_analyst_agent
@@ -42,6 +40,8 @@ from tasks.market.daily_report_tasks import (
 from tools.file_writer import SaveToMarkdown
 from utils.fxstreet_events_downloader import get_fxstreet_events
 from utils.pdf_framework_reader import DailyBiasFramework
+from utils.weekly_report_reader import WeeklyReportReader
+from config.cisd_pattern_config import is_tradable_day
 
 def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, period="weekly"):
     """
@@ -72,6 +72,26 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
     today_date = paris_now.date()
     today_date_str = today_date.strftime("%Y-%m-%d")
     
+    # Fetch economic events to check if today is tradable (for daily reports only)
+    economic_events = None
+    tradable_day = True
+    
+    if period == "daily":
+        try:
+            print("📊 Pre-fetching economic events for tradable day check...")
+            economic_events = get_fxstreet_events()
+            #tradable_day = is_tradable_day(today_date, economic_events)
+            tradable_day = True
+            
+            if not tradable_day:
+                print(f"⚠️ {today_date_str} is not a tradable day. Daily report generation skipped.")
+                return None
+            else:
+                print(f"✅ {today_date_str} is a tradable day. Proceeding with daily report generation.")
+        except Exception as e:
+            print(f"⚠️ Error checking tradable day: {e}")
+            # Continue anyway if we can't check
+    
     # Initialize tools list for report writer
     report_writer_tools = []
     
@@ -83,6 +103,9 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         report_writer_tools.append(file_tool)
         print(f"✅ File saving tool initialized for {period} report")
     
+    # Get appropriate report writer agent based on period
+    report_writer_agent = daily_report_writer_agent if period == "daily" else weekly_report_writer_agent
+    
     # Update report writer agent with tools for file saving
     if report_writer_tools:
         print(f"📝 Adding {len(report_writer_tools)} tools to report writer agent")
@@ -90,16 +113,33 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
             print(f"   - {tool.name}: {tool.description[:60]}...")
         
         # Set the tools for the report writer agent
-        weekly_report_writer_agent.tools = report_writer_tools
-        daily_report_writer_agent.tools = report_writer_tools
+        report_writer_agent.tools = report_writer_tools
     else:
         print("⚠️ No tools added to report writer agent")
     
     # Pre-fetch economic events and trading frameworks for context
     economic_events_context = None
     framework_context = None
+    weekly_report_context = None
     
     if period == "daily":
+        # Get context from most recent weekly report
+        try:
+            print("📚 Loading most recent weekly report for context...")
+            weekly_report_reader = WeeklyReportReader()
+            weekly_report_metadata = weekly_report_reader.get_weekly_report_metadata()
+            
+            weekly_report_context = f"""
+            Most recent weekly report date: {weekly_report_metadata['report_date']}
+            Fundamental outlook: {weekly_report_metadata['fundamental_outlook']}
+            Technical bias: {weekly_report_metadata['technical_bias']}
+            Key levels: {json.dumps(weekly_report_metadata['key_levels'])}
+            """
+            print("✅ Loaded weekly report context")
+        except Exception as e:
+            print(f"⚠️ Error loading weekly report context: {e}")
+            weekly_report_context = "Unable to load weekly report context."
+        
         # Load trading frameworks from PDFs
         try:
             print("📚 Loading trading frameworks from PDFs...")
@@ -113,7 +153,8 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         # Fetch economic events
         try:
             print("📊 Pre-fetching economic events for context...")
-            economic_events = get_fxstreet_events()
+            if economic_events is None:  # Only fetch if not already fetched
+                economic_events = get_fxstreet_events()
             economic_events_context = f"Economic events for this week: {json.dumps(economic_events)}"
             print(f"✅ Fetched {len(economic_events)} economic events")
         except Exception as e:
@@ -121,13 +162,17 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
             economic_events_context = "Unable to fetch economic events."
             
         # Combine contexts
-        if framework_context and economic_events_context:
-            combined_context = f"{framework_context}\n\n{economic_events_context}"
-        else:
-            combined_context = framework_context or economic_events_context or ""
+        combined_context = ""
         
+        if weekly_report_context:
+            combined_context += weekly_report_context + "\n\n"
+        if framework_context:
+            combined_context += framework_context + "\n\n"
+        if economic_events_context:
+            combined_context += economic_events_context
+            
         # Use combined context
-        economic_events_context = combined_context
+        economic_events_context = combined_context if combined_context else None
     
     # Get appropriate tasks based on period
     if period == "daily":
@@ -232,7 +277,8 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
                 "report_type": period,
                 "posted_to_notion": post_to_notion,
                 "report_length": len(result_str) if result else 0,
-                "report_file_path": f"data/{folder_name}/{file_name}" if result else None
+                "report_file_path": f"data/{folder_name}/{file_name}" if result else None,
+                "tradable_day": tradable_day
             }
             
             # Add period-specific metadata
@@ -242,9 +288,10 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
                     "generation_time": paris_now.strftime('%H:%M'),
                     "agents_used": [
                         "Economic News Agent",
-                        "Technical Analyst Agent",
-                        "Session Analyst Agent",
-                        "Report Writer Agent"
+                        "Weekly Profile Analyst Agent",
+                        "Daily Bias Analyst Agent",
+                        "CISD Pattern Analyst Agent",
+                        "Daily Report Writer Agent"
                     ]
                 })
             else:  # weekly
@@ -254,7 +301,7 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
                         "Technical Analyst Agent",
                         "Fundamental Analyst Agent",
                         "Sentiment Analyst Agent",
-                        "Report Writer Agent"
+                        "Weekly Report Writer Agent"
                     ]
                 })
             
