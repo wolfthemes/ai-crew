@@ -38,4 +38,4 @@ _How did the Asia session looks last night? Ranging? Did you take a previous ses
 
 ### Addional for Technicaly specific
 
-_Price action wise, did we already form a CSID (see PDF that has been added)?_
+_Price action wise, did we already form a CISD in M30 (see PDF that has been added)? Are we inside a daily PD array (FVG, Old high/low taken)? Are we heading toward it. The best case scenario would be, in a beairsh trend, being inside a SIBI and forming a m30 bearish CISD_
