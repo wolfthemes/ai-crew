@@ -143,6 +143,11 @@ st.markdown("""
         border-radius: 5px;
         margin-bottom: 15px;
     }
+            
+    .theme-detail p{
+        margin-bottom:0;        
+    }
+
     .metrics-container {
         background-color: #f0f2f6;
         padding: 15px;
