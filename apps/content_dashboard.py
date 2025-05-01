@@ -235,7 +235,7 @@ if page == "Theme Explorer":
                     st.session_state.view_theme = slug
                 
                 # This would open a detailed view in the real app
-                if st.button(f"Generate Content: {theme.get('name', '')}", key=f"generate_{slug}"):
+                if st.button(f"Generate content: {theme.get('name', '')}", key=f"generate_{slug}"):
                     st.session_state.selected_theme = slug
                     st.session_state.page = "Content Generator"
                     st.rerun()
@@ -378,10 +378,8 @@ elif page == "Content Generator":
         with st.spinner("Generating posts..."):
             # Check for content settings
             content_settings = st.session_state.get("content_settings", {})
-            
-            # In a real implementation, you would pass these settings to your function
-            # For now, just use the basic generate_social_campaign function
-            posts = generate_social_campaign(selected_theme, platforms, post_count)
+           
+            posts = social_post_agent.generate_posts(selected_theme, count=2, data=data)
             st.session_state.generated_posts = posts
     
     # Display generated posts
@@ -466,7 +464,7 @@ elif page == "Scheduling":
                 for i, post in enumerate(posts[platform]):
                     # Schedule each post a day apart
                     post_date = start_date + timedelta(days=i)
-                    post_time = "10:00" if platform == "facebook" else "12:00" if platform == "instagram" else "15:00"
+                    post_time = st.time_input(f"{platform} Post {i+1} Time", datetime.time(10, 0), key=f"time_{platform}_{i}")
                     platform_times.append(f"{post_date} {post_time}")
                     
                     # Add to dataframe for display

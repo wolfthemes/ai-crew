@@ -1,5 +1,5 @@
 # utils/content_utils.py
-import datetime
+from datetime import datetime, timedelta
 import json
 
 def load_theme_data():
