@@ -2,11 +2,11 @@
   "generated_on": "2025-05-01",
   "report_type": "daily",
   "posted_to_notion": true,
-  "report_length": 3720,
+  "report_length": 5334,
   "report_file_path": "data/daily/eurusd_daily_report_2025-05-01.md",
   "tradable_day": true,
   "session_focus": "London",
-  "generation_time": "09:35",
+  "generation_time": "11:30",
   "agents_used": [
     "Economic News Agent",
     "Weekly Profile Analyst Agent",

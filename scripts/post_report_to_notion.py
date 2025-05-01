@@ -59,7 +59,7 @@ def post_report_to_notion(file_path=None, title=None):
     if "daily" in file_path.lower() or (title and "daily" in title.lower()):
         period = "Daily"
 
-    print( period )
+    #print( period )
     
     # Initialize the Notion tool
     notion_tool = PostToNotion()

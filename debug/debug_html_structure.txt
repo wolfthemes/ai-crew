@@ -5,7 +5,7 @@
  Summary
 </h3>
 <p>
- EUR/USD continues to trade under pressure following a decisive downside breakout below 1.1350, confirming a Classic Expansion weekly profile. The pair closed yesterday near its session low (1.1330), with the Next Day Model projecting a high-probability bearish continuation for today. The daily bias framework and CISD analysis are fully aligned, favoring further downside toward 1.1320, 1.1300, and potentially 1.1275. Thursday is statistically the highest-probability continuation day in expansion profiles, and all actionable frameworks support a short bias for the London session.
+ EUR/USD remains in a tight consolidation phase, with price action confined between 1.13 and 1.14 throughout the week. The current weekly profile is classified as a Consolidation Reversal, with no significant expansion or breakout following high-impact US data on Wednesday. The Daily Bias framework signals a high-confidence bearish bias for today, as the previous day closed at the session low and early Thursday saw a sweep below 1.1290 before stabilizing above 1.1300. The Next Day Model and CISD patterns both support a bearish continuation unless price reclaims 1.1320.
 </p>
 <p>
  <strong>
@@ -16,29 +16,123 @@
  Fundamental Context
 </h3>
 <p>
- The macroeconomic backdrop remains USD-supportive, with recent US data (ADP, Core PCE, GDP) reinforcing Dollar strength and driving EUR/USD below key support levels. The lack of major EUR releases today shifts the focus to the US ISM Manufacturing PMI at 14:00 London time, which is expected to drive volatility and directional follow-through. The market is trading in line with the anticipated expansion profile, with no significant deviation from the weekly outlook.
+ The weekly outlook anticipated a holding pattern in EUR/USD, with the pair awaiting a catalyst for breakout or reversal. Despite major US data releases (ADP, Core PCE, GDP) on Wednesday, EUR/USD failed to break out of its established range, confirming the market's indecision. Renewed USD demand amid US-China trade optimism and cautious sentiment ahead of the ISM Manufacturing PMI (14:00 London) continue to pressure EUR/USD. The lack of strong reaction to recent data suggests traders are focused on upcoming events for direction, aligning with the anticipated late-week volatility in the Consolidation Reversal profile.
 </p>
 <h3 id="weekly-profile">
  Weekly profile
 </h3>
 <p>
- The current weekly profile is a Classic Expansion. Monday and Tuesday were range-bound below 1.1400, but Wednesday’s US data triggered a decisive downside breakout below last week’s low (1.1350), extending the weekly range. Thursday (today) is the high-probability continuation day, with the path of least resistance remaining lower unless price reclaims and holds above 1.1350. The week’s range has expanded to the downside, with immediate support at 1.1300 and further extension targets at 1.1275. Only a sharp reversal above 1.1350 would threaten the expansion structure.
+ The current weekly profile is a textbook Consolidation Reversal pattern. Monday and Tuesday set a narrow range (1.13–1.14), with Wednesday's high-impact US data failing to prompt a breakout. The current week's range is notably narrower than the previous week, with price action contained and no new weekly highs or lows established. Thursday is statistically the highest-probability day for a breakout or reversal in this pattern, especially with the ISM Manufacturing PMI scheduled at 14:00 London. Key levels to monitor are 1.1300 (critical support/range boundary) and 1.1400 (resistance). A sustained break below 1.1300 post-ISM could open the way to 1.1250, while a reversal above 1.1300 could target 1.14. Early London hours are likely to remain range-bound, with traders positioning for the ISM data.
 </p>
 <h3 id="daily-price-action">
  Daily price action
 </h3>
 <p>
- The Daily Bias framework confirms strong bearish intent. The previous day’s high (PDH) was 1.1372 and low (PDL) was 1.1320, with a close at 1.1330 near the session low. The prior week’s low (1.1350) now acts as major resistance. The Next Day Model projects a bearish bias, as the close was at the lower extreme of the day’s range. The primary liquidity draw is the PDL at 1.1320, followed by 1.1300 and 1.1275. No failure to displace below key lows is evident; only a sustained move above 1.1350 would invalidate the bearish bias.
+ Applying the Daily Bias framework:
+</p>
+<ul>
+ <li>
+  <strong>
+   Previous Day High (PDH):
+  </strong>
+  1.1345 (untapped liquidity)
+ </li>
+ <li>
+  <strong>
+   Previous Day Low (PDL):
+  </strong>
+  1.1290 (swept in early Thursday trade)
+ </li>
+ <li>
+  <strong>
+   Previous Week High (PWH):
+  </strong>
+  1.1430
+ </li>
+ <li>
+  <strong>
+   Previous Week Low (PWL):
+  </strong>
+  1.1275
+ </li>
+ <li>
+  <strong>
+   Close:
+  </strong>
+  1.1308 (at session low)
+ </li>
+</ul>
+<p>
+ Price dipped below 1.1290 in early Thursday trade, clearing stops and stabilizing above 1.1300. The sweep below PDL increases the probability of a reversal if price holds above 1.1300, but a sustained break below 1.1290/1.1275 would confirm range expansion to the downside, targeting 1.1250. The previous day's close at the extreme low signals strong bearish sentiment (Next Day Model), with high confidence for a bearish continuation unless price reclaims 1.1315–1.1320. Key actionable levels: resistance at 1.1315–1.1320, support at 1.1290, breakdown target at 1.1275, and extension target at 1.1250.
 </p>
 <h3 id="asianfrankfurt-session">
  Asian/Frankfurt Session
 </h3>
 <p>
- Overnight, EUR/USD traded with mild losses, consolidating near 1.1325 and maintaining pressure from the previous day’s USD strength. The Asian session was subdued, with price holding below 1.1350 and failing to reclaim lost support. The Frankfurt session saw continued containment below 1.1335, with no significant attempt to retake the prior day’s high or prior week’s low. The immediate focus is on whether the London session will trigger a sweep of the PDL (1.1320) and extend toward 1.1300.
+ Overnight, EUR/USD traded in a tight range, consolidating between 1.1300 and 1.1320. In early Thursday trade, price dipped below the previous day's low (1.1290), sweeping stops before stabilizing above 1.1300. The Frankfurt session saw price consolidating just above 1.1300, with no decisive move in either direction. Key levels established pre-London are 1.1290 (support) and 1.1315 (resistance). The London reversal model is in play, with the sweep below 1.1290 setting up for a potential reversal if price holds above 1.1300, but the overall bias remains bearish unless 1.1320 is reclaimed.
 </p>
 <h3 id="technical-specifics">
  Technical specifics
 </h3>
 <p>
- The M30 CISD pattern confirms a transition from prior manipulation/consolidation (Monday-Tuesday) to distribution/expansion below 1.1350. The key M30 breaker block is 1.1340–1.1350, with an order block at 1.1335–1.1345 and a fair value gap at 1.1332–1.1340. The optimal M5 CISD entry zone is 1.1332–1.1345 during the 09:30–11:00 London window. The ideal setup is a retracement into this zone, a local M5 manipulation sweep, and a bearish displacement candle for entry. Entry: 1.1335–1.1342 (on M5 confirmation), stop above 1.1352, targets at 1.1320, 1.1300, and 1.1275. All CISD, daily, and weekly frameworks are aligned for bearish continuation. Only a sustained move above 1.1350 would invalidate the setup. Maintain discipline and execute only if the M5 CISD forms within the M30 CISD range during the prime window.
+ <strong>
+  CISD Pattern Analysis (M30/M5):
+ </strong>
+</p>
+<ul>
+ <li>
+  <strong>
+   M30 CISD:
+  </strong>
+  Early London session saw a stop run below 1.1290, followed by stabilization above 1.1300. The CISD sequence: accumulation (1.1300–1.1320), manipulation (wick below 1.1290), and delivery shift (consolidation above 1.1300). Key resistance is 1.1315–1.1320 (breaker block/order block cluster), with a fair value gap at 1.1305–1.1310.
+ </li>
+ <li>
+  <strong>
+   M5 Entry Setup:
+  </strong>
+  Focus on 1.1305–1.1315 for M5 bearish rejection patterns. Optimal short entries are on M5 rejection within this zone, with confirmation if M5 closes below 1.1300 after rejection. Entry: 1.1305–1.1312, stop above 1.1320, targets at 1.1290 (PDL), 1.1275 (PWL), and 1.1250 (extension).
+ </li>
+ <li>
+  <strong>
+   Directional Alignment:
+  </strong>
+  The CISD setup aligns with the daily bearish bias and the Consolidation Reversal weekly profile. High confidence for bearish continuation unless 1.1320 is reclaimed.
+ </li>
+ <li>
+  <strong>
+   London Session Window:
+  </strong>
+  Focus on 09:30–11:00 London for optimal entry, as price is likely to retest CISD resistance before the ISM event. Avoid new trades after 13:30 London due to expected volatility spike around ISM.
+ </li>
+</ul>
+<p>
+ <strong>
+  Actionable Summary:
+ </strong>
+</p>
+<ul>
+ <li>
+  <strong>
+   Bias:
+  </strong>
+  Bearish (High Confidence)
+ </li>
+ <li>
+  <strong>
+   Sell rallies below 1.1315, targeting 1.1290 → 1.1275 → 1.1250
+  </strong>
+ </li>
+ <li>
+  <strong>
+   If price reclaims 1.1320, stand aside or look for reversal toward 1.1345
+  </strong>
+ </li>
+ <li>
+  <strong>
+   Monitor for volatility spike and directional confirmation at/after ISM Manufacturing PMI (14:00 London)
+  </strong>
+ </li>
+</ul>
+<p>
+ This report strictly adheres to the Daily Bias, Weekly Profile, and CISD frameworks, providing a clear, evidence-based roadmap for EUR/USD trading during today’s London session.
 </p>

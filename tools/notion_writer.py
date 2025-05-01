@@ -19,7 +19,7 @@ class NotionPostInput(BaseModel):
 
 class PostToNotion(BaseTool):
     name: str = "post_to_notion"
-    description: str = "Posts a weekly EUR/USD report to a Notion database"
+    description: str = "Posts a EUR/USD report to a Notion database"
     args_schema: Type[BaseModel] = NotionPostInput
     
     # Add these as proper model fields
@@ -438,12 +438,19 @@ class PostToNotion(BaseTool):
             
             print(f"Report will be posted in {len(block_chunks)} chunks ({len(blocks)} total blocks)")
             
+            if period == "daily":
+                emoji_icon = "📅"
+            elif period == "weekly":
+                emoji_icon = "🏛️"
+            else:
+                emoji_icon = "🗓️"  # Default or fallback
+
             # Create the page with the first chunk of blocks
             response = self.notion.pages.create(
                 parent={"database_id": self.database_id},
                 icon= {
                     "type": "emoji",
-                    "emoji": "🏛️"
+                    "emoji": emoji_icon
                 },
                 properties={
                     "Name": {"title": [{"text": {"content": title_text}}]},
