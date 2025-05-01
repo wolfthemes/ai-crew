@@ -1,3 +1,4 @@
+import json
 from crewai import Task
 from agents.support.support_agent import support_agent
 from utils.document_loaders import load_guidelines
@@ -12,6 +13,15 @@ def create_support_reply_task(ticket_text: str, research_output: str = None, ins
         for i, segment in enumerate(ticket_meta["ticket_parts"], 1):
             status = "RESOLVED" if segment.get("resolved", False) else "UNRESOLVED"
             segments_info += f"{i}. [{status}] {segment.get('issue', 'No issue text')}\n"
+
+    # Format ticket metadata to include in task description
+    meta_info = ""
+    if ticket_meta:
+        # Convert metadata to a formatted string
+        meta_info = "\n## Ticket Metadata\n```json\n"
+        meta_info += json.dumps({k: v for k, v in ticket_meta.items() 
+                                if k != 'ticket_parts' and k != 'full_thread'}, indent=2)
+        meta_info += "\n```\n"
     
     return Task(
         description=f"""
@@ -21,6 +31,8 @@ def create_support_reply_task(ticket_text: str, research_output: str = None, ins
         {ticket_text}
         
         {segments_info}
+
+        {meta_info}
         
         ## Guidelines
         {guidelines}

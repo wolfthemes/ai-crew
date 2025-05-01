@@ -1,3 +1,4 @@
+import json
 from crewai import Task
 from agents.support.quality_agent import support_quality_control_agent
 from utils.document_loaders import load_guidelines
@@ -5,12 +6,23 @@ from utils.document_loaders import load_guidelines
 def review_support_reply_task(ticket_text: str, instruction: str = "", ticket_meta: dict = None) -> Task:
     guidelines = load_guidelines()
 
+    # Format ticket metadata to include in task description
+    meta_info = ""
+    if ticket_meta:
+        # Convert metadata to a formatted string
+        meta_info = "\n## Ticket Metadata\n```json\n"
+        meta_info += json.dumps({k: v for k, v in ticket_meta.items() 
+                                if k != 'ticket_parts' and k != 'full_thread'}, indent=2)
+        meta_info += "\n```\n"
+
     return Task(
         description=f"""
         Review the support agent's reply to this ticket.
 
         ### Original Ticket:
         {ticket_text}
+
+        {meta_info}
 
         Guidelines:
         {guidelines}

@@ -1,3 +1,4 @@
+import json
 from crewai import Task
 from core.research_processor import process_ticket_research
 from agents.support.research_agent import research_agent, research_task_prompt
@@ -17,6 +18,15 @@ def create_research_task(ticket_text: str, instruction: str = "", ticket_meta: d
         for i, segment in enumerate(ticket_meta["ticket_parts"], 1):
             status = "RESOLVED" if segment.get("resolved", False) else "UNRESOLVED"
             segments_info += f"{i}. [{status}] {segment.get('issue', 'No issue text')}\n"
+
+    # Format ticket metadata to include in task description
+    meta_info = ""
+    if ticket_meta:
+        # Convert metadata to a formatted string
+        meta_info = "\n## Ticket Metadata\n```json\n"
+        meta_info += json.dumps({k: v for k, v in ticket_meta.items() 
+                                if k != 'ticket_parts' and k != 'full_thread'}, indent=2)
+        meta_info += "\n```\n"
     
     # Create a task description with the research already done
     task_description = f"""
@@ -26,7 +36,10 @@ def create_research_task(ticket_text: str, instruction: str = "", ticket_meta: d
     
     ## Original Ticket
     {ticket_text}
+
     {segments_info}
+
+    {meta_info}
     
     ## Additional Instructions
     {instruction or "No additional instructions provided."}

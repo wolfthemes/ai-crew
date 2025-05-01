@@ -16,7 +16,7 @@ research_agent = Agent(
     allow_delegation=False,
 )
 
-# Updated task prompt with properly formatted JSON example
+# Updated task prompt that leverages ticket metadata when available
 research_task_prompt = """
 # Support Research Task
 
@@ -28,11 +28,10 @@ research_task_prompt = """
 
 ## Instructions
 1. Carefully analyze the customer's support request above.
-2. Extract the following key information:
-   - Theme name: Identify which WordPress theme they're using (if mentioned)
-   - Page builder: Identify if they're using Elementor, WPBakery, etc. (if mentioned)
-   - Plugins: List any plugins mentioned in the request
-   - Main issues: Break down complex requests into individual issues
+
+2. Leverage available ticket metadata first:
+   - If metadata contains theme, builder, and plugins information, use it directly
+   - Only extract this information from the ticket text if it's not available in metadata
 
 3. For each identified issue:
    - Search the knowledge base using SearchKnowledgeBaseTool
@@ -49,34 +48,35 @@ research_task_prompt = """
 Return a structured JSON with this format:
 
 ```
-{{
-  "theme": "theme_name_or_empty_if_unknown",
-  "builder": "builder_name_or_empty_if_unknown",
+{
+  "theme": "theme_name_from_metadata_or_text",
+  "builder": "builder_name_from_metadata_or_text",
   "plugins": ["plugin1", "plugin2"],
   "issues": [
-    {{
+    {
       "issue_description": "Concise description of issue 1",
-      "kb_match": {{
+      "kb_match": {
         "title": "Title of matching KB article/common issue",
         "source": "common_issue/kb_article/etc",
         "solution": "The solution text",
         "confidence": "high/medium/low",
         "requires_customization": true/false,
         "is_strict": true/false
-      }}
-    }},
-    {{
+      }
+    },
+    {
       "issue_description": "Concise description of issue 2",
       "kb_match": null
-    }}
+    }
   ],
   "additional_instruction_analysis": "Brief analysis of how the additional instructions were incorporated"
-}}
+}
 ```
 
 Remember:
+- Prioritize metadata over text extraction when information is available
 - Focus on providing accurate information rather than guessing
 - If no match is found for an issue, return null for kb_match
-- Only include information actually mentioned in the ticket
+- Only include information actually mentioned in the ticket if not in metadata
 - Consider the confidence level when determining if a response should be strict
 """
