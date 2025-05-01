@@ -138,6 +138,7 @@ st.markdown("""
     }
     .theme-detail {
         background-color: #f8f9fa;
+        color:#333;
         padding: 15px;
         border-radius: 5px;
         margin-bottom: 15px;
@@ -237,7 +238,7 @@ if page == "Theme Explorer":
                 if st.button(f"Generate Content: {theme.get('name', '')}", key=f"generate_{slug}"):
                     st.session_state.selected_theme = slug
                     st.session_state.page = "Content Generator"
-                    st.experimental_rerun()
+                    st.rerun()
     
     # MOVED: Theme details expander - now outside the theme grid loop
     if "view_theme" in st.session_state:
@@ -411,13 +412,13 @@ elif page == "Content Generator":
                             # This would regenerate just this post in a real implementation
                             new_posts = generate_social_campaign(selected_theme, [platform], 1)
                             st.session_state.generated_posts[platform][i] = new_posts[platform][0]
-                            st.experimental_rerun()
+                            st.rerun()
         
         # Schedule button
         if st.button("Schedule these posts to Buffer"):
             st.session_state.posts_to_schedule = st.session_state.generated_posts
             st.session_state.page = "Scheduling"
-            st.experimental_rerun()
+            st.rerun()
 
 # Scheduling page
 elif page == "Scheduling":
@@ -427,7 +428,7 @@ elif page == "Scheduling":
         st.warning("No posts to schedule. Please generate posts first.")
         if st.button("Go to Content Generator"):
             st.session_state.page = "Content Generator"
-            st.experimental_rerun()
+            st.rerun()
     else:
         posts = st.session_state.posts_to_schedule
         
@@ -765,4 +766,4 @@ elif page == "Blog Post Generator":
 # Check if we need to switch pages based on session state
 if "page" in st.session_state and st.session_state.page != page:
     # Switch to the page in session state
-    st.experimental_rerun()
+    st.rerun()
