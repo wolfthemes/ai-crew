@@ -11,17 +11,101 @@
     "updated": "2025-04-24",
     "description": "A Wordpress Theme for the Music Industry",
     "longdescription": "Decibel is a premium WordPress theme dedicated to musicians, bands, labels or anyone related to the music industry. It includes a discography, event list, and video gallery features and so much more! It is built for WooCommerce to allow you to sell your merch online and includes WPBakery Page Builder to create your layouts. It also comes with a lot of theme options to set the appearance and colors of your website easily.",
-    "category": "Music",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "compatible_plugins": [],
-    "design_features": [],
-    "use_cases": [],
+    "category": [
+      "Music"
+    ],
+    "features": [
+      "Slider Revolution plugin ($109 value) included",
+      "Comprehensive discography management system",
+      "Event listing and calendar functionality",
+      "Video gallery with custom player options",
+      "Built with WPBakery Page Builder ($64 value)",
+      "Wolf WPBakery Extension with music-specific elements",
+      "WooCommerce integration for merchandise sales",
+      "Audio player with playlist management",
+      "Custom header and footer builder",
+      "One-click demo import with complete content",
+      "Mobile-optimized responsive design for all devices"
+    ],
+    "selling_points": [
+      "Create a professional music website with minimal technical knowledge",
+      "Showcase your music, videos, and upcoming events in one cohesive platform",
+      "Sell merchandise directly to fans with integrated e-commerce",
+      "Connect with your audience through embedded social media features",
+      "Establish a professional online presence for your band, label, or music business",
+      "Save time with pre-built music industry layouts and templates",
+      "Customize every aspect of your site to match your unique brand identity"
+    ],
+    "theme_style": [
+      "Professional",
+      "Modern",
+      "Dynamic"
+    ],
+    "target_audience": [
+      "Musicians and Bands",
+      "Record Labels",
+      "Music Producers",
+      "DJ's and Electronic Artists",
+      "Music Industry Professionals"
+    ],
+    "key_benefits": [
+      "Showcase your music with integrated audio players and playlists",
+      "Promote upcoming performances with event calendar integration",
+      "Sell merchandise and music directly to your fans",
+      "Build a dedicated fanbase through media galleries and content",
+      "Establish a professional music industry presence that grows with your career"
+    ],
+    "included_plugins": [
+      "One-Click Demo Import",
+      "WooCommerce",
+      "WooCommerce Variation Swatches",
+      "Contact Form 7",
+      "WPBakery Page Builder",
+      "Wolf WPBakery Page Builder Extension",
+      "Wolf WPBakery Page Builder Content Blocks",
+      "Wolf Metaboxes",
+      "Wolf Albums",
+      "Wolf Videos",
+      "Wolf Events",
+      "Wolf Discography",
+      "Wolf Playlist Manager",
+      "Wolf WooCommerce Wishlist",
+      "Wolf WooCommerce Quickview",
+      "Wolf Video Thumbnail Generator",
+      "Slider Revolution"
+    ],
+    "design_features": [
+      "Music-oriented layout templates",
+      "Album cover showcase options",
+      "Video thumbnail galleries",
+      "Multiple header layout variations",
+      "Custom music player"
+    ],
+    "use_cases": [
+      "Band & Musician Websites",
+      "Record Label Online Presence",
+      "Music Producer Portfolios",
+      "DJ & Electronic Artist Sites",
+      "Music Industry Business Websites"
+    ],
     "customer_sites": [],
-    "testimonials": []
+    "testimonials": [
+      {
+        "text": "This theme is very beautiful, complete and versatile. And the costumer support is very reactive. I recommend !",
+        "author": "aureliealibertdupuy",
+        "rating": 5
+      },
+      {
+        "text": "This is not only a great looking theme...not only has some of the best features...but the support is AMAZING. Had a few tweaks that needed in order to customize, but overall a very easy theme to use and customize. And I have had HUGE reaction from users that have visited the site...and I only just launched it. BUY THIS THEME if you are a band or artist!!!!",
+        "author": "Jgarth",
+        "rating": 5
+      },
+      {
+        "text": "Love this theme! It's beautifully designed, easy to use (love the fact that they use WP Bakery) and the customer support is great!!",
+        "author": "leonordl",
+        "rating": 5
+      }
+    ]
   },
   "tattoopress": {
     "name": "Tattoopress",
@@ -41,7 +125,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -65,7 +149,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -89,7 +173,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -113,7 +197,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -137,7 +221,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -161,7 +245,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -185,7 +269,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -209,7 +293,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -233,7 +317,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -257,7 +341,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -281,7 +365,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -305,7 +389,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -329,7 +413,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -353,7 +437,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -377,7 +461,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -401,7 +485,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -425,7 +509,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -449,7 +533,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -473,7 +557,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -507,7 +591,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -531,7 +615,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -555,7 +639,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -579,7 +663,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -603,7 +687,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -627,7 +711,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -651,7 +735,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -675,7 +759,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -693,17 +777,95 @@
     "updated": "2025-04-24",
     "description": "One-Page Music Wordpress Theme",
     "longdescription": "Swingster is a one-page WordPress theme built for Elementor and dedicated to musicians, bands, labels, or anyone related to the music industry who wants to create a professional website easily. It includes everything you need: Discography, Tour Dates, Playlist Manager, Store, Video, etc.",
-    "category": "Music",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "compatible_plugins": [],
-    "design_features": [],
-    "use_cases": [],
+    "category": [
+      "Music"
+    ],
+    "features": [
+      "Slider Revolution plugin ($109 value) included",
+      "One-page scrolling layout for seamless navigation",
+      "Built with Elementor page builder for easy customization",
+      "Wolf Core plugin with music-specific Elementor widgets",
+      "Audio player with playlist functionality",
+      "Event listing section with upcoming performances",
+      "Discography showcase with audio previews",
+      "Video section for music videos and performances",
+      "WooCommerce integration for merch and music sales",
+      "Social media integration for artist profiles",
+      "Mobile-optimized responsive design for all devices"
+    ],
+    "selling_points": [
+      "Create a complete music website on a single, engaging page",
+      "Guide visitors through your content with smooth scrolling navigation",
+      "Showcase all your music, videos, and events without page changes",
+      "Maintain visitor attention with an uninterrupted browsing experience",
+      "Simplify website management with an all-in-one page approach",
+      "Create a memorable impression with dynamic scrolling effects",
+      "Optimize for mobile fans with touch-friendly navigation"
+    ],
+    "theme_style": [
+      "Modern",
+      "Minimal",
+      "Focused"
+    ],
+    "target_audience": [
+      "Solo Musicians",
+      "Bands and Music Groups",
+      "DJs and Producers",
+      "Music Artists",
+      "Indie Musicians"
+    ],
+    "key_benefits": [
+      "Present your entire music portfolio on a single, flowing page",
+      "Keep visitors engaged without navigation interruptions",
+      "Showcase your music with integrated audio players",
+      "Promote upcoming shows with built-in event sections",
+      "Create a professional music presence with minimal setup time"
+    ],
+    "included_plugins": [
+      "Elementor",
+      "Wolf Core",
+      "WooCommerce",
+      "Contact Form 7",
+      "Wolf Discography",
+      "Wolf Events",
+      "Wolf Videos",
+      "Wolf Playlist Manager",
+      "Slider Revolution"
+    ],
+    "design_features": [
+      "Parallax scrolling effects",
+      "Section navigation dots",
+      "Fullscreen hero sections",
+      "Animated content transitions",
+      "Audio waveform visualizations",
+      "Sticky header with navigation",
+      "Animated section backgrounds"
+    ],
+    "use_cases": [
+      "Musician Landing Pages",
+      "Band EPK (Electronic Press Kit)",
+      "Album Launch Websites",
+      "Tour Promotion Pages",
+      "Artist Portfolio Sites"
+    ],
     "customer_sites": [],
-    "testimonials": []
+    "testimonials": [
+      {
+        "text": "After 10 years of using the Speaker theme, now I had to migrate to the latest version since the website was broken. After some trouble with getting the license in place again, the support was really excellent and made it work again, response within 24hrs. Recommended!",
+        "author": "chrissa007",
+        "rating": 5
+      },
+      {
+        "text": "Great layout, been using for a band page - only focused on a one-page layout but it works well. Lots of positive comments about the site.",
+        "author": "jaywaltm",
+        "rating": 5
+      },
+      {
+        "text": "I'll admit it took me a bit of time to understand how the theme worked - partly because I jumped in without reading the documentation. The customer support was helpful and pointed me in the right direction; responses were received within 24 hours. I also appreciate follow-up to confirm that my problems were addressed.",
+        "author": "jlowery",
+        "rating": 5
+      }
+    ]
   },
   "nu": {
     "name": "Nu",
@@ -723,7 +885,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -747,7 +909,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -771,7 +933,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -795,7 +957,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -819,7 +981,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -843,7 +1005,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -867,7 +1029,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -891,7 +1053,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -947,7 +1109,7 @@
       "Client testimonials and success stories",
       "Pricing tables for different service packages"
     ],
-    "compatible_plugins": [
+    "included_plugins": [
       "Elementor",
       "Woocommerce",
       "Slider Revolution"
@@ -962,7 +1124,13 @@
       "WordPress Online Stores"
     ],
     "customer_sites": [],
-    "testimonials": []
+    "testimonials": [
+      {
+        "text": "Great theme can do a lot with, got plenty of features and is easy to configure. Support is great i had some problems as a wordpress newbie but support solved everything.",
+        "author": "kontakt952",
+        "rating": 5
+      }
+    ]
   },
   "unimate": {
     "name": "Unimate",
@@ -976,15 +1144,51 @@
     "updated": "2025-04-24",
     "description": "Unimate - Art Gallery and Museum Theme",
     "longdescription": "Introducing Unimate, our Art Gallery and Museum WordPress theme – where elegance meets functionality. Showcase your events, exhibitions and galleries with a aesthetic design that puts your business in the spotlight. Seamless navigation, responsive design, and a sleek layouts display create a captivating online experience for art enthusiasts. Elevate your gallery's digital presence effortlessly with our user-friendly theme.",
-    "category": "",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
+    "category": "WordPress",
+    "features": [
+      "Slider Revolution plugin ($109 value) included",
+      "Elementor templates included for easy customization",
+      "Also online support works very well.",
+      "Fully responsive design",
+      "SEO optimized structure",
+      "Regular theme updates",
+      "Comprehensive documentation"
+    ],
+    "selling_points": [
+      "Event Management for Museums and Galleries – Organize and promote exhibitions, workshops, or tours with a built-in events manager, complete with scheduling, details, and ticketing options.",
+      "Stunning Portfolio Layouts – Showcase your artwork or exhibitions with beautifully designed portfolio layouts that capture attention and highlight creativity.",
+      "Mobile-Ready Design – Crafted with art and culture in mind, Unimate’s design is fully responsive, ensuring your exhibitions look flawless on all devices.",
+      "WooCommerce Integration – Sell exhibition tickets, art pieces, and more directly from your website.",
+      "SEO Optimized – Attract more visitors with built-in SEO features that help your site rank higher on search engines.",
+      "Import the demo content with one simple click and start customizing immediately",
+      "All images are included, so you can get your site up and running quickly with beautiful visuals"
+    ],
+    "theme_style": [
+      "Clean",
+      "Creative",
+      "Professional"
+    ],
     "target_audience": [],
-    "key_benefits": [],
-    "compatible_plugins": [],
-    "design_features": [],
-    "use_cases": [],
+    "key_benefits": [
+      "Event Management for Museums and Galleries – Organize and promote exhibitions, workshops, or tours with a built-in events manager, complete with scheduling, details, and ticketing options.",
+      "Stunning Portfolio Layouts – Showcase your artwork or exhibitions with beautifully designed portfolio layouts that capture attention and highlight creativity.",
+      "Mobile-Ready Design – Crafted with art and culture in mind, Unimate’s design is fully responsive, ensuring your exhibitions look flawless on all devices.",
+      "WooCommerce Integration – Sell exhibition tickets, art pieces, and more directly from your website.",
+      "SEO Optimized – Attract more visitors with built-in SEO features that help your site rank higher on search engines."
+    ],
+    "included_plugins": [
+      "Elementor",
+      "Woocommerce",
+      "Slider Revolution"
+    ],
+    "design_features": [
+      "Responsive Support",
+      "Slider"
+    ],
+    "use_cases": [
+      "WordPress Portfolio Websites",
+      "WordPress Online Stores"
+    ],
     "customer_sites": [],
     "testimonials": []
   },
@@ -1006,7 +1210,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "compatible_plugins": [],
+    "included_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -1025,14 +1229,52 @@
     "description": "8Pulse - Motorcycle WordPress Theme",
     "longdescription": "Welcome to 8pulse the ultimate Motorcycle WordPress theme designed for enthusiasts, riders, motovloggers, motorcycle events, motorcycle shops & businesses. Our theme combines sleek design with powerful features to create a dynamic online presence that stands out.",
     "category": "",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "compatible_plugins": [],
-    "design_features": [],
-    "use_cases": [],
+    "features": [
+      "Slider Revolution plugin ($109 value) included",
+      "Elementor templates included for easy customization",
+      "Fully responsive design",
+      "SEO optimized structure",
+      "Regular theme updates",
+      "Comprehensive documentation",
+      "Built with Elementor page builder"
+    ],
+    "selling_points": [
+      "Built for Elementor – Easily customize your motorcycle website using our custom elements with Elementor. No coding required!",
+      "Showcase Your Portfolio – Highlight your bike collection or past projects with customizable portfolio layouts designed to captivate your audience.",
+      "Stunning Video Galleries – Feature your latest motorcycle adventures, product reviews, or events with immersive video galleries that engage visitors.",
+      "Event Management Features – Promote your upcoming motorcycle events, track days, or meetups with built-in event management tools to organize and display dates, locations, and details.",
+      "Mobile-Ready Design – Crafted with a motorcycle enthusiast’s aesthetic, 8Pulse’s design is visually captivating and fully responsive on all devices.",
+      "WooCommerce Integration – Sell motorcycles, gear, parts, or merchandise directly from your site.",
+      "SEO Optimized – Drive more traffic with built-in SEO features that ensure your site ranks high on search engines."
+    ],
+    "theme_style": [
+      "Clean",
+      "Professional"
+    ],
+    "target_audience": [
+      "Motorcycle Enthusiasts Who Want To Take Their Online Presence To The Next Level"
+    ],
+    "key_benefits": [
+      "Highlight festival lineups and event schedules",
+      "Sell tickets directly through your website",
+      "Showcase past events with photo galleries",
+      "Interactive maps for venue locations",
+      "Countdown timers for upcoming events"
+    ],
+    "included_plugins": [
+      "Elementor",
+      "Woocommerce",
+      "Slider Revolution"
+    ],
+    "design_features": [
+      "Responsive Support",
+      "Slider"
+    ],
+    "use_cases": [
+      "Music Festival & Event Websites",
+      "WordPress Portfolio Websites",
+      "WordPress Online Stores"
+    ],
     "customer_sites": [],
     "testimonials": []
   },
@@ -1048,15 +1290,60 @@
     "updated": "2025-04-24",
     "description": "Yor - Artist WordPress Theme",
     "longdescription": "Are you an artist, photographer, or creative looking to showcase and sell your masterpieces online? Look no further! Yor is the perfect WordPress build for Elementor, designed specifically to meet the unique needs of artists like you.",
-    "category": "",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "compatible_plugins": [],
-    "design_features": [],
-    "use_cases": [],
+    "category": [
+      "Portfolio",
+      "Art"
+    ],
+    "features": [
+      "Slider Revolution plugin ($109 value) included",
+      "Elementor templates included for easy customization",
+      "Fully responsive design",
+      "SEO optimized structure",
+      "Regular theme updates",
+      "Comprehensive documentation",
+      "Built with Elementor page builder"
+    ],
+    "selling_points": [
+      "Versatile Portfolio with Advanced Animation – Showcase your work with a dynamic, customizable portfolio featuring smooth animations that bring your creations to life.",
+      "Built for Elementor – Easily customize your portfolio using our custom art-focused elements with Elementor. No coding required!",
+      "Beautiful Image Galleries – Showcase your art in stunning image galleries with customizable layouts to match your style.",
+      "Mobile-Ready Design – Crafted with a visual artist’s aesthetic, Yor’s design is visually captivating and fully responsive on all devices.",
+      "WooCommerce Integration – Sell your artwork, prints, or merchandise directly from your site.",
+      "SEO Optimized – Drive more traffic with built-in SEO features that ensure your portfolio ranks high on search engines.",
+      "Import the demo content with one simple click and start customizing immediately"
+    ],
+    "theme_style": [
+      "Clean",
+      "Bold",
+      "Creative"
+    ],
+    "target_audience": [
+      "Musicians",
+      "Bands",
+      "Music Industry Professionals"
+    ],
+    "key_benefits": [
+      "Showcase your music with integrated audio players",
+      "Display upcoming tour dates and concert information",
+      "Sell merchandise directly through your website",
+      "Connect with fans through social media integration",
+      "Present your discography in an appealing layout"
+    ],
+    "included_plugins": [
+      "Elementor",
+      "Woocommerce",
+      "Slider Revolution"
+    ],
+    "design_features": [
+      "Responsive Support",
+      "Animation",
+      "Slider"
+    ],
+    "use_cases": [
+      "Music Industry Websites",
+      "WordPress Portfolio Websites",
+      "WordPress Online Stores"
+    ],
     "customer_sites": [],
     "testimonials": []
   },
@@ -1077,70 +1364,83 @@
       "Music"
     ],
     "features": [
-      "Event Manager",
-      "Artist Profile",
-      "Event Calendar",
-      "Event Ticketing Integration",
-      "Lineup Management",
-      "Dark/Light Mode",
-      "Multiple Header Layouts",
-      "One-Click Demo Import",
-      "Fully Responsive Design",
-      "Translation Ready",
-      "Performance Optimized"
+      "Slider Revolution plugin ($109 value) included",
+      "Advanced event management system with calendar",
+      "Artist profiles linked to events via custom taxonomies",
+      "Built with Elementor page builder for easy customization",
+      "Wolf Core plugin with music & event specific widgets",
+      "Festival lineup display with sorting options",
+      "WooCommerce integration for ticket sales",
+      "Event countdown timers and schedule displays",
+      "Custom header and footer builder",
+      "One-click demo import with complete content",
+      "Mobile-optimized responsive design for all devices"
     ],
     "selling_points": [
-      "Clean and modern",
-      "WooCommerce ready",
-      "Perfect for music festivals and concert venues",
-      "Dedicated event layouts and features",
-      "Optimized for mobile viewing",
-      "Artist profiles with social media integration",
-      "Built with performance in mind"
+      "Create professional music event and festival websites with minimal setup time",
+      "Engage visitors with dynamic event calendars and artist showcases",
+      "Sell tickets directly through your website with WooCommerce integration",
+      "Build excitement with countdown timers and lineup announcements",
+      "Customize every aspect of your site without coding knowledge",
+      "Optimize for mobile users purchasing tickets on the go",
+      "Connect artists to events for comprehensive event promotion"
     ],
     "theme_style": [
       "Modern",
-      "Clean",
+      "Bold",
       "Dynamic"
     ],
     "target_audience": [
       "Festival Organizers",
+      "Concert Venues",
+      "Event Promotion Companies",
       "Music Venues",
-      "Concert Promoters",
       "Event Managers"
     ],
     "key_benefits": [
-      "Easily manage festival lineups and schedules",
-      "Sell tickets directly through your website",
-      "Showcase upcoming events with countdown timers",
-      "Feature artists with dedicated profile pages",
-      "Mobile-optimized for on-the-go ticket purchases"
+      "Create an engaging event website that sells more tickets",
+      "Showcase your event lineup with artist connections and profiles",
+      "Manage multiple events with an organized calendar system",
+      "Promote upcoming events with visual countdown displays",
+      "Mobile-optimized design for visitors purchasing on mobile devices"
     ],
-    "compatible_plugins": [
+    "included_plugins": [
+      "One-Click Demo Import",
       "WooCommerce",
-      "Wolf Events",
-      "Wolf Booking",
-      "Wolf Artists",
+      "WooCommerce Variation Swatches",
       "Contact Form 7",
-      "Elementor"
+      "Elementor",
+      "Wolf Core",
+      "Wolf Artists",
+      "Wolf Events",
+      "Wolf Portfolio",
+      "Wolf Video Thumbnail Generator",
+      "Slider Revolution"
     ],
     "design_features": [
-      "Bold typography options",
-      "Vibrant color schemes",
-      "Fullwidth layouts",
-      "Animated sections",
-      "Video backgrounds",
-      "Parallax effects"
+      "Festival-inspired color schemes",
+      "Multiple header layout options",
+      "Dynamic event grid layouts",
+      "Artist showcase templates",
+      "Ticket display widgets",
+      "Video background support",
+      "Bold typography options"
     ],
     "use_cases": [
-      "Music festival websites",
-      "Concert venue online presence",
-      "Event ticketing platforms",
-      "Artist showcase sites",
-      "Nightclub websites"
+      "Music Festival Websites",
+      "Concert Venue Online Presence",
+      "Event Management Platform",
+      "Artist Showcase & Event Promotion",
+      "Ticket Sales Portal"
     ],
     "customer_sites": [],
-    "testimonials": []
+    "testimonials": [
+      {
+        "text": "Poize is hands down one of the best WordpPress themes I’ve ever worked with to date! The design is fantastic, the layout is intuitive, and it comes packed with a variety of great features. Especially the custom Events plugin by Wolf Theme that I love. The theme integrates seamlessly with Elementor, making customization an absolute breeze. What truly makes this theme stand out is the exceptional support provided by Wolf Themes. Their team is quick to respond, incredibly helpful, and provide detailed solutions to any questions you throw at them. Wolf Themes has truly knocked it out of the park with Poize. It’s the perfect theme for anyone working on musicians, music events, festivals, or event websites. Thank you so much Wolf Themes team for creating such an exceptional theme! Keep up the great work!",
+        "author": "GINGALLEY",
+        "rating": 5
+      }
+    ]
   },
   "mediafoundry": {
     "name": "MediaFoundry",
@@ -1159,27 +1459,28 @@
       "Agency"
     ],
     "features": [
-      "Portfolio Showcase",
-      "Video Production Gallery",
-      "Team Members Display",
-      "Client Logo Showcase",
-      "Masonry Gallery Layouts",
-      "Custom Services Section",
-      "Testimonials Carousel",
-      "Video Background Support",
-      "Modern Contact Forms",
-      "Social Media Integration",
-      "One-Click Demo Import",
-      "Fully Responsive Design"
+      "Slider Revolution plugin ($85 value) included",
+      "Portfolio custom post type with advanced filtering",
+      "Artist/Team profiles linked to portfolio via taxonomy system",
+      "Job board with career listings and application system",
+      "Built with Elementor page builder for drag-and-drop editing",
+      "Wolf Core plugin with production-focused widgets and elements",
+      "Video gallery with custom player and thumbnail options",
+      "Masonry portfolio layouts with filtering capabilities",
+      "Client logo and testimonial showcase carousels",
+      "Team member showcase with role and expertise filtering",
+      "Custom services section with icon selection",
+      "Video background support for dynamic headers"
     ],
     "selling_points": [
-      "Perfect for production studios and creative agencies",
-      "Specialized media showcase layouts",
-      "Clean, professional design aesthetic",
-      "Optimized for video and portfolio content",
-      "Mobile-first approach for all devices",
-      "Fast loading for better user experience",
-      "Dedicated support and documentation"
+      "Create a professional portfolio that showcases your production work",
+      "Connect team members to their projects through the taxonomy system",
+      "Present your creative services with beautiful, conversion-focused layouts",
+      "Attract talent with an integrated job board and application system",
+      "Highlight your production team's expertise and specializations",
+      "Display your client roster and testimonials to build credibility",
+      "Optimize your site for both aesthetic appeal and performance",
+      "Customize every element to match your production studio's brand identity"
     ],
     "theme_style": [
       "Clean",
@@ -1196,35 +1497,43 @@
       "Videographers"
     ],
     "key_benefits": [
-      "Present your production work with a professional online presence",
-      "Showcase your creative team and their expertise",
-      "Display services in an engaging, modern format",
-      "Build credibility with client testimonials and portfolio",
-      "Attract new clients with a conversion-focused design"
+      "Showcase your creative work with portfolio-artist connections",
+      "Highlight team members and link them directly to their projects",
+      "Attract industry talent with customized job listings",
+      "Present your services in an engaging, conversion-focused format",
+      "Build credibility with integrated client logos and testimonials",
+      "Attract new clients with a professional, optimized online presence"
     ],
-    "compatible_plugins": [
+    "included_plugins": [
       "Elementor",
+      "Wolf Core",
       "WooCommerce",
+      "WooCommerce Variation Swatches",
       "Contact Form 7",
       "Wolf Portfolio",
-      "WPML",
-      "Yoast SEO"
+      "Wolf Artists",
+      "Wolf Jobs",
+      "Slider Revolution",
+      "One-Click Demo Import"
     ],
     "design_features": [
-      "Elegant typography",
-      "Studio-inspired light/dark modes",
+      "Advanced scrolling animations",
+      "Filterable portfolio grids",
+      "Video lightbox integrations",
+      "Elegant typography system",
       "Fullscreen video headers",
-      "Portfolio grid layouts",
-      "Smooth animations",
-      "Filterable project galleries"
+      "Team member card layouts",
+      "Animated content transitions",
+      "Custom cursor options"
     ],
     "use_cases": [
-      "Video production studio websites",
-      "Film production company sites",
-      "Creative agency online presence",
-      "Photographer portfolio sites",
-      "Videographer showcases",
-      "Digital content studios"
+      "Video Production Studio Websites",
+      "Film Production Company Portfolios",
+      "Creative Agency Online Presence",
+      "Photography Portfolio Sites",
+      "Videographer Showcase Platforms",
+      "Digital Content Studio Websites",
+      "Creative Industry Recruitment Platforms"
     ],
     "customer_sites": [],
     "testimonials": [
@@ -1234,5 +1543,29 @@
         "rating": 5
       }
     ]
+  },
+  "soundkraft": {
+    "name": "Soundkraft",
+    "slug": "soundkraft",
+    "builder": "Elementor",
+    "url": "https://themeforest.net/item/soundkraft/000000",
+    "demourl": "https://preview.wolfthemes.store/soundkraft/landing/",
+    "shortlink": "https://wlfthm.es/soundkraft",
+    "itemId": "000000",
+    "version": "1.0.0",
+    "updated": "2025-04-24",
+    "description": "Music Production Theme",
+    "longdescription": "MediaFoundry is a powerful WordPress theme designed for creative professionals and agencies. Whether you're a video producer, graphic designer, or multidisciplinary artist, MediaFoundry helps you showcase your work with bold layouts, seamless video integration, and dynamic team profiles. Perfect for creating portfolios, managing projects, and building a stunning online presence.",
+    "category": "Agency",
+    "features": [],
+    "selling_points": [],
+    "theme_style": [],
+    "target_audience": [],
+    "key_benefits": [],
+    "included_plugins": [],
+    "design_features": [],
+    "use_cases": [],
+    "customer_sites": [],
+    "testimonials": []
   }
 }

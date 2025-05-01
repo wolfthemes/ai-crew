@@ -214,6 +214,7 @@ def preprocess_ticket(raw_ticket):
     version = get_theme_version(theme)
     last_update = get_theme_last_update(theme)
     envato_id = get_theme_envato_id(theme)
+    included_plugins = get_theme_included_plugins(theme)
     
     #summary = "Tickets summary in once clear sentence"
     # User info
@@ -234,6 +235,7 @@ def preprocess_ticket(raw_ticket):
         "customer_url": customer_url,
         "theme": theme,
         "builder": builder,
+        "included_plugins": included_plugins,
         "category": category,
         "version": version,
         "updated": last_update,
@@ -312,6 +314,17 @@ def get_theme_category(theme_name):
     
     return f"Uncategorized"
 
+def get_theme_included_plugins(theme_name):
+    with open(os.path.join("data", "themes/theme_catalog.json"), encoding="utf-8") as f:
+        data = json.load(f)
+    
+    # Loop through all themes to match by name
+    for theme in data.values():
+        if theme.get("name", "").lower() == theme_name.lower():
+            return theme['included_plugins']
+    
+    return f"Not Provided"
+
 def get_theme_last_update(theme_name):
     with open(os.path.join("data", "themes/theme_catalog.json"), encoding="utf-8") as f:
         data = json.load(f)
@@ -334,6 +347,7 @@ def get_theme_version(theme_name):
     
     return f"No version found"
 
+
 def get_ticket_metadata(ticket_id):
     ticket = load_ticket_by_id(ticket_id)
     
@@ -350,6 +364,7 @@ def get_ticket_metadata(ticket_id):
         "customer_url": ticket.get("customer_url"),
         "theme": ticket.get("theme"),
         "builder": ticket.get("builder"),
+        "included_plugins": ticket.get("included_plugins"),
         "category": ticket.get("category"),
         "version": ticket.get("version"),
         "theme_url": ticket.get("theme_url"),
