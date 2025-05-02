@@ -5,7 +5,7 @@ import multiprocessing
 import logging
 import time
 from datetime import datetime
-
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv
@@ -202,12 +202,17 @@ if USE_VECTORSTORE:
             all_docs = load_documents()
             
             if all_docs:
+
+                # Add this chunking logic:
+                text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+                split_docs = text_splitter.split_documents(all_docs)
+                logger.info(f"✓ Split into {len(split_docs)} chunks from {len(all_docs)} original documents")
                 # Compute current file hashes
                 current_hashes = compute_all_file_hashes(DATA_FOLDER)
                 
                 # Build the index
                 start_time = time.time()
-                vectorstore = FAISS.from_documents(all_docs, embedding)
+                vectorstore = FAISS.from_documents(split_docs, embedding)
                 build_time = time.time() - start_time
                 logger.info(f"✓ FAISS index built in {build_time:.2f} seconds")
                 
