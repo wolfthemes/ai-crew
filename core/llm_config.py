@@ -5,7 +5,7 @@ from langchain_anthropic import ChatAnthropic
 
 # === Fallback to local config overrides ===
 try:
-    from llm_config_local import PRIMARY_MODEL_KEY, SECONDARY_MODEL_KEY, POWER_MODEL_KEY, CODING_MODEL_KEY
+    from config.llm_config_local import PRIMARY_MODEL_KEY, SECONDARY_MODEL_KEY, POWER_MODEL_KEY, CODING_MODEL_KEY
 except ImportError:
     PRIMARY_MODEL_KEY = "gpt-4.1-mini"
     SECONDARY_MODEL_KEY = "gpt-4.1-nano"
