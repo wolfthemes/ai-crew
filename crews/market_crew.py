@@ -223,6 +223,7 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         tasks=tasks,
         process=Process.sequential,  # Tasks executed in order
         verbose=verbose,
+        memory=True,
         manager_llm=report_writer_agent.llm  # Use the same LLM for the manager
     )
 

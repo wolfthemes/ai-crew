@@ -97,6 +97,7 @@ def support_crew_fresh_with_review(ticket_text, instruction: str = ""):
         agents=[support_agent, support_quality_control_agent],
         tasks=[support_task, quality_task],
         process=Process.sequential,
+        memory=True,
         verbose=True
     )
     
