@@ -13,6 +13,7 @@ apps = [
     {"script": "apps/chat_dev_agent.py", "port": 8501, "name": "Dev Agent"},
     {"script": "apps/fresh_ticket.py", "port": 8502, "name": "Fresh Ticket"},
     {"script": "apps/ticket_dashboard.py", "port": 8503, "name": "Ticket Dashboard"},
+    {"script": "apps/content_dashboard.py", "port": 8504, "name": "Content Generator"},
 ]
 
 def run_streamlit(script, port, name):
