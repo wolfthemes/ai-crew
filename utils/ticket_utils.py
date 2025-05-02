@@ -20,7 +20,7 @@ def reformulate_reply(reply_text: str, instruction: str = "", last_user_message:
     Reformulates the AI reply with optional extra instruction and original customer message for context.
     Preserves formatting, tone, and details.
     """
-    from llm_config_local import SECONDARY_MODEL_KEY
+    from config.llm_config_local import SECONDARY_MODEL_KEY
 
     openai_client = OpenAI()
 
