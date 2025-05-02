@@ -32,6 +32,7 @@ data/dynamic/tickets/*
 
 *.log
 logs/
+debug
 
 # Confif files
 llm_config_local.py
