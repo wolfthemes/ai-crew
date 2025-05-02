@@ -11,7 +11,7 @@ def segment_ticket_with_ai(full_thread_summary: str) -> List[Dict]:
     Returns:
         A list of dicts like: [{"issue": "...", "resolved": False}, {...}]
     """
-    from llm_config_local import SECONDARY_MODEL_KEY
+    from config.llm_config_local import SECONDARY_MODEL_KEY
     from openai import OpenAI  # Assuming you already have openai_client setup like in reformulate_reply
 
     openai_client = OpenAI()

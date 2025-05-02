@@ -35,7 +35,7 @@ logs/
 debug
 
 # Confif files
-llm_config_local.py
+config/llm_config_local.py
 .env
 
 # Ignore cloned or test repos
