@@ -15,17 +15,17 @@
       "Music"
     ],
     "features": [
-      "Slider Revolution plugin ($109 value) included",
       "Comprehensive discography management system",
-      "Event listing and calendar functionality",
+      "Event listing and grid functionality",
       "Video gallery with custom player options",
-      "Built with WPBakery Page Builder ($64 value)",
       "Wolf WPBakery Extension with music-specific elements",
       "WooCommerce integration for merchandise sales",
       "Audio player with playlist management",
       "Custom header and footer builder",
       "One-click demo import with complete content",
-      "Mobile-optimized responsive design for all devices"
+      "Mobile-optimized responsive design for all devices",
+      "Built with WPBakery Page Builder ($74 value)",
+      "Slider Revolution plugin ($109 value) included"
     ],
     "selling_points": [
       "Create a professional music website with minimal technical knowledge",
@@ -55,25 +55,7 @@
       "Build a dedicated fanbase through media galleries and content",
       "Establish a professional music industry presence that grows with your career"
     ],
-    "included_plugins": [
-      "One-Click Demo Import",
-      "WooCommerce",
-      "WooCommerce Variation Swatches",
-      "Contact Form 7",
-      "WPBakery Page Builder",
-      "Wolf WPBakery Page Builder Extension",
-      "Wolf WPBakery Page Builder Content Blocks",
-      "Wolf Metaboxes",
-      "Wolf Albums",
-      "Wolf Videos",
-      "Wolf Events",
-      "Wolf Discography",
-      "Wolf Playlist Manager",
-      "Wolf WooCommerce Wishlist",
-      "Wolf WooCommerce Quickview",
-      "Wolf Video Thumbnail Generator",
-      "Slider Revolution"
-    ],
+    "compatible_plugins": [],
     "design_features": [
       "Music-oriented layout templates",
       "Album cover showcase options",
@@ -125,7 +107,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -149,7 +131,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -173,7 +155,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -197,7 +179,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -214,14 +196,14 @@
     "version": "2.6.51",
     "updated": "2025-04-24",
     "description": "A Fresh Multipurpose WordPress Theme",
-    "longdescription": "André is a fresh, stunning, pixel perfect, modern and solid WordPress Themes for small business owners, entrepreneurs, and creatives. It is designed with terrific attention to details, flexibility and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes a tailored version of Visual Composer ($64) and the Slider Revolution plugin ($85).",
+    "longdescription": "André is a fresh, stunning, pixel perfect, modern and solid WordPress Themes for small business owners, entrepreneurs, and creatives. It is designed with terrific attention to details, flexibility and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes a tailored version of WPBakery Page Builder ($74 value) and the Slider Revolution plugin ($109 value).",
     "category": "Portfolio",
     "features": [],
     "selling_points": [],
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -239,17 +221,95 @@
     "updated": "2025-04-24",
     "description": "A Modern and Unique WordPress Theme for the Music Industry",
     "longdescription": "Loud is a modern and unique WordPress Theme for musicians, artists, labels and everyone working in the music industry. It includes all the feature you need to create a professional music website easily and quickly. Discography, Tour Dates, Playlist Manager, Store, Video & Photo Gallery etc...",
-    "category": "Music",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "included_plugins": [],
-    "design_features": [],
-    "use_cases": [],
+    "category": [
+      "Music",
+      "Entertainment"
+    ],
+    "features": [
+      "Built with WPBakery Page Builder ($64 value) included",
+      "Comprehensive discography management system",
+      "Event listing and tour date functionality",
+      "Video gallery with custom player options",
+      "Photo gallery and album management",
+      "Wolf WPBakery Extension with music-specific elements",
+      "WooCommerce integration for merchandise sales",
+      "Audio player with playlist management",
+      "Content Blocks system for custom headers and footers",
+      "One-click demo import with complete content",
+      "Mobile-optimized responsive design for all devices",
+      "Multiple blog layout options (grid, modern grid, mosaic, masonry, metro, standard, lateral)",
+      "Social sharing integration across multiple platforms",
+      "Slider Revolution plugin ($109 value) included"
+    ],
+    "selling_points": [
+      "Create a professional music website with a bold, modern aesthetic",
+      "Showcase your music, videos, and upcoming events in one cohesive platform",
+      "Sell merchandise directly to fans with integrated e-commerce",
+      "Connect with your audience through embedded social media features",
+      "Establish a professional online presence for your band, label, or music business",
+      "Save time with pre-built music industry layouts and templates",
+      "Customize every aspect of your site to match your unique brand identity"
+    ],
+    "theme_style": [
+      "Bold",
+      "Modern",
+      "Clean",
+      "Dynamic"
+    ],
+    "target_audience": [
+      "Musicians and Bands",
+      "Record Labels",
+      "Music Producers",
+      "DJ's and Electronic Artists",
+      "Music Industry Professionals",
+      "Entertainment Companies"
+    ],
+    "key_benefits": [
+      "Showcase your music with integrated audio players and playlists",
+      "Promote upcoming performances with event calendar integration",
+      "Sell merchandise and music directly to your fans",
+      "Build a dedicated fanbase through media galleries and content",
+      "Establish a professional music industry presence with a bold aesthetic",
+      "Create a website that stands out with distinctive design elements"
+    ],
+    "compatible_plugins": [],
+    "design_features": [
+      "Bold typography and color schemes",
+      "Music-oriented layout templates",
+      "Album cover showcase options",
+      "Video thumbnail galleries",
+      "Multiple header layout variations",
+      "Custom music player with playlist support",
+      "Social sharing integration",
+      "Advanced animation effects"
+    ],
+    "use_cases": [
+      "Band & Musician Websites",
+      "Record Label Online Presence",
+      "Music Producer Portfolios",
+      "DJ & Electronic Artist Sites",
+      "Music Festival Websites",
+      "Entertainment Business Websites",
+      "Music Industry Professional Sites"
+    ],
     "customer_sites": [],
-    "testimonials": []
+    "testimonials": [
+      {
+        "text": "I believe I was the first to buy this theme! I loved the way it looked and it's been a great transition into a new website for me. I find the layout easy to use and very seamless. The support has been fantastic and very efficient!",
+        "author": "repip",
+        "rating": 5
+      },
+      {
+        "text": "A lot of options. Looks great. The support is superb. They answer fast and will help you till the problem is solved.",
+        "author": "JasperK88",
+        "rating": 5
+      },
+      {
+        "text": "This theme is the only one I have ever used where all my customisations were point-and-click. A very, very comprehensive and thematically awesome theme. Thanks! 5/5 stars!",
+        "author": "TechTiger",
+        "rating": 5
+      }
+    ]
   },
   "hares": {
     "name": "Hares",
@@ -269,7 +329,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -293,7 +353,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -310,14 +370,14 @@
     "version": "2.2.51",
     "updated": "2025-04-24",
     "description": "An Elegant Video Oriented WordPress Theme",
-    "longdescription": "Superflick is an elegant & modern WordPress Theme for movie studios, video artists, filmmakers, vloggers, agencies and everyone wanting to showcase their video work. It includes a video gallery, portfolio, shop and blog features. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($85).",
+    "longdescription": "Superflick is an elegant & modern WordPress Theme for movie studios, video artists, filmmakers, vloggers, agencies and everyone wanting to showcase their video work. It includes a video gallery, portfolio, shop and blog features. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": "",
     "features": [],
     "selling_points": [],
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -334,18 +394,102 @@
     "version": "2.3.48",
     "updated": "2025-04-24",
     "description": "A Complete Music WordPress Theme for Record Labels and Artists",
-    "longdescription": "Phase is a complete music WordPress theme for record labels, artists, bands and everyone working in the music industry. It includes an artist custom post type, a discography, video, photo, shop and blog features. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($85).",
-    "category": "Music",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "included_plugins": [],
-    "design_features": [],
-    "use_cases": [],
-    "customer_sites": [],
-    "testimonials": []
+    "longdescription": "Phase is a complete music WordPress theme for record labels, artists, bands and everyone working in the music industry. It includes an artist custom post type, a discography, video, photo, shop and blog features. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
+    "category": [
+      "Music"
+    ],
+    "features": [
+      "Artist custom post type with taxonomy connections",
+      "Comprehensive discography management system",
+      "Event listing and grid functionality",
+      "Video gallery with custom player options",
+      "Photo gallery and album management",
+      "Built with WPBakery Page Builder ($64 value)",
+      "Wolf WPBakery Extension with music-specific elements",
+      "Slider Revolution plugin ($109 value) included",
+      "WooCommerce integration for merchandise sales",
+      "Audio player with playlist management",
+      "Content Blocks system for custom headers and footers",
+      "One-click demo import with complete content",
+      "Mobile-optimized responsive design for all devices",
+      "Artist profiles linked to releases, events, and videos"
+    ],
+    "selling_points": [
+      "Create a professional music website with minimal technical knowledge",
+      "Showcase artists, music, videos, and upcoming events in one cohesive platform",
+      "Connect artists to their releases, events, and videos with taxonomy linking",
+      "Sell merchandise directly to fans with integrated e-commerce",
+      "Connect with your audience through embedded social media features",
+      "Establish a professional online presence for your label, band, or music business",
+      "Save time with pre-built music industry layouts and templates",
+      "Customize every aspect of your site to match your unique brand identity"
+    ],
+    "theme_style": [
+      "Professional",
+      "Modern",
+      "Dynamic",
+      "Flexible"
+    ],
+    "target_audience": [
+      "Record Labels",
+      "Musicians and Bands",
+      "Music Producers",
+      "DJ's and Electronic Artists",
+      "Music Industry Professionals",
+      "Artist Management Companies"
+    ],
+    "key_benefits": [
+      "Showcase your artists with dedicated profile pages linked to their work",
+      "Display music releases with integrated audio players and playlists",
+      "Promote upcoming performances with event calendar integration",
+      "Sell merchandise and music directly to your fans",
+      "Build a dedicated fanbase through media galleries and content",
+      "Establish a professional music industry presence that grows with your career"
+    ],
+    "compatible_plugins": [],
+    "design_features": [
+      "Music-oriented layout templates",
+      "Artist profile showcase options",
+      "Album cover gallery displays",
+      "Video thumbnail galleries",
+      "Multiple header layout variations",
+      "Custom music player with playlist support",
+      "Social sharing integration",
+      "Advanced page transitions and animations"
+    ],
+    "use_cases": [
+      "Record Label Websites",
+      "Band & Musician Portfolios",
+      "Music Festival Sites",
+      "DJ & Electronic Artist Platforms",
+      "Music Producer Showcases",
+      "Artist Management Company Sites",
+      "Music Industry Business Websites"
+    ],
+    "customer_sites": [
+      {
+        "name": "Dymytry",
+        "url": "https://www.dymytry.cz/",
+        "ig_at": "dymytry_cz_official"
+      }
+    ],
+    "testimonials": [
+      {
+        "text": "Thank you greatly for top notch customer support. Both issues were quickly resolved and communication was outstanding.",
+        "author": "hempfulfarms",
+        "rating": 5
+      },
+      {
+        "text": "Big thank you to the developers theme of this complete project. It is one of the fastest out there especially when it comes to the tons of features and customization options this theme has. Purchased, installed and customized in 7 days.. Now we are ready to push our Record Label company to the public once we are over with the copywriting. Thank you and you get 10/10",
+        "author": "Kiranov",
+        "rating": 5
+      },
+      {
+        "text": "This is a great looking theme with tons of flexibility –– maybe too much, as I'm still discovering the many options available! Highly recommended.",
+        "author": "nickfaber",
+        "rating": 5
+      }
+    ]
   },
   "zample": {
     "name": "Zample",
@@ -365,7 +509,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -382,14 +526,14 @@
     "version": "2.0.47",
     "updated": "2025-04-24",
     "description": "Elegant and Modern WooCommerce Theme",
-    "longdescription": "Prequelle is modern and elegant e-commerce WordPress theme built for WooCoomerce plugin. It includes shop extended features like product quick view, user wishlist, dropdown cart panel, login popup and more. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($85).",
+    "longdescription": "Prequelle is modern and elegant e-commerce WordPress theme built for WooCoomerce plugin. It includes shop extended features like product quick view, user wishlist, dropdown cart panel, login popup and more. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": "",
     "features": [],
     "selling_points": [],
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -406,14 +550,14 @@
     "version": "1.9.55",
     "updated": "2025-04-24",
     "description": "Stylish WooCommerce Theme",
-    "longdescription": "Slikk is a vintage and elegant WordPress theme built for WooCoomerce plugin. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($85).",
+    "longdescription": "Slikk is a vintage and elegant WordPress theme built for WooCoomerce plugin. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": "",
     "features": [],
     "selling_points": [],
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -430,14 +574,14 @@
     "version": "1.9.54",
     "updated": "2025-04-24",
     "description": "Music Oriented WooCommerce Theme",
-    "longdescription": "Vonzot It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($85).",
+    "longdescription": "Vonzot It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": "",
     "features": [],
     "selling_points": [],
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -454,14 +598,14 @@
     "version": "1.8.56",
     "updated": "2025-04-24",
     "description": "Fitnesss and Bodybuilding WordPress Theme",
-    "longdescription": "Deadlift is a bold and modern fitness WordPress theme. It includes many features for your website like classes timetable, workout programs, meal plans, recipes and more. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($85).",
+    "longdescription": "Deadlift is a bold and modern fitness WordPress theme. It includes many features for your website like classes timetable, workout programs, meal plans, recipes and more. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": "",
     "features": [],
     "selling_points": [],
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -485,7 +629,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -509,7 +653,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -533,7 +677,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -557,7 +701,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -574,28 +718,103 @@
     "version": "1.8.48",
     "updated": "2025-04-24",
     "description": "A Clean and Modern WooCommerce Theme",
-    "longdescription": "Alceste is fresh and modern e-commerce WordPress theme built for WooCoomerce plugin. It includes shop extended features like product quick view, user wishlist, dropdown cart panel, login popup and more. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($85).",
+    "longdescription": "Alceste is fresh and modern e-commerce WordPress theme built for WooCoomerce plugin. It includes shop extended features like product quick view, user wishlist, dropdown cart panel, login popup and more. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": [
+      "E-commerce",
+      "WooCommerce",
       "Shop"
     ],
     "features": [
-      "WooCommerce Ready",
-      "Ajax shopping cart",
-      "Store Locator",
-      "User Wishlist"
+      "Product quick view functionality",
+      "User wishlist system",
+      "Dropdown cart panel for easy shopping",
+      "Login popup for streamlined user experience",
+      "Currency switcher for international sales",
+      "One-click demo import for quick setup",
+      "Custom header and footer builder",
+      "Content Blocks system for reusable sections",
+      "Multiple product layout options (grid, masonry, metro)",
+      "Customizable single product page layouts",
+      "Mobile-optimized responsive design",
+      "Slider Revolution plugin ($109 value) included",
+      "WPBakery Page Builder ($74 value) included with extended features"
     ],
     "selling_points": [
-      "Clean and modern",
-      "WooCommcere ready"
+      "Create a professional e-commerce website with minimal technical knowledge",
+      "Showcase your products with beautiful layouts and filtering options",
+      "Enhance shopping experience with quick view and wishlist features",
+      "Offer international shopping with currency switcher functionality",
+      "Establish a professional online store focused on conversions",
+      "Save time with pre-built e-commerce layouts and templates",
+      "Customize every aspect to match your unique brand identity"
     ],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "included_plugins": [],
-    "design_features": [],
-    "use_cases": [],
-    "customer_sites": [],
-    "testimonials": []
+    "theme_style": [
+      "Clean",
+      "Modern",
+      "Trendy",
+      "Minimalist"
+    ],
+    "target_audience": [
+      "Online Retailers",
+      "E-commerce Businesses",
+      "Fashion Stores",
+      "Electronic Shops",
+      "Beauty and Cosmetic Stores",
+      "Furniture Retailers",
+      "Digital Product Vendors"
+    ],
+    "key_benefits": [
+      "Showcase your products with multiple layout options and filtering capabilities",
+      "Enhance customer experience with quick view and wishlist features",
+      "Improve conversion rates with optimized product pages and checkout process",
+      "Build credibility with professional design and user-friendly interface",
+      "Save development time with ready-to-use templates and one-click demo import",
+      "Establish a scalable online store that grows with your business"
+    ],
+    "compatible_plugins": [],
+    "design_features": [
+      "E-commerce focused layout templates",
+      "Product showcase options",
+      "Multiple header layout variations",
+      "Advanced scrolling animations",
+      "Smooth page transitions",
+      "Custom cursor options",
+      "Social sharing integration",
+      "Customizable mega menu"
+    ],
+    "use_cases": [
+      "Fashion and Clothing Stores",
+      "Electronics and Tech Shops",
+      "Beauty and Cosmetics Retailers",
+      "Furniture and Home Decor Outlets",
+      "Digital Product Marketplaces",
+      "Handmade and Craft Shops",
+      "Multi-vendor Marketplaces"
+    ],
+    "customer_sites": [
+      {
+        "name": "HireIt",
+        "url": "https://hireit-eventfurniture.com/",
+        "ig_at": "hire.it"
+      }
+    ],
+    "testimonials": [
+      {
+        "text": "Modern design with lots of flexibility. Easy to use with great documentation. 5 stars!",
+        "author": "peson82",
+        "rating": 5
+      },
+      {
+        "text": "Great template with many customizable features and easy to use. Design quality is great with loads of options and easy to read and understand documentation.",
+        "author": "RaeShantael",
+        "rating": 5
+      },
+      {
+        "text": "We love this theme for our agency, it's magnificent, beautifully responsive and the support is very present. We appreciate it a lot!",
+        "author": "USTS",
+        "rating": 5
+      }
+    ]
   },
   "firemaster": {
     "name": "Firemaster",
@@ -615,7 +834,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -639,7 +858,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -663,7 +882,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -680,18 +899,97 @@
     "version": "1.8.49",
     "updated": "2025-04-24",
     "description": "A WordPress Theme for Music Bands and Record Labels",
-    "longdescription": "Herion is a complete music WordPress theme for record labels, artists, bands and everyone working in the music industry. It includes an artist custom post type, a discography, video, photo, shop and blog features. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($85).",
-    "category": "Music",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "included_plugins": [],
-    "design_features": [],
-    "use_cases": [],
+    "longdescription": "Herion is a complete music WordPress theme for record labels, artists, bands and everyone working in the music industry. It includes an artist custom post type, a discography, video, photo, shop and blog features. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
+    "category": [
+      "Music"
+    ],
+    "features": [
+      "Artist custom post type with profiles and media",
+      "Comprehensive discography management system",
+      "Event listing and calendar functionality",
+      "Video gallery with custom player options",
+      "Photo gallery and album management",
+      "Built with WPBakery Page Builder ($64 value)",
+      "Wolf WPBakery Extension with music-specific elements",
+      "Slider Revolution plugin (included)",
+      "WooCommerce integration for merchandise sales",
+      "Audio player with playlist management",
+      "Content Blocks system for custom headers and footers",
+      "One-click demo import with complete content",
+      "Mobile-optimized responsive design for all devices",
+      "Social sharing across multiple platforms",
+      "Custom post meta options (likes, views, reading time)"
+    ],
+    "selling_points": [
+      "Create a professional music website with minimal technical knowledge",
+      "Showcase artists, music, videos, and upcoming events in one cohesive platform",
+      "Connect artists to their releases, events, and videos",
+      "Sell merchandise directly to fans with integrated e-commerce",
+      "Connect with your audience through embedded social media features",
+      "Establish a professional online presence for your label, band, or music business",
+      "Save time with pre-built music industry layouts and templates",
+      "Customize every aspect of your site to match your unique brand identity"
+    ],
+    "theme_style": [
+      "Professional",
+      "Modern",
+      "Elegant",
+      "Clean"
+    ],
+    "target_audience": [
+      "Record Labels",
+      "Musicians and Bands",
+      "Music Producers",
+      "DJ's and Electronic Artists",
+      "Music Industry Professionals",
+      "Artist Management Companies"
+    ],
+    "key_benefits": [
+      "Showcase your artists with dedicated profile pages linked to their work",
+      "Display music releases with integrated audio players and playlists",
+      "Promote upcoming performances with event calendar integration",
+      "Sell merchandise and music directly to your fans",
+      "Build a dedicated fanbase through media galleries and content",
+      "Establish a professional music industry presence that grows with your career"
+    ],
+    "compatible_plugins": [],
+    "design_features": [
+      "Music-oriented layout templates",
+      "Artist profile showcase options",
+      "Album cover gallery displays",
+      "Video thumbnail galleries",
+      "Multiple header layout variations",
+      "Custom music player with playlist support",
+      "Social sharing integration",
+      "Clean and modern aesthetic"
+    ],
+    "use_cases": [
+      "Record Label Websites",
+      "Band & Musician Portfolios",
+      "Music Festival Sites",
+      "DJ & Electronic Artist Platforms",
+      "Music Producer Showcases",
+      "Artist Management Company Sites",
+      "Music Industry Business Websites"
+    ],
     "customer_sites": [],
-    "testimonials": []
+    "testimonials": [
+      {
+        "text": "There's a reason why my label, my marketing agency, all of my artists, and soon – all of my venues, use Wolf-Themes… Why you'd use another template just means you're not serious about your music.",
+        "author": "BobbyJayOTA",
+        "rating": 5
+      },
+      {
+        "text": "Use this theme as starting point for a summer weekend festival, till now all my needs are inside the configurable blocks. Support QnA is within one day, which helps my proceding on-time.",
+        "author": "StarSolutions",
+        "rating": 5
+      },
+      {
+        "text": "Outstanding template, I really like it! You can use it in many ways and it's very flexible. The support is also amazing. I had a problem with a function and reached out to the author, so he just updated the theme. Thanks again! :)",
+        "author": "JSchmidti",
+        "rating": 5
+      }
+    ]
   },
   "staaw": {
     "name": "Staaw",
@@ -704,14 +1002,14 @@
     "version": "1.6.55",
     "updated": "2025-04-24",
     "description": "Print-on-Demand WooCommerce Theme",
-    "longdescription": "Oglin offers a unique experience to your visitors. Its advanced navigation feature lets users and potential customers browse your website while listening to your music, without reloading the page. It includes everything needed for anyone working in the music industry. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($85).",
+    "longdescription": "Oglin offers a unique experience to your visitors. Its advanced navigation feature lets users and potential customers browse your website while listening to your music, without reloading the page. It includes everything needed for anyone working in the music industry. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": "",
     "features": [],
     "selling_points": [],
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -735,7 +1033,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -759,7 +1057,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -781,7 +1079,6 @@
       "Music"
     ],
     "features": [
-      "Slider Revolution plugin ($109 value) included",
       "One-page scrolling layout for seamless navigation",
       "Built with Elementor page builder for easy customization",
       "Wolf Core plugin with music-specific Elementor widgets",
@@ -791,7 +1088,8 @@
       "Video section for music videos and performances",
       "WooCommerce integration for merch and music sales",
       "Social media integration for artist profiles",
-      "Mobile-optimized responsive design for all devices"
+      "Mobile-optimized responsive design for all devices",
+      "Slider Revolution plugin ($109 value) included"
     ],
     "selling_points": [
       "Create a complete music website on a single, engaging page",
@@ -821,17 +1119,7 @@
       "Promote upcoming shows with built-in event sections",
       "Create a professional music presence with minimal setup time"
     ],
-    "included_plugins": [
-      "Elementor",
-      "Wolf Core",
-      "WooCommerce",
-      "Contact Form 7",
-      "Wolf Discography",
-      "Wolf Events",
-      "Wolf Videos",
-      "Wolf Playlist Manager",
-      "Slider Revolution"
-    ],
+    "compatible_plugins": [],
     "design_features": [
       "Parallax scrolling effects",
       "Section navigation dots",
@@ -879,17 +1167,85 @@
     "updated": "2025-04-24",
     "description": "Creative Portfolio WordPress Theme",
     "longdescription": "Nù is a creative portfolio WordPress theme built for Elementor and dedicated to digital designer, modern agency, design studio, personal portfolio or who wants to create a professional website easily.",
-    "category": "",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "included_plugins": [],
-    "design_features": [],
-    "use_cases": [],
+    "category": [
+      "Portfolio",
+      "Creative"
+    ],
+    "features": [
+      "Built with Elementor page builder for easy customization",
+      "Portfolio custom post type with advanced filtering",
+      "Wolf Core plugin with creative-focused widgets and elements",
+      "Slider Revolution plugin ($85 value) included",
+      "WooCommerce integration for selling creative products",
+      "Content Blocks system for custom headers and footers",
+      "Social sharing integration across multiple platforms",
+      "One-click demo import with complete content",
+      "Mobile-optimized responsive design for all devices",
+      "Blog functionality with modern layouts",
+      "Multiple portfolio layout options (grid, masonry, metro)",
+      "Advanced animation effects for portfolio items",
+      "Advanced SEO optimization for better visibility"
+    ],
+    "selling_points": [
+      "Create a professional creative portfolio with minimal technical knowledge",
+      "Showcase your design work with elegant and customizable layouts",
+      "Sell your creative products directly with integrated e-commerce",
+      "Connect with your audience through embedded social media features",
+      "Establish a professional online presence for your agency or studio",
+      "Save time with pre-built creative layouts and templates",
+      "Customize every aspect of your site with Elementor's drag-and-drop builder"
+    ],
+    "theme_style": [
+      "Modern",
+      "Elegant",
+      "Minimalist",
+      "Creative"
+    ],
+    "target_audience": [
+      "Digital Designers",
+      "Creative Agencies",
+      "Design Studios",
+      "Freelancers",
+      "Web Designers",
+      "Graphic Designers",
+      "Creative Professionals"
+    ],
+    "key_benefits": [
+      "Showcase your creative projects with elegant portfolio layouts",
+      "Highlight your design process with customizable presentation options",
+      "Sell design assets and products directly through your website",
+      "Build a professional online presence that attracts potential clients",
+      "Easily update your portfolio as your body of work grows",
+      "Customize your website to reflect your unique creative vision"
+    ],
+    "compatible_plugins": [],
+    "design_features": [
+      "Creative-oriented layout templates",
+      "Portfolio masonry and grid layouts",
+      "Modern minimalist aesthetic",
+      "Advanced animation effects",
+      "Multiple header layout variations",
+      "Custom cursor options",
+      "Interactive hover effects",
+      "Project-focused presentation"
+    ],
+    "use_cases": [
+      "Digital Design Agency Websites",
+      "Creative Studio Portfolios",
+      "Freelance Designer Showcases",
+      "Web Design Portfolio Sites",
+      "Graphic Design Galleries",
+      "Creative Project Showcases",
+      "Design Product Shops"
+    ],
     "customer_sites": [],
-    "testimonials": []
+    "testimonials": [
+      {
+        "text": "Nù is a great looking and flexible WP theme. Also online support works very well.",
+        "author": "jurajgavenda",
+        "rating": 5
+      }
+    ]
   },
   "spectacle": {
     "name": "Spectacle",
@@ -909,7 +1265,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -933,7 +1289,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -957,7 +1313,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -981,7 +1337,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -999,17 +1355,97 @@
     "updated": "2025-04-24",
     "description": "Professional Music WordPress Theme",
     "longdescription": "Overable is a premium WordPress theme built for Elementor and dedicated to musicians, bands, labels, or anyone related to the music industry which wants to create a professional website easily. Whether It includes everything you need Discography, Tour Dates, Playlist Manager, Store, Video, etc. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their clients. It includes Slider Revolution plugin ($85 value).",
-    "category": "Music",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "included_plugins": [],
-    "design_features": [],
-    "use_cases": [],
-    "customer_sites": [],
-    "testimonials": []
+    "category": [
+      "Music",
+      "Urban"
+    ],
+    "features": [
+      "Built with Elementor page builder for easy customization",
+      "Artist custom post type with bios and media galleries",
+      "Comprehensive discography management system",
+      "Event listing and tour date functionality",
+      "Video gallery with custom player options",
+      "Spotify integration for streaming tracks",
+      "Wolf Core plugin with music-specific elements for Elementor",
+      "WooCommerce integration for merchandise sales",
+      "Audio player with playlist management",
+      "Content Blocks system for custom headers and footers",
+      "One-click demo import with complete content",
+      "Mobile-optimized responsive design for all devices",
+      "Slider Revolution plugin ($109 value) included"
+    ],
+    "selling_points": [
+      "Create a professional music website with a fresh urban design",
+      "Showcase your music, videos, and upcoming events in one cohesive platform",
+      "Sell merchandise directly to fans with integrated e-commerce",
+      "Connect with your audience through embedded social media features",
+      "Establish a professional online presence for your band, label, or music business",
+      "Save time with pre-built music industry layouts and templates",
+      "Customize every aspect of your site with Elementor's drag-and-drop builder"
+    ],
+    "theme_style": [
+      "Urban",
+      "Modern",
+      "Dynamic",
+      "Bold"
+    ],
+    "target_audience": [
+      "Musicians and Bands",
+      "Record Labels",
+      "Urban Artists",
+      "Music Producers",
+      "DJ's and Electronic Artists",
+      "Rappers and Hip-Hop Artists",
+      "Beat Makers",
+      "Recording Studios"
+    ],
+    "key_benefits": [
+      "Showcase your music with stylish artist profiles and integrated players",
+      "Promote upcoming performances with event calendar integration",
+      "Sell merchandise and music directly to your fans",
+      "Build a dedicated fanbase through media galleries and content",
+      "Establish a professional music industry presence with an urban aesthetic",
+      "Easily customize your site with Elementor without coding knowledge"
+    ],
+    "compatible_plugins": [],
+    "design_features": [
+      "Urban-oriented layout templates",
+      "Artist profile showcase options",
+      "Album cover display galleries",
+      "Video thumbnail galleries",
+      "Multiple header layout variations",
+      "Custom music player with playlist support",
+      "Social sharing integration",
+      "Advanced animations and effects"
+    ],
+    "use_cases": [
+      "Urban Music Artist Websites",
+      "Hip-Hop & Rap Artist Sites",
+      "Record Label Online Presence",
+      "Music Producer Portfolios",
+      "DJ & Electronic Artist Sites",
+      "Beat Maker Showcases",
+      "Recording Studio Websites"
+    ],
+    "customer_sites": [
+      {
+        "name": "Kamelot",
+        "url": "https://kamelot.com/",
+        "ig_at": "kamelotofficial"
+      }
+    ],
+    "testimonials": [
+      {
+        "text": "This is the second Wolf Themes theme we've used. They are great themes. Just had an excellent support request solved as well as I could of asked as well.",
+        "author": "cosmicfantasia",
+        "rating": 5
+      },
+      {
+        "text": "TSuperb theme - superb up-to-date design. Support is great - please ignore my previous comments - once these guys figured out what the issue was they were right on it. Very easy to customise this theme as well - highly recommended.",
+        "author": "Bobbafet",
+        "rating": 5
+      }
+    ]
   },
   "morvan": {
     "name": "Morvan",
@@ -1029,7 +1465,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -1053,7 +1489,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -1109,11 +1545,7 @@
       "Client testimonials and success stories",
       "Pricing tables for different service packages"
     ],
-    "included_plugins": [
-      "Elementor",
-      "Woocommerce",
-      "Slider Revolution"
-    ],
+    "compatible_plugins": [],
     "design_features": [
       "Responsive Support",
       "Slider"
@@ -1176,11 +1608,7 @@
       "WooCommerce Integration – Sell exhibition tickets, art pieces, and more directly from your website.",
       "SEO Optimized – Attract more visitors with built-in SEO features that help your site rank higher on search engines."
     ],
-    "included_plugins": [
-      "Elementor",
-      "Woocommerce",
-      "Slider Revolution"
-    ],
+    "compatible_plugins": [],
     "design_features": [
       "Responsive Support",
       "Slider"
@@ -1210,7 +1638,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
@@ -1261,11 +1689,7 @@
       "Interactive maps for venue locations",
       "Countdown timers for upcoming events"
     ],
-    "included_plugins": [
-      "Elementor",
-      "Woocommerce",
-      "Slider Revolution"
-    ],
+    "compatible_plugins": [],
     "design_features": [
       "Responsive Support",
       "Slider"
@@ -1295,56 +1719,79 @@
       "Art"
     ],
     "features": [
-      "Slider Revolution plugin ($109 value) included",
-      "Elementor templates included for easy customization",
-      "Fully responsive design",
-      "SEO optimized structure",
-      "Regular theme updates",
-      "Comprehensive documentation",
-      "Built with Elementor page builder"
+      "Portfolio custom post type with advanced filtering",
+      "Photo gallery and album management",
+      "Built with Elementor page builder for drag-and-drop editing",
+      "Wolf Core plugin with art-focused widgets and elements",
+      "Advanced animation effects for portfolio items",
+      "Beautiful image galleries with customizable layouts",
+      "WooCommerce integration for selling artwork",
+      "One-click demo import with complete content",
+      "Mobile-optimized responsive design for all devices",
+      "Slider Revolution plugin (included)",
+      "Content Blocks system for custom headers and footers",
+      "Advanced SEO optimization for better visibility",
+      "Multiple portfolio layout options (grid, masonry, metro)"
     ],
     "selling_points": [
-      "Versatile Portfolio with Advanced Animation – Showcase your work with a dynamic, customizable portfolio featuring smooth animations that bring your creations to life.",
-      "Built for Elementor – Easily customize your portfolio using our custom art-focused elements with Elementor. No coding required!",
-      "Beautiful Image Galleries – Showcase your art in stunning image galleries with customizable layouts to match your style.",
-      "Mobile-Ready Design – Crafted with a visual artist’s aesthetic, Yor’s design is visually captivating and fully responsive on all devices.",
-      "WooCommerce Integration – Sell your artwork, prints, or merchandise directly from your site.",
-      "SEO Optimized – Drive more traffic with built-in SEO features that ensure your portfolio ranks high on search engines.",
-      "Import the demo content with one simple click and start customizing immediately"
+      "Create a professional artist portfolio with minimal technical knowledge",
+      "Showcase your artwork with stunning galleries and advanced animations",
+      "Sell your art directly to collectors with integrated e-commerce",
+      "Connect with your audience through embedded social media features",
+      "Establish a professional online presence for your artistic career",
+      "Save time with pre-built artist layouts and templates",
+      "Customize every aspect of your site to match your unique artistic style"
     ],
     "theme_style": [
       "Clean",
-      "Bold",
-      "Creative"
+      "Modern",
+      "Minimalist",
+      "Artistic"
     ],
     "target_audience": [
-      "Musicians",
-      "Bands",
-      "Music Industry Professionals"
+      "Painters",
+      "Illustrators",
+      "Visual Artists",
+      "Graphic Designers",
+      "Art Galleries",
+      "Photographers",
+      "Creative Professionals"
     ],
     "key_benefits": [
-      "Showcase your music with integrated audio players",
-      "Display upcoming tour dates and concert information",
-      "Sell merchandise directly through your website",
-      "Connect with fans through social media integration",
-      "Present your discography in an appealing layout"
+      "Showcase your artwork with versatile portfolio layouts and animations",
+      "Highlight your creative process with customizable gallery options",
+      "Sell artwork and prints directly through your website",
+      "Build a professional online presence that attracts art collectors",
+      "Easily update your portfolio as your body of work grows",
+      "Customize your website to reflect your unique artistic vision"
     ],
-    "included_plugins": [
-      "Elementor",
-      "Woocommerce",
-      "Slider Revolution"
-    ],
+    "compatible_plugins": [],
     "design_features": [
-      "Responsive Support",
-      "Animation",
-      "Slider"
+      "Art-oriented layout templates",
+      "Portfolio masonry and grid layouts",
+      "Image gallery display options",
+      "Advanced animation effects",
+      "Multiple header layout variations",
+      "Custom cursor options",
+      "Clean and minimalist aesthetic",
+      "Artwork-focused presentation"
     ],
     "use_cases": [
-      "Music Industry Websites",
-      "WordPress Portfolio Websites",
-      "WordPress Online Stores"
+      "Painter Portfolio Websites",
+      "Illustrator Showcase Sites",
+      "Artist Online Galleries",
+      "Graphic Designer Portfolios",
+      "Art Gallery Websites",
+      "Visual Artist Online Presence",
+      "Art Selling Platforms"
     ],
-    "customer_sites": [],
+    "customer_sites": [
+      {
+        "name": "Diogo Barros Pires",
+        "url": "https://www.diogobarrospires.com/",
+        "ig_at": "diogo_barros_pires"
+      }
+    ],
     "testimonials": []
   },
   "poize": {
@@ -1364,7 +1811,6 @@
       "Music"
     ],
     "features": [
-      "Slider Revolution plugin ($109 value) included",
       "Advanced event management system with calendar",
       "Artist profiles linked to events via custom taxonomies",
       "Built with Elementor page builder for easy customization",
@@ -1374,7 +1820,8 @@
       "Event countdown timers and schedule displays",
       "Custom header and footer builder",
       "One-click demo import with complete content",
-      "Mobile-optimized responsive design for all devices"
+      "Mobile-optimized responsive design for all devices",
+      "Slider Revolution plugin ($109 value) included"
     ],
     "selling_points": [
       "Create professional music event and festival websites with minimal setup time",
@@ -1404,19 +1851,7 @@
       "Promote upcoming events with visual countdown displays",
       "Mobile-optimized design for visitors purchasing on mobile devices"
     ],
-    "included_plugins": [
-      "One-Click Demo Import",
-      "WooCommerce",
-      "WooCommerce Variation Swatches",
-      "Contact Form 7",
-      "Elementor",
-      "Wolf Core",
-      "Wolf Artists",
-      "Wolf Events",
-      "Wolf Portfolio",
-      "Wolf Video Thumbnail Generator",
-      "Slider Revolution"
-    ],
+    "compatible_plugins": [],
     "design_features": [
       "Festival-inspired color schemes",
       "Multiple header layout options",
@@ -1459,18 +1894,18 @@
       "Agency"
     ],
     "features": [
-      "Slider Revolution plugin ($85 value) included",
       "Portfolio custom post type with advanced filtering",
       "Artist/Team profiles linked to portfolio via taxonomy system",
       "Job board with career listings and application system",
       "Built with Elementor page builder for drag-and-drop editing",
-      "Wolf Core plugin with production-focused widgets and elements",
+      "Wolf Core plugin with csutom production-focused widgets and elements",
       "Video gallery with custom player and thumbnail options",
       "Masonry portfolio layouts with filtering capabilities",
       "Client logo and testimonial showcase carousels",
       "Team member showcase with role and expertise filtering",
       "Custom services section with icon selection",
-      "Video background support for dynamic headers"
+      "Video background support for dynamic headers",
+      "Slider Revolution plugin ($85 value) included"
     ],
     "selling_points": [
       "Create a professional portfolio that showcases your production work",
@@ -1504,18 +1939,7 @@
       "Build credibility with integrated client logos and testimonials",
       "Attract new clients with a professional, optimized online presence"
     ],
-    "included_plugins": [
-      "Elementor",
-      "Wolf Core",
-      "WooCommerce",
-      "WooCommerce Variation Swatches",
-      "Contact Form 7",
-      "Wolf Portfolio",
-      "Wolf Artists",
-      "Wolf Jobs",
-      "Slider Revolution",
-      "One-Click Demo Import"
-    ],
+    "compatible_plugins": [],
     "design_features": [
       "Advanced scrolling animations",
       "Filterable portfolio grids",
@@ -1562,7 +1986,7 @@
     "theme_style": [],
     "target_audience": [],
     "key_benefits": [],
-    "included_plugins": [],
+    "compatible_plugins": [],
     "design_features": [],
     "use_cases": [],
     "customer_sites": [],
