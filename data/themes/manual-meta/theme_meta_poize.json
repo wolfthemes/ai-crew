@@ -41,7 +41,7 @@
         "Promote upcoming events with visual countdown displays",
         "Mobile-optimized design for visitors purchasing on mobile devices"
     ],
-	"compatible_plugins": [
+	"included_plugins": [
 		"Elementor",
 		"WooCommerce",
 		"Contact Form 7",
