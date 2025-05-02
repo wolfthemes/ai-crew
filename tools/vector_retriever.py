@@ -2,6 +2,7 @@ import os
 import json
 import shutil
 import multiprocessing
+import tiktoken
 import logging
 import time
 from datetime import datetime
@@ -207,6 +208,12 @@ if USE_VECTORSTORE:
                 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
                 split_docs = text_splitter.split_documents(all_docs)
                 logger.info(f"✓ Split into {len(split_docs)} chunks from {len(all_docs)} original documents")
+
+                # Make the vector build fail
+                #enc = tiktoken.encoding_for_model("text-embedding-3-large")
+                #avg_tokens = sum(len(enc.encode(chunk.page_content)) for chunk in split_docs) / len(split_docs)
+                #logger.info(f"✓ Average chunk size: {avg_tokens:.1f} tokens")
+
                 # Compute current file hashes
                 current_hashes = compute_all_file_hashes(DATA_FOLDER)
                 
