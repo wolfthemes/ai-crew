@@ -19,27 +19,24 @@ class AlphaVantageDataTool(BaseTool):
     description: str = "Get real-time and historical forex data from Alpha Vantage API"
     args_schema: Type[BaseModel] = ForexRateInput
     
-    def __init__(self, api_key=None):
-        """
-        Initialize the Alpha Vantage API client
-        
-        Args:
-            api_key (str, optional): API key for Alpha Vantage. If None, loads from environment
-        """
-        # Initialize the BaseTool
+    def __init__(self):
+        """Initialize the Alpha Vantage API client"""
+        # Initialize BaseTool first
         super().__init__()
         
-        # Load API key
+        # Load environment variables
         load_dotenv()
-        self.api_key = api_key or os.getenv("ALPHA_VANTAGE_API_KEY")
-
-        print(f"API KEY: {self.api_key}")
         
-        if not self.api_key:
+        # Get API key from environment
+        self._api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
+        
+        # Check if API key exists
+        if not self._api_key:
             raise ValueError("No Alpha Vantage API key found. Please set ALPHA_VANTAGE_API_KEY in your environment or .env file")
         
-        self.base_url = "https://www.alphavantage.co/query"
-        self.cached_data = {}
+        # Set up other instance variables
+        self._base_url = "https://www.alphavantage.co/query"
+        self._cached_data = {}
     
     def _run(self, from_currency: str = "EUR", to_currency: str = "USD") -> str:
         """
@@ -80,19 +77,19 @@ class AlphaVantageDataTool(BaseTool):
             Dict[str, Any]: Exchange rate data
         """
         cache_key = f"forex_rate_{from_currency}_{to_currency}"
-        if cache_key in self.cached_data:
+        if cache_key in self._cached_data:
             # Use cached data if less than 15 minutes old
-            if (datetime.now() - self.cached_data[cache_key]["timestamp"]).total_seconds() < 900:
-                return self.cached_data[cache_key]["data"]
+            if (datetime.now() - self._cached_data[cache_key]["timestamp"]).total_seconds() < 900:
+                return self._cached_data[cache_key]["data"]
         
         params = {
             "function": "CURRENCY_EXCHANGE_RATE",
             "from_currency": from_currency,
             "to_currency": to_currency,
-            "apikey": self.api_key
+            "apikey": self._api_key  # Use the private attribute
         }
         
-        response = requests.get(self.base_url, params=params)
+        response = requests.get(self._base_url, params=params)
         data = response.json()
         
         # Handle potential error or rate limit responses
@@ -105,7 +102,7 @@ class AlphaVantageDataTool(BaseTool):
                 "time_zone": data["Realtime Currency Exchange Rate"]["7. Time Zone"]
             }
             # Cache the result
-            self.cached_data[cache_key] = {
+            self._cached_data[cache_key] = {
                 "data": result,
                 "timestamp": datetime.now()
             }

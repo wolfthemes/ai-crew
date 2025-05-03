@@ -58,7 +58,7 @@ class MarketToolsIntegration:
                 print(f"AlphaVantage price data available, current EUR/USD rate: {rate_data['exchange_rate']:.5f}")
                 
                 # Initialize the historical data tool with the same API key
-                self.alpha_vantage_historical = AlphaVantageHistoricalTool(api_key=self.alpha_vantage.api_key)
+                self.alpha_vantage_historical = AlphaVantageHistoricalTool()
                 self.has_historical_data = True
                 print("AlphaVantage historical data tool initialized")
             else:

@@ -20,27 +20,24 @@ class AlphaVantageHistoricalTool(BaseTool):
     description: str = "Get historical forex price data from Alpha Vantage API"
     args_schema: Type[BaseModel] = HistoricalDataInput
     
-    def __init__(self, api_key=None):
-        """
-        Initialize the Alpha Vantage API client
-        
-        Args:
-            api_key (str, optional): API key for Alpha Vantage. If None, loads from environment
-        """
-        # Initialize the BaseTool
+    def __init__(self):
+        """Initialize the Alpha Vantage API client"""
+        # Initialize BaseTool first
         super().__init__()
         
-        # Load API key
+        # Load environment variables
         load_dotenv()
-        self.api_key = api_key or os.getenv("ALPHA_VANTAGE_API_KEY")
-
-        print( self.api_key )
         
-        if not self.api_key:
+        # Get API key from environment
+        self._api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
+        
+        # Check if API key exists
+        if not self._api_key:
             raise ValueError("No Alpha Vantage API key found. Please set ALPHA_VANTAGE_API_KEY in your environment or .env file")
         
-        self.base_url = "https://www.alphavantage.co/query"
-        self.cached_data = {}
+        # Set up other instance variables
+        self._base_url = "https://www.alphavantage.co/query"
+        self._cached_data = {}
     
     def _run(self, from_currency: str = "EUR", to_currency: str = "USD", days: int = 5) -> str:
         """
@@ -57,7 +54,7 @@ class AlphaVantageHistoricalTool(BaseTool):
         try:
             df = self.get_daily_forex(from_currency, to_currency)
             
-            if 'error' in df.columns:
+            if isinstance(df, pd.DataFrame) and 'error' in df.columns:
                 return f"Error retrieving historical {from_currency}/{to_currency} data: {df['error'][0]}"
             
             # Limit to requested number of days
@@ -104,20 +101,20 @@ class AlphaVantageHistoricalTool(BaseTool):
             pd.DataFrame: Daily forex data
         """
         cache_key = f"daily_forex_{from_currency}_{to_currency}_{outputsize}"
-        if cache_key in self.cached_data:
+        if cache_key in self._cached_data:
             # Use cached data if less than 1 hour old
-            if (datetime.now() - self.cached_data[cache_key]["timestamp"]).total_seconds() < 3600:
-                return self.cached_data[cache_key]["data"]
+            if (datetime.now() - self._cached_data[cache_key]["timestamp"]).total_seconds() < 3600:
+                return self._cached_data[cache_key]["data"]
         
         params = {
             "function": "FX_DAILY",
             "from_symbol": from_currency,
             "to_symbol": to_currency,
             "outputsize": outputsize,
-            "apikey": self.api_key
+            "apikey": self._api_key  # Use the private attribute
         }
         
-        response = requests.get(self.base_url, params=params)
+        response = requests.get(self._base_url, params=params)
         data = response.json()
         
         if "Time Series FX (Daily)" in data:
@@ -137,7 +134,7 @@ class AlphaVantageHistoricalTool(BaseTool):
             df.sort_index(inplace=True)
             
             # Cache the result
-            self.cached_data[cache_key] = {
+            self._cached_data[cache_key] = {
                 "data": df,
                 "timestamp": datetime.now()
             }
@@ -163,7 +160,7 @@ class AlphaVantageHistoricalTool(BaseTool):
         try:
             df = self.get_daily_forex(from_currency, to_currency)
             
-            if 'error' in df.columns:
+            if isinstance(df, pd.DataFrame) and 'error' in df.columns:
                 return f"Error retrieving data: {df['error'][0]}"
             
             # Get this week and last week data
