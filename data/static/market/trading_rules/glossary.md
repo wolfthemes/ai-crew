@@ -18,6 +18,7 @@
 - **PD Array**: Previous Week Low
 - **IRL**: Internal Range Liquidity - Imbalances
 - **ERL**: External Range Liquidity - Highs and Lows
+- **TDO**: True Day Open (Midnight Open) - Price level at 00:00 NY time
 
 ## Risk Management Terms
 - **R:R**: Risk to Reward Ratio - comparison of potential loss to potential gain

@@ -6,7 +6,7 @@ Our approach combines fundamental analysis (economic context) with multi-timefra
 ## Objectives
 - Trade in the direction of the underlying trend after retracements
 - Exploit market inefficiencies (FVG, POI, OB)
-- Maintain a minimum risk/reward ratio of 1:2
+- Maintain a minimum risk/reward ratio of 1:2 and a maximum or 1:3
 - Preserve capital through strict risk management
 
 ## General Framework
