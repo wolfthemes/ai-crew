@@ -132,40 +132,40 @@ class TradingKnowledgeBase:
 
         return results
 
-def get_context_for_agent(self, agent_type):
-    """
-    Get relevant context for a specific agent type
+    def get_context_for_agent(self, agent_type):
+        """
+        Get relevant context for a specific agent type
 
-    Args:
-        agent_type (str): Type of agent (e.g., 'technical', 'fundamental')
+        Args:
+            agent_type (str): Type of agent (e.g., 'technical', 'fundamental')
 
-    Returns:
-        str: Context string
-    """
-    context = ""
+        Returns:
+            str: Context string
+        """
+        context = ""
 
-    # Define which documents are relevant for each agent type
-    relevant_docs = {
-        'technical': ['technical_patterns', 'entry_rules', 'scenario_examples'],
-        'fundamental': ['fundamental_context', 'glossary'],
-        'daily_bias': ['Daily Report Prompt', 'checklists'],
-        'weekly_profile': ['trading_overview', 'scenario_examples'],
-        'sentiment': ['fundamental_context'],
-        'entry_model': ['checklists', 'entry_rules']
-    }
+        # Define which documents are relevant for each agent type
+        relevant_docs = {
+            'technical': ['technical_patterns', 'entry_rules', 'scenario_examples'],
+            'fundamental': ['fundamental_context', 'glossary'],
+            'daily_bias': ['Daily Report Prompt', 'checklists'],
+            'weekly_profile': ['trading_overview', 'scenario_examples'],
+            'sentiment': ['fundamental_context'],
+            'entry_model': ['checklists', 'entry_rules']
+        }
 
-    # Default to all documents if agent type not recognized
-    docs_to_include = relevant_docs.get(agent_type, self.markdown_docs.keys())
+        # Default to all documents if agent type not recognized
+        docs_to_include = relevant_docs.get(agent_type, self.markdown_docs.keys())
 
-    # Build context from relevant documents
-    for doc_name in docs_to_include:
-        doc = self.get_document(doc_name)
-        if doc:
-            context += f"--- {doc_name.upper().replace('_', ' ')} ---\n\n"
-            context += doc["content"]
-            context += "\n\n"
+        # Build context from relevant documents
+        for doc_name in docs_to_include:
+            doc = self.get_document(doc_name)
+            if doc:
+                context += f"--- {doc_name.upper().replace('_', ' ')} ---\n\n"
+                context += doc["content"]
+                context += "\n\n"
 
-    return context if context else f"No specific knowledge found for {agent_type} agent."
+        return context if context else f"No specific knowledge found for {agent_type} agent."
 
 # Example usage
 if __name__ == "__main__":
