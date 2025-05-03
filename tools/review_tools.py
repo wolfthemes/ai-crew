@@ -1,6 +1,7 @@
 from typing import Type
 from pydantic import BaseModel, Field
 from crewai.tools import BaseTool
+
 class ReviewReplyInput(BaseModel):
     reply: str = Field(..., description="The support reply to review")
     ticket: str = Field(..., description="The original customer ticket")
