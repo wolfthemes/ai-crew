@@ -172,6 +172,7 @@ class AlphaVantageHistoricalTool(BaseTool):
             recent_data = df[df.index >= pd.Timestamp(two_weeks_ago)]
             
             # Create a week number column
+            recent_data = df.loc[df.index >= pd.Timestamp(two_weeks_ago)].copy()
             recent_data['week'] = recent_data.index.isocalendar().week
             weekly_groups = recent_data.groupby('week')
             
