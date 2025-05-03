@@ -37,7 +37,7 @@ MODELS = {
     "gpt-4.1": GPT_4_1,
     "gpt-4.1-nano": GPT_4_1_NANO,
     "gpt-4.1-mini": GPT_4_1_MINI,
-    "claude": CLAUDE_SONNET
+    "claude-3.5": CLAUDE_SONNET
 }
 
 # === Assigned Models Based on Config Keys ===

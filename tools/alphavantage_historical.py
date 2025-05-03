@@ -33,6 +33,8 @@ class AlphaVantageHistoricalTool(BaseTool):
         # Load API key
         load_dotenv()
         self.api_key = api_key or os.getenv("ALPHA_VANTAGE_API_KEY")
+
+        print( self.api_key )
         
         if not self.api_key:
             raise ValueError("No Alpha Vantage API key found. Please set ALPHA_VANTAGE_API_KEY in your environment or .env file")
