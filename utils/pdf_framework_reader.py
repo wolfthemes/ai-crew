@@ -34,7 +34,8 @@ class DailyBiasFramework:
             "daily_bias": os.path.join(framework_dir, "Daily-Bias.pdf"),
             "intraday_bias": os.path.join(framework_dir, "Intraday-Bias.pdf"),
             "london_reversal": os.path.join(framework_dir, "London-Reversal.pdf"),
-            "cisd": os.path.join(framework_dir, "Change-In-State-of-Delivery.pdf")
+            "cisd": os.path.join(framework_dir, "Change-In-State-of-Delivery.pdf"),
+            "pd_array": os.path.join(framework_dir, "PD-Array.pdf")
         }
         
         # Cache file paths
@@ -43,7 +44,8 @@ class DailyBiasFramework:
             "daily_bias": os.path.join(self.cache_dir, "daily_bias.json"),
             "intraday_bias": os.path.join(self.cache_dir, "intraday_bias.json"),
             "london_reversal": os.path.join(self.cache_dir, "london_reversal.json"),
-            "cisd": os.path.join(self.cache_dir, "cisd.json")
+            "cisd": os.path.join(self.cache_dir, "cisd.json"),
+            "pd_array": os.path.join(self.cache_dir, "pd_array.json")
         }
         
         # Load frameworks from cache or PDF files
