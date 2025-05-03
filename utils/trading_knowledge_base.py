@@ -8,7 +8,7 @@ class TradingKnowledgeBase:
     Works with the existing project structure and complements the DailyBiasFramework.
     """
     
-    def __init__(self, md_dir="static/trading_rules/visuals", visuals_dir="static/trading_rules/visuals/visuals"):
+    def __init__(self, md_dir="static/trading_rules", visuals_dir="static/trading_rules/visuals"):
         """
         Initialize the trading knowledge base loader.
 
