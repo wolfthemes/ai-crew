@@ -168,7 +168,9 @@ else:
                 full_thread_key = 'full_thread_sumary'  # Try the alternate spelling
                 
             single_summary_clean = strip_html_tags(ticket.get(full_thread_key, "No summary available"))
-            st.subheader(f"🗨️ {single_summary_clean}")
+            original_title = strip_html_tags(ticket.get("subject", "No title available"))
+            st.subheader(f"{original_title}")
+            st.markdown(f"🗨️ {single_summary_clean}")
             st.markdown(html.unescape(ticket.get("last_message", "")), unsafe_allow_html=True)
 
             # ⬇️ Display attachments if present
