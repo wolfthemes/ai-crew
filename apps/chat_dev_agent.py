@@ -193,6 +193,7 @@ if query := st.chat_input("Ask your dev agent..."):
         ctx = st.session_state.dev_context
         context_injection = (
             f"\n\n[Context]\n"
+            f"Github Username: {ctx['owner'] or 'unknown'}\n"
             f"Repo: {ctx['repo'] or 'unknown'}\n"
             f"Branch: {ctx['branch'] or 'unknown'}\n"
             f"Safety Mode: {'Enabled' if ctx['safety_mode'] else 'Disabled'}\n"
@@ -204,6 +205,7 @@ if query := st.chat_input("Ask your dev agent..."):
         if ctx["working_repos"]:
             context_injection += f"Working repositories: {', '.join(ctx['working_repos'])}\n"
 
+    
         task = dev_assistance_task(query=query, memory_context=memory_context, context_injection=context_injection)
 
         # task = Task(
