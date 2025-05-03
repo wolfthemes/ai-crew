@@ -82,14 +82,16 @@ else:
         if full_thread_key not in ticket:
             full_thread_key = 'full_thread_sumary'  # Try the alternate spelling
             
+        original_title_clean = strip_html_tags(ticket.get("subject", "No subject available"))
         summary_clean = strip_html_tags(ticket.get(full_thread_key, "No summary available"))
         last_message_summary_clean = strip_html_tags(ticket.get('last_message_summary', "No message"))
         timestamp = time_ago(ticket.get("last_message_timestamp", "2025-01-01 00:00:00"))
 
         st.sidebar.markdown(f"""
         <div style='text-align: left; padding-bottom: 0.2em;'>
-            {"🔒 " if ticket.get("needs_human", False) else ""}<strong>{summary_clean}</strong><br>
-            <span>{last_message_summary_clean}</span><br>
+            {"🔒 " if ticket.get("needs_human", False) else ""}<strong>{original_title_clean}</strong><br>
+            <span>{summary_clean}</span><br>
+            <em>{last_message_summary_clean}</em><br>
             <small>{ticket.get('customer', 'Unknown')} ({ticket.get('theme', 'Unknown')}) · {timestamp}</small><br>
         </div>
         """, unsafe_allow_html=True)
@@ -168,7 +170,7 @@ else:
                 full_thread_key = 'full_thread_sumary'  # Try the alternate spelling
                 
             single_summary_clean = strip_html_tags(ticket.get(full_thread_key, "No summary available"))
-            original_title = strip_html_tags(ticket.get("subject", "No title available"))
+            original_title = strip_html_tags(ticket.get("subject", "No subject available"))
             st.subheader(f"{original_title}")
             st.markdown(f"🗨️ {single_summary_clean}")
             st.markdown(html.unescape(ticket.get("last_message", "")), unsafe_allow_html=True)
