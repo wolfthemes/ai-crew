@@ -9,7 +9,9 @@ import os
 import json
 import subprocess
 from crewai import Task, Crew
-from agents.dev.dev_agent import dev_agent  # from your code
+from crews.dev_crew import dev_crew
+from agents.dev.dev_agent import dev_agent
+from tasks.dev.dev_task import dev_assistance_task
 from dotenv import load_dotenv
 
 
@@ -159,7 +161,7 @@ if query := st.chat_input("Ask your dev agent..."):
     with st.chat_message("user"):
         st.markdown(query)
 
-    # Try structured JSON input first
+    # Try structured JSON input first - Note used
     try:
         user_input = json.loads(query)
         task = Task(
@@ -202,13 +204,16 @@ if query := st.chat_input("Ask your dev agent..."):
         if ctx["working_repos"]:
             context_injection += f"Working repositories: {', '.join(ctx['working_repos'])}\n"
 
-        task = Task(
-            description=f"{memory_context}\nUser: {query}\n{context_injection}",
-            agent=dev_agent,
-            expected_output="A concise and actionable response to the developer question."
-        )
+        task = dev_assistance_task(query=query, memory_context=memory_context, context_injection=context_injection)
 
-    crew = Crew(agents=[dev_agent], tasks=[task])
+        # task = Task(
+        #     description=f"{memory_context}\nUser: {query}\n{context_injection}",
+        #     agent=dev_agent,
+        #     expected_output="A concise and actionable response to the developer question."
+        # )
+
+    #crew = Crew(agents=[dev_agent], tasks=[task])
+    crew = dev_crew(task)
     result = crew.kickoff()
 
     # Display assistant response
