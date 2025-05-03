@@ -1,6 +1,10 @@
 import os
 import json
-import PyPDF2
+try:
+    import PyPDF2
+except ImportError:
+    PyPDF2 = None
+    print("PyPDF2 is not installed. PDF parsing will not work.")
 from typing import Dict, List, Optional, Union, Any
 import re
 
