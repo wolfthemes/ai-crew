@@ -4,7 +4,7 @@
 ### Market Context
 - Daily trend is bullish with higher highs and higher lows
 - Recent pullback created a Fair Value Gap on H4 timeframe
-- M30 shows a change in structure direction (CiSD) from bearish to bullish
+- M30 shows a change in state of delivery (CiSD) from bearish to bullish
 - Approaching London session open
 
 ### Entry Conditions
