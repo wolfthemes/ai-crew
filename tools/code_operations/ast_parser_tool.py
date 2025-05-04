@@ -1,20 +1,22 @@
+from typing import Type
+from pydantic import BaseModel, Field
+from crewai.tools import BaseTool
 import ast
 import os
-from langchain.tools import BaseTool
-from typing import Dict, List, Any, Optional
-from pydantic import BaseModel, Field
 
+REPO_ROOT = os.path.abspath("repos")
 
+# Input schema
 class ASTParserInput(BaseModel):
-    """Input for the AST Parser tool."""
-    file_path: str = Field(..., description="Path to the file to parse")
-    query_type: str = Field(..., description="Type of query: 'functions', 'classes', 'imports', 'function_details', 'class_details', 'find_usage'")
-    target_name: Optional[str] = Field(None, description="Name of function, class, or variable to analyze (for targeted queries)")
+    repo_path: str = Field(..., description="The name of the repo (inside 'repos/')")
+    file_path: str = Field(..., description="Relative path to the file inside the repo")
+    query_type: str = Field(..., description="Type of query: 'functions', 'classes', 'imports', 'function_details', 'class_details'")
+    target_name: str = Field(None, description="Name of function, class, or variable to analyze (optional)")
 
-
+# ASTParserTool definition
 class ASTParserTool(BaseTool):
-    name = "ast_parser_tool"
-    description = """
+    name: str = "ast_parser_tool"
+    description: str = """
     Parse Python code into AST to understand structure and relationships.
     Use this tool to:
     - List all functions in a file
@@ -24,9 +26,9 @@ class ASTParserTool(BaseTool):
     - Find where functions/variables are used
     - Analyze imports and dependencies
     """
-    args_schema = ASTParserInput
-    
-    def _extract_functions(self, tree: ast.Module) -> List[Dict[str, Any]]:
+    args_schema: Type[BaseModel] = ASTParserInput
+
+    def _extract_functions(self, tree: ast.Module) -> list:
         """Extract all function definitions from the AST."""
         functions = []
         for node in ast.walk(tree):
@@ -40,7 +42,7 @@ class ASTParserTool(BaseTool):
                 })
         return functions
         
-    def _extract_classes(self, tree: ast.Module) -> List[Dict[str, Any]]:
+    def _extract_classes(self, tree: ast.Module) -> list:
         """Extract all class definitions from the AST."""
         classes = []
         for node in ast.walk(tree):
@@ -66,26 +68,7 @@ class ASTParserTool(BaseTool):
                 })
         return classes
     
-    def _find_usage(self, tree: ast.Module, target_name: str) -> List[Dict[str, Any]]:
-        """Find where a function, class or variable is used."""
-        usages = []
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Name) and node.id == target_name:
-                # This might be a usage
-                usages.append({
-                    'lineno': node.lineno,
-                    'col_offset': node.col_offset,
-                    'context': self._get_context(node)
-                })
-        return usages
-    
-    def _get_context(self, node: ast.AST) -> str:
-        """Get the surrounding context of a node."""
-        # This would need the source code to extract context
-        # Simplified version returning just location
-        return f"Line {node.lineno}, Column {node.col_offset}"
-    
-    def _extract_imports(self, tree: ast.Module) -> List[Dict[str, Any]]:
+    def _extract_imports(self, tree: ast.Module) -> list:
         """Extract all imports from the AST."""
         imports = []
         for node in ast.walk(tree):
@@ -105,18 +88,18 @@ class ASTParserTool(BaseTool):
                         'lineno': node.lineno
                     })
         return imports
-        
-    def _run(self, file_path: str, query_type: str, target_name: Optional[str] = None) -> str:
-        """Run the AST parser tool with the given parameters."""
-        # Check if file exists and has correct extension
-        if not os.path.exists(file_path):
-            return f"Error: File '{file_path}' does not exist."
-        
+
+    def _run(self, repo_path: str, file_path: str, query_type: str, target_name: str = None) -> str:
+        full_path = os.path.join(REPO_ROOT, repo_path, file_path)
+
+        if not os.path.exists(full_path):
+            return f"❌ File not found: {full_path}"
+            
         if not file_path.endswith('.py'):
-            return f"Error: This tool currently only supports Python files (*.py)."
+            return f"❌ This tool currently only supports Python files (*.py)."
             
         try:
-            with open(file_path, 'r') as f:
+            with open(full_path, 'r') as f:
                 code = f.read()
                 
             tree = ast.parse(code)
@@ -138,13 +121,13 @@ class ASTParserTool(BaseTool):
                        
             elif query_type == 'function_details':
                 if not target_name:
-                    return "Error: Must provide target_name for function_details query."
+                    return "❌ Must provide target_name for function_details query."
                     
                 functions = self._extract_functions(tree)
                 function = next((f for f in functions if f['name'] == target_name), None)
                 
                 if not function:
-                    return f"Function '{target_name}' not found in {file_path}."
+                    return f"❌ Function '{target_name}' not found in {file_path}."
                     
                 return f"Function '{target_name}' details:\n" + \
                        f"- Line: {function['lineno']}\n" + \
@@ -153,13 +136,13 @@ class ASTParserTool(BaseTool):
                        
             elif query_type == 'class_details':
                 if not target_name:
-                    return "Error: Must provide target_name for class_details query."
+                    return "❌ Must provide target_name for class_details query."
                     
                 classes = self._extract_classes(tree)
                 cls = next((c for c in classes if c['name'] == target_name), None)
                 
                 if not cls:
-                    return f"Class '{target_name}' not found in {file_path}."
+                    return f"❌ Class '{target_name}' not found in {file_path}."
                     
                 return f"Class '{target_name}' details:\n" + \
                        f"- Line: {cls['lineno']}\n" + \
@@ -168,22 +151,13 @@ class ASTParserTool(BaseTool):
                        f"- Bases: {', '.join(filter(None, cls['bases']))}\n" + \
                        f"- Docstring: {cls['docstring']}\n"
                        
-            elif query_type == 'find_usage':
-                if not target_name:
-                    return "Error: Must provide target_name for find_usage query."
-                    
-                usages = self._find_usage(tree, target_name)
-                
-                if not usages:
-                    return f"'{target_name}' not used in {file_path}."
-                    
-                return f"Found {len(usages)} usages of '{target_name}' in {file_path}:\n" + \
-                       "\n".join([f"- {usage['context']}" for usage in usages])
-                       
             else:
-                return f"Error: Unknown query_type '{query_type}'."
+                return f"❌ Unknown query_type '{query_type}'."
                 
         except SyntaxError as e:
-            return f"SyntaxError in {file_path}: {str(e)}"
+            return f"❌ SyntaxError in {file_path}: {str(e)}"
         except Exception as e:
-            return f"Error analyzing {file_path}: {str(e)}"
+            return f"❌ Error analyzing {file_path}: {str(e)}"
+
+    def run(self, query: str) -> str:
+        return "Use structured input with 'repo_path', 'file_path', 'query_type', and optional 'target_name'."

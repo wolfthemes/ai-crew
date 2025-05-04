@@ -1,21 +1,23 @@
+from typing import Type
+from pydantic import BaseModel, Field
+from crewai.tools import BaseTool
 import os
 import re
-from typing import List, Dict, Any
-from pydantic import BaseModel, Field
-from langchain.tools import BaseTool
 
+REPO_ROOT = os.path.abspath("repos")
 
+# Input schema
 class CodeOccurrenceInput(BaseModel):
-    """Input for the Code Occurrence Counter tool."""
-    file_path: str = Field(..., description="Path to the file to analyze or 'repo:' prefix to search entire repo")
+    repo_path: str = Field(..., description="The name of the repo (inside 'repos/')")
+    file_path: str = Field("", description="Relative path to the file inside the repo (blank for entire repo)")
     search_term: str = Field(..., description="Code element to search for (function name, variable, string, etc.)")
     search_type: str = Field("exact", description="Search type: 'exact', 'regex', 'fuzzy'")
     context_size: int = Field(3, description="Number of lines of context to include around each occurrence")
 
-
+# CodeOccurrenceCounter definition
 class CodeOccurrenceCounter(BaseTool):
-    name = "code_occurrence_counter"
-    description = """
+    name: str = "code_occurrence_counter"
+    description: str = """
     Count and list occurrences of specific code elements in files or repositories.
     Precisely answers questions about whether something exists in the code and where.
     
@@ -24,15 +26,10 @@ class CodeOccurrenceCounter(BaseTool):
     - "How many times is X used?"
     - "Where is X defined or used?"
     - "Find all occurrences of X"
-    
-    The tool can search:
-    - A specific file with exact path
-    - Multiple files matching a pattern
-    - An entire repository
     """
-    args_schema = CodeOccurrenceInput
-    
-    def _count_in_file(self, file_path: str, search_term: str, search_type: str) -> List[Dict[str, Any]]:
+    args_schema: Type[BaseModel] = CodeOccurrenceInput
+
+    def _count_in_file(self, file_path: str, search_term: str, search_type: str, context_size: int) -> list:
         """Count occurrences of a term in a single file."""
         if not os.path.exists(file_path):
             return []
@@ -65,15 +62,15 @@ class CodeOccurrenceCounter(BaseTool):
                 
             # Process matches
             for line_num, line in line_matches:
-                start_context = max(0, line_num - self.context_size)
-                end_context = min(len(lines) - 1, line_num + self.context_size)
+                start_context = max(0, line_num - context_size)
+                end_context = min(len(lines) - 1, line_num + context_size)
                 
                 context_lines = lines[start_context:end_context + 1]
                 # Highlight the matched line
                 context_lines[line_num - start_context] = f">>> {context_lines[line_num - start_context]}"
                 
                 occurrences.append({
-                    'file': file_path,
+                    'file': os.path.basename(file_path),
                     'line': line_num + 1,  # 1-indexed line numbers
                     'content': line.strip(),
                     'context': '\n'.join(context_lines)
@@ -84,63 +81,52 @@ class CodeOccurrenceCounter(BaseTool):
         except Exception as e:
             return [{'error': f"Error reading file {file_path}: {str(e)}"}]
     
-    def _search_repo(self, repo_path: str, search_term: str, search_type: str, file_pattern: str = None) -> List[Dict[str, Any]]:
-        """Search for occurrences across a repository or directory."""
+    def _search_repo(self, repo_path: str, search_term: str, search_type: str, context_size: int) -> list:
+        """Search for occurrences across a repository."""
         if not os.path.isdir(repo_path):
             return [{'error': f"Repository path not found: {repo_path}"}]
             
         all_occurrences = []
         
         # Extensions to search in code files
-        code_extensions = ['.py', '.php', '.js', '.jsx', '.ts', '.tsx', '.html', '.css', '.scss', 
-                           '.java', '.c', '.cpp', '.h', '.cs', '.go', '.rb', '.rs', '.swift']
+        code_extensions = ['.py', '.php', '.js', '.jsx', '.ts', '.tsx', '.html', '.css', '.scss']
         
         for root, _, files in os.walk(repo_path):
             for file in files:
-                # Skip non-code files unless a specific pattern is provided
-                if file_pattern:
-                    if not re.search(file_pattern, file):
-                        continue
-                elif not any(file.endswith(ext) for ext in code_extensions):
+                if not any(file.endswith(ext) for ext in code_extensions):
                     continue
                     
                 file_path = os.path.join(root, file)
-                file_occurrences = self._count_in_file(file_path, search_term, search_type)
+                file_occurrences = self._count_in_file(file_path, search_term, search_type, context_size)
+                
+                # Add relative path to the repository
+                for occ in file_occurrences:
+                    if 'file' in occ:
+                        occ['file'] = os.path.relpath(file_path, repo_path)
+                
                 all_occurrences.extend(file_occurrences)
                 
         return all_occurrences
-    
-    def _run(self, file_path: str, search_term: str, search_type: str = "exact", context_size: int = 3) -> str:
-        """Run the code occurrence counter with the given parameters."""
-        self.context_size = context_size
+
+    def _run(self, repo_path: str, file_path: str, search_term: str, search_type: str = "exact", context_size: int = 3) -> str:
+        repo_full_path = os.path.join(REPO_ROOT, repo_path)
         
-        # Handle repository search
-        if file_path.startswith('repo:'):
-            repo_name = file_path[5:].strip()
-            if not repo_name:
-                return "Error: No repository name specified. Use format 'repo:repo_name'"
-                
-            repo_path = os.path.join("repos", repo_name)
-            occurrences = self._search_repo(repo_path, search_term, search_type)
-            
-        # Handle file pattern search (with wildcards)
-        elif '*' in file_path:
-            base_dir = os.path.dirname(file_path) or '.'
-            file_pattern = os.path.basename(file_path).replace('*', '.*')
-            occurrences = self._search_repo(base_dir, search_term, search_type, file_pattern)
-            
-        # Handle single file search
+        if not file_path:
+            # Search entire repo
+            occurrences = self._search_repo(repo_full_path, search_term, search_type, context_size)
         else:
-            occurrences = self._count_in_file(file_path, search_term, search_type)
+            # Search single file
+            file_full_path = os.path.join(repo_full_path, file_path)
+            occurrences = self._count_in_file(file_full_path, search_term, search_type, context_size)
             
         # Process and format results
         if not occurrences:
-            return f"No occurrences of '{search_term}' found."
+            return f"❌ No occurrences of '{search_term}' found."
             
         if 'error' in occurrences[0]:
-            return f"Error: {occurrences[0]['error']}"
+            return f"❌ Error: {occurrences[0]['error']}"
             
-        result = f"Found {len(occurrences)} occurrences of '{search_term}':\n\n"
+        result = f"✅ Found {len(occurrences)} occurrences of '{search_term}':\n\n"
         
         for i, occ in enumerate(occurrences[:10]):  # Limit to 10 results
             result += f"Occurrence {i+1}: {occ['file']}:{occ['line']}\n"
@@ -150,3 +136,6 @@ class CodeOccurrenceCounter(BaseTool):
             result += f"... and {len(occurrences) - 10} more occurrences."
             
         return result
+        
+    def run(self, query: str) -> str:
+        return "Use structured input with 'repo_path', 'file_path', 'search_term', and optional 'search_type' and 'context_size'."

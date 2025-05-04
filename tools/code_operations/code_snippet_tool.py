@@ -1,21 +1,23 @@
+from typing import Type
+from pydantic import BaseModel, Field
+from crewai.tools import BaseTool
 import os
 import re
-from typing import List, Optional, Dict, Any
-from pydantic import BaseModel, Field
-from langchain.tools import BaseTool
 
+REPO_ROOT = os.path.abspath("repos")
 
+# Input schema
 class CodeSnippetInput(BaseModel):
-    """Input for the Code Snippet tool."""
-    file_path: str = Field(..., description="Path to the file to extract snippets from")
+    repo_path: str = Field(..., description="The name of the repo (inside 'repos/')")
+    file_path: str = Field(..., description="Relative path to the file inside the repo")
     query_type: str = Field(..., description="Type of query: 'function', 'class', 'pattern', 'lines', 'section'")
     target: str = Field(..., description="Name of function/class, regex pattern, or line range (e.g., '10-20')")
     context_lines: int = Field(2, description="Number of context lines to include before and after the match")
 
-
+# CodeSnippetTool definition
 class CodeSnippetTool(BaseTool):
-    name = "code_snippet_tool"
-    description = """
+    name: str = "code_snippet_tool"
+    description: str = """
     Extract relevant code snippets from files instead of returning entire file contents.
     Use this tool to:
     - Get a specific function or method by name
@@ -24,9 +26,27 @@ class CodeSnippetTool(BaseTool):
     - Get a specific range of lines
     - Get a logical section of code
     """
-    args_schema = CodeSnippetInput
+    args_schema: Type[BaseModel] = CodeSnippetInput
+
+    def _detect_language(self, file_path: str) -> str:
+        """Detect the programming language based on file extension."""
+        ext = os.path.splitext(file_path)[1].lower()
+        
+        language_map = {
+            '.py': 'python',
+            '.php': 'php',
+            '.js': 'javascript',
+            '.jsx': 'javascript',
+            '.ts': 'javascript',
+            '.tsx': 'javascript',
+            '.html': 'html',
+            '.css': 'css',
+            '.scss': 'css',
+        }
+        
+        return language_map.get(ext, 'text')
     
-    def _find_function(self, content: str, function_name: str, language: str) -> Dict[str, Any]:
+    def _find_function(self, content: str, function_name: str, language: str) -> dict:
         """Find a function by name in the code content."""
         # Different regex patterns for different languages
         patterns = {
@@ -69,7 +89,7 @@ class CodeSnippetTool(BaseTool):
         
         return {'found': False}
     
-    def _find_class(self, content: str, class_name: str, language: str) -> Dict[str, Any]:
+    def _find_class(self, content: str, class_name: str, language: str) -> dict:
         """Find a class by name in the code content."""
         patterns = {
             'python': r'(class\s+' + re.escape(class_name) + r'\s*(?:\([^)]*\))?\s*:.*?)(?=\n\S|$)',
@@ -93,37 +113,7 @@ class CodeSnippetTool(BaseTool):
         
         return {'found': False}
     
-    def _find_pattern(self, content: str, pattern: str) -> List[Dict[str, Any]]:
-        """Find all occurrences of a regex pattern in the code content."""
-        try:
-            regex = re.compile(pattern)
-            matches = []
-            
-            for match in regex.finditer(content):
-                start_line = content[:match.start()].count('\n') + 1
-                end_line = start_line + match.group(0).count('\n')
-                
-                matches.append({
-                    'snippet': match.group(0),
-                    'start_line': start_line,
-                    'end_line': end_line
-                })
-            
-            return matches
-        except re.error:
-            # If regex is invalid, try as a plain text search
-            results = []
-            lines = content.split('\n')
-            for i, line in enumerate(lines):
-                if pattern in line:
-                    results.append({
-                        'snippet': line,
-                        'start_line': i + 1,
-                        'end_line': i + 1
-                    })
-            return results
-    
-    def _get_lines(self, content: str, line_range: str) -> Dict[str, Any]:
+    def _get_lines(self, content: str, line_range: str) -> dict:
         """Get a specific range of lines from the code content."""
         try:
             # Parse line range like '10-20'
@@ -151,49 +141,6 @@ class CodeSnippetTool(BaseTool):
         except ValueError:
             return {'found': False, 'error': f"Invalid line range: {line_range}"}
     
-    def _get_section(self, content: str, section_name: str, language: str) -> Dict[str, Any]:
-        """Get a logical section of code (e.g., PHP comment sections, HTML comment blocks)."""
-        patterns = {
-            'php': r'/\*\s*' + re.escape(section_name) + r'\s*\*/(.*?)(?:/\*|$)',
-            'javascript': r'//\s*' + re.escape(section_name) + r'\s*\n(.*?)(?://|$)',
-            'html': r'<!--\s*' + re.escape(section_name) + r'\s*-->(.*?)(?:<!--|$)',
-            'python': r'#\s*' + re.escape(section_name) + r'\s*\n(.*?)(?:#|$)',
-        }
-        
-        pattern = patterns.get(language, r'(?:/\*|//|#|<!--)\s*' + re.escape(section_name) + r'\s*(?:\*/|-->|\n)(.*?)(?:/\*|//|#|<!--|$)')
-        
-        match = re.search(pattern, content, re.DOTALL)
-        if match:
-            start_line = content[:match.start()].count('\n') + 1
-            end_line = start_line + match.group(0).count('\n')
-            
-            return {
-                'found': True,
-                'snippet': match.group(0),
-                'start_line': start_line,
-                'end_line': end_line
-            }
-        
-        return {'found': False}
-    
-    def _detect_language(self, file_path: str) -> str:
-        """Detect the programming language based on file extension."""
-        ext = os.path.splitext(file_path)[1].lower()
-        
-        language_map = {
-            '.py': 'python',
-            '.php': 'php',
-            '.js': 'javascript',
-            '.jsx': 'javascript',
-            '.ts': 'javascript',
-            '.tsx': 'javascript',
-            '.html': 'html',
-            '.css': 'css',
-            '.scss': 'css',
-        }
-        
-        return language_map.get(ext, 'unknown')
-    
     def _add_context_lines(self, content: str, start_line: int, end_line: int, context_lines: int) -> str:
         """Add context lines before and after the snippet."""
         lines = content.split('\n')
@@ -204,14 +151,15 @@ class CodeSnippetTool(BaseTool):
         
         # Extract with context
         return '\n'.join(lines[context_start-1:context_end])
-    
-    def _run(self, file_path: str, query_type: str, target: str, context_lines: int = 2) -> str:
-        """Run the code snippet extraction with the given parameters."""
-        if not os.path.exists(file_path):
-            return f"Error: File '{file_path}' does not exist."
+
+    def _run(self, repo_path: str, file_path: str, query_type: str, target: str, context_lines: int = 2) -> str:
+        full_path = os.path.join(REPO_ROOT, repo_path, file_path)
+
+        if not os.path.exists(full_path):
+            return f"❌ File not found: {full_path}"
             
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(full_path, 'r', encoding='utf-8') as f:
                 content = f.read()
                 
             language = self._detect_language(file_path)
@@ -226,7 +174,7 @@ class CodeSnippetTool(BaseTool):
                     
                     return f"Found function '{target}' (lines {result['start_line']}-{result['end_line']}):\n\n```{language}\n{snippet_with_context}\n```"
                 else:
-                    return f"Function '{target}' not found in {file_path}."
+                    return f"❌ Function '{target}' not found in {file_path}."
                     
             elif query_type == 'class':
                 result = self._find_class(content, target, language)
@@ -238,26 +186,7 @@ class CodeSnippetTool(BaseTool):
                     
                     return f"Found class '{target}' (lines {result['start_line']}-{result['end_line']}):\n\n```{language}\n{snippet_with_context}\n```"
                 else:
-                    return f"Class '{target}' not found in {file_path}."
-                    
-            elif query_type == 'pattern':
-                matches = self._find_pattern(content, target)
-                
-                if matches:
-                    results = [f"Found {len(matches)} matches for pattern '{target}' in {file_path}:"]
-                    
-                    for idx, match in enumerate(matches[:5]):  # Limit to first 5 matches
-                        snippet_with_context = self._add_context_lines(
-                            content, match['start_line'], match['end_line'], context_lines
-                        )
-                        results.append(f"\nMatch {idx+1} (lines {match['start_line']}-{match['end_line']}):\n```{language}\n{snippet_with_context}\n```")
-                    
-                    if len(matches) > 5:
-                        results.append(f"\n...and {len(matches) - 5} more matches.")
-                        
-                    return "\n".join(results)
-                else:
-                    return f"Pattern '{target}' not found in {file_path}."
+                    return f"❌ Class '{target}' not found in {file_path}."
                     
             elif query_type == 'lines':
                 result = self._get_lines(content, target)
@@ -265,22 +194,13 @@ class CodeSnippetTool(BaseTool):
                 if result['found']:
                     return f"Lines {target} from {file_path}:\n\n```{language}\n{result['snippet']}\n```"
                 else:
-                    return f"Error: {result.get('error', 'Could not extract the specified lines.')}"
-                    
-            elif query_type == 'section':
-                result = self._get_section(content, target, language)
-                
-                if result['found']:
-                    snippet_with_context = self._add_context_lines(
-                        content, result['start_line'], result['end_line'], context_lines
-                    )
-                    
-                    return f"Found section '{target}' (lines {result['start_line']}-{result['end_line']}):\n\n```{language}\n{snippet_with_context}\n```"
-                else:
-                    return f"Section '{target}' not found in {file_path}."
+                    return f"❌ Error: {result.get('error', 'Could not extract the specified lines.')}"
                     
             else:
-                return f"Error: Unknown query_type '{query_type}'."
+                return f"❌ Unknown query_type '{query_type}'."
                 
         except Exception as e:
-            return f"Error extracting from {file_path}: {str(e)}"
+            return f"❌ Error extracting from {file_path}: {str(e)}"
+            
+    def run(self, query: str) -> str:
+        return "Use structured input with 'repo_path', 'file_path', 'query_type', 'target', and optional 'context_lines'."
