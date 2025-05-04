@@ -5,6 +5,9 @@ from tools.git.github_operations_tool import GitHubTool, GitOperationsTool
 from tools.code_operations.code_search_tools import CodeSearchTool  
 from tools.code_operations.fix_code_tool import FixCodeTool
 from tools.code_operations.patch_tool import PatchTool
+from tools.code_operations.ast_parser_tool import ASTParserTool
+from tools.code_operations.code_snippet_tool import CodeSnippetTool
+from tools.code_operations.code_occurrence_counter import CodeOccurrenceCounter
 
 from tools.file_operations.file_content_tool import FileContentTool
 from tools.file_operations.file_operations_tool import FileOperationsTool
@@ -24,6 +27,11 @@ dev_agent = Agent(
         # Git tools
         GitHubTool(),
         GitOperationsTool(),
+
+        # Enhanced code analysis tools
+        ASTParserTool(),
+        CodeSnippetTool(),
+        CodeOccurrenceCounter(),
         
         # Code operation tools
         CodeSearchTool(),
