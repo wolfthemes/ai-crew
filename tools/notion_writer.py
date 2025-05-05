@@ -1,4 +1,4 @@
-# Python solution for Notion markdown conversion
+# Enhanced NotionWriter with improved formatting
 # pip install markdown2 python-dotenv notion-client pydantic crewai crewai-tools bs4
 
 import os
@@ -11,7 +11,7 @@ from crewai.tools import BaseTool
 from notion_client import Client
 from dotenv import load_dotenv
 import markdown2
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag, NavigableString
 
 load_dotenv()
 
@@ -137,7 +137,7 @@ class PostToNotion(BaseTool):
                     header_row = {
                         "type": "table_row",
                         "table_row": {
-                            "cells": [[{"type": "text", "text": {"content": cell.strip()}}] for cell in header_cells]
+                            "cells": [[{"type": "text", "text": {"content": cell.strip()}, "annotations": {"bold": True}}] for cell in header_cells]
                         }
                     }
                     rows.append(header_row)
@@ -229,66 +229,153 @@ class PostToNotion(BaseTool):
         # Default to "plain text" if not found
         return "plain text"
 
-    def process_html_for_styling(self, content: str) -> List[Dict[str, Any]]:
+    def _parse_styling(self, element) -> Dict[str, Any]:
+        """Recursively parse HTML elements to extract text with styling."""
+        if isinstance(element, NavigableString):
+            return {"type": "text", "text": {"content": str(element).strip()}}
+            
+        if isinstance(element, Tag):
+            text = element.get_text().strip()
+            if not text:
+                return None
+                
+            result = {"type": "text", "text": {"content": text}}
+            
+            # Add styling annotations as needed
+            if element.name in ['strong', 'b']:
+                result["annotations"] = {"bold": True}
+            elif element.name in ['em', 'i']:
+                result["annotations"] = {"italic": True}
+            elif element.name == 'code':
+                result["annotations"] = {"code": True}
+            elif element.name in ['s', 'del']:
+                result["annotations"] = {"strikethrough": True}
+            elif element.name == 'a' and element.get('href'):
+                result["text"]["link"] = {"url": element.get('href')}
+                
+            return result
+            
+        return None
+
+    def process_html_for_styling(self, element) -> List[Dict[str, Any]]:
         """Process HTML content to extract styled text for Notion rich text."""
-        soup = BeautifulSoup(content, 'html.parser')
+        if isinstance(element, str):
+            soup = BeautifulSoup(element, 'html.parser')
+            element = soup
+            
         rich_text_list = []
         
-        # Process each element for styling
-        for element in soup.descendants:
-            if element.name is None and element.string and element.string.strip():
-                # Plain text
-                rich_text_list.append({
-                    "type": "text",
-                    "text": {"content": element.string.strip()}
-                })
-            elif element.name == 'strong' or element.name == 'b':
-                # Bold text
-                rich_text_list.append({
-                    "type": "text",
-                    "text": {"content": element.get_text().strip()},
-                    "annotations": {"bold": True}
-                })
-            elif element.name == 'em' or element.name == 'i':
-                # Italic text
-                rich_text_list.append({
-                    "type": "text",
-                    "text": {"content": element.get_text().strip()},
-                    "annotations": {"italic": True}
-                })
-            elif element.name == 'code':
-                # Inline code
-                rich_text_list.append({
-                    "type": "text",
-                    "text": {"content": element.get_text().strip()},
-                    "annotations": {"code": True}
-                })
-            elif element.name == 'a':
-                # Link
-                rich_text_list.append({
-                    "type": "text",
-                    "text": {
-                        "content": element.get_text().strip(),
-                        "link": {"url": element.get('href', '#')}
+        if isinstance(element, Tag):
+            # Process direct text content
+            for content in element.contents:
+                if isinstance(content, NavigableString) and content.strip():
+                    rich_text_list.append({"type": "text", "text": {"content": content.strip()}})
+                elif isinstance(content, Tag):
+                    if content.name in ['strong', 'b']:
+                        rich_text_list.append({
+                            "type": "text", 
+                            "text": {"content": content.get_text().strip()},
+                            "annotations": {"bold": True}
+                        })
+                    elif content.name in ['em', 'i']:
+                        rich_text_list.append({
+                            "type": "text", 
+                            "text": {"content": content.get_text().strip()},
+                            "annotations": {"italic": True}
+                        })
+                    elif content.name == 'code':
+                        rich_text_list.append({
+                            "type": "text", 
+                            "text": {"content": content.get_text().strip()},
+                            "annotations": {"code": True}
+                        })
+                    elif content.name in ['s', 'del']:
+                        rich_text_list.append({
+                            "type": "text", 
+                            "text": {"content": content.get_text().strip()},
+                            "annotations": {"strikethrough": True}
+                        })
+                    elif content.name == 'a':
+                        rich_text_list.append({
+                            "type": "text",
+                            "text": {
+                                "content": content.get_text().strip(),
+                                "link": {"url": content.get('href', '#')}
+                            }
+                        })
+                    else:
+                        # Recursively process nested elements
+                        nested_text = self.process_html_for_styling(content)
+                        if nested_text:
+                            rich_text_list.extend(nested_text)
+        
+        # Filter out empty items and ensure proper formatting
+        rich_text_list = [item for item in rich_text_list if item.get("text", {}).get("content", "").strip()]
+        
+        # If no rich text was found, return plain text
+        if not rich_text_list and isinstance(element, Tag):
+            text = element.get_text().strip()
+            if text:
+                return [{"type": "text", "text": {"content": text}}]
+                
+        return rich_text_list
+
+    def extract_markdown_lists(self, markdown_text: str) -> List[Dict[str, Any]]:
+        """Directly extract lists from markdown text to ensure proper nesting."""
+        list_blocks = []
+        lines = markdown_text.split('\n')
+        
+        i = 0
+        while i < len(lines):
+            line = lines[i].strip()
+            
+            # Check for bulleted list items
+            bullet_match = re.match(r'^(\s*)(?:[-*+])\s+(.+)$', lines[i])
+            if bullet_match:
+                indent_level = len(bullet_match.group(1))
+                content = bullet_match.group(2).strip()
+                
+                # Create the list item
+                list_blocks.append({
+                    "object": "block",
+                    "type": "bulleted_list_item",
+                    "bulleted_list_item": {
+                        "rich_text": [{"type": "text", "text": {"content": content}}],
+                        "color": "default"
                     }
                 })
-            elif element.name == 's' or element.name == 'del':
-                # Strikethrough
-                rich_text_list.append({
-                    "type": "text",
-                    "text": {"content": element.get_text().strip()},
-                    "annotations": {"strikethrough": True}
+                i += 1
+                continue
+                
+            # Check for numbered list items
+            number_match = re.match(r'^(\s*)(\d+)\.?\s+(.+)$', lines[i])
+            if number_match:
+                indent_level = len(number_match.group(1))
+                content = number_match.group(3).strip()
+                
+                # Create the list item
+                list_blocks.append({
+                    "object": "block",
+                    "type": "numbered_list_item",
+                    "numbered_list_item": {
+                        "rich_text": [{"type": "text", "text": {"content": content}}],
+                        "color": "default"
+                    }
                 })
-        
-        # Merge consecutive text nodes with the same styling to avoid fragmentation
-        if rich_text_list:
-            return rich_text_list
-        
-        # Default to plain text if no styled elements found
-        return [{"type": "text", "text": {"content": content}}]
+                i += 1
+                continue
+                
+            i += 1
+            
+        return list_blocks
 
     def markdown_to_notion_blocks(self, markdown_content: str) -> List[Dict[str, Any]]:
         """Convert markdown to Notion blocks with enhanced formatting."""
+        blocks = []
+        
+        # First directly extract any tables
+        table_blocks = self.extract_tables_from_markdown(markdown_content)
+        
         # Convert markdown to HTML with extended features
         html = markdown2.markdown(
             markdown_content,
@@ -306,20 +393,36 @@ class PostToNotion(BaseTool):
             ]
         )
         
+        # Create debug directory if it doesn't exist
+        os.makedirs("debug", exist_ok=True)
+        
+        # Output HTML for debugging
+        with open("debug/debug_html_output.html", "w", encoding="utf-8") as f:
+            f.write(html)
+        
         # Parse HTML with BeautifulSoup
         soup = BeautifulSoup(html, 'html.parser')
-        blocks = []
         
-        # Extract all elements
-        for element in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'ul', 'ol', 'li', 'blockquote', 'hr']):
-            # Handle headings
+        # Dictionary to track section hierarchy for better nesting
+        section_hierarchy = {}
+        current_section = None
+        current_level = 0
+        
+        # Process all top-level elements
+        for element in soup.contents:
+            if not isinstance(element, Tag):
+                continue
+                
+            # Handle headings - reset section hierarchy
             if element.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-                level = min(int(element.name[1]), 3)  # Notion supports h1, h2, h3 only
+                level = int(element.name[1])
+                level = min(level, 3)  # Notion only supports h1-h3
                 header_type = f"heading_{level}"
                 
                 # Extract text with styling
-                rich_text = self.process_html_for_styling(str(element))
+                rich_text = self.process_html_for_styling(element)
                 
+                # Create heading block
                 blocks.append({
                     "object": "block",
                     "type": header_type,
@@ -329,20 +432,28 @@ class PostToNotion(BaseTool):
                     }
                 })
                 
+                # Update section tracking
+                current_section = element.get_text().strip()
+                current_level = level
+                for l in range(level, 7):
+                    section_hierarchy[l] = None
+                section_hierarchy[level] = current_section
+            
             # Handle paragraphs
-            elif element.name == 'p' and not element.parent.name in ['li', 'blockquote']:
+            elif element.name == 'p':
                 # Extract text with styling
-                rich_text = self.process_html_for_styling(str(element))
+                rich_text = self.process_html_for_styling(element)
                 
-                blocks.append({
-                    "object": "block",
-                    "type": "paragraph",
-                    "paragraph": {
-                        "rich_text": rich_text,
-                        "color": "default"
-                    }
-                })
-                
+                if rich_text:
+                    blocks.append({
+                        "object": "block",
+                        "type": "paragraph",
+                        "paragraph": {
+                            "rich_text": rich_text,
+                            "color": "default"
+                        }
+                    })
+            
             # Handle code blocks
             elif element.name == 'pre':
                 code_element = element.find('code')
@@ -369,29 +480,55 @@ class PostToNotion(BaseTool):
                             "language": valid_language
                         }
                     })
+            
+            # Handle lists (both ul and ol)
+            elif element.name in ['ul', 'ol']:
+                for li in element.find_all('li', recursive=False):
+                    list_type = "bulleted_list_item" if element.name == 'ul' else "numbered_list_item"
                     
-            # Handle lists
-            elif element.name == 'li':
-                # Determine list type (bulleted or numbered)
-                parent = element.parent
-                list_type = "bulleted_list_item" if parent.name == 'ul' else "numbered_list_item"
-                
-                # Extract text with styling
-                rich_text = self.process_html_for_styling(str(element))
-                
-                blocks.append({
-                    "object": "block",
-                    "type": list_type,
-                    list_type: {
-                        "rich_text": rich_text,
-                        "color": "default"
-                    }
-                })
-                
+                    # Process styled text in the list item
+                    rich_text = self.process_html_for_styling(li)
+                    
+                    blocks.append({
+                        "object": "block",
+                        "type": list_type,
+                        list_type: {
+                            "rich_text": rich_text,
+                            "color": "default"
+                        }
+                    })
+                    
+                    # Process any nested lists
+                    nested_ul = li.find('ul')
+                    nested_ol = li.find('ol')
+                    
+                    if nested_ul:
+                        for nested_li in nested_ul.find_all('li', recursive=False):
+                            rich_text = self.process_html_for_styling(nested_li)
+                            blocks.append({
+                                "object": "block",
+                                "type": "bulleted_list_item",
+                                "bulleted_list_item": {
+                                    "rich_text": rich_text,
+                                    "color": "default"
+                                }
+                            })
+                            
+                    if nested_ol:
+                        for nested_li in nested_ol.find_all('li', recursive=False):
+                            rich_text = self.process_html_for_styling(nested_li)
+                            blocks.append({
+                                "object": "block",
+                                "type": "numbered_list_item",
+                                "numbered_list_item": {
+                                    "rich_text": rich_text,
+                                    "color": "default"
+                                }
+                            })
+            
             # Handle blockquotes
             elif element.name == 'blockquote':
-                # Extract text with styling
-                rich_text = self.process_html_for_styling(str(element))
+                rich_text = self.process_html_for_styling(element)
                 
                 blocks.append({
                     "object": "block",
@@ -401,7 +538,7 @@ class PostToNotion(BaseTool):
                         "color": "default"
                     }
                 })
-                
+            
             # Handle horizontal rules
             elif element.name == 'hr':
                 blocks.append({
@@ -410,9 +547,12 @@ class PostToNotion(BaseTool):
                     "divider": {}
                 })
         
-        # Extract tables (they're usually not properly handled by BeautifulSoup)
-        table_blocks = self.extract_tables_from_markdown(markdown_content)
+        # Add tables at their appropriate positions
         blocks.extend(table_blocks)
+        
+        # Sort blocks to ensure tables appear in the right place
+        # This is a simplified approach - for complex documents, 
+        # you might need a more sophisticated ordering mechanism
         
         return blocks
 
@@ -436,9 +576,6 @@ class PostToNotion(BaseTool):
             # Convert markdown to Notion blocks
             blocks = self.markdown_to_notion_blocks(content)
             
-            # Create debug directory if it doesn't exist
-            os.makedirs("debug", exist_ok=True)
-            
             # Output blocks for debugging
             debug_blocks_path = "debug/debug_notion_blocks.json"
             with open(debug_blocks_path, "w", encoding="utf-8") as f:
@@ -461,6 +598,20 @@ class PostToNotion(BaseTool):
                     # Ensure rich_text is provided
                     if "rich_text" not in block["code"] or not block["code"]["rich_text"]:
                         block["code"]["rich_text"] = [{"type": "text", "text": {"content": ""}}]
+                        
+                # Ensure all rich text arrays are properly formatted
+                for key in ["paragraph", "heading_1", "heading_2", "heading_3", 
+                            "bulleted_list_item", "numbered_list_item", "quote"]:
+                    if block_type == key and key in block:
+                        if "rich_text" not in block[key] or not block[key]["rich_text"]:
+                            block[key]["rich_text"] = [{"type": "text", "text": {"content": ""}}]
+                        
+                        # Make sure all rich_text items have proper structure
+                        for i, text_item in enumerate(block[key]["rich_text"]):
+                            if "text" not in text_item:
+                                text_item["text"] = {"content": ""}
+                            if "content" not in text_item["text"]:
+                                text_item["text"]["content"] = ""
             
             # Split blocks into chunks of 100 (Notion API limit)
             block_chunks = [blocks[i:i+100] for i in range(0, len(blocks), 100)]
@@ -532,37 +683,3 @@ class PostToNotion(BaseTool):
             import traceback
             print(traceback.format_exc())
             return f"NOTION_POST_STATUS: FAILED — {str(e)}"
-
-# Usage example:
-# 
-# from notion_writer import PostToNotion
-#
-# # Initialize the tool
-# notion_tool = PostToNotion()
-#
-# # Sample markdown content
-# markdown_content = """
-# # EUR/USD Weekly Report - 2025-05-05
-#
-# ## Market Summary
-#
-# The EUR/USD pair showed significant volatility this week, closing at 1.0842.
-#
-# ## Key Technical Levels
-#
-# | Level | Type | Price |
-# |-------|------|-------|
-# | R2 | Resistance | 1.0925 |
-# | R1 | Resistance | 1.0880 |
-# | PP | Pivot Point | 1.0842 |
-# | S1 | Support | 1.0810 |
-# | S2 | Support | 1.0775 |
-#
-# ## Analysis
-#
-# The pair continues to trade in a consolidation pattern between 1.0775 and 1.0925.
-# """
-#
-# # Post to Notion
-# result = notion_tool.run(markdown_content)
-# print(result)
