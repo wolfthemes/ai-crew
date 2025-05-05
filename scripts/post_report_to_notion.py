@@ -14,7 +14,7 @@ sys.path.append(str(parent_directory))
 from tools.notion_writer import PostToNotion
 from dotenv import load_dotenv
 
-def post_report_to_notion(file_path=None, title=None):
+def post_report_to_notion(file_path=None, title=None, period=None):
     """
     Posts a markdown report file to Notion.
     
@@ -35,10 +35,13 @@ def post_report_to_notion(file_path=None, title=None):
         print("❌ Notion environment variables not set")
         return False
     
+    if not period:
+        period = "weekly"
+    
     # Default to the latest report if no file path is specified
     if not file_path:
         today = date.today().strftime("%Y-%m-%d")
-        file_path = f"data/reports/eurusd_weekly_report_{today}.md"
+        file_path = f"data/reports/{period}/eurusd_weekly_report_{today}.md"
     
     # Check if the file exists
     if not os.path.exists(file_path):

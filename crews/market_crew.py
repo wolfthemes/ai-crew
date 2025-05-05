@@ -387,7 +387,8 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
                     
                 notion_result = post_report_to_notion(
                     file_path=file_path,
-                    title=title
+                    title=title,
+                    period=period
                 )
                 if notion_result:
                     print(f"✅ Successfully posted {period} report to Notion")
