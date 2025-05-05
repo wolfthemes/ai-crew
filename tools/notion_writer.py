@@ -1,15 +1,70 @@
-import markdown2
-from bs4 import BeautifulSoup
+# Python solution for Notion markdown conversion
+# pip install markdown2 python-dotenv notion-client pydantic crewai crewai-tools bs4
+
+import os
+import re
+import json
 from typing import Type, Optional, List, Dict, Any
+from datetime import date
 from pydantic import BaseModel, Field, ConfigDict
 from crewai.tools import BaseTool
 from notion_client import Client
-from datetime import date
-import os
-import re
 from dotenv import load_dotenv
+import markdown2
+from bs4 import BeautifulSoup
 
 load_dotenv()
+
+# Valid Notion code block languages
+VALID_NOTION_LANGUAGES = {
+    "abap", "agda", "arduino", "ascii art", "assembly", "bash", "basic", "bnf", 
+    "c", "c#", "c++", "clojure", "coffeescript", "coq", "css", "dart", "dhall", 
+    "diff", "docker", "ebnf", "elixir", "elm", "erlang", "f#", "flow", "fortran", 
+    "gherkin", "glsl", "go", "graphql", "groovy", "haskell", "hcl", "html", "idris", 
+    "java", "javascript", "json", "julia", "kotlin", "latex", "less", "lisp", 
+    "livescript", "llvm ir", "lua", "makefile", "markdown", "markup", "matlab", 
+    "mathematica", "mermaid", "nix", "notion formula", "objective-c", "ocaml", 
+    "pascal", "perl", "php", "plain text", "powershell", "prolog", "protobuf", 
+    "purescript", "python", "r", "racket", "reason", "ruby", "rust", "sass", 
+    "scala", "scheme", "scss", "shell", "smalltalk", "solidity", "sql", "swift", 
+    "toml", "typescript", "vb.net", "verilog", "vhdl", "visual basic", 
+    "webassembly", "xml", "yaml", "java/c/c++/c#", "notionscript"
+}
+
+# Mapping of common language names to valid Notion language values
+LANGUAGE_MAPPING = {
+    "js": "javascript",
+    "py": "python",
+    "ts": "typescript",
+    "rb": "ruby",
+    "cs": "c#",
+    "cpp": "c++",
+    "plain_text": "plain text",
+    "plaintext": "plain text",
+    "txt": "plain text",
+    "sh": "bash",
+    "zsh": "bash",
+    "md": "markdown",
+    "yml": "yaml",
+    "htm": "html",
+    "jsx": "javascript",
+    "tsx": "typescript",
+    "fs": "f#",
+    "pl": "perl",
+    "ps": "powershell",
+    "ps1": "powershell",
+    "bat": "powershell",
+    "cmd": "powershell",
+    "hs": "haskell",
+    "kt": "kotlin",
+    "m": "matlab",
+    "mm": "objective-c",
+    "objc": "objective-c",
+    "rs": "rust",
+    "scss": "sass",
+    "tex": "latex",
+    "vb": "visual basic"
+}
 
 class NotionPostInput(BaseModel):
     content: str = Field(..., description="The Markdown-formatted report content to post")
@@ -29,9 +84,28 @@ class PostToNotion(BaseTool):
     # Add configuration for arbitrary types
     model_config = ConfigDict(arbitrary_types_allowed=True)
     
+    def __init__(self):
+        super().__init__()
+        
+        try:
+            notion_api_key = os.getenv("NOTION_API_KEY")
+            database_id = os.getenv("NOTION_MARKET_REPORTS_DB_KEY")
+            
+            if not notion_api_key or not database_id:
+                print("⚠️ Notion API key or database ID not found in environment variables")
+                self.notion = None
+                self.database_id = None
+            else:
+                self.notion = Client(auth=notion_api_key)
+                self.database_id = database_id
+        except Exception as e:
+            print(f"⚠️ Failed to initialize Notion client: {e}")
+            self.notion = None
+            self.database_id = None
+
     def extract_tables_from_markdown(self, markdown_text: str) -> List[Dict[str, Any]]:
         """
-        Extract tables directly from markdown text in case the HTML conversion didn't work.
+        Extract tables directly from markdown text.
         Returns a list of Notion blocks for each detected table.
         """
         table_blocks = []
@@ -140,217 +214,194 @@ class PostToNotion(BaseTool):
         
         return cells
 
-    def __init__(self):
-        super().__init__()
+    def get_valid_language(self, language: str) -> str:
+        """Convert language identifier to a valid Notion language."""
+        language = language.strip().lower()
         
-        try:
-            notion_api_key = os.getenv("NOTION_API_KEY")
-            database_id = os.getenv("NOTION_MARKET_REPORTS_DB_KEY")
+        # Check if it's already a valid Notion language
+        if language in VALID_NOTION_LANGUAGES:
+            return language
             
-            if not notion_api_key or not database_id:
-                print("⚠️ Notion API key or database ID not found in environment variables")
-                self.notion = None
-                self.database_id = None
-            else:
-                self.notion = Client(auth=notion_api_key)
-                self.database_id = database_id
-        except Exception as e:
-            print(f"⚠️ Failed to initialize Notion client: {e}")
-            self.notion = None
-            self.database_id = None
+        # Check if it's in our mapping
+        if language in LANGUAGE_MAPPING:
+            return LANGUAGE_MAPPING[language]
+            
+        # Default to "plain text" if not found
+        return "plain text"
 
-    def html_to_notion_blocks(self, soup) -> List[Dict[str, Any]]:
-        """Convert HTML elements to Notion blocks."""
+    def process_html_for_styling(self, content: str) -> List[Dict[str, Any]]:
+        """Process HTML content to extract styled text for Notion rich text."""
+        soup = BeautifulSoup(content, 'html.parser')
+        rich_text_list = []
+        
+        # Process each element for styling
+        for element in soup.descendants:
+            if element.name is None and element.string and element.string.strip():
+                # Plain text
+                rich_text_list.append({
+                    "type": "text",
+                    "text": {"content": element.string.strip()}
+                })
+            elif element.name == 'strong' or element.name == 'b':
+                # Bold text
+                rich_text_list.append({
+                    "type": "text",
+                    "text": {"content": element.get_text().strip()},
+                    "annotations": {"bold": True}
+                })
+            elif element.name == 'em' or element.name == 'i':
+                # Italic text
+                rich_text_list.append({
+                    "type": "text",
+                    "text": {"content": element.get_text().strip()},
+                    "annotations": {"italic": True}
+                })
+            elif element.name == 'code':
+                # Inline code
+                rich_text_list.append({
+                    "type": "text",
+                    "text": {"content": element.get_text().strip()},
+                    "annotations": {"code": True}
+                })
+            elif element.name == 'a':
+                # Link
+                rich_text_list.append({
+                    "type": "text",
+                    "text": {
+                        "content": element.get_text().strip(),
+                        "link": {"url": element.get('href', '#')}
+                    }
+                })
+            elif element.name == 's' or element.name == 'del':
+                # Strikethrough
+                rich_text_list.append({
+                    "type": "text",
+                    "text": {"content": element.get_text().strip()},
+                    "annotations": {"strikethrough": True}
+                })
+        
+        # Merge consecutive text nodes with the same styling to avoid fragmentation
+        if rich_text_list:
+            return rich_text_list
+        
+        # Default to plain text if no styled elements found
+        return [{"type": "text", "text": {"content": content}}]
+
+    def markdown_to_notion_blocks(self, markdown_content: str) -> List[Dict[str, Any]]:
+        """Convert markdown to Notion blocks with enhanced formatting."""
+        # Convert markdown to HTML with extended features
+        html = markdown2.markdown(
+            markdown_content,
+            extras=[
+                "tables",
+                "fenced-code-blocks", 
+                "code-friendly",
+                "cuddled-lists",
+                "footnotes",
+                "header-ids",
+                "html-classes",
+                "markdown-in-html",
+                "strike",
+                "target-blank-links"
+            ]
+        )
+        
+        # Parse HTML with BeautifulSoup
+        soup = BeautifulSoup(html, 'html.parser')
         blocks = []
         
-        # Find all tables in the document first, regardless of nesting
-        all_tables = soup.find_all('table')
-        print(f"Found {len(all_tables)} tables in the HTML")
-        
-        # Process all top-level elements
-        for element in soup.body.children if soup.body else soup.children:
-            if element.name is None:
-                # Skip empty text nodes
-                continue
-                
-            # Handle headings (h1 to h6)
+        # Extract all elements
+        for element in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'ul', 'ol', 'li', 'blockquote', 'hr']):
+            # Handle headings
             if element.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-                level = int(element.name[1])
+                level = min(int(element.name[1]), 3)  # Notion supports h1, h2, h3 only
                 header_type = f"heading_{level}"
+                
+                # Extract text with styling
+                rich_text = self.process_html_for_styling(str(element))
+                
                 blocks.append({
                     "object": "block",
                     "type": header_type,
                     header_type: {
-                        "rich_text": [{"type": "text", "text": {"content": element.get_text()}}],
+                        "rich_text": rich_text,
                         "color": "default"
                     }
                 })
                 
             # Handle paragraphs
-            elif element.name == 'p':
+            elif element.name == 'p' and not element.parent.name in ['li', 'blockquote']:
+                # Extract text with styling
+                rich_text = self.process_html_for_styling(str(element))
+                
                 blocks.append({
                     "object": "block",
                     "type": "paragraph",
                     "paragraph": {
-                        "rich_text": [{"type": "text", "text": {"content": element.get_text()}}],
-                        "color": "default"
-                    }
-                })
-                
-            # Handle unordered lists
-            elif element.name == 'ul':
-                for li in element.find_all('li', recursive=False):
-                    blocks.append({
-                        "object": "block",
-                        "type": "bulleted_list_item",
-                        "bulleted_list_item": {
-                            "rich_text": [{"type": "text", "text": {"content": li.get_text()}}],
-                            "color": "default"
-                        }
-                    })
-                    
-            # Handle ordered lists
-            elif element.name == 'ol':
-                for li in element.find_all('li', recursive=False):
-                    blocks.append({
-                        "object": "block",
-                        "type": "numbered_list_item",
-                        "numbered_list_item": {
-                            "rich_text": [{"type": "text", "text": {"content": li.get_text()}}],
-                            "color": "default"
-                        }
-                    })
-                    
-            # Handle blockquotes
-            elif element.name == 'blockquote':
-                blocks.append({
-                    "object": "block",
-                    "type": "quote",
-                    "quote": {
-                        "rich_text": [{"type": "text", "text": {"content": element.get_text()}}],
+                        "rich_text": rich_text,
                         "color": "default"
                     }
                 })
                 
             # Handle code blocks
             elif element.name == 'pre':
-                code = element.find('code')
-                if code:
-                    language = "plain text"
-                    # Try to extract language from class (e.g., "language-python")
-                    if code.get('class'):
-                        for cls in code.get('class'):
-                            if cls.startswith('language-'):
-                                language = cls[9:]
+                code_element = element.find('code')
+                if code_element:
+                    # Get language if specified in class
+                    language = "plain text"  # Default language
+                    if code_element.get('class'):
+                        for class_name in code_element.get('class'):
+                            if class_name.startswith('language-'):
+                                language = class_name[9:]
                                 break
-                                
+                    
+                    # Convert to a valid Notion language
+                    valid_language = self.get_valid_language(language)
+                    
+                    # Extract code content
+                    code_content = code_element.get_text()
+                    
                     blocks.append({
                         "object": "block",
                         "type": "code",
                         "code": {
-                            "language": language,
-                            "rich_text": [{"type": "text", "text": {"content": code.get_text()}}]
-                        }
-                    })
-                else:
-                    blocks.append({
-                        "object": "block",
-                        "type": "code",
-                        "code": {
-                            "language": "plain text",
-                            "rich_text": [{"type": "text", "text": {"content": element.get_text()}}]
+                            "rich_text": [{"type": "text", "text": {"content": code_content}}],
+                            "language": valid_language
                         }
                     })
                     
-            # Handle tables
-            elif element.name == 'table':
-                #print(f"Processing table element: {element}")
-                rows = []
-                # Get all rows, including those within thead, tbody, tfoot
-                table_rows = []
+            # Handle lists
+            elif element.name == 'li':
+                # Determine list type (bulleted or numbered)
+                parent = element.parent
+                list_type = "bulleted_list_item" if parent.name == 'ul' else "numbered_list_item"
                 
-                # Check for thead/tbody/tfoot sections
-                thead = element.find('thead')
-                tbody = element.find('tbody')
-                tfoot = element.find('tfoot')
+                # Extract text with styling
+                rich_text = self.process_html_for_styling(str(element))
                 
-                # Get rows from thead if it exists
-                if thead:
-                    thead_rows = thead.find_all('tr')
-                    table_rows.extend(thead_rows)
-                    print(f"Found {len(thead_rows)} rows in thead")
+                blocks.append({
+                    "object": "block",
+                    "type": list_type,
+                    list_type: {
+                        "rich_text": rich_text,
+                        "color": "default"
+                    }
+                })
                 
-                # Get rows from tbody if it exists
-                if tbody:
-                    tbody_rows = tbody.find_all('tr')
-                    table_rows.extend(tbody_rows)
-                    print(f"Found {len(tbody_rows)} rows in tbody")
+            # Handle blockquotes
+            elif element.name == 'blockquote':
+                # Extract text with styling
+                rich_text = self.process_html_for_styling(str(element))
                 
-                # Get rows from tfoot if it exists
-                if tfoot:
-                    tfoot_rows = tfoot.find_all('tr')
-                    table_rows.extend(tfoot_rows)
-                    print(f"Found {len(tfoot_rows)} rows in tfoot")
+                blocks.append({
+                    "object": "block",
+                    "type": "quote",
+                    "quote": {
+                        "rich_text": rich_text,
+                        "color": "default"
+                    }
+                })
                 
-                # If no structured sections, get rows directly
-                if not table_rows:
-                    table_rows = element.find_all('tr')
-                    print(f"Found {len(table_rows)} direct rows in table")
-                
-                if table_rows:
-                    # Determine table width from the first row
-                    first_row = table_rows[0]
-                    cells = first_row.find_all(['th', 'td'])
-                    table_width = len(cells)
-                    print(f"Table width: {table_width}")
-                    
-                                            # Process all rows
-                    for row in table_rows:
-                        cells = row.find_all(['th', 'td'])
-                        # Ensure consistent number of cells
-                        cell_list = []
-                        for i in range(table_width):
-                            if i < len(cells) and cells[i]:
-                                cell_text = cells[i].get_text().strip()
-                                # Check if the original text contains bold or other formatting
-                                original_html = str(cells[i])
-                                is_bold = '<strong>' in original_html or '<b>' in original_html
-                            else:
-                                cell_text = ""  # Empty cell for padding
-                                is_bold = False
-                            
-                            # Create text with appropriate formatting
-                            text_obj = {
-                                "type": "text",
-                                "text": {"content": cell_text}
-                            }
-                            
-                            # Add bold annotation if needed
-                            if is_bold:
-                                text_obj["annotations"] = {"bold": True}
-                            
-                            cell_list.append([text_obj])
-                            
-                        rows.append({
-                            "type": "table_row",
-                            "table_row": {
-                                "cells": cell_list
-                            }
-                        })
-                    
-                    # Add the table block
-                    blocks.append({
-                        "object": "block",
-                        "type": "table",
-                        "table": {
-                            "table_width": table_width,
-                            "has_column_header": True,  # Assume first row is header
-                            "has_row_header": False,
-                            "children": rows
-                        }
-                    })
-                    print(f"Added table with {len(rows)} rows to blocks")
-                    
             # Handle horizontal rules
             elif element.name == 'hr':
                 blocks.append({
@@ -358,18 +409,11 @@ class PostToNotion(BaseTool):
                     "type": "divider",
                     "divider": {}
                 })
-                
-            # Handle any other elements as paragraphs
-            elif element.name:
-                blocks.append({
-                    "object": "block",
-                    "type": "paragraph",
-                    "paragraph": {
-                        "rich_text": [{"type": "text", "text": {"content": element.get_text()}}],
-                        "color": "default"
-                    }
-                })
-                
+        
+        # Extract tables (they're usually not properly handled by BeautifulSoup)
+        table_blocks = self.extract_tables_from_markdown(markdown_content)
+        blocks.extend(table_blocks)
+        
         return blocks
 
     def _run(self, content: str, title: str = None, date_str: str = None, period: str = None) -> str:
@@ -387,60 +431,46 @@ class PostToNotion(BaseTool):
         title_text = title or f"EUR/USD {period} Report – {today}"
         
         try:
-            print(f"Converting markdown to HTML...")
+            print(f"Converting markdown to Notion blocks...")
             
-            # Convert Markdown to HTML with enhanced table support
-            html = markdown2.markdown(
-                content,
-                extras=[
-                    "tables",
-                    "fenced-code-blocks", 
-                    "code-friendly",
-                    "cuddled-lists",
-                    "footnotes",
-                    "header-ids",
-                    "html-classes",
-                    "markdown-in-html",
-                    "strike",
-                    "target-blank-links"
-                ]
-            )
+            # Convert markdown to Notion blocks
+            blocks = self.markdown_to_notion_blocks(content)
             
-            # Output HTML to a file for debugging
-            debug_html_path = "debug/debug_markdown_output.html"
-            with open(debug_html_path, "w", encoding="utf-8") as f:
-                f.write(html)
-            print(f"Saved HTML output to {debug_html_path} for debugging")
+            # Create debug directory if it doesn't exist
+            os.makedirs("debug", exist_ok=True)
             
-            # Parse HTML with BeautifulSoup
-            soup = BeautifulSoup(html, "html.parser")
+            # Output blocks for debugging
+            debug_blocks_path = "debug/debug_notion_blocks.json"
+            with open(debug_blocks_path, "w", encoding="utf-8") as f:
+                json.dump(blocks, f, indent=2)
+            print(f"Saved Notion blocks to {debug_blocks_path} for debugging")
             
-            # Output pretty-printed HTML structure for debugging
-            debug_structure_path = "debug/debug_html_structure.txt"
-            with open(debug_structure_path, "w", encoding="utf-8") as f:
-                f.write(soup.prettify())
-            print(f"Saved pretty HTML structure to {debug_structure_path} for debugging")
-            
-            # Check if we need to manually handle tables from the markdown
-            # Some markdown tables may not be properly converted to HTML tables
-            manual_table_blocks = self.extract_tables_from_markdown(content)
-            
-            # Convert HTML to Notion blocks
-            blocks = self.html_to_notion_blocks(soup)
-            
-            # Add any manually detected tables
-            if manual_table_blocks:
-                print(f"Adding {len(manual_table_blocks)} manually detected tables")
-                blocks.extend(manual_table_blocks)
+            # Validate all blocks before sending
+            for block in blocks:
+                block_type = block.get("type")
+                
+                # Ensure code blocks have valid language
+                if block_type == "code" and "code" in block:
+                    if "language" in block["code"]:
+                        # Make sure language is a valid Notion language
+                        block["code"]["language"] = self.get_valid_language(block["code"]["language"])
+                    else:
+                        # Default to plain text if language is missing
+                        block["code"]["language"] = "plain text"
+                        
+                    # Ensure rich_text is provided
+                    if "rich_text" not in block["code"] or not block["code"]["rich_text"]:
+                        block["code"]["rich_text"] = [{"type": "text", "text": {"content": ""}}]
             
             # Split blocks into chunks of 100 (Notion API limit)
             block_chunks = [blocks[i:i+100] for i in range(0, len(blocks), 100)]
             
             print(f"Report will be posted in {len(block_chunks)} chunks ({len(blocks)} total blocks)")
             
-            if period == "daily":
+            # Set emoji icon based on period
+            if period.lower() == "daily":
                 emoji_icon = "📅"
-            elif period == "weekly":
+            elif period.lower() == "weekly":
                 emoji_icon = "🏛️"
             else:
                 emoji_icon = "🗓️"  # Default or fallback
@@ -502,3 +532,37 @@ class PostToNotion(BaseTool):
             import traceback
             print(traceback.format_exc())
             return f"NOTION_POST_STATUS: FAILED — {str(e)}"
+
+# Usage example:
+# 
+# from notion_writer import PostToNotion
+#
+# # Initialize the tool
+# notion_tool = PostToNotion()
+#
+# # Sample markdown content
+# markdown_content = """
+# # EUR/USD Weekly Report - 2025-05-05
+#
+# ## Market Summary
+#
+# The EUR/USD pair showed significant volatility this week, closing at 1.0842.
+#
+# ## Key Technical Levels
+#
+# | Level | Type | Price |
+# |-------|------|-------|
+# | R2 | Resistance | 1.0925 |
+# | R1 | Resistance | 1.0880 |
+# | PP | Pivot Point | 1.0842 |
+# | S1 | Support | 1.0810 |
+# | S2 | Support | 1.0775 |
+#
+# ## Analysis
+#
+# The pair continues to trade in a consolidation pattern between 1.0775 and 1.0925.
+# """
+#
+# # Post to Notion
+# result = notion_tool.run(markdown_content)
+# print(result)

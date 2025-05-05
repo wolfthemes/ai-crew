@@ -1,4 +1,3 @@
-```markdown
 # EUR/USD Weekly Report – 2025-05-05
 
 ---
@@ -229,6 +228,3 @@ Short-term, EUR/USD is likely to remain volatile and rangebound (1.1265–1.1347
 
 **In summary:**  
 EUR/USD is at a pivotal juncture, consolidating after a strong rally and awaiting major event risk. The 1.1265–1.1347 range is key for directional bias. Highest-probability trades involve fading liquidity sweeps at these levels with confirmation, especially post-Fed. Remain flexible, manage risk tightly, and be prepared for volatility spikes and rapid sentiment shifts around scheduled events.
-
----
-```
