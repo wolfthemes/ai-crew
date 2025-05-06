@@ -18,7 +18,9 @@ data/crawled/*.csv
 
 data/cache/*.json
 
-data/reports/*.json
+data/reports/*
+data/reports/weekly/*
+data/reports/daily/*
 !data/reports/.gitkeep
 !data/reports/daily/.gitkeep
 !data/reports/weekly/.gitkeep
