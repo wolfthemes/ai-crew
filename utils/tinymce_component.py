@@ -18,8 +18,8 @@ def tinymce_editor(initial_content="", ticket_id="0", height=500):
     editor_id = f"editor_{uuid.uuid4().hex[:8]}"
     TINYMCE_API_KEY = os.getenv("TINYMCE_API_KEY")
     #editor_provider_url = f"https://cdn.tiny.cloud/1/{TINYMCE_API_KEY}/tinymce/7/tinymce.min.js"
-    editor_provider_url = "https://hugerte.org/node_modules/hugerte/hugerte.min.js?v=1.0.9" # <- replace with local URL
-    #editor_provider_url = "http://localhost:5050/static/js/hugerte.min.js?v=1.0.9"
+    #editor_provider_url = "https://hugerte.org/node_modules/hugerte/hugerte.min.js?v=1.0.9" # <- replace with local URL
+    editor_provider_url = "https://cdn.jsdelivr.net/npm/hugerte@1.0.9/hugerte.min.js"
 
     component_html = f"""
     <!DOCTYPE html>
