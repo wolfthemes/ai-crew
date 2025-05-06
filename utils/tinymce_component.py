@@ -57,6 +57,13 @@ def tinymce_editor(initial_content="", ticket_id="0", height=500):
                 height: {height},
                 menubar: false,
                 plugins: "link lists code codesample",
+                codesample_languages: [
+                    {{ text: 'CSS', value: 'css' }},
+                    {{ text: 'JavaScript', value: 'javascript' }},
+                    {{ text: 'PHP', value: 'php' }},
+                    {{ text: 'HTML/XML', value: 'markup' }},
+                    {{ text: 'Python', value: 'python' }}
+                ],
                 toolbar: "undo redo | bold italic | bullist numlist | link | code | codesample",
                 setup: function (editor) {{
                     editor.on("Change KeyUp", saveToFile);
