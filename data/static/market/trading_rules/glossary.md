@@ -15,6 +15,8 @@
 - **PDL**: Previous Day Low
 - **PWH**: Previous Week High
 - **PWL**: Previous Week Low
+- **ASH**: Asian Session High
+- **ASL**: Asian Session Low
 - **PD Array**: Previous Week Low
 - **IRL**: Internal Range Liquidity - Imbalances
 - **ERL**: External Range Liquidity - Highs and Lows
