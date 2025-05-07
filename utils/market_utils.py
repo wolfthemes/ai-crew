@@ -35,8 +35,19 @@ def is_tradable_day(current_date: date = None, economic_events: List[Dict[str, A
     # Check for high-impact news on the current date
     current_date_str = current_date.strftime("%Y-%m-%d")
     
-    keywords = [r'President.*Speech', r'ECB.*Speech', r'ECB.*Speech', r'Fed.*Speech', r'Nonfarm.*Payrolls', r'Consumer.*Prices', r'Fed.*Interest.*Rate', r'FOMC.*Press.*Conference']
-    pattern = re.compile('|'.join(re.escape(k) for k in keywords), re.IGNORECASE)
+    keywords = [
+        r'Nonfarm.*Payrolls',
+        r'Consumer.*Price.*Index',
+        r'Consumer.*Prices',
+        r'ECB.*Rate',
+        r'Fed.*Interest.*Rate',
+        r'ECB.*Press.*Conference',
+        r'FOMC.*Press.*Conference',
+        r'Fed.*Speech',
+        r'ECB.*Speech',
+        r'President.*Speech',
+    ]
+    pattern = re.compile('|'.join(keywords), re.IGNORECASE)
 
     high_impact_events = [
         event for event in economic_events 
