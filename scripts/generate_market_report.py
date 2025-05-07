@@ -30,6 +30,8 @@ def main():
                         help="Skip saving report to file")
     parser.add_argument("--quiet", action="store_true",
                         help="Run in quiet mode (less verbose output)")
+    parser.add_argument("--force", action="store_true",
+                        help="Force to generate on non-tradable day")
     
     args = parser.parse_args()
     
@@ -41,7 +43,8 @@ def main():
         verbose=not args.quiet,
         post_to_notion=not args.no_notion,
         save_to_file=not args.no_save,
-        period=args.period
+        period=args.period,
+        force=not args.force
     )
     
     if result:

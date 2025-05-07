@@ -44,7 +44,7 @@ from utils.weekly_report_reader import WeeklyReportReader
 from utils.market_tools_integration import MarketToolsIntegration
 from utils.market_utils import is_tradable_day
 
-def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, period="weekly"):
+def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, period="weekly", force=False):
     """
     Run the market analysis crew to generate a comprehensive EUR/USD market report
     
@@ -105,8 +105,12 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         try:
             print("📊 Pre-fetching economic events for tradable day check...")
             economic_events = get_fxstreet_events()
-            tradable_day = is_tradable_day(today_date, economic_events)
+            #tradable_day = is_tradable_day(today_date, economic_events)
             #tradable_day = True
+            if not force:
+                tradable_day = is_tradable_day(today_date, economic_events)
+            else:
+                tradable_day = True
             
             if not tradable_day:
                 print(f"⚠️ {today_date_str} is not a tradable day. Daily report generation skipped.")
