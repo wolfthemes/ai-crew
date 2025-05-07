@@ -22,6 +22,8 @@
 - **ERL**: External Range Liquidity - Highs and Lows
 - **DOL**: Draw on Liquidity - Liquidity Level where the price is most likely going next (important or intermediate liquidity level)
 - **TDO**: True Day Open (Midnight Open) - Price level at 00:00 NY time
+- **London Reversal**: The M30 CSID is formed during the London Session - We aim to enter in the reversal  
+- **London Continuation**: The M30 CSID is formed before the London Session - We aim to enter in the continuation
 
 ## Risk Management Terms
 - **R:R**: Risk to Reward Ratio - comparison of potential loss to potential gain

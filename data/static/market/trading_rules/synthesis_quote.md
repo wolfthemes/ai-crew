@@ -1,0 +1,1 @@
+>A run on liquidity, a displacement, a retracement into inefficiency with a lower level objective for sellside/buyside, while the 4hr, or the daily or the weekly, preferably all 3 are into agreement that there is something that will be reached for on the lower/higher side, that is a high probablity trade.

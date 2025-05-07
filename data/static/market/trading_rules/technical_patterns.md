@@ -4,7 +4,7 @@
 - **Bullish OB**: Last bearish candle before a bullish move
 - **Bearish OB**: Last bullish candle before a bearish move
 - **Identification**: Focus on the body of the candle, not the wicks
-- **Mitigation**: Price returning to an order block often leads to reaction
+- **Mitigation**: Price returning to an order block or a fair value gap often leads to reaction
 
 ## Multi-Timeframe Analysis Framework
 1. **Weekly/Daily**: Establish trend direction and major PD Array
