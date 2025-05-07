@@ -44,7 +44,7 @@ def main():
         post_to_notion=not args.no_notion,
         save_to_file=not args.no_save,
         period=args.period,
-        force=not args.force
+        force=args.force
     )
     
     if result:
