@@ -10,8 +10,8 @@
 - Locate instraday liquidity zones (ERL/IRL)
 - Aknowledge the price level compared to the TDO
 
-## Level 2: M30 Analysis
-- Confirm market structure on M30 
+## Level 2: MTF Analysis
+- Confirm market structure on M30
 - Validate MTF PD array (IRL and OB) as potential entry zones
 - Monitor liquidity grabs (wicks)
 
@@ -26,4 +26,4 @@
    - Entry at market price after a confirming M5 candle
 
 2. **Limit Order**:
-   - Set entry order on M5 order block near M30 OB level
+   - Set entry order on M5 order block near M5 OB level
