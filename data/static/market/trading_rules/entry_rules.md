@@ -3,7 +3,7 @@
 ## Prerequisites
 - Prior identification of the trend on HTF (Weekly/Daily)
 - Verification of the economic calendar (no major news)
-- Active London session (9:30-11:00 Paris time, ±10min)
+- Active London session (3:30-5:00 NY time, ±10min)
 
 ## Level 1: Weekly/Daily Analysis
 - Identify the context/narrative based on Weekly profile, Daily Bias and Next Day Model while emphasis the main HTF trend
@@ -16,7 +16,7 @@
 - Monitor liquidity grabs (wicks)
 
 ## Level 3: M5 Analysis
-- Final confirmation with CISD on M5
+- Final confirmation with CSID on M5 away from the M30 CSID
 - Precise identification of entry point
 - Search for reversal candlestick patterns with clear displacement
 - Invalidation of entry if price retraces deeeper than 50% level of M30 OB
