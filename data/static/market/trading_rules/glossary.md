@@ -18,6 +18,7 @@
 - **PD Array**: Previous Week Low
 - **IRL**: Internal Range Liquidity - Imbalances
 - **ERL**: External Range Liquidity - Highs and Lows
+- **DOL**: Draw on Liquidity - Liquidity Level where the price is most likely going next (important or intermediate liquidity level)
 - **TDO**: True Day Open (Midnight Open) - Price level at 00:00 NY time
 
 ## Risk Management Terms
