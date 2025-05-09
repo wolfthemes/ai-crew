@@ -1,0 +1,1 @@
+wsl bash -c "cd /mnt/c/Users/Constantin/wolfthemes-dev/ai-crew && source .venv/bin/activate && python crawlers/crawl_theme_meta.py && python crawlers/crawl_theme_docs.py && python crawlers/crawl_kb_articles.py"
