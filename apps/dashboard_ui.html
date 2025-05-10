@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="ai_crew_dashboard_icon.ico">
-    <title>AI Crew Dashboard</title>
+    <title>AI Support Dashboard</title>
     <style>
         body {
             margin: 0;
@@ -77,18 +77,16 @@
 
 <body>
     <div class="tabs">
-        <div class="tab" onclick="switchTab(0)">Dev Agent</div>
-        <div class="tab" onclick="switchTab(1)">Fresh Ticket</div>
-        <div class="tab active" onclick="switchTab(2)">Ticket Dashboard</div>
-        <div class="tab" onclick="switchTab(3)">Content Generator</div>
+        <!-- <div class="tab" onclick="switchTab(0)">Dev Agent</div> -->
+        <div class="tab" onclick="switchTab(0)">Fresh Ticket</div>
+        <div class="tab active" onclick="switchTab(1)">Ticket Dashboard</div>
+        <!-- <div class="tab" onclick="switchTab(3)">Content Generator</div> -->
     </div>
 
     <div class="iframe-container">
         <div class="loading-indicator">Loading apps...</div>
         <iframe data-src="http://localhost:8501" loading="lazy"></iframe>
-        <iframe data-src="http://localhost:8502" loading="lazy"></iframe>
-        <iframe data-src="http://localhost:8503" class="active" src="http://localhost:8503"></iframe>
-        <iframe data-src="http://localhost:8504" loading="lazy"></iframe>
+        <iframe data-src="http://localhost:8502" class="active" src="http://localhost:8502"></iframe>
     </div>
 
     <script>
