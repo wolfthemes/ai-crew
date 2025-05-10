@@ -46,6 +46,6 @@ if __name__ == "__main__":
     
     # Create webview window on the main thread
     logger.info("Creating webview window")
-    webview.create_window("AI Crew Dashboard", "dashboard_ui.html", width=1280, height=800)
+    webview.create_window("AI Support Crew Dashboard", "support_dashboard_ui.html", width=1280, height=800)
     logger.info("Starting webview")
     webview.start(gui='edgechromium')

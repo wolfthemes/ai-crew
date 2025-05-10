@@ -6,7 +6,7 @@ import time
 import os
 
 PORT = 8000
-DASHBOARD_FILE = "apps/dashboard_ui.html"
+DASHBOARD_FILE = "apps/support_dashboard_ui.html"
 
 # Define Streamlit apps to launch
 apps = [
@@ -51,7 +51,7 @@ def open_brave(url):
             "--new-window",
             "--window-size=1280,800",
             #f"--app={url}",
-            f"--app=http://localhost:8000/dashboard_ui.html",
+            f"--app=http://localhost:8000/support_dashboard_ui.html",
             #"--window-position=100,100"
             #"--new-window",
             #url
@@ -61,7 +61,7 @@ def open_brave(url):
         print(f"Please manually open: {url}")
 
 def start_server():
-    # Always serve files from the folder where dashboard_ui.html is
+    # Always serve files from the folder where support_dashboard_ui.html is
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     handler = http.server.SimpleHTTPRequestHandler
     with socketserver.TCPServer(("", PORT), handler) as httpd:
