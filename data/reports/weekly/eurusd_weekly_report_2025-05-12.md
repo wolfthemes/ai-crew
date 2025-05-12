@@ -2,247 +2,288 @@
 
 ---
 
-## 1. Executive Summary
+## Executive Summary
 
-**Weekly Bias:** **Bearish-to-neutral** (Confidence: 70%)  
-EUR/USD enters the week consolidating just above major support at **1.1200**, with bearish momentum dominating after a multi-week reversal from April’s highs. The pair is vulnerable to further downside, especially if US inflation (CPI) and growth data surprise to the upside. However, the market is stretched on sentiment, and sharp reversals are possible if consensus is wrong.
+**Weekly Bias:** **Bearish** (Confidence: High, with elevated volatility risk)
 
 **Key Price Levels:**
-- **Resistance:** 1.1245 (H4), 1.1290–1.1320 (weekly flip/supply), 1.1380 (swing high)
-- **Support:** 1.1200 (major liquidity), 1.1160 (next target), 1.1120, 1.1050 (monthly)
+- **Support:** **1.1070–1.1100** (critical liquidity pool, daily/weekly OB)
+- **Resistance:** **1.1195–1.1240** (broken support, now supply zone)
+- **Targets:** Downside to **1.1070**, extension to **1.1000**; upside squeeze risk to **1.1240** on reversal
 
 **Major News Events:**
-- **May 13:** US CPI (high impact, trend-setter)
-- **May 15:** Eurozone GDP, US Retail Sales & PPI, Fed Powell Speech (high impact, volatility cluster)
-- **May 16:** US Michigan Consumer Sentiment
+- **May 13:** US CPI (high impact, volatility driver)
+- **May 15:** Eurozone GDP, US PPI & Retail Sales, Fed Chair Powell speech (trend-defining cluster)
+- **May 16:** US Michigan Consumer Sentiment (moderate impact)
 
 **Strategy Recommendation:**  
-Adopt a **short bias below 1.1290**, targeting a break of 1.1200 and extension to 1.1160. Only consider longs if price reclaims 1.1290–1.1320 with strong momentum. Manage risk tightly around event windows, and be prepared for sharp reversals if data surprises.
+Favor **shorts on rallies** into resistance (1.1195–1.1240) in line with the prevailing bearish trend. Consider **countertrend longs** only on a sharp liquidity sweep and reclaim above 1.1070, ideally after major event risk passes. **Risk management is paramount**—size down and avoid trading during major data releases due to whipsaw risk. Watch for a potential **midweek reversal** if sentiment and positioning become stretched.
 
 ---
 
-## 2. Previous Week Recap
+## Previous Week Recap
 
-EUR/USD traded with a bearish tone last week, closing at **1.1246** (down -0.47%), after failing to hold above the key 1.1290 support. The pair tested resistance at **1.1381** early in the week, but sellers quickly regained control, driving price down to a low of **1.1196** before a modest rebound. The break and sustained trade below 1.1290 marked a significant change in character, confirming a short-term reversal from the April high at 1.1573.
+EUR/USD experienced a decisive bearish continuation last week, extending its decline from the April high (1.1573) and closing at **1.1118**. The pair broke through several key supports, notably **1.1196** (previous weekly low) and **1.1265** (April low), confirming a shift in market structure. Price action was characterized by persistent lower highs and lower lows, with only minor corrective rallies failing to reclaim broken support.
 
-Key levels tested included the **1.1290–1.1320** supply zone (now resistance) and the **1.1200** support, which held on a closing basis but saw repeated probes. The week was marked by indecisive daily candles with long wicks, reflecting both profit-taking and defensive positioning ahead of major US data.
+The week’s volatility was driven by a combination of sticky US inflation data and cautious ECB commentary, which reinforced the USD’s policy and growth advantage. Risk sentiment deteriorated as global equities softened and the DXY (Dollar Index) rebounded to 104.5. Retail traders increased net long exposure as price fell, while large speculators trimmed EUR longs and commercials added to shorts.
 
-Fundamental drivers included continued speculation about Fed policy, with mixed US data (ISM, NFP) and cautious ECB rhetoric. No major surprises emerged, but the market’s focus shifted to the upcoming US CPI and Eurozone GDP. The weekly close just above 1.1200 leaves the pair vulnerable to a stop run and further downside if bearish catalysts emerge.
+The weekly close below **1.1195** solidified the bearish bias, with the market now eyeing the **1.1070** liquidity pool as the next major downside target. No significant bullish reversal signals emerged, and the technical backdrop remains heavy heading into a week packed with high-impact economic events.
 
 ---
 
-## 3. Fundamental Outlook
+## Fundamental Outlook
 
 ### Monetary Policy Comparison: ECB vs Fed
 
-The **ECB** remains in a tightening cycle, citing persistent inflation risks, but is increasingly cautious due to uneven Eurozone growth. No ECB meeting is scheduled this week; market attention will focus on Eurozone GDP and any unscheduled commentary. The **Fed** is more data-dependent, balancing sticky inflation against signs of slowing growth. Fed Chair Powell’s speech (May 15) is a key event for forward guidance.
+- **ECB:** Remains in a tightening cycle, but rhetoric has turned more cautious amid growth concerns. No policy meeting this week; focus is on Eurozone GDP and unscheduled commentary. Deposit rate at **4.00%**, with slow QT.
+- **Fed:** Data-dependent, balancing sticky inflation with signs of slowing growth. Policy rate at **5.25–5.50%**, ongoing QT. Powell’s May 15 speech is a key risk event. The Fed’s higher rate and more aggressive QT continue to support the USD.
 
-**Interest rate differentials** remain a core driver: the Fed’s policy rate is still above the ECB’s, but the gap is narrowing. If US CPI surprises to the upside, expectations for further Fed tightening will rise, supporting the USD. Conversely, dovish Fed signals or strong Eurozone data could support the EUR.
+**Implication:** The Fed’s ~125–150 bps policy rate advantage and more hawkish stance underpin USD strength, keeping EUR/USD under pressure.
 
 ### Economic Growth Dynamics
 
-US growth is moderating but remains positive, while the Eurozone is stabilizing at low levels. The upcoming Eurozone GDP release (May 15) is pivotal; a beat could signal a turning point for the EUR, while a miss would reinforce downside risks. Leading indicators (PMIs, sentiment) are mixed, with the US showing resilience and the Eurozone lagging.
+- **US:** Q1 GDP growth at ~1.8% YoY (slowing but resilient); ISM Services PMI ~52, Manufacturing PMI ~49.
+- **Eurozone:** Q1 GDP growth at ~0.7% YoY (modest, stabilizing); Composite PMI ~50 (stagnant).
+- **Sentiment:** US growth remains above the Eurozone, but the gap is narrowing. Eurozone GDP (May 15) is a key risk—an upside surprise could support the EUR.
 
 ### Inflation Outlook
 
-US CPI (May 13) is the week’s most important data point. Persistent inflation would keep the Fed hawkish; a downside surprise could trigger a USD selloff. Eurozone HICP inflation is elevated but peaking, keeping the ECB cautious.
+- **US:** Headline CPI ~3.2% YoY, Core CPI ~3.5% YoY (April). Inflation is sticky, especially in services.
+- **Eurozone:** HICP ~2.6% YoY, Core HICP ~2.9% YoY (April). Inflation is easing but remains above target.
+- **Implication:** Sticky US inflation supports a cautious Fed, while the ECB is more data-dependent.
 
 ### Geopolitical Factors
 
-Global risk sentiment is neutral to mildly risk-off, favoring the USD. Europe remains vulnerable to energy price shocks, but inventories are healthy. Political fragmentation in the Eurozone is a background risk, but no major events are expected this week.
+- **Trade:** US-China tensions persist; Eurozone sensitive to global trade flows.
+- **Energy:** Europe remains vulnerable to energy shocks, though risks have eased.
+- **Political:** US election cycle and Eurozone fiscal debates are background risks.
 
 ### Fundamental Bias Statement
 
-**Short-term (1-2 weeks):** Bearish-to-neutral EUR/USD, with risk of further downside if US CPI and retail sales are strong or if Eurozone GDP disappoints. Only consider a bullish reversal if US data is soft and Eurozone growth surprises to the upside.
+**Short-term (1–2 weeks):**  
+**Bearish EUR/USD**, with downside risk toward **1.1070** and possibly **1.1000**, driven by the Fed’s policy advantage, sticky US inflation, and cautious ECB. Volatility will be high around US CPI, Eurozone GDP, and Powell’s speech—sharp reversals possible if data surprises.
 
-**Medium-term (1-3 months):** Neutral-to-bearish, but watch for a potential shift to neutral if the Fed signals a pause and/or Eurozone growth stabilizes.
+**Medium-term (1–3 months):**  
+Neutral to bearish, unless Eurozone growth surprises to the upside or the Fed signals a pause.
+
+**Key triggers:**  
+- Strong US data/hawkish Powell = further downside  
+- Weak US data/dovish Powell or strong Eurozone GDP = sharp rebound
 
 ---
 
-## 4. Technical Analysis
+## Technical Analysis
 
 ### Multiple Timeframe Assessment
 
-**Monthly:**  
-- Uptrend from Q1 2025 stalled at 1.1570–1.1600. May is trading below the monthly open (1.1386), signaling early bearish pressure.
+#### Monthly
+- **Trend:** Broad consolidation after multi-month uptrend; May forming a large bearish engulfing candle.
+- **Levels:** Resistance at **1.1570–1.1600**; support at **1.0800–1.0850**.
+- **Current Price:** **1.1120** (well below monthly open at 1.1360).
 
-**Weekly:**  
-- Two consecutive lower closes, confirming a short-term reversal. Last week’s close at 1.1246, with key support at 1.1200 and resistance at 1.1290–1.1320.
+#### Weekly
+- **Trend:** Bearish reversal after topping at 1.1573; three consecutive bearish closes.
+- **Key Levels:** Resistance at **1.1195–1.1240**; support at **1.1070–1.1100**.
+- **Profile:** Expansion profile, strong downside momentum.
 
-**Daily:**  
-- Bearish structure with lower highs/lows since the 1.1573 peak. Price is compressing between 1.1200 and 1.1290. A break below 1.1200 opens risk to 1.1160 and 1.1050.
+#### Daily
+- **Trend:** Persistent lower highs/lows since late April.
+- **Zones:** Supply at **1.1195–1.1240**; demand at **1.1070–1.1100**.
+- **Structure:** Closes below 1.1195 confirm bearish structure; watch for liquidity sweeps below 1.1070.
 
-**H4:**  
-- Bearish consolidation in the 1.1200–1.1245 range. Lower highs, failure to reclaim 1.1290. Watch for a clean H4 close below 1.1200 for downside acceleration.
+#### 4-Hour
+- **Structure:** Bearish, minor corrective rallies.
+- **Setups:** Short rallies into resistance; long scalps on sharp liquidity sweeps below 1.1070 if reversal patterns emerge.
 
-### Key Support and Resistance Zones
+### Key Support & Resistance Zones
 
-| Level        | Type                | Significance                                  |
-|--------------|---------------------|-----------------------------------------------|
-| **1.1570–1.1600** | Monthly Resistance  | April high, major supply, psychological level |
-| **1.1400**       | Weekly Resistance   | Round number, prior swing high                |
-| **1.1380**       | Daily/Weekly High   | Last major swing high                         |
-| **1.1320**       | Daily Resistance    | Broken support, now supply                    |
-| **1.1290**       | Weekly Close/Flip   | Key S/R flip zone                             |
-| **1.1245**       | H4 Resistance       | Intraday supply, recent high                  |
-| **1.1200**       | Weekly/Daily Support| Major liquidity pool, round number            |
-| **1.1160**       | Daily Support       | Next downside target if 1.1200 breaks         |
-| **1.1050**       | Monthly Support     | March/April open/close                        |
+| Level Type         | Price Area         | Significance                                   |
+|--------------------|-------------------|------------------------------------------------|
+| Monthly Resistance | 1.1570–1.1600     | April high, quarterly resistance               |
+| Weekly Resistance  | 1.1195–1.1240     | Broken support, now supply zone                |
+| Weekly Support     | 1.1070–1.1100     | Current week low, psychological, OB            |
+| Daily Swing High   | 1.1381            | May 6 high, liquidity pool                     |
+| Daily Swing Low    | 1.1072            | May 12 low, current support                    |
+| Psychological      | 1.1000, 1.1200    | Round numbers, likely liquidity                |
 
-### Market Structure & Patterns
+### Market Structure & Indicators
 
-- **Change in Character (CiSD):** Break below 1.1290 confirms bearish control.
-- **Liquidity Engineering:** Price compressing above 1.1200 suggests potential for a stop run below this level before any reversal.
-- **Pattern Identification:**  
-  - **Classic Expansion:** Likely if US CPI is strong; expect a sharp break below 1.1200, targeting 1.1160/1.1120.
-  - **Consolidation Reversal:** Possible if CPI is soft or Eurozone GDP beats; look for a sweep below 1.1200 and reversal to 1.1245/1.1290.
-  - **Midweek Reversal:** Watch for exhaustion and reversal patterns post-major events (GDP, Powell speech).
+- **Change in Character (CiSD):** Confirmed on daily/H4 with lower lows and highs.
+- **Moving Averages:** Price below all key MAs (20/50/200 EMA), confirming bearish momentum.
+- **RSI:** Daily/H4 RSI near 30–35 (approaching oversold, but not extreme).
+- **ATR:** Daily ATR expanded to ~100–120 pips.
+- **Bollinger Bands:** Price hugging lower band, risk of mean reversion if volatility spikes.
 
-### Technical Indicators
+### Weekly Pattern Identification
 
-| TF   | 20MA   | 50MA   | 200MA  | RSI | ATR   | Structure      |
-|------|--------|--------|--------|-----|-------|---------------|
-| Mth  | 1.1280 | 1.1200 | 1.1050 | 54  | 0.012 | Uptrend stall  |
-| Wkly | 1.1295 | 1.1240 | 1.1100 | 46  | 0.009 | Bearish break  |
-| Dly  | 1.1290 | 1.1245 | 1.1120 | 41  | 0.007 | Bearish        |
-| H4   | 1.1235 | 1.1240 | 1.1150 | 38  | 0.003 | Bearish/OS     |
+- **Classic Expansion:** Downside expansion likely early in the week, especially if US CPI surprises to the upside.
+- **Consolidation Reversal:** Possible if price sweeps below 1.1070 and quickly reclaims 1.1100.
+- **Midweek Reversal:** Watch for reversal on Eurozone GDP or Powell speech if price is extended to the downside.
 
-- **Price is below all key MAs on daily/H4, confirming bearish momentum.**
-- **RSI:** Daily/H4 in bearish territory, H4 near oversold—watch for bullish divergence if price sweeps 1.1200.
-- **Bollinger Bands:** Expanding lower, signaling trend continuation risk.
-- **ATR:** Elevated; expect 50–100 pip swings on news.
+### Trade Scenarios
+
+- **Bearish Continuation:** Short rallies into 1.1195–1.1240; target 1.1100, 1.1070, extension to 1.1000.
+- **Bullish Reversal (Countertrend):** Long on sharp sweep below 1.1070 and reclaim of 1.1100; target 1.1195–1.1240.
 
 ---
 
-## 5. Market Sentiment
+## Market Sentiment
 
 ### Positioning Data
 
-- **COT:** Large speculators have reduced net long EUR positions for three weeks; institutional sentiment is defensive. Commercials are net short EUR.
-- **Retail:** 68%+ net long EUR/USD (contrarian bearish signal).
-- **Options:** 1-week/1-month risk reversals skewed toward puts; implied vol elevated (8.2%).
+- **Large Specs:** Net EUR longs trimmed for third week; now +65,000 (down from +90,000).
+- **Commercials:** Increased net EUR shorts (3-month extreme).
+- **Retail:** Net long EUR/USD (~65% long)—contrarian bearish.
+- **Summary:** Positioning is moving away from crowded EUR longs, but not yet at full capitulation/extreme short.
 
 ### Risk Sentiment
 
-- **Global risk:** Neutral to mildly risk-off; USD favored as safe haven.
-- **Volatility:** High, especially around US CPI and Eurozone GDP.
-- **Correlation:** EUR/USD correlation with equities is weakening; macro drivers dominate.
+- **Environment:** Mild risk-off; equities under pressure, VIX elevated (~18–20).
+- **Safe Haven Flows:** USD supported by risk aversion and policy/growth advantage.
+- **Volatility:** High—daily ATR ~100–120 pips, implied vol elevated ahead of events.
 
 ### Sentiment Indicators
 
-- **Economic Surprise Indices:** US > Eurozone, but gap narrowing.
-- **Institutional Surveys:** Median 1-month EUR/USD target is 1.1200; few expect a sustained rebound above 1.1300.
-- **Social Media:** Retail “buy the dip” optimism; macro accounts warn of further downside.
+- **FX Options:** Skew toward puts, highest implied vol below 1.1100.
+- **Economic Surprise Indices:** US positive, Eurozone negative.
+- **Institutional Outlook:** Consensus bearish, but not at extremes.
+- **Social Media:** Bearish, but retail “buy the dip” narratives rising.
 
 ### Contrarian Signals
 
-- **Retail is crowded long,** while institutions are defensive—classic setup for further downside if support breaks.
-- **No panic selling yet;** a break below 1.1200 could trigger capitulation.
-- **Consensus trade:** Sell rallies into 1.1245–1.1290, stops above 1.1320.
+- **Not at Extremes:** Specs not net short, retail not at record long.
+- **Capitulation Risk:** Watch for retail longs >75–80% and panic on social media for reversal cue.
 
 ### Sentiment Bias Projection
 
-- **Short-term:** Bearish-to-neutral, risk skewed to downside.
-- **Event risk:** US CPI (May 13) is the key catalyst; manage risk tightly.
-- **Contrarian watch:** If price sweeps 1.1200 but fails to close below, look for a reversal to 1.1245–1.1290.
+- **Short-term:** Bearish, risk of further downside to 1.1070/1.1000.
+- **Catalysts:** US CPI, Eurozone GDP, Powell speech.
+- **Contrarian Opportunities:** Fade breakdowns below 1.1070 only on clear reversal signals.
 
 ---
 
-## 6. Economic Calendar
+## Economic Calendar
 
-| Date      | Time (UTC) | Event                                 | Expected Impact | Volatility |
-|-----------|------------|---------------------------------------|-----------------|------------|
-| May 13    | 12:30      | US CPI (MoM, YoY), Core CPI           | Very High       | 50–100 pips|
-| May 15    | 09:00      | Eurozone GDP (QoQ, YoY)               | High            | 40–70 pips |
-| May 15    | 12:30      | US PPI, Retail Sales, Control Group   | High            | 40–60 pips |
-| May 15    | 12:40      | Fed Powell Speech                     | High            | 50–100 pips|
-| May 16    | 14:00      | US Michigan Consumer Sentiment        | Moderate-High   | 30–50 pips |
+| Date/Time (UTC) | Event                                   | Expected Impact        | Volatility Expectation         |
+|-----------------|-----------------------------------------|-----------------------|-------------------------------|
+| May 13, 12:30   | US CPI                                  | High                  | Very high (50–100 pip moves)  |
+| May 15, 09:00   | Eurozone GDP                            | High                  | High (40–70 pip moves)        |
+| May 15, 12:30   | US PPI, Retail Sales                    | High                  | High (40–60 pip moves)        |
+| May 15, 12:40   | Fed Chair Powell Speech                 | High                  | High (50–100 pip moves)       |
+| May 16, 14:00   | US Michigan Consumer Sentiment          | Moderate              | Moderate to high              |
 
-**Impact Assessment:**
-- **US CPI (May 13):** Primary trend-setter; a hot print likely breaks 1.1200, while a soft print could trigger a reversal.
-- **Eurozone GDP (May 15):** Key for EUR sentiment; a beat could provide relief, but bar is high for a sustained rally.
-- **US Retail Sales/PPI (May 15):** Secondary, but can reinforce USD trend.
-- **Powell Speech (May 15):** Tone will amplify or temper reactions to data.
-- **Michigan Sentiment (May 16):** Watch for cracks in US consumer confidence.
+**Impact Assessment:**  
+- **US CPI (May 13):** Key inflation gauge; higher-than-expected = USD strength, EUR/USD lower.  
+- **Eurozone GDP (May 15):** Stronger print = EUR support; weaker = EUR downside.  
+- **US PPI/Retail Sales (May 15):** Strong = USD up; weak = USD down.  
+- **Powell Speech (May 15):** Hawkish = USD up; dovish = USD down.  
+- **Michigan Sentiment (May 16):** Strong = USD up; weak = USD down.
 
 **Volatility Expectations:**  
-- Elevated throughout the week, especially Tuesday and Thursday. Avoid trading during the first 15 minutes after major releases. Watch for stop runs and sharp reversals.
+- Highest around US CPI, Eurozone GDP, and Powell speech.  
+- Avoid trading during these releases; expect whipsaws and liquidity gaps.
 
 ---
 
-## 7. Weekly Trading Plan
+## Weekly Trading Plan
 
 ### Day-by-Day Approach
 
-**Monday (May 12):**  
-- Rangebound conditions likely; prep for event risk.  
-- Focus: Identify intraday supply at 1.1245–1.1290 and demand at 1.1200.
+- **Monday (May 12):**  
+  - Assess opening structure; avoid early trades.  
+  - Watch for positioning ahead of US CPI.
 
-**Tuesday (May 13):**  
-- **US CPI (12:30 UTC):** Highest volatility.  
-- **Plan:**  
-  - If CPI is strong, sell break of 1.1200 (target 1.1160/1.1120).
-  - If CPI is soft, look for a sweep below 1.1200 and reversal to 1.1245/1.1290.
+- **Tuesday (May 13):**  
+  - **US CPI (12:30 UTC):** Expect sharp volatility.  
+  - Trade only after initial reaction; look for breakout/fade setups at key levels (1.1070, 1.1195).
 
-**Wednesday (May 14):**  
-- Post-CPI digestion; watch for continuation or mean reversion.
-- **Plan:**  
-  - Fade rallies into 1.1245–1.1290 if price stalls.
-  - Only consider longs if price reclaims 1.1290 with momentum.
+- **Wednesday (May 14):**  
+  - Assess post-CPI structure.  
+  - Look for continuation or reversal setups; avoid overtrading.
 
-**Thursday (May 15):**  
-- **Eurozone GDP, US Retail Sales/PPI, Powell Speech:**  
-  - Second wave of volatility; ideal for mean reversion or continuation trades.
-  - **Plan:**  
-    - If price is below 1.1200, target 1.1160/1.1120.
-    - If price reverses post-data, look for squeeze to 1.1245/1.1290.
+- **Thursday (May 15):**  
+  - **Eurozone GDP (09:00 CET), US PPI/Retail Sales (12:30 UTC), Powell Speech (12:40 UTC):**  
+    - High-impact cluster; avoid trading during releases.  
+    - Watch for midweek reversal if price is extended.
 
-**Friday (May 16):**  
-- US Michigan Sentiment; profit-taking likely.
-- **Plan:**  
-  - Expect rangebound conditions after major moves.
-  - Tighten stops, consider partial profit-taking.
+- **Friday (May 16):**  
+  - **US Michigan Sentiment (14:00 UTC):**  
+    - Potential for profit-taking and mean reversion.  
+    - Trade only if clear structure emerges.
 
-### Key Levels for Entries and Exits
+### Key Levels for Entries & Exits
 
-- **Sell Zone:** 1.1245–1.1290 (fade rallies)
-- **Buy Zone:** Only above 1.1290–1.1320 with confirmation
-- **Downside Targets:** 1.1200 (break = 1.1160), 1.1120
-- **Upside Targets:** 1.1245, 1.1290, 1.1320, 1.1380
+- **Short Entries:** 1.1195–1.1240 (H4 OB, prior support)
+- **Long Entries (countertrend):** 1.1070–1.1100 (liquidity sweep/reversal)
+- **Stops:** Above 1.1265 (shorts), below 1.1050 (longs)
+- **Targets:** 1.1100, 1.1070, extension to 1.1000 (shorts); 1.1195–1.1240 (longs)
 
-### Risk Management Parameters
+### Risk Management
 
-- **Max risk per trade:** 1%
-- **Minimum R:R:** 1:2
-- **Wider stops (30–40 pips) around news**
-- **No trading during first 15 minutes after major releases**
-- **Reduce size during high-volatility windows**
+- **Max risk per trade:** 1% (reduce to 0.5% during high-volatility windows)
+- **No trading during major data releases (±15 min)**
+- **Set and forget:** Avoid manual intervention; let stops/targets work
 
 ### Session-Specific Opportunities
 
-- **London Session:** Focus on liquidity sweeps and reversals at key levels (1.1200, 1.1245).
-- **NY Session:** Trade event-driven moves, especially post-CPI and retail sales.
+- **London Session:** Focus on trend continuation or reversal at key levels; best liquidity.
+- **NY Session:** Volatility spikes around US data; fade extremes only on confirmation.
 
 ### Contingency Scenarios
 
-- **If price breaks and closes below 1.1200:** Hold shorts to 1.1160/1.1120; trail stops.
-- **If price sweeps 1.1200 but fails to close below:** Look for reversal to 1.1245/1.1290.
-- **If price reclaims 1.1290–1.1320:** Flip bias to neutral/bullish, target 1.1380.
+- **Unexpected Dovish Fed/Weak US Data:** EUR/USD could spike above 1.1240, targeting 1.1380–1.1420.
+- **Stronger Eurozone GDP:** May trigger reversal even if US data is strong.
+- **Geopolitical/ECB Surprises:** Always possible—manage risk accordingly.
 
 ---
 
-## 8. Conclusion
+## Key Takeaways & Actionable Trade Ideas
 
-EUR/USD is at a technical and fundamental crossroads, consolidating above major support at 1.1200 but with bearish momentum and risk of further downside if US data is strong. All key timeframes show bearish structure below major moving averages, with liquidity pools below current price. The week’s outcome will hinge on US CPI and Eurozone GDP. Use event-driven setups, focus on key levels, and manage risk tightly around news releases.
-
-**Actionable Plan:**  
-- **Short bias below 1.1290, target 1.1200/1.1160.**  
-- **Only flip long if price reclaims 1.1290–1.1320 with strong confirmation.**  
-- **Monitor event risk and volatility; adjust position sizing accordingly.**
+- **Bias:** Bearish, but volatility and reversal risk are high around major news.
+- **Critical Levels:** **1.1070** (support/liquidity), **1.1195–1.1240** (resistance/OB).
+- **Best Setups:** Short rallies into resistance; fade failed breakdowns below 1.1070 only on clear reversal signals.
+- **Risk:** Elevated—size down and use wide stops during news events.
 
 ---
 
-**Prepared by:**  
-Weekly Report Writer Agent  
-*Specialist in EUR/USD Multi-Timeframe Analysis & Strategic Trading Plans*  
-2025-05-12
+## Schematic Support/Resistance Map
+
+```
+1.1570 ──────────────── Monthly/Quarterly Resistance
+      │
+1.1425 ──────────────── Recent Swing High
+      │
+1.1240 ──────────────── Weekly/Daily Resistance (OB)
+      │
+1.1195 ──────────────── Broken Support, Now Resistance
+      │
+1.1120 ──────────────── Current Price
+      │
+1.1100 ──────────────── Psychological Support
+      │
+1.1070 ──────────────── Weekly/Daily Support (Liquidity Pool)
+      │
+1.1000 ──────────────── Psychological Round Number
+```
+
+---
+
+## Disclaimer
+
+*Trading forex involves significant risk and is not suitable for all investors. This report is for informational purposes only and does not constitute investment advice. Always use proper risk management and consult with a qualified financial advisor before making trading decisions.*
+
+---
+
+**Good luck and trade safe!**
+
+---
+
+**References:**  
+- [US CPI Release Calendar](https://www.investing.com/economic-calendar/cpi-233)  
+- [Eurozone GDP Release](https://www.investing.com/economic-calendar/gdp-325)  
+- [Fed Chair Powell Speech](https://www.federalreserve.gov/newsevents/speech.htm)  
+- [CFTC Commitment of Traders Report](https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm)  
+- [Bloomberg FX Forecasts](https://www.bloomberg.com/markets/currencies/forecast)  
+- [Investing.com EUR/USD Technicals](https://www.investing.com/currencies/eur-usd-technical)
+
+---
