@@ -57,6 +57,7 @@ def tinymce_editor(initial_content="", ticket_id="0", height=500):
                 height: {height},
                 menubar: false,
                 plugins: "link lists code codesample",
+                link_default_target: '_blank',
                 codesample_languages: [
                     {{ text: 'CSS', value: 'css' }},
                     {{ text: 'JavaScript', value: 'javascript' }},
