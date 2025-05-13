@@ -43,10 +43,22 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
                 ticket_segments = [{"issue": last_msg, "resolved": False}]
                 logger.info("No segments found in metadata, using last message as single segment")
             
-            # Create safe context from ticket_meta
+           # Create safe context from ticket_meta
             context = {}
             if "theme" in ticket_meta:
                 context["theme"] = str(ticket_meta["theme"]) if ticket_meta["theme"] else ""
+                if context.get("theme", "").lower() == "unknown":
+                    # Return a structured JSON object for the support agent to recognize
+                    return json.dumps({
+                        "auto_reply": True,
+                        "message": (
+                            "<p>Hi there,</p>"
+                            "<p>As specified in the forum homepage information message, uncategorized tickets are displayed at the bottom of the feed.<br>"
+                            "<a href='https://d.pr/LSADVh' target='_blank'>https://d.pr/LSADVh</a></p>"
+                            "<p>For more help in the future, please post your ticket in the appropriate category so your purchase can be verified and we can process your ticket more quickly.</p>"
+                            "<p>Talk to you soon.</p>"
+                        )
+                    })
             if "builder" in ticket_meta:
                 context["builder"] = str(ticket_meta["builder"]) if ticket_meta["builder"] else ""
             if "match_source" in ticket_meta:
