@@ -25,7 +25,7 @@ CRAWLED_PATH = "data/crawled/closed_tickets.json"
 PREPROCESSED_PATH = "data/dynamic/tickets/closed_tickets.json"
 #BACKUP_DIR = r"G:\My Drive\DBBackup\ai-crew"
 BACKUP_DIR = "/mnt/g/My Drive/DBBackup/ai-crew"
-STALE_TICKETS_DAYS_LIMIT = 7
+STALE_TICKETS_DAYS_LIMIT = 6
 
 def close_stale_tickets():
     """Close tickets that don't need response and that are open since more than 7 days"""
