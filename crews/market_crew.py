@@ -1,3 +1,5 @@
+# OBSIDIAN_DIR = "/mnt/g/My Drive/Obsidian Vaults/Backbrain"
+
 from crewai import Crew, Process
 from pathlib import Path
 import sys
@@ -43,8 +45,92 @@ from utils.fxstreet_events_downloader import get_fxstreet_events
 from utils.weekly_report_reader import WeeklyReportReader
 from utils.market_tools_integration import MarketToolsIntegration
 from utils.market_utils import is_tradable_day
+import re
 
-def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, period="weekly", force=False):
+OBSIDIAN_DIR = "/mnt/g/My Drive/Obsidian Vaults/Backbrain"
+
+def extract_summary_from_report(report_content):
+    """
+    Extract a summary from the report content.
+    Attempt to find a summary section or the first paragraph.
+    """
+    # Try to find a summary section
+    summary_match = re.search(r'#+ (?:Summary|Executive Summary|Overview).*?\n(.*?)(?:\n#+|\Z)', 
+                              report_content, re.DOTALL | re.IGNORECASE)
+    
+    if summary_match:
+        # Extract first paragraph of summary section
+        summary_text = summary_match.group(1).strip()
+        first_para = summary_text.split('\n\n')[0].strip()
+        # Remove any markdown formatting
+        clean_summary = re.sub(r'\*\*|\*|_|`|#', '', first_para)
+        # Limit to a reasonable length
+        return clean_summary[:200] + ('...' if len(clean_summary) > 200 else '')
+    
+    # If no summary section found, take first paragraph of the report
+    first_para_match = re.search(r'^(?:#.*?\n+)?(.*?)(?:\n\n|\Z)', report_content, re.DOTALL)
+    if first_para_match:
+        first_para = first_para_match.group(1).strip()
+        clean_summary = re.sub(r'\*\*|\*|_|`|#', '', first_para)
+        return clean_summary[:200] + ('...' if len(clean_summary) > 200 else '')
+    
+    return "No summary available"
+
+def save_to_obsidian(report_content, period, report_date):
+    """
+    Save the report to Obsidian with the specified format and metadata.
+    
+    Args:
+        report_content (str): The content of the report
+        period (str): Either "daily" or "weekly"
+        report_date (datetime.date): The date of the report
+    
+    Returns:
+        bool: Whether the save was successful
+    """
+    try:
+        # Format the date
+        date_str = report_date.strftime("%Y-%m-%d")
+        
+        # Create the filename according to the required format
+        filename = f"EU {period.capitalize()} Report {date_str}.md"
+
+        folder_name = "Daily" if period == "daily" else "Weekly"
+
+        # Ensure the Obsidian directory exists
+        os.makedirs(f"{OBSIDIAN_DIR}/Market Reports/{folder_name}", exist_ok=True)
+        
+        # Full path for the file
+        file_path = os.path.join(f"{OBSIDIAN_DIR}/Market Reports/{folder_name}", filename)
+        
+        # Extract a summary from the report
+        summary = extract_summary_from_report(report_content)
+        
+        # Create the metadata section
+        metadata = f"""---
+area: trading
+type: report
+period: {period}
+date: {date_str}
+summary: {summary}
+---
+
+"""
+        # Combine metadata and report content
+        full_content = metadata + report_content
+        
+        # Write to file
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(full_content)
+            
+        print(f"📝 Report saved to Obsidian at {file_path}")
+        return True
+    
+    except Exception as e:
+        print(f"❌ Error saving to Obsidian: {e}")
+        return False
+
+def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, period="weekly", force=False, save_to_obsidian_vault=True):
     """
     Run the market analysis crew to generate a comprehensive EUR/USD market report
     
@@ -53,6 +139,8 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
         post_to_notion (bool): Whether to post the final report to Notion
         save_to_file (bool): Whether to save the report to a markdown file
         period (str): The period of the report - "daily" or "weekly"
+        force (bool): Whether to force report generation even if not a tradable day
+        save_to_obsidian_vault (bool): Whether to save the report to Obsidian vault
         
     Returns:
         The result from the crew execution (the final report)
@@ -328,6 +416,18 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
                 
             print(f"📝 Report saved to {file_path}")
         
+        # Save to Obsidian if requested
+        if save_to_obsidian_vault and result:
+            obsidian_success = save_to_obsidian(
+                report_content=str(result),
+                period=period,
+                report_date=today_date
+            )
+            if obsidian_success:
+                print(f"📝 Report successfully saved to Obsidian vault")
+            else:
+                print(f"❌ Failed to save report to Obsidian vault")
+        
         # Save metadata about the report execution
         if save_to_file:
             # Convert result to string for length measurement
@@ -340,7 +440,8 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
                 "posted_to_notion": post_to_notion,
                 "report_length": len(result_str) if result else 0,
                 "report_file_path": f"data/{folder_name}/{file_name}" if result else None,
-                "tradable_day": tradable_day
+                "tradable_day": tradable_day,
+                "saved_to_obsidian": save_to_obsidian_vault
             }
             
             # Add period-specific metadata
@@ -416,9 +517,26 @@ if __name__ == "__main__":
     period = "weekly"  # Default period
     
     # Parse command line arguments
-    if len(sys.argv) > 1:
-        if sys.argv[1].lower() in ["daily", "weekly"]:
-            period = sys.argv[1].lower()
+    args = {"period": period, "save_to_obsidian": True, "force": False}
     
-    print(f"Running {period} market analysis...")
-    run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, period=period)
+    if len(sys.argv) > 1:
+        # Check for period
+        if sys.argv[1].lower() in ["daily", "weekly"]:
+            args["period"] = sys.argv[1].lower()
+        
+        # Check for additional flags
+        for arg in sys.argv[2:]:
+            if arg.lower() == "--no-obsidian":
+                args["save_to_obsidian"] = False
+            elif arg.lower() == "--force":
+                args["force"] = True
+    
+    print(f"Running {args['period']} market analysis...")
+    run_market_analysis(
+        verbose=True, 
+        post_to_notion=True, 
+        save_to_file=True, 
+        period=args["period"],
+        force=args["force"],
+        save_to_obsidian_vault=args["save_to_obsidian"]
+    )

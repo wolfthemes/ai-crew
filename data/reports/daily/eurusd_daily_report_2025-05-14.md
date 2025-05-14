@@ -2,43 +2,30 @@
 
 ### Summary
 
-EUR/USD is trading in a pivotal midweek position following a sharp reversal from Monday’s downside extension, catalyzed by cooler-than-expected US CPI data. The weekly profile is a textbook Consolidation Reversal: Monday’s false break lower was fully retraced by Tuesday’s rally, and early Wednesday price action is consolidating above 1.1185, just below the previous day’s high (PDH). The Daily Bias framework confirms a bullish directional bias, with the previous day’s close near the high of the range and buyers in control. The London session outlook is for further upside attempts as long as price holds above 1.1180–1.1200, with 1.12428 (Monday’s high) as the next major target.
+EUR/USD enters the London session following a week characterized by a Classic Expansion profile, with both new weekly lows and highs set early in the week. The Daily Bias framework signals a high-confidence bearish bias, as the previous day’s close was at the extreme low of the range, and price is trading below last week’s low. The Next Day Model supports a continuation lower, with immediate downside targets at 1.11730 (PDL), 1.1150, and 1.1100. Price action suggests the market is likely to digest recent moves, with a focus on failed displacement at key levels.
 
-**The recommended bias for today is bullish with high confidence.**
+**The recommended bias for today is bearish with high confidence.**
 
 ### Fundamental Context
 
-The macro backdrop is supportive for EUR/USD in the short term. The key catalyst was Tuesday’s US CPI release, which came in cooler than expected, triggering a broad USD selloff and fueling a strong EUR/USD rebound. No major Eurozone data was released yesterday, but today’s early Eurozone ZEW sentiment data (09:00 BST) could provide additional direction. The fundamental context aligns with the technical reversal: USD weakness and improved risk appetite are supporting the Euro, and the market is positioned for further upside if the reversal structure holds.
+The macroeconomic backdrop remains supportive of EUR/USD downside for today’s London session. Soft US inflation data released yesterday led to a temporary EUR/USD recovery, but the move lacked strong conviction and faded as the US Dollar regained composure. No high-impact Eurozone data is scheduled for today, so the pair’s direction will be primarily influenced by US economic releases and Fed Chair Powell’s speech later in the session. The current price action aligns with the anticipated continuation lower, as outlined in the last Weekly report.
 
 ### Weekly profile
 
-This week’s EUR/USD action fits the Consolidation Reversal profile. Monday saw a sharp downside extension (low at 1.10651, below last week’s low), but this move failed to sustain and was fully retraced by Tuesday’s rally (close at 1.11856). Early Wednesday price action is consolidating above the midweek pivot (1.1180–1.1200), confirming the reversal. If price holds above this zone, the profile suggests a move toward 1.12428 (Monday’s high) and potentially higher. A sustained break below 1.1180 would invalidate the reversal thesis and risk renewed downside.
+This week’s price action fits the Classic Expansion profile. Monday set a new weekly low (1.10651), while Tuesday and early Wednesday saw a sharp recovery and a new weekly high (1.12658). The current week’s range has already exceeded the previous two weeks, confirming the expansion. With both sides of last week’s range taken out, the market is in price discovery mode. The London session is likely to see digestion or mean reversion after the Wednesday morning expansion, with a moderate probability of further range extension but increased risk of reversal or choppy price action. Key levels to monitor are 1.12658 (weekly high/resistance), 1.1200 (pivot), 1.1150 (support), and 1.1100/1.1065 (weekly low/expansion base).
 
 ### Daily price action
 
-Applying the Daily Bias framework:
-- **PDH:** 1.12007 (2025-05-13 high), immediate upside liquidity draw.
-- **PDL:** 1.10821 (2025-05-13 low), downside liquidity pool.
-- **Swing points:** 1.12428 (Monday high, key upside target), 1.10651 (Monday low, invalidation).
-- **Failure to displace:** Monday’s break below last week’s low failed, fueling the reversal. Watch for failed breaks above 1.12007 in early London as a sign of short-term exhaustion.
-- **Next Day Model:** Previous day closed at 1.11856, near the high of the range, confirming bullish bias with high confidence. Immediate targets are 1.12007 (PDH), 1.12428 (Monday high), and 1.12900 (last week’s close).
+Applying the Daily Bias framework, the previous day’s high (PDH) is 1.12658 and the low (PDL) is 1.11730. The previous day closed at 1.11780, near the extreme low of the range, which signals a high-confidence bearish bias for today’s session. The Next Day Model indicates a likely continuation lower, with immediate targets at 1.11730 (PDL), 1.1150 (intraday support), and 1.1100 (major swing low/weekly low). A failure to displace below 1.11730 could trigger a sharp reversal back toward 1.1200–1.1250, but sustained trade below 1.11730 increases the probability of a move toward lower support levels. The market remains below last week’s low (1.11964), further supporting the bearish outlook.
 
 ### Asian/Frankfurt Session
 
-Overnight, EUR/USD consolidated in a narrow range above 1.1185, with a session high at 1.12007 and a low at 1.11798. The pair held firm after Tuesday’s rally, with no significant retracement, and Frankfurt trading has maintained this consolidation just below PDH. No major highs or lows from the previous session have been taken out yet, setting up the London session for a potential break of PDH (1.12007) or a reversal if price fails to sustain above this level.
+Overnight, EUR/USD opened with a cautiously bullish tone near 1.1200 but showed little directional conviction. The Asian session was range-bound, with no significant breakouts or liquidity sweeps. During the Frankfurt session, price remained below the previous day’s high (1.12658) and above the low (1.11730), consolidating within a narrow range. No major highs or lows from the previous session were taken out, and the market awaits the London open for potential liquidity grabs at these key levels.
 
 ### Technical specifics
 
-CISD pattern analysis:
-- **M30:** No new M30 CISD pattern has been confirmed in the pre-London window; price is consolidating just below PDH (1.12007) after Tuesday’s strong bullish move. The last significant CISD was the bullish reversal from Monday’s low (1.10651), which remains in play.
-- **M5:** No clear M5 CISD pattern is evident in the pre-London session; price action is range-bound between 1.1185 and 1.1200. For London session entries (09:30–11:00 BST), traders should watch for a bullish CISD on M5 above the 1.1200 level for confirmation of continuation, or a bearish CISD below 1.1180 for signs of reversal.
-- **Directional alignment:** The higher timeframe (HTF) bias is bullish, and the best-case scenario is a bullish M5 CISD above 1.1200, targeting 1.12428. Invalidation is a sustained move below 1.1180.
-
-**Key levels for London session setups:**
-- **Long bias:** Above 1.1180–1.1200, targeting 1.1240–1.1290.
-- **Invalidation:** Sustained move below 1.1180 or a strong bearish CISD on M5/M30.
-- **Reversal setup:** Only consider shorts if a clear failure to displace above 1.1200 is confirmed with a strong rejection and bearish CISD.
+As of the London pre-session (07:45 BST), there is no explicit evidence of a new M30 or M5 CISD (Change in State of Delivery) pattern forming at the key levels. The directional bias remains bearish, in alignment with the Daily Bias framework and Classic Expansion weekly profile. The optimal scenario for London session traders is a short setup on a failed retest of 1.1200 or a clean break and retest of 1.11730, with downside targets at 1.1150 and 1.1100. If price sweeps 1.11730 but fails to continue lower, a reversal setup targeting 1.1200–1.1250 may develop. Traders should remain cautious ahead of the 12:30 BST US data releases and Fed Chair Powell’s speech, as these events could trigger significant volatility. No valid CISD-based entry is confirmed at this time; traders should wait for clear CISD confirmation on M30 or M5 before executing trades within the 09:30–11:00 London entry window.
 
 ---
 
-This report is strictly based on the Daily Bias framework, Weekly Profile classification, and CISD pattern methodology. All price levels and analytical conclusions are drawn directly from the provided specialist agent inputs and current market data.
+**This report is strictly based on the Daily Bias framework, Weekly Profile classification, and CISD pattern methodology. No other analytical tools or indicators have been used. All price levels and directional biases are derived from the provided specialist agent inputs and framework analysis.**
