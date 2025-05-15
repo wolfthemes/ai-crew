@@ -115,7 +115,7 @@ area: trading
 type: report
 period: {period}
 date: {date_str}
-summary: {summary}
+summary: "{summary}"
 ---
 
 """
