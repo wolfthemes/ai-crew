@@ -13,7 +13,7 @@ class TradingKnowledgeBase:
     Works with the existing project structure and complements the DailyBiasFramework.
     """
     
-    def __init__(self, md_dir="data/static/market/trading_rules", visuals_dir="data/static/market/trading_rules/visuals"):
+    def __init__(self, md_dir=None, visuals_dir="data/static/market/trading_rules/visuals"):
         """
         Initialize the trading knowledge base loader.
 
@@ -21,7 +21,7 @@ class TradingKnowledgeBase:
             md_dir (str): Directory where markdown knowledge base files are stored
             visuals_dir (str): Directory where visual assets (images) are stored
         """
-        self.md_dir = f"{OBSIDIAN_DIR}/Trading KB"
+        self.md_dir = md_dir or f"{OBSIDIAN_DIR}/Trading KB"
         self.visuals_dir = visuals_dir
         self.markdown_docs = {}
         self.visuals = {}
