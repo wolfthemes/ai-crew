@@ -47,7 +47,7 @@ class DailyBiasFramework:
             "london_reversal": os.path.join(framework_dir, "London-Reversal.pdf"),
             "cisd": os.path.join(framework_dir, "Change-In-State-of-Delivery.pdf"),
             "pd_array": os.path.join(framework_dir, "PD-Array.pdf"),
-            "Po3": os.path.join(framework_dir, "Power-of-3- Accumulation-Manipulation-Distribution.pdf")
+            "Po3": os.path.join(framework_dir, "Power-of-3-Accumulation-Manipulation-Distribution.pdf")
         }
         
         # Cache file paths
