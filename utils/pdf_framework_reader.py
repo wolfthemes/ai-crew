@@ -8,6 +8,11 @@ except ImportError:
 from typing import Dict, List, Optional, Union, Any
 import re
 
+from dotenv import load_dotenv
+load_dotenv()
+
+OBSIDIAN_DIR = os.getenv("OBSIDIAN_DIR")
+
 class DailyBiasFramework:
     """
     Utility class for reading and managing Daily Bias framework PDF documents.
@@ -17,14 +22,15 @@ class DailyBiasFramework:
     to framework concepts for the market analysis agents.
     """
     
-    def __init__(self, framework_dir: str = "data/static/market/pdf"):
+    def __init__(self, framework_dir=None):
         """
         Initialize the framework reader.
         
         Args:
             framework_dir: Directory containing framework PDF files
         """
-        self.framework_dir = framework_dir
+        #self.framework_dir = framework_dir
+        self.framework_dir = framework_dir or f"{OBSIDIAN_DIR}/Resources/Trading/PDF"
         self.cache_dir = os.path.join("data", "cache", "framework")
         self.frameworks = {}
         
