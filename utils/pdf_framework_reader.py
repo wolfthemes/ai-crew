@@ -1,7 +1,7 @@
 import os
 import json
 try:
-    import PyPDF2
+    import PyPDF2 # type: ignore
 except ImportError:
     PyPDF2 = None
     print("PyPDF2 is not installed. PDF parsing will not work.")
