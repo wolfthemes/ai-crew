@@ -42,20 +42,24 @@ class DailyBiasFramework:
         self.files = {
             "weekly_profile": os.path.join(framework_dir, "Weekly-Profile.pdf"),
             "daily_bias": os.path.join(framework_dir, "Daily-Bias.pdf"),
+            "IRL_ERL_model": os.path.join(framework_dir, "IRL-ERL-Model.pdf"),
             "intraday_bias": os.path.join(framework_dir, "Intraday-Bias.pdf"),
             "london_reversal": os.path.join(framework_dir, "London-Reversal.pdf"),
             "cisd": os.path.join(framework_dir, "Change-In-State-of-Delivery.pdf"),
-            "pd_array": os.path.join(framework_dir, "PD-Array.pdf")
+            "pd_array": os.path.join(framework_dir, "PD-Array.pdf"),
+            "Po3": os.path.join(framework_dir, "Power-of-3- Accumulation-Manipulation-Distribution.pdf")
         }
         
         # Cache file paths
         self.cache_files = {
             "weekly_profile": os.path.join(self.cache_dir, "weekly_profile.json"),
             "daily_bias": os.path.join(self.cache_dir, "daily_bias.json"),
+            "IRL_ERL_model": os.path.join(self.cache_dir, "IRL_ERL_model.json"),
             "intraday_bias": os.path.join(self.cache_dir, "intraday_bias.json"),
             "london_reversal": os.path.join(self.cache_dir, "london_reversal.json"),
             "cisd": os.path.join(self.cache_dir, "cisd.json"),
-            "pd_array": os.path.join(self.cache_dir, "pd_array.json")
+            "pd_array": os.path.join(self.cache_dir, "pd_array.json"),
+            "Po3": os.path.join(self.cache_dir, "Po3.json")
         }
         
         # Load frameworks from cache or PDF files
