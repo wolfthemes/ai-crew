@@ -21,8 +21,15 @@ class TradingKnowledgeBase:
             md_dir (str): Directory where markdown knowledge base files are stored
             visuals_dir (str): Directory where visual assets (images) are stored
         """
-        self.md_dir = md_dir or f"{OBSIDIAN_DIR}/Trading KB"
-        self.visuals_dir = visuals_dir or f"{OBSIDIAN_DIR}/Resources/Trading/Visuals"
+        # Use OBSIDIAN_DIR if not explicitly provided
+        if md_dir is None or visuals_dir is None:
+            if not OBSIDIAN_DIR:
+                raise ValueError(
+                    "OBSIDIAN_DIR environment variable is not set. "
+                    "Please set it in your .env file or environment."
+                )
+        self.md_dir = md_dir or os.path.join(OBSIDIAN_DIR, "Trading KB")
+        self.visuals_dir = visuals_dir or os.path.join(OBSIDIAN_DIR, "Resources/Trading/Visuals")
         self.markdown_docs = {}
         self.visuals = {}
 
