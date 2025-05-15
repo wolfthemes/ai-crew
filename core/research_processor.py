@@ -56,7 +56,7 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
                             "<p>As specified in the forum homepage information message, uncategorized tickets are displayed at the bottom of the feed.<br>"
                             "<a href='https://d.pr/LSADVh' target='_blank'>https://d.pr/LSADVh</a></p>"
                             "<p>For more help in the future, please post your ticket in the appropriate category so your purchase can be verified and we can process your ticket more quickly.</p>"
-                            "<p>Talk to you soon.</p>"
+                            "<p>Talk to you soon!</p>"
                         )
                     })
             if "builder" in ticket_meta:
