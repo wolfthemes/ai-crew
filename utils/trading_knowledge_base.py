@@ -2,6 +2,11 @@ import os
 import glob
 from pathlib import Path
 
+from dotenv import load_dotenv
+load_dotenv()
+
+OBSIDIAN_DIR = os.getenv("OBSIDIAN_DIR")
+
 class TradingKnowledgeBase:
     """
     A simplified class for loading and accessing trading knowledge from markdown files.
