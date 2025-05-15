@@ -47,7 +47,10 @@ from utils.market_tools_integration import MarketToolsIntegration
 from utils.market_utils import is_tradable_day
 import re
 
-OBSIDIAN_DIR = "/mnt/g/My Drive/Obsidian Vaults/Backbrain"
+from dotenv import load_dotenv
+load_dotenv()
+
+OBSIDIAN_DIR = os.getenv("OBSIDIAN_DIR")
 
 def extract_summary_from_report(report_content):
     """
