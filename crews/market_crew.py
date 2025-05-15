@@ -112,9 +112,10 @@ def save_to_obsidian(report_content, period, report_date):
         # Create the metadata section
         metadata = f"""---
 area: trading
-type: report
-period: {period}
 date: {date_str}
+type: report
+journal: "[[Market Reports]]"
+period: {period}
 summary: "{summary}"
 ---
 
