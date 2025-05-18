@@ -1062,17 +1062,104 @@
     "updated": "2025-05-06",
     "description": "Music Oriented WooCommerce Theme",
     "longdescription": "Vonzot It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
-    "category": "",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "included_plugins": [],
-    "design_features": [],
-    "use_cases": [],
+    "category": [
+      "E-commerce",
+      "Music"
+    ],
+    "features": [
+      "WooCommerce-optimized layouts for music and disc stores",
+      "Product catalog system designed for music inventory",
+      "Currency switching capabilities for international sales",
+      "Variation swatches for vinyl, CD, and digital format displays",
+      "Comprehensive Visual Composer extensions for e-commerce",
+      "Slider Revolution integration for product showcases",
+      "One-click demo import with complete music store setups",
+      "Instagram feed integration for social media presence",
+      "Advanced filter and sorting options for music catalogs",
+      "Mobile-optimized responsive design for all devices",
+      "Built with WPBakery Page Builder ($74 value)",
+      "Slider Revolution plugin ($109 value) included"
+    ],
+    "selling_points": [
+      "Create a professional music retail store with minimal technical knowledge",
+      "Organize and display your music inventory effectively",
+      "Sell physical and digital music products with format variations",
+      "Implement advanced catalog filtering and searching for customers",
+      "Establish a professional online presence for your music retail business",
+      "Save time with pre-built music store layouts and templates",
+      "Customize product displays to match your store's unique identity"
+    ],
+    "theme_style": [
+      "Modern",
+      "Clean",
+      "Retail-focused"
+    ],
+    "target_audience": [
+      "Music and Record Stores",
+      "Vinyl Retailers",
+      "Digital Music Retailers",
+      "Music Equipment Shops",
+      "Independent Record Labels",
+      "Music Merchandisers",
+      "DJ Equipment Retailers"
+    ],
+    "key_benefits": [
+      "Sell physical and digital music formats from a single platform",
+      "Display product variations like vinyl colors or special editions",
+      "Handle international sales with built-in currency conversion",
+      "Create an intuitive shopping experience for music collectors",
+      "Scale your music retail business with a professional online store"
+    ],
+    "included_plugins": [
+      "One-Click Demo Import",
+      "WooCommerce",
+      "WooCommerce Currency Switcher",
+      "Variation Swatches for WooCommerce",
+      "Instagram Feed",
+      "Contact Form 7",
+      "Slider Revolution",
+      "WPBakery Page Builder (formerly Visual Composer)",
+      "Envato Market",
+      "Wolf Visual Composer",
+      "Wolf VC Content Block",
+      "Wolf Playlist Manager",
+      "Wolf Portfolio",
+      "Wolf Custom Post Meta",
+      "Wolf Metaboxes",
+      "Wolf Video Thumbnail Generator"
+    ],
+    "design_features": [
+      "Music retail-oriented e-commerce layouts",
+      "Product catalog displays optimized for music inventory",
+      "Advanced product filtering and categorization",
+      "Multiple header and footer variations for retail stores",
+      "Custom WooCommerce product templates for music formats"
+    ],
+    "use_cases": [
+      "Record and Vinyl Shops",
+      "Digital Music Download Stores",
+      "Music Equipment Retailers",
+      "CD and Physical Media Stores",
+      "Music Merchandise Retailers"
+    ],
     "customer_sites": [],
-    "testimonials": []
+    "testimonials": [
+      {
+        "text": "Vonzot offers a great package. Its design and functionality are commendable, and the support team's responsiveness and helpfulness make it a strong choice for anyone looking to improve their website.",
+        "author": "JW_2022",
+        "rating": 5
+      },
+      {
+        "text": "Theme is really cool. Easy to install and customizable. Support is great too. Thank you for this work.",
+        "author": "Nohud",
+        "rating": 5
+      },
+      {
+        "text": "It is perfect to build a website with for my record shop. You can do a lot of things with it. Also the customer support is very good. I am a happy customer!",
+        "author": "simager1",
+        "rating": 5
+      }
+    ]
   },
   "deadlift": {
     "name": "Deadlift",
@@ -2250,8 +2337,8 @@
     "demourl": "https://preview.wolfthemes.store/effigy/landing/",
     "shortlink": "https://wlfthm.es/effigy",
     "itemId": "36336866",
-    "version": "1.4.45",
-    "updated": "2025-05-06",
+    "version": "1.4.46",
+    "updated": "2025-05-12",
     "description": "A Clean and Professional Music WordPress Theme",
     "longdescription": "Effigy is a clean and elegant WordPress theme built for Elementor and dedicated to musicians, bands, labels, or anyone related to the music industry who wants to create a professional website easily. It includes everything you need: Discography, Tour Dates, Playlist Manager, Store, Video, etc.",
     "category": "Music",
@@ -2947,8 +3034,8 @@
     "demourl": "https://preview.wolfthemes.store/mediafoundry/landing/",
     "shortlink": "https://wlfthm.es/mediafoundry",
     "itemId": "57345165",
-    "version": "1.0.15",
-    "updated": "2025-05-06",
+    "version": "1.0.17",
+    "updated": "2025-05-16",
     "description": "Creative Production Studio Theme",
     "longdescription": "MediaFoundry is a powerful WordPress theme designed for creative professionals and agencies. Whether you're a video producer, graphic designer, or multidisciplinary artist, MediaFoundry helps you showcase your work with bold layouts, seamless video integration, and dynamic team profiles. Perfect for creating portfolios, managing projects, and building a stunning online presence.",
     "category": [
