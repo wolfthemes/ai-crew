@@ -42,6 +42,7 @@ class DailyBiasFramework:
         self.files = {
             "weekly_profile": os.path.join(framework_dir, "Weekly-Profile.pdf"),
             "daily_bias": os.path.join(framework_dir, "Daily-Bias.pdf"),
+            "next_day_model": os.path.join(framework_dir, "Next-Day-Model.pdf"),
             "IRL_ERL_model": os.path.join(framework_dir, "IRL-ERL-Model.pdf"),
             "intraday_bias": os.path.join(framework_dir, "Intraday-Bias.pdf"),
             "london_reversal": os.path.join(framework_dir, "London-Reversal.pdf"),
@@ -54,6 +55,7 @@ class DailyBiasFramework:
         self.cache_files = {
             "weekly_profile": os.path.join(self.cache_dir, "weekly_profile.json"),
             "daily_bias": os.path.join(self.cache_dir, "daily_bias.json"),
+            "next_day_model": os.path.join(self.cache_dir, "next_day_model.json"),
             "IRL_ERL_model": os.path.join(self.cache_dir, "IRL_ERL_model.json"),
             "intraday_bias": os.path.join(self.cache_dir, "intraday_bias.json"),
             "london_reversal": os.path.join(self.cache_dir, "london_reversal.json"),
