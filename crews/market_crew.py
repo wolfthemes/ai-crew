@@ -329,9 +329,14 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
             file_name = f"eurusd_{period}_report_{today_date_str}.md"
             file_path = f"data/reports/{folder_name}/{file_name}"
             
+            # Convert result to string and clean up any markdown prefix
+            result_str = str(result)
+            if result_str.startswith('markdown'):
+                result_str = result_str[8:].lstrip()
+            
             # Write the report content to the file
             with open(file_path, "w", encoding="utf-8") as f:
-                f.write(str(result))
+                f.write(result_str)
                 
             print(f"📝 Report saved to {file_path}")
         

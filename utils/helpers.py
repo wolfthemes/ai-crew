@@ -230,3 +230,20 @@ def time_ago(timestamp_str):
 # Strip basic HTML tags for sidebar
 def strip_html_tags(text):
     return re.sub(r"<.*?>", "", html.unescape(text)).strip()
+
+def clean_markdown_content(content):
+    """
+    Clean up common issues with markdown content from LLMs
+    """
+    # Convert to string if it's an object with __str__ method
+    if hasattr(content, '__str__'):
+        content = str(content)
+        
+    # Remove 'markdown' prefix if present
+    if content.startswith('markdown'):
+        content = content[8:].lstrip()
+    
+    # Remove any leading/trailing whitespace
+    content = content.strip()
+    
+    return content

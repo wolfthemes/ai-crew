@@ -1,75 +1,72 @@
-```markdown
 # EUR/USD Weekly Report – 2025-05-19
 
 ---
 
 ## 1. Executive Summary
 
-**Weekly Bias:** **Bullish** (Confidence: Moderate-High)
+**Weekly Bias:**  
+**Neutral-to-bullish** above 1.1200, with a confidence level of 7/10. The pair is consolidating just below key resistance at 1.1275–1.1300. Event-driven volatility is expected due to major data releases and central bank commentary.
 
-EUR/USD enters the week with a bullish bias above **1.1190**, supported by a constructive technical structure, narrowing policy divergence, and sentiment tailwinds. The pair is challenging the **1.1270** resistance zone; a sustained break opens upside toward **1.1380/1.1420**. Key supports are **1.1220/1.1190** (pullback buy zones) and **1.1170** (bullish invalidation). Major event risk centers on the **Eurozone and US PMIs (May 22)** and **Fed Chair Powell’s speech (May 25)**, with the **G7 meeting (May 20–22)** adding headline risk. Volatility is expected to spike around these events, with daily ranges of **80–100 pips**. 
+**Key Price Levels:**  
+- **Immediate Resistance:** 1.1275, 1.1300  
+- **Expansion Targets:** 1.1380, 1.1420  
+- **Support:** 1.1200, 1.1160, 1.1100  
+- **Critical Pivot:** 1.1240 (short-term support)
 
-**Key Price Levels:**
-- **Support:** 1.1220, 1.1190, 1.1170
-- **Resistance:** 1.1270, 1.1300, 1.1380, 1.1420
+**Major News Events:**  
+- **May 20–22:** G7 Meeting (headline risk, potential for risk-on/off swings)  
+- **May 22:** Eurozone HCOB PMIs (Composite, Manufacturing, Services)  
+- **May 22:** US S&P Global PMIs  
+- **May 25:** Fed Chair Powell Speech
 
-**Major News Events:**
-- G7 Meeting (May 20–22)
-- Eurozone PMIs (May 22, 08:00 CET)
-- US PMIs (May 22, 13:45 UTC)
-- Fed Chair Powell Speech (May 25, 18:40 UTC)
-
-**Strategy Recommendation:**  
-Buy dips above **1.1190**, add on breakout above **1.1270**, target **1.1380/1.1420**. Tighten risk around event windows; be prepared for sharp reversals if key data or Powell’s tone disappoints. If EUR/USD fails to hold above **1.1190**, reassess for potential downside toward **1.1065**.
+**Weekly Trading Strategy:**  
+- **Buy dips** above 1.1200, targeting 1.1320/1.1380 on positive Eurozone data or dovish Fed signals.
+- **Fade failed breakouts** above 1.1300 if sentiment turns euphoric or data disappoints.
+- **Reduce size or avoid new trades** around major event releases (especially May 22 and May 25).
+- **Risk management:** Use 20–40 pip stops beyond key S/R; partial profits at first target, trail stops for runners.
 
 ---
 
 ## 2. Previous Week Recap
 
-EUR/USD began last week consolidating near the **1.1200** handle, with early weakness probing support at **1.1196** before buyers stepped in. The pair staged a robust recovery from the **1.1065** low (weekly support), printing a bullish engulfing candle on the weekly chart and closing at **1.1266**—just below the critical **1.1270** resistance. The rally was driven by a combination of profit-taking on USD longs, stabilization in Eurozone data, and a lack of hawkish surprises from US policymakers.
+**Price Action Review:**  
+EUR/USD began last week near 1.1160, initially consolidating before staging a strong bullish reversal from the 1.1065 low (May 12). The pair rallied impulsively, breaking through minor resistance at 1.1200 and closing the week near the highs at 1.12640 (May 19 close). The weekly candle formed a bullish engulfing pattern, signaling renewed demand.
 
-Key levels tested included:
-- **Support:** 1.1065 (held, triggered reversal)
-- **Resistance:** 1.1270 (tested, not broken)
-- **Weekly Close:** 1.1266 (bullish, above prior week’s close)
+**Key Levels Tested:**  
+- **Support:** 1.1065 (weekly low, May 12–13), 1.1160 (midweek pullback)
+- **Resistance:** 1.12739 (weekly high, May 19), 1.1200 (flipped to support midweek)
 
-News flow was dominated by cautious optimism on Eurozone growth and a lack of major US data. Market participants positioned ahead of this week’s event risk, with sentiment turning more constructive for EUR/USD. The strong weekly close above **1.1246** (prior week’s close) and the reclaim of the **1.1270** zone set the stage for potential bullish continuation.
+**News Events & Market Reactions:**  
+- No major ECB or Fed meetings, but markets responded to softer US data and stabilizing Eurozone sentiment.
+- Risk sentiment improved as geopolitical tensions remained contained, and energy prices stabilized.
 
-**Lesson:** The market is responsive to technical levels and event risk, with liquidity-driven moves around key supports and resistances. The bullish reversal off **1.1065** highlights the importance of respecting major swing lows as inflection points.
+**Weekly Close Assessment:**  
+The close at 1.12640, just below the 1.1275 resistance, leaves the pair poised for a potential breakout. The bullish weekly structure is intact, but supply at 1.1275–1.1300 remains formidable. The market is positioned for event-driven moves, with traders awaiting confirmation from upcoming data and central bank signals.
 
 ---
 
 ## 3. Fundamental Outlook
 
-### Monetary Policy Comparison: ECB vs Fed
-
-- **ECB:** Remains in a tightening cycle (Deposit Facility Rate: 4.50%), but is increasingly cautious given sluggish growth. No policy meeting this week; focus is on Eurozone PMIs for clues to future moves. ECB’s hawkish stance is underpinned by sticky core inflation and elevated wage growth.
-- **Fed:** At cycle highs (Fed Funds Upper Bound: 5.50%), but recent data is mixed. The Fed is data-dependent, with some market speculation about a pause or slower pace of hikes. Powell’s May 25 speech is the main event; any hawkish surprise could boost USD, while dovishness would support EUR/USD upside.
-- **Policy Divergence:** The interest rate differential remains USD-positive but is narrowing as ECB hawkishness persists and Fed signals caution.
+### Monetary Policy Comparison (ECB vs Fed)
+- **ECB:** Remains in a tightening cycle, with persistent inflation above target. No policy meeting this week, but Eurozone PMIs will be pivotal for future guidance. The ECB is expected to maintain a restrictive stance until inflation moderates.
+- **Fed:** Data-dependent, balancing sticky inflation with signs of slowing growth. No FOMC meeting, but Powell’s May 25 speech is critical. The Fed’s higher policy rate supports the USD, but the gap with the ECB is narrowing.
 
 ### Economic Growth Dynamics
-
-- **Eurozone:** Growth is sluggish but stabilizing (Q1 GDP: ~0.3% QoQ, 0.7% YoY). May PMIs are forecast to show modest expansion (Composite: 52.0). Upside surprises would be EUR-positive.
-- **US:** Growth remains above trend but is decelerating (Q1 GDP: ~0.6% QoQ, 2.1% YoY). May PMIs are steady (Composite: 53.5) but vulnerable to downside surprises.
-- **Growth Differential:** Still favors the US, but the gap is narrowing. PMI data (May 22) is critical for near-term direction.
+- **US:** Growth is moderating, with Q1 GDP solid but recent indicators (retail sales, manufacturing) softening.
+- **Eurozone:** Growth is sluggish; manufacturing is weak, but services are stabilizing. PMIs on May 22 will be key for direction.
 
 ### Inflation Outlook
-
-- **Eurozone:** Headline CPI at 2.6% YoY, core at 2.9%. Inflation remains above target, with wage growth at 4.5% YoY. ECB remains vigilant.
-- **US:** Headline CPI at 3.4% YoY, core at 3.6%. Inflation is sticky, especially in services. Fed is cautious about declaring victory.
-- **Implication:** Both central banks face persistent inflation, reducing the USD’s relative advantage.
+- **US:** Inflation is above target but moderating; core PCE remains sticky.
+- **Eurozone:** Inflation is persistent, especially in core components. Producer prices remain elevated, and wage growth is picking up.
 
 ### Geopolitical Factors
-
-- **G7 Meeting (May 20–22):** Potential for surprise headlines on trade, sanctions, or fiscal coordination. Could drive risk sentiment and EUR/USD volatility.
-- **Energy:** Europe remains more vulnerable to energy price shocks, but current conditions are stable.
-- **Risk Sentiment:** USD benefits from risk-off; EUR from risk-on. G7 and geopolitical headlines are wild cards.
+- **G7 Meeting (May 20–22):** Potential for headline-driven volatility. Energy prices and global risk sentiment are key for the EUR.
+- **Energy:** Europe remains exposed to shocks, but recent stability supports the EUR.
 
 ### Fundamental Bias Statement
-
-**Short-term (1–2 weeks):** **Bullish EUR/USD above 1.1190, targeting 1.1380/1.1420.**  
-**Rationale:** ECB hawkishness, narrowing growth/inflation differentials, and potential for positive Eurozone PMI surprises support EUR. Powell’s speech is the main risk—hawkish surprise could cap gains or trigger reversal.  
-**Medium-term (1–3 months):** **Cautiously bullish, but highly data-dependent.** Renewed US outperformance or risk-off shocks could reverse gains.
+**Short-term:** Mildly bullish above 1.1200, targeting 1.1320/1.1380 if Eurozone PMIs are strong or Powell is dovish.  
+**Risks:** Weak Eurozone PMIs, strong US data, or hawkish Powell could trigger a reversal toward 1.1200/1.1160.  
+**Conclusion:** The narrowing policy gap and persistent Eurozone inflation support EUR/USD upside, but the pair remains highly event-driven. Stay nimble and monitor key data.
 
 ---
 
@@ -77,118 +74,99 @@ News flow was dominated by cautious optimism on Eurozone growth and a lack of ma
 
 ### Multiple Timeframe Assessment
 
-#### Monthly Chart (Long-Term)
-- **Trend:** Bullish above **1.1050**; higher low forming after impulsive rally from 1.08 to 1.1573.
-- **Key Levels:** Support at **1.1050**, resistance at **1.1500/1.1570**.
+#### Monthly Chart
+- **Trend:** Bullish reversal since March 2025; higher highs/lows.
+- **Key Levels:** Resistance at 1.1500/1.1573; support at 1.1200/1.1100.
 
-#### Weekly Chart (Intermediate)
-- **Trend:** Bullish reversal off **1.1065**; weekly close at **1.1266**.
-- **Key Levels:** Support at **1.1065/1.1196**, resistance at **1.1270/1.1381**.
+#### Weekly Chart
+- **Trend:** Bullish, with a strong engulfing candle last week.
+- **Key Levels:** Resistance at 1.1275 (weekly high), 1.1381/1.1420 (expansion targets); support at 1.1160/1.1100.
 
-#### Daily Chart (Short-Term)
-- **Trend:** Recovery from **1.1065** low; testing **1.1270** resistance.
-- **Zones:** Demand at **1.1160–1.1190**, supply at **1.1270–1.1300**.
+#### Daily Chart
+- **Trend:** Bullish reversal from 1.1065; daily closes above 1.1200 signal demand.
+- **Zones:** Supply at 1.1275–1.1300; demand at 1.1160–1.1200.
 
-#### 4-Hour Chart (Near-Term)
-- **Trend:** Uptrend from **1.1170**; higher highs/lows.
-- **Setups:** Buy dips to **1.1220/1.1190**, breakout above **1.1270** targets **1.1300/1.1380**.
+#### 4-Hour Chart
+- **Structure:** Higher highs/lows; consolidation below 1.1275.
+- **Setups:** Breakout buy above 1.1275 (target 1.1320/1.1380); reversal sell on rejection at 1.1275–1.1300.
 
-### Key Support and Resistance Zones
+### Key Support & Resistance Zones
 
-| Level Type         | Price(s)        | Significance                                   |
-|--------------------|-----------------|------------------------------------------------|
-| Monthly Support    | 1.1050, 1.0800  | Major structural, base of rally                |
-| Monthly Resistance | 1.1500, 1.1570  | April/May highs, psychological                 |
-| Weekly Support     | 1.1065, 1.1196  | Last week’s low, prior swing low               |
-| Weekly Resistance  | 1.1270, 1.1381  | Current high, May high                         |
-| Daily Demand       | 1.1160–1.1190   | Recent base, buy zone                          |
-| Daily Supply       | 1.1270–1.1300   | Current resistance, breakout zone              |
-| Psychological      | 1.1200, 1.1300  | Round numbers, liquidity magnets               |
-| Swing Points       | 1.1170, 1.1266  | 4H/daily swing lows and highs                  |
+| Level Type        | Price(s)         | Significance                                      |
+|-------------------|------------------|---------------------------------------------------|
+| Monthly High      | 1.1573           | Major supply, spike high                          |
+| Weekly High       | 1.12739          | Immediate resistance, breakout trigger            |
+| Weekly Low        | 1.11711          | Immediate support, breakdown trigger              |
+| Daily Supply      | 1.1275–1.1300    | Near-term supply, multiple rejections             |
+| Daily Demand      | 1.1160–1.1200    | Recent demand, swing low support                  |
+| Expansion Targets | 1.1380, 1.1420   | If breakout confirmed                             |
+| Downside Targets  | 1.1160, 1.1100   | If reversal on event risk                         |
 
 ### Market Structure Analysis
+- **Bullish above 1.1200**; risk of liquidity engineering above 1.1275.
+- **Buy stops** above 1.1275; **sell stops** below 1.1170.
+- **Support/Resistance flips:** 1.1200 now support; 1.1275 must flip for sustained upside.
 
-- **HTF Structure:** Bullish on monthly/weekly; daily corrective but turning up.
-- **Liquidity Levels:** Sell-side below **1.1170/1.1190**; buy-side above **1.1270/1.1300**.
-- **Change in Character:** Daily close above **1.1270** confirms bullish continuation; break below **1.1170** negates near-term bullish bias.
-- **Support/Resistance Flips:** **1.1270** is key—flip to support on breakout signals further upside.
-
-### Technical Indicator Readings
-
-- **Moving Averages:** Price above 20/50/200 EMAs (4H/daily), confirming bullish momentum.
-- **RSI:** Rising, not overbought (55–65 on weekly/daily).
-- **ATR:** 80–100 pips (daily range).
-- **Bollinger Bands:** Price near upper band—short-term mean reversion possible before further upside.
+### Technical Indicators
+- **Moving Averages:** 20 EMA (~1.1220), 50 SMA (~1.1180), 200 SMA (~1.1100) – all stacked bullishly.
+- **RSI:** Daily 62–68 (bullish, not overbought); 4H 65–70 (approaching overbought).
+- **ATR (14d):** ~85 pips (elevated volatility).
+- **Bollinger Bands:** Price near upper band; risk of mean reversion if overextended.
 
 ### Pattern Identification
+- **Classic Expansion:** Break and hold above 1.1275/1.1300 targets 1.1380/1.1420.
+- **Consolidation Reversal:** Failure at resistance triggers drop to 1.1200/1.1160.
+- **Midweek Reversal:** Early breakout, PMI-driven reversal midweek.
 
-- **Classic Expansion:** Breakout above **1.1270/1.1300** could trigger move to **1.1380/1.1420**.
-- **Consolidation Reversal:** Failure at **1.1270** could see pullback to **1.1220/1.1190** before renewed buying.
-- **Midweek Reversal:** High-impact PMIs (May 22) and Powell’s speech (May 25) are likely reversal catalysts.
-
-**Takeaway:** Structure favors bullish continuation above **1.1270**, with risk of false breakouts if liquidity is engineered below **1.1190**.
+**Takeaway:**  
+The technical structure favors breakout trading above 1.1275, but be alert for false breaks and sharp reversals around event risk.
 
 ---
 
 ## 5. Market Sentiment
 
 ### Positioning Data Analysis
-
-- **COT Report:** Large specs net long EUR (+85k contracts), not at extremes; room for further long buildup.
-- **Retail Sentiment:** Net short EUR/USD (60–65%), supporting contrarian bullish view.
-- **Commercial Hedgers:** Net short, but less defensive—subtle bullish signal.
+- **COT Large Speculators:** Net long EUR, not at extremes (bullish, but not crowded).
+- **Commercial Hedgers:** Net short, increasing hedges (cautious at resistance).
+- **Retail Sentiment:** Majority short (contrarian bullish).
+- **Options/Volatility:** Elevated implied vols, upside skew.
 
 ### Risk Sentiment Assessment
-
-- **Risk-On/Off:** Neutral-to-positive; equities stable, volatility low.
-- **Correlation:** EUR/USD positively correlated with S&P 500; risk-on supports EUR.
-- **Safe Haven Flows:** No acute USD demand, but event risk could change this.
+- **Cautious ahead of G7/PMIs/Powell.** Volatility spikes likely.
+- **Correlation:** EUR/USD positively correlated with equities; risk-on favors EUR, risk-off favors USD.
 
 ### Sentiment Indicators Review
-
-- **Options Skew:** Slight call premium (bullish).
-- **Economic Surprise Indices:** Eurozone > US (bullish EUR/USD).
-- **Institutional Surveys:** Median 1-month target 1.1350–1.1400; consensus bullish.
-- **Social Media:** Bullish chatter, but not euphoric; consensus building for upside.
+- **Put/Call Ratios:** Slight upside skew.
+- **Economic Surprise Indices:** Eurozone improving, US slowing.
+- **Institutional Outlook:** Neutral-to-bullish for Q2, but warn of volatility.
 
 ### Contrarian Signals
-
-- **No extremes:** Positioning and sentiment supportive, but not crowded.
-- **Consensus risk:** If key events disappoint, sharp reversal possible.
+- **No extremes yet,** but retail shorts could be squeezed if 1.1275/1.1300 breaks.
+- **Fade euphoria** above 1.1380/1.1420; **buy panic** dips to 1.1200/1.1160.
 
 ### Sentiment Bias Projection
-
-- **Short-Term:** Bullish above **1.1190**, targeting **1.1380/1.1420** if data/events are supportive.
-- **Catalysts:** Eurozone/US PMIs (May 22), Powell speech (May 25), G7 headlines.
-- **Contrarian Plan:** If EUR/USD fails at **1.1270/1.1300** post-data, short targeting **1.1190/1.1065**.
-
-**Sentiment Bias Statement:**  
-**EUR/USD is sentimentally biased higher above 1.1190, with a bullish consensus and supportive positioning, but event-driven volatility could trigger sharp reversals—trade with discipline and respect for the risk of sentiment shifts.**
+- **Mildly bullish above 1.1200,** targeting 1.1320/1.1380 if data supports.
+- **Event risk is high;** be ready to fade spikes or buy dips on event-driven moves.
 
 ---
 
 ## 6. Economic Calendar
 
-| Date       | Time (UTC) | Event                                      | Currency | Expected Impact         |
-|------------|------------|---------------------------------------------|----------|------------------------|
-| May 20–22  | All Day    | G7 Meeting                                 | EUR      | High (headline risk)   |
-| May 22     | 08:00 CET  | Eurozone HCOB Composite/Manuf/Services PMI | EUR      | High (volatility)      |
-| May 22     | 13:45 UTC  | US S&P Global Manuf/Services PMI           | USD      | High (volatility)      |
-| May 25     | 18:40 UTC  | Fed Chair Powell Speech                    | USD      | High (volatility)      |
+| Date         | Event                                      | Expected Impact                | Volatility Risk      |
+|--------------|--------------------------------------------|-------------------------------|----------------------|
+| May 20–22    | G7 Meeting (EUR)                           | Headline-driven, risk flows   | High (headline risk) |
+| May 22, 08:00 CET | Eurozone HCOB Composite, Manufacturing, Services PMIs | Directional for EUR, sets ECB tone | High                 |
+| May 22, 13:45 UTC | US S&P Global Manufacturing & Services PMIs | Directional for USD, sets Fed tone | High                 |
+| May 25, 18:40 UTC | Fed Chair Powell Speech (USD)          | Forward guidance, USD driver  | Very High            |
 
-**Impact Assessment:**
-- **G7 Meeting:** Headline risk; potential for sharp, unscheduled moves.
-- **Eurozone PMIs:** Major driver for EUR; strong = bullish, weak = bearish.
-- **US PMIs:** Major driver for USD; strong = bearish EUR/USD, weak = bullish.
-- **Powell Speech:** Key for Fed policy outlook; hawkish = USD positive, dovish = EUR positive.
+**Impact Assessment:**  
+- **PMIs (May 22):** Key directional drivers; expect 40–70 pip swings on surprises.
+- **Powell Speech (May 25):** High risk of sharp moves (50–100 pips); avoid holding risk into event.
+- **G7:** Ongoing headline risk; monitor for risk-on/off shifts.
 
 **Volatility Expectations:**  
-Elevated around May 22 and May 25; daily ranges of 80–100 pips likely. Watch for liquidity grabs and false breaks during/after releases.
-
-**Watch Points for Surprises:**  
-- PMI surprises (Eurozone or US)
-- Unexpected G7 headlines
-- Powell’s tone diverging from expectations
+- Elevated throughout the week, peaking around May 22 and May 25.
+- **Watch points:** PMI surprises, unexpected G7 headlines, Powell’s tone.
 
 ---
 
@@ -197,89 +175,79 @@ Elevated around May 22 and May 25; daily ranges of 80–100 pips likely. Watch f
 ### Day-by-Day Approach
 
 - **Monday (May 19):**  
-  - Expect consolidation or mild pullback; look for long entries on dips to **1.1220/1.1190**.
-  - Avoid aggressive positioning ahead of G7/PMI risk.
+  - Watch for false moves and liquidity grabs as market positions for event risk.
+  - Avoid aggressive entries; focus on reaction to 1.1275/1.1200.
 
 - **Tuesday (May 20):**  
-  - G7 headlines may trigger volatility; maintain flexible bias.
-  - Continue to buy dips above **1.1190**; stops below **1.1170**.
+  - G7 headlines may trigger volatility; remain cautious.
+  - Look for early signs of breakout or reversal.
 
 - **Wednesday (May 21):**  
-  - Position for PMI volatility; avoid new trades late in the day.
-  - Prepare for breakout or reversal moves post-data.
+  - Position for PMI-driven moves; avoid new trades late in the session.
 
 - **Thursday (May 22):**  
-  - **Key event day:** Eurozone PMIs (08:00 CET), US PMIs (13:45 UTC).
-  - Trade only if clear direction emerges post-data.
-  - Buy breakout above **1.1270** (target **1.1380/1.1420**) or fade failed breakouts with stops above/below event highs/lows.
+  - **High-impact day:** Eurozone and US PMIs.
+  - Trade only after data; look for breakout or reversal confirmation.
+  - **Key levels:** Buy breakout above 1.1275/1.1300 (target 1.1320/1.1380); fade failed breakouts or buy dips to 1.1200.
 
 - **Friday (May 23):**  
-  - Manage open positions; expect volatility around Powell’s speech (18:40 UTC).
-  - Avoid holding large positions into the weekend unless strong trend confirmation.
+  - Powell speech risk into the weekend.
+  - Avoid holding positions into Powell unless already well in profit.
+  - Take profits or tighten stops ahead of event.
 
 ### Key Levels for Entries and Exits
 
-- **Long Entries:** 1.1220/1.1190 (pullback), 1.1270 (breakout)
-- **Long Targets:** 1.1300, 1.1380, 1.1420
-- **Stops:** Below 1.1170 (bullish invalidation)
-- **Short Entries (contrarian):** Failure at 1.1270/1.1300 post-event, target 1.1190/1.1065
+- **Buy Breakout:** Above 1.1275/1.1300, target 1.1320/1.1380/1.1420, stop below 1.1240.
+- **Buy Dip:** 1.1200/1.1160 (with confirmation), stop below 1.1100.
+- **Fade Spike:** Above 1.1380/1.1420 if sentiment turns euphoric, stop above 1.1500.
 
 ### Risk Management Parameters
 
-- **Max risk per trade:** 1% (prop firm), 0.5% (live)
-- **Position sizing:** Adjust for volatility; use wider stops during event windows
-- **Set & Forget:** No manual interference after entry; predefined SL/TP
+- **Stops:** 20–40 pips beyond S/R or swing points.
+- **Size:** Reduce around major events.
+- **Partial Profits:** At first target; trail stops for runners.
 
 ### Session-Specific Opportunities
 
-- **London Session:** Focus on breakout/pullback setups around 1.1220/1.1270; avoid trading during restricted events.
-- **NY Session:** React to US PMI and Powell speech outcomes; manage risk tightly.
+- **London Session:**  
+  - Focus on breakout or reversal setups around 1.1275/1.1300 and 1.1200.
+  - Watch for liquidity sweeps at session open.
+
+- **New York Session:**  
+  - React to US PMI data and risk sentiment.
+  - Avoid new trades late Friday ahead of Powell.
 
 ### Contingency Scenarios
 
-- **Unexpected G7 headlines:** Stand aside until volatility subsides.
-- **False breakouts:** Wait for confirmation (4H/daily close) before adding to positions.
-- **Sharp reversal post-data:** Flip bias if EUR/USD fails to hold above 1.1190; target 1.1065/1.1050.
+- **Event Shock:**  
+  - If surprise data or Powell triggers a sharp move, wait for volatility to subside before entering.
+  - Be ready to fade overextended spikes or buy deep flushes with confirmation.
+
+- **Seek & Destroy Profile:**  
+  - If price action is choppy and directionless, stand aside and preserve capital.
 
 ---
 
-## 8. Key Price Levels for the Coming Week
+## 8. Quick Reference Summary Table
 
-| Level Type      | Price(s)        | Actionable Use Case                       |
-|-----------------|-----------------|-------------------------------------------|
-| **Support**     | **1.1220/1.1190** | Buy dips, set stops below 1.1170          |
-| **Resistance**  | **1.1270/1.1300** | Breakout buy trigger, initial target      |
-| **Target**      | **1.1380/1.1420** | Weekly/daily supply, take profit zone     |
-| **Invalidation**| **1.1170**        | Bullish bias negated below this level     |
-| **Downside Risk**| **1.1065/1.1050** | Contrarian short target if bias flips     |
+| Scenario         | Trigger Level      | Target(s)           | Stop Loss         | Confirmation                  |
+|------------------|-------------------|---------------------|-------------------|-------------------------------|
+| Bullish Breakout | >1.1275           | 1.1320/1.1380/1.1420| <1.1240           | Strong close, PMI beat        |
+| Bearish Reversal | <1.1240           | 1.1200/1.1160/1.1100| >1.1275           | Rejection, PMI miss, Powell   |
+| Range Play       | 1.1200–1.1275     | 30–50 pip swings    | 20–30 pips        | Choppy, low conviction        |
 
 ---
 
-## 9. Actionable Trading Opportunities & Strategic Positioning
+## 9. Conclusion & Actionable Takeaways
 
-- **Primary Strategy:**  
-  - Buy dips above **1.1190**, add on breakout above **1.1270**.
-  - Target **1.1300/1.1380/1.1420**.
-  - Use stops below **1.1170** to protect against reversal.
+- **Above 1.1275:** Path of least resistance is higher, but supply at 1.1300/1.1380 is formidable.
+- **Below 1.1200:** Risk of deeper correction to 1.1160/1.1100.
+- **Event Risk:** Stay nimble, size down, and be ready for sharp volatility spikes.
+- **Best Opportunities:** Breakout retest buys above 1.1275, or fade failed breakouts with confirmation.
+- **Risk Management:** Respect stops, take partial profits, and avoid overexposure around major events.
 
-- **Event-Driven Adjustments:**  
-  - Tighten stops and reduce size ahead of May 22 (PMIs) and May 25 (Powell).
-  - Avoid trading during high-impact event windows unless clear post-event direction emerges.
-
-- **Contrarian Plan:**  
-  - If EUR/USD fails at **1.1270/1.1300** post-data, consider short with target **1.1190/1.1065**.
-  - Watch for retail capitulation and consensus overcrowding as reversal signals.
-
-- **Risk Management:**  
-  - Respect position sizing and stop discipline.
-  - Be alert for liquidity grabs and engineered false breaks around key levels.
-
-- **Session Focus:**  
-  - Prioritize London session setups; NY session for event-driven moves.
-  - Avoid trading on restricted event days or during S&D (Seek & Destroy) profiles.
+**Stay disciplined, respect key levels, and adapt to event-driven volatility. Monitor data and central bank signals closely, and let the market confirm your bias before committing capital.**
 
 ---
 
-## 10. Conclusion
-
-EUR/USD is positioned for bullish continuation into the week, with **1.1270/1.1300** as the key breakout zone. Dips to **1.1220/1.1190** are likely to be bought, and a sustained move above **1.1270** targets **1.138
+*Report prepared using price data as of May 19, 2025. All analysis is based on the latest available information and is subject to change as new data emerges during the week.*
