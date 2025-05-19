@@ -1,5 +1,3 @@
-# OBSIDIAN_DIR = "/mnt/g/My Drive/Obsidian Vaults/Backbrain"
-
 from crewai import Crew, Process
 from pathlib import Path
 import sys
@@ -7,6 +5,7 @@ import os
 import json
 from datetime import date, datetime, timedelta
 import pytz
+import re
 
 # Import agents
 from agents.market.economic_news_agent import economic_news_agent
@@ -20,6 +19,7 @@ from agents.market.weekly_profile_analyst_agent import weekly_profile_analyst_ag
 from agents.market.daily_bias_analyst_agent import daily_bias_analyst_agent
 from agents.market.cisd_pattern_analyst_agent import cisd_pattern_analyst_agent
 from scripts.post_report_to_notion import post_report_to_notion
+from scripts.save_to_obsidian import save_to_obsidian
 
 # Import tasks
 from tasks.market.weekly_report_tasks import (
@@ -45,94 +45,9 @@ from utils.fxstreet_events_downloader import get_fxstreet_events
 from utils.weekly_report_reader import WeeklyReportReader
 from utils.market_tools_integration import MarketToolsIntegration
 from utils.market_utils import is_tradable_day
-import re
 
 from dotenv import load_dotenv
 load_dotenv()
-
-OBSIDIAN_DIR = os.getenv("OBSIDIAN_DIR")
-
-def extract_summary_from_report(report_content):
-    """
-    Extract a summary from the report content.
-    Attempt to find a summary section or the first paragraph.
-    """
-    # Try to find a summary section
-    summary_match = re.search(r'#+ (?:Summary|Executive Summary|Overview).*?\n(.*?)(?:\n#+|\Z)', 
-                              report_content, re.DOTALL | re.IGNORECASE)
-    
-    if summary_match:
-        # Extract first paragraph of summary section
-        summary_text = summary_match.group(1).strip()
-        first_para = summary_text.split('\n\n')[0].strip()
-        # Remove any markdown formatting
-        clean_summary = re.sub(r'\*\*|\*|_|`|#', '', first_para)
-        # Limit to a reasonable length
-        return clean_summary[:200] + ('...' if len(clean_summary) > 200 else '')
-    
-    # If no summary section found, take first paragraph of the report
-    first_para_match = re.search(r'^(?:#.*?\n+)?(.*?)(?:\n\n|\Z)', report_content, re.DOTALL)
-    if first_para_match:
-        first_para = first_para_match.group(1).strip()
-        clean_summary = re.sub(r'\*\*|\*|_|`|#', '', first_para)
-        return clean_summary[:200] + ('...' if len(clean_summary) > 200 else '')
-    
-    return "No summary available"
-
-def save_to_obsidian(report_content, period, report_date):
-    """
-    Save the report to Obsidian with the specified format and metadata.
-    
-    Args:
-        report_content (str): The content of the report
-        period (str): Either "daily" or "weekly"
-        report_date (datetime.date): The date of the report
-    
-    Returns:
-        bool: Whether the save was successful
-    """
-    try:
-        # Format the date
-        date_str = report_date.strftime("%Y-%m-%d")
-        
-        # Create the filename according to the required format
-        filename = f"EU {period.capitalize()} Report {date_str}.md"
-
-        folder_name = "Daily" if period == "daily" else "Weekly"
-
-        # Ensure the Obsidian directory exists
-        os.makedirs(f"{OBSIDIAN_DIR}/Market Reports/{folder_name}", exist_ok=True)
-        
-        # Full path for the file
-        file_path = os.path.join(f"{OBSIDIAN_DIR}/Market Reports/{folder_name}", filename)
-        
-        # Extract a summary from the report
-        summary = extract_summary_from_report(report_content)
-        
-        # Create the metadata section
-        metadata = f"""---
-area: trading
-date: {date_str}
-type: report
-journal: "[[Market Reports]]"
-period: {period}
-summary: "{summary}"
----
-
-"""
-        # Combine metadata and report content
-        full_content = metadata + report_content
-        
-        # Write to file
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.write(full_content)
-            
-        print(f"📝 Report saved to Obsidian at {file_path}")
-        return True
-    
-    except Exception as e:
-        print(f"❌ Error saving to Obsidian: {e}")
-        return False
 
 def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, period="weekly", force=False, save_to_obsidian_vault=True):
     """
@@ -421,16 +336,30 @@ def run_market_analysis(verbose=True, post_to_notion=True, save_to_file=True, pe
             print(f"📝 Report saved to {file_path}")
         
         # Save to Obsidian if requested
-        if save_to_obsidian_vault and result:
-            obsidian_success = save_to_obsidian(
-                report_content=str(result),
-                period=period,
-                report_date=today_date
-            )
-            if obsidian_success:
-                print(f"📝 Report successfully saved to Obsidian vault")
-            else:
-                print(f"❌ Failed to save report to Obsidian vault")
+        if save_to_obsidian_vault and result and save_to_file:
+            try:
+                print("\n" + "="*50)
+                print(f"📓 SAVING {period.upper()} REPORT TO OBSIDIAN")
+                
+                folder_name = "daily" if period == "daily" else "weekly"
+                file_name = f"eurusd_{period}_report_{today_date_str}.md"
+                file_path = f"data/reports/{folder_name}/{file_name}"
+                
+                obsidian_success = save_to_obsidian(
+                    file_path=file_path,
+                    period=period,
+                    report_date=today_date
+                )
+                
+                if obsidian_success:
+                    print(f"✅ Successfully saved {period} report to Obsidian")
+                else:
+                    print(f"❌ Failed to save {period} report to Obsidian")
+                print("="*50 + "\n")
+            except Exception as e:
+                print(f"❌ Error saving to Obsidian: {e}")
+                import traceback
+                traceback.print_exc()
         
         # Save metadata about the report execution
         if save_to_file:
