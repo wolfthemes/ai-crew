@@ -4,6 +4,13 @@ import json
 import random
 import os
 from datetime import datetime
+import sys
+from pathlib import Path
+
+# Add the parent directory to sys.path to find utils
+current_file = Path(__file__).resolve()
+project_root = current_file.parents[2]  # Go up to ai-crew directory
+sys.path.append(str(project_root))
 
 from utils.content_utils import format_hashtags, format_list_to_text, get_random_feature, is_new_theme, format_category
 
@@ -59,82 +66,115 @@ def load_data():
         
     return data
 
-def get_theme_templates(theme, platform, data):
-    """Get appropriate templates based on theme characteristics"""
-    # Get base templates
-    all_templates = data["templates"].get("social_posts", {}).get(platform, [])
+def get_enhanced_templates(theme, platform, data):
+    """Enhanced template selection based on theme characteristics and available data"""
     
-    # Check if this theme has specific target audiences or styles that warrant custom templates
+    # Get theme characteristics
+    category = theme.get("category", "")
     target_audience = theme.get("target_audience", [])
+    selling_points = theme.get("selling_points", [])
+    testimonials = theme.get("testimonials", [])
+    features = theme.get("features", [])
     theme_style = theme.get("theme_style", [])
+    use_cases = theme.get("use_cases", [])
     
-    # Custom templates for photographers
-    if platform == "instagram" and any("Photographer" in audience for audience in target_audience):
-        photo_templates = [
-            "Photographers! Elevate your portfolio with {theme_name}, designed for showcasing your work beautifully ✨\n\n#Photography #{category_hashtags} #PhotographyWebsite",
-            "Calling all photographers! {theme_name} is the perfect WordPress theme to display your visual stories ✨\n\n#PhotographyPortfolio #{category_hashtags}",
-            "{theme_name}: A {theme_style} WordPress theme crafted for professional photographers 📸\n\n#Photography #{category_hashtags}"
-        ]
-        return photo_templates
-        
-    # Custom templates for musicians
-    elif platform == "facebook" and any("Music" in cat for cat in ([theme.get("category", "")] if isinstance(theme.get("category", ""), str) else theme.get("category", []))):
-        music_templates = [
-            "Musicians! {theme_name} showcases your tracks, events and videos perfectly. Our {category_text} WordPress theme includes everything you need: {key_feature}. See the demo: {demourl}",
-            "Create a professional music website with {theme_name}. Perfect for {target_audience}, with built-in features for tracks, albums and events. Check it out: {demourl}",
-            "Introducing {theme_name}: A {theme_style} WordPress theme for musicians and bands. Key feature: {key_feature}. Preview: {demourl}"
-        ]
-        return music_templates
+    # Check what rich content we have available
+    has_testimonials = bool(testimonials)
+    has_selling_points = bool(selling_points)
+    has_rich_features = bool(features)
+    has_use_cases = bool(use_cases)
     
-    # Regular template selection based on whether theme is new or established
-    if is_new_theme(theme):
-        # Templates for new themes
+    templates = []
+    
+    # TESTIMONIAL-BASED TEMPLATES (when available)
+    if has_testimonials and platform in ["facebook", "instagram"]:
+        top_testimonial = testimonials[0]  # Get the first testimonial
         if platform == "facebook":
-            return [
-                "Just launched: {theme_name}, a new {category_text} WordPress theme built with {builder}. Check out the demo: {demourl}",
-                "Introducing {theme_name} - our latest {category_text} WordPress theme with stunning design and powerful features. See it here: {demourl}",
-                "New release: {theme_name} - a fresh {category_text} WordPress theme for creating professional websites. Demo: {demourl}",
-                "Just released: {theme_name} for {target_audience}. {selling_point}. See the demo: {demourl}"
+            templates.extend([
+                f'"{top_testimonial.get("text", "")}" - {top_testimonial.get("author", "")} ({top_testimonial.get("rating", 5)} stars)\n\nSee why {"{theme_name}"} is loved by users: {"{demourl}"}',
+                f'⭐ {top_testimonial.get("rating", 5)}/5 Stars: "{top_testimonial.get("text", "")[:80]}..."\n\nDiscover {"{theme_name}"} - our {"{category_text}"} WordPress theme: {"{demourl}"}'
+            ])
+        elif platform == "instagram":
+            templates.extend([
+                f'⭐ {top_testimonial.get("rating", 5)}/5 STARS ⭐\n\n"{top_testimonial.get("text", "")[:100]}..."\n\n- {top_testimonial.get("author", "")}\n\n{"{theme_name}"} #{"{category_hashtags}"} #WordPress #CustomerLove',
+                f'REAL USER REVIEW ✨\n\n"{top_testimonial.get("text", "")[:120]}..."\n\n{"{theme_name}"} - trusted by professionals\n\n#{"{category_hashtags}"} #WordPress #TestimonialTuesday'
+            ])
+    
+    # FEATURE-FOCUSED TEMPLATES (when rich features available)
+    if has_rich_features:
+        key_features = features[:3]  # Get top 3 features
+        if platform == "facebook":
+            templates.extend([
+                f'{"{theme_name}"} includes everything you need:\n\n✅ {key_features[0] if len(key_features) > 0 else "Professional design"}\n✅ {key_features[1] if len(key_features) > 1 else "Easy customization"}\n✅ {key_features[2] if len(key_features) > 2 else "Mobile responsive"}\n\nSee it in action: {"{demourl}"}',
+                f'Why choose {"{theme_name}"}? Here are just 3 reasons:\n\n🔹 {key_features[0] if len(key_features) > 0 else "Professional design"}\n🔹 {key_features[1] if len(key_features) > 1 else "Easy customization"}\n🔹 {key_features[2] if len(key_features) > 2 else "Mobile responsive"}\n\nDiscover more: {"{demourl}"}'
+            ])
+        elif platform == "instagram":
+            templates.extend([
+                f'{"{theme_name}"} FEATURES 🔥\n\n✨ {key_features[0] if len(key_features) > 0 else "Professional design"}\n✨ {key_features[1] if len(key_features) > 1 else "Easy customization"}\n✨ {key_features[2] if len(key_features) > 2 else "Mobile responsive"}\n\n#{"{category_hashtags}"} #WordPress #WebDesign #Features',
+                f'EVERYTHING YOU NEED ✅\n\n{key_features[0] if len(key_features) > 0 else "Professional design"} ✓\n{key_features[1] if len(key_features) > 1 else "Easy customization"} ✓\n{key_features[2] if len(key_features) > 2 else "Mobile responsive"} ✓\n\n{"{theme_name}"} has it all\n\n#{"{category_hashtags}"} #WordPress'
+            ])
+    
+    # SELLING POINTS TEMPLATES (when available)
+    if has_selling_points:
+        top_selling_point = selling_points[0]
+        if platform == "facebook":
+            templates.extend([
+                f'{"{theme_name}"}: {top_selling_point}\n\nPerfect for {"{target_audience}"} who want professional results without the complexity.\n\nDemo: {"{demourl}"}',
+                f'Ready to {top_selling_point.lower()}?\n\n{"{theme_name}"} makes it possible with our {"{category_text}"} WordPress theme.\n\nSee how: {"{demourl}"}'
+            ])
+        elif platform == "instagram":
+            templates.extend([
+                f'{top_selling_point} ✨\n\nThat\'s the power of {"{theme_name}"}\n\n#{"{category_hashtags}"} #WordPress #WebDesign #Professional',
+                f'GAME CHANGER 🚀\n\n{top_selling_point}\n\nWith {"{theme_name}"} it\'s possible\n\n#{"{category_hashtags}"} #WordPress #Success'
+            ])
+        elif platform == "x":
+            templates.extend([
+                f'{top_selling_point} That\'s what {"{theme_name}"} delivers. {"{shortlink}"}',
+                f'Want to {top_selling_point.lower()}? {"{theme_name}"} makes it simple: {"{shortlink}"}'
+            ])
+    
+    # USE CASE TEMPLATES (when available)
+    if has_use_cases:
+        primary_use_case = use_cases[0]
+        if platform == "facebook":
+            templates.append(f'Building a {primary_use_case.lower()}? {"{theme_name}"} is specifically designed for projects like yours.\n\n{"{selling_point}"}\n\nExplore the demo: {"{demourl}"}')
+        elif platform == "instagram":
+            templates.append(f'PERFECT FOR {primary_use_case.upper()} ✨\n\n{"{theme_name}"} - designed specifically for your needs\n\n#{"{category_hashtags}"} #WordPress #WebDesign')
+        elif platform == "x":
+            templates.append(f'{"{theme_name}"}: The go-to choice for {primary_use_case.lower()}. {"{shortlink}"}')
+    
+    # FALLBACK: Enhanced generic templates if no rich content
+    if not templates:
+        if platform == "facebook":
+            templates = [
+                f'Meet {"{theme_name}"} - our {"{category_text}"} WordPress theme designed for {"{target_audience}"}.\n\n{"{selling_point}"}\n\nSee it live: {"{demourl}"}',
+                f'Looking for a {"{category_text}"} WordPress theme? {"{theme_name}"} offers {"{key_feature}"} and so much more.\n\nDemo: {"{demourl}"}'
             ]
         elif platform == "instagram":
-            return [
-                "🔥 NEW THEME ALERT 🔥\n\n{theme_name} - The ultimate WordPress solution for {category_text} websites\n\n#WordPressTheme #{category_hashtags} #WebDesign",
-                "✨ Just Released: {theme_name} ✨\n\nOur newest {category_text} WordPress theme\n\n#WordPress #{category_hashtags} #WebDesign #NewRelease",
-                "Introducing {theme_name} - our latest {category_text} WordPress theme!\n\nBuilt with {builder} for maximum flexibility\n\n#WordPress #WebDesign #{category_hashtags}",
-                "✨ NEW: {theme_name} ✨\n\nA {theme_style} WordPress theme for {target_audience}\n\n{key_feature}\n\n#WordPress #{category_hashtags}"
+            templates = [
+                f'{"{theme_name}"} ✨\n\nYour new {"{category_text}"} WordPress theme\n\n{"{key_feature}"}\n\n#{"{category_hashtags}"} #WordPress #WebDesign',
+                f'INTRODUCING {"{theme_name}"} 🔥\n\nBuilt for {"{target_audience}"}\n\n#{"{category_hashtags}"} #WordPress #WebDesign #NewTheme'
             ]
         elif platform == "x":
-            return [
-                "🚀 Just launched: {theme_name} - our newest {category_text} WordPress theme! Built with {builder}. Check it out: {shortlink}",
-                "Introducing {theme_name} v{version} - A brand new {category_text} WordPress theme now available! {shortlink}",
-                "New release: {theme_name}, the perfect {category_text} WordPress theme for your next project. {shortlink}",
-                "🆕 {theme_name}: A {theme_style} WordPress theme for {target_audience}. {selling_point} {shortlink}"
-            ]
-    else:
-        # Templates for established themes
-        if platform == "facebook":
-            return [
-                "Looking for a professional {category_text} WordPress theme? {theme_name} has everything you need. See it in action: {demourl}",
-                "{theme_name} continues to be one of our most popular {category_text} WordPress themes. Find out why: {demourl}",
-                "Create a stunning {category_text} website with our {theme_name} WordPress theme. Trusted by professionals worldwide. Preview: {demourl}",
-                "{theme_name}: A {theme_style} WordPress theme perfect for {target_audience}. {key_feature}. See the demo: {demourl}"
-            ]
-        elif platform == "instagram":
-            return [
-                "Create stunning {category_text} websites with {theme_name} 💯\n\nPowered by {builder} for unlimited customization\n\n#WordPress #{category_hashtags} #WebDesign",
-                "{theme_name}: Professional {category_text} WordPress theme ✨\n\nTrusted by creators worldwide\n\n#WordPress #WebDesign #{category_hashtags}",
-                "Transform your {category_text} website with {theme_name} 🔥\n\nBuilt for professionals and beginners alike\n\n#WordPress #{category_hashtags} #WebDesign",
-                "{theme_name}: A {theme_style} WordPress theme designed for {target_audience} ✨\n\n{key_feature}\n\n#WordPress #{category_hashtags}"
-            ]
-        elif platform == "x":
-            return [
-                "Create a professional {category_text} website with {theme_name}, our popular WordPress theme. Preview: {shortlink}",
-                "{theme_name} v{version} - Trusted by {category_text} professionals worldwide. See what makes it special: {shortlink}",
-                "Looking for a reliable {category_text} WordPress theme? {theme_name} has you covered with its powerful features. {shortlink}",
-                "The {theme_style} design of {theme_name} makes it perfect for {target_audience}. {selling_point} {shortlink}"
+            templates = [
+                f'{"{theme_name}"}: {"{selling_point}"} {"{shortlink}"}',
+                f'New {"{category_text}"} WordPress theme: {"{theme_name}"}. {"{key_feature}"} {"{shortlink}"}'
             ]
     
-    # Fall back to default templates if no specific ones match
+    return templates
+
+def get_theme_templates(theme, platform, data):
+    """Get appropriate templates based on theme characteristics - ENHANCED VERSION"""
+    
+    # Use the enhanced template selection
+    enhanced_templates = get_enhanced_templates(theme, platform, data)
+    
+    # If we got enhanced templates, return them
+    if enhanced_templates:
+        return enhanced_templates
+    
+    # Fallback to basic templates if enhanced fails
+    all_templates = data["templates"].get("social_posts", {}).get(platform, [])
     return all_templates if all_templates else [
         f"Check out {theme.get('name', '')}, our {format_category(theme.get('category', ''))} WordPress theme! {theme.get('demourl', '')}"
     ]
@@ -197,7 +237,7 @@ def generate_posts(theme_slug, platforms=None, count=1, data=None):
     results = {}
     
     for platform in platforms:
-        # Get templates appropriate for this theme and platform
+        # Get templates appropriate for this theme and platform (now uses enhanced logic)
         platform_templates = get_theme_templates(theme, platform, data)
         
         # Select random templates
@@ -220,3 +260,40 @@ def generate_posts(theme_slug, platforms=None, count=1, data=None):
         results[platform] = posts
     
     return results
+
+# Test function for development
+def test_enhanced_generation():
+    """Test function to verify the enhanced template generation"""
+    print("🧪 Testing Enhanced Social Post Generation\n")
+    
+    data = load_data()
+    if not data["theme_data"]:
+        print("❌ No theme data found")
+        return
+    
+    # Test with a theme that has rich data (like 'decibel')
+    test_theme_slug = "decibel"
+    theme = data["theme_data"].get(test_theme_slug)
+    
+    if theme:
+        print(f"📝 Testing with theme: {theme.get('name')}")
+        print(f"   Has testimonials: {bool(theme.get('testimonials'))}")
+        print(f"   Has selling points: {bool(theme.get('selling_points'))}")
+        print(f"   Has features: {bool(theme.get('features'))}")
+        
+        # Generate actual posts
+        posts = generate_posts(test_theme_slug, data=data, count=2)
+        
+        # Display results
+        for platform, platform_posts in posts.items():
+            print(f"\n{platform.upper()} posts:")
+            for i, post in enumerate(platform_posts, 1):
+                preview = post.replace('\n', ' ')[:120]
+                print(f"{i}. {preview}...")
+        
+        print("\n✅ Enhanced generation test completed!")
+    else:
+        print(f"❌ Test theme '{test_theme_slug}' not found")
+
+if __name__ == "__main__":
+    test_enhanced_generation()

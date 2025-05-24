@@ -302,6 +302,7 @@ if page == "Theme Explorer":
     for _, row in newest_themes.iterrows():
         st.sidebar.text(f"{row['name']} ({row['updated']})")
 
+
 # Content Generator page - FIXED VERSION
 elif page == "Content Generator":
     st.header("Content Generator")
@@ -377,25 +378,102 @@ elif page == "Content Generator":
         post_count = st.slider("Number of Posts per Platform", 1, 5, 2)
     
     if st.button("Generate Posts"):
-        with st.spinner("Generating posts..."):
-            posts = social_post_agent.generate_posts(st.session_state.selected_theme, count=post_count, data=data)
+        with st.spinner("Generating enhanced posts..."):
+            # Use enhanced generation with the selected theme
+            posts = social_post_agent.generate_posts(
+                theme_slug=st.session_state.selected_theme, 
+                platforms=platforms,
+                count=post_count, 
+                data=data
+            )
             st.session_state.generated_posts = posts
+            
+            # Show generation summary
+            if "error" not in posts:
+                total_posts = sum(len(platform_posts) for platform_posts in posts.values())
+                st.success(f"✅ Generated {total_posts} enhanced posts using theme data!")
+            else:
+                st.error(f"❌ Error: {posts['error']}")
     
-    # Display generated posts with FIXED STYLING
+    # Display generated posts with ENHANCED INFORMATION
     if "generated_posts" in st.session_state:
         posts = st.session_state.generated_posts
         
-        st.subheader("Generated Posts")
-        
-        for platform in posts:
-            if platform not in platforms:
-                continue
+        if "error" in posts:
+            st.error(f"Error generating posts: {posts['error']}")
+        else:
+            st.subheader("Generated Enhanced Posts")
+            
+            # Show what enhanced data was used
+            theme = theme_data[st.session_state.selected_theme]
+            with st.expander("📊 Enhanced Content Used", expanded=False):
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    testimonials_count = len(theme.get("testimonials", []))
+                    st.metric("Testimonials", testimonials_count)
+                with col2:
+                    features_count = len(theme.get("features", []))
+                    st.metric("Features", features_count)
+                with col3:
+                    selling_points_count = len(theme.get("selling_points", []))
+                    st.metric("Selling Points", selling_points_count)
+                with col4:
+                    use_cases_count = len(theme.get("use_cases", []))
+                    st.metric("Use Cases", use_cases_count)
+            
+            for platform in posts:
+                if platform not in platforms:
+                    continue
+                    
+                st.markdown(f"""
+                <div style='background-color: #f0f2f6; padding: 10px; border-radius: 5px; font-weight: bold; color: #2E4057; margin-bottom: 10px;'>
+                {platform.upper()} ({len(posts[platform])} posts)
+                </div>
+                """, unsafe_allow_html=True)
                 
-            st.markdown(f"""
-            <div style='background-color: #f0f2f6; padding: 10px; border-radius: 5px; font-weight: bold; color: #2E4057; margin-bottom: 10px;'>
-            {platform.upper()}
-            </div>
-            """, unsafe_allow_html=True)
+                for i, post in enumerate(posts[platform]):
+                    # Display the post content with proper styling and HTML escaping
+                    post_html = post.replace('\n', '<br>').replace('"', '&quot;').replace("'", '&#39;')
+                    st.markdown(f"""
+                    <div style='background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e6e6e6; margin-bottom: 10px; color: #333; white-space: pre-wrap;'>
+                    {post_html}
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    # Edit and regenerate section
+                    col1, col2 = st.columns([3, 1])
+                    with col1:
+                        # Make keys unique by including theme slug and timestamp
+                        unique_key = f"edit_{platform}_{i}_{st.session_state.selected_theme}_{hash(post) % 10000}"
+                        edited_post = st.text_area(
+                            f"Edit {platform} post {i+1}", 
+                            post, 
+                            key=unique_key,
+                            height=100
+                        )
+                        if edited_post != post:
+                            st.session_state.generated_posts[platform][i] = edited_post
+                    
+                    with col2:
+                        st.write("")  # Add some spacing
+                        regen_key = f"regen_{platform}_{i}_{st.session_state.selected_theme}_{hash(post) % 10000}"
+                        if st.button(f"🔄 Regenerate", key=regen_key):
+                            # Regenerate just this post
+                            new_posts = social_post_agent.generate_posts(
+                                st.session_state.selected_theme, 
+                                platforms=[platform], 
+                                count=1, 
+                                data=data
+                            )
+                            if platform in new_posts and new_posts[platform]:
+                                st.session_state.generated_posts[platform][i] = new_posts[platform][0]
+                                st.rerun()
+            
+            # Schedule button
+            if st.button("Schedule these posts to Buffer", key="schedule_posts_button"):
+                st.session_state.posts_to_schedule = st.session_state.generated_posts
+                st.session_state.page = "Scheduling"
+                st.rerun()
             
             for i, post in enumerate(posts[platform]):
                 with st.container():
