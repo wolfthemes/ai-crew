@@ -1,3 +1,5 @@
+# streamlit run apps/content_dashboard.py --server.fileWatcherType=poll --server.runOnSave=true --browser.gatherUsageStats=false 
+
 from pathlib import Path
 import sys
 # Add the parent directory to sys.path
