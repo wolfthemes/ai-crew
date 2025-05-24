@@ -14,7 +14,6 @@ from utils.content_utils import format_category
 from agents.content import social_post_agent
 from crews.content_crew import generate_social_campaign, schedule_to_buffer
 
-
 def show_theme_details(theme_slug, theme_data):
     """Show detailed theme information in an expandable section"""
     theme = theme_data[theme_slug]
@@ -113,6 +112,35 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Add this RIGHT AFTER st.set_page_config() in content_dashboard.py
+# (After line where you have st.set_page_config but before any other st commands)
+
+# Development auto-refresh setup
+import time
+
+# Enable development mode
+if "development" not in st.session_state:
+    st.session_state.development = True
+
+# Development tools in sidebar (place this after the existing sidebar content)
+def add_dev_tools():
+    if st.session_state.get("development", False):
+        with st.sidebar:
+            st.markdown("---")
+            st.markdown("**🔧 Development Tools**")
+            if st.button("🔄 Refresh App", help="Click to refresh the app manually"):
+                st.rerun()
+            
+            # Show last refresh time
+            if "last_refresh" not in st.session_state:
+                st.session_state.last_refresh = time.time()
+            
+            st.caption(f"Last refresh: {time.strftime('%H:%M:%S', time.localtime(st.session_state.last_refresh))}")
+            st.caption("💡 Tip: Save files to auto-refresh")
+
+# Call this function at the end of your sidebar setup
+# (after the existing sidebar content but before the main content)
+
 # Add some custom CSS for better styling
 st.markdown("""
 <style>
@@ -164,6 +192,7 @@ st.title("🎨 Theme Content Dashboard")
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Theme Explorer", "Content Generator", "Blog Post Generator", "Scheduling", "Analytics"])
 
+add_dev_tools()
 # In actual implementation, load from social_post_agent
 data = social_post_agent.load_data()
 theme_data = data["theme_data"]
