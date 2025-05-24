@@ -360,7 +360,11 @@ elif page == "Content Generator":
             if platform not in platforms:
                 continue
                 
-            st.markdown(f"<div class='platform-header'>{platform.upper()}</div>", unsafe_allow_html=True)
+            st.markdown(f"""
+            <div style='background-color: #f0f2f6; padding: 10px; border-radius: 5px; font-weight: bold; color: #2E4057; margin-bottom: 10px;'>
+            {platform.upper()}
+            </div>
+            """, unsafe_allow_html=True)
             
             for i, post in enumerate(posts[platform]):
                 with st.container():
@@ -391,6 +395,7 @@ elif page == "Content Generator":
             st.session_state.posts_to_schedule = st.session_state.generated_posts
             st.session_state.page = "Scheduling"
             st.rerun()
+
 # Scheduling page
 elif page == "Scheduling":
     st.header("Schedule Posts to Buffer")
