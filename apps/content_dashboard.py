@@ -271,39 +271,46 @@ if page == "Theme Explorer":
     for _, row in newest_themes.iterrows():
         st.sidebar.text(f"{row['name']} ({row['updated']})")
 
-# Content Generator page
+# Content Generator page - FIXED VERSION
 elif page == "Content Generator":
     st.header("Content Generator")
     
-    # Theme selection
-    if "selected_theme" not in st.session_state:
-        selected_theme = st.selectbox(
-            "Select Theme",
-            options=theme_df["slug"].tolist(),
-            format_func=lambda x: theme_data[x].get("name", x)
-        )
-        st.session_state.selected_theme = selected_theme
-    else:
-        selected_theme = st.session_state.selected_theme
-        # Fix for the SelectBox value type error
-        index_value = theme_df[theme_df["slug"] == selected_theme].index[0]
-        if hasattr(index_value, 'item'):  # Check if it's a numpy type that needs conversion
-            index_value = index_value.item()  # Convert numpy.int64 to Python int
-        else:
-            index_value = int(index_value)  # Regular int conversion as fallback
-            
-        st.selectbox(
-            "Select Theme",
-            options=theme_df["slug"].tolist(),
-            index=index_value,
-            format_func=lambda x: theme_data[x].get("name", x),
-            key="theme_selector"
-        )
+    # Theme selection - SAFE LOGIC
+    theme_slugs = theme_df["slug"].tolist()
     
-    # Display theme details
-    theme = theme_data[selected_theme]
+    # Initialize with first theme if not set
+    if "selected_theme" not in st.session_state:
+        st.session_state.selected_theme = theme_slugs[0] if theme_slugs else None
+    
+    # Ensure selected theme exists in current data
+    if st.session_state.selected_theme not in theme_slugs:
+        st.session_state.selected_theme = theme_slugs[0] if theme_slugs else None
+    
+    # Find current index safely
+    try:
+        current_index = theme_slugs.index(st.session_state.selected_theme)
+    except (ValueError, AttributeError):
+        current_index = 0
+        st.session_state.selected_theme = theme_slugs[0] if theme_slugs else None
+    
+    # Theme selector dropdown
+    selected_theme_slug = st.selectbox(
+        "Select Theme",
+        options=theme_slugs,
+        index=current_index,
+        format_func=lambda x: theme_data[x].get("name", x),
+        key="theme_selector_dropdown"
+    )
+    
+    # Update session state when selection changes
+    if selected_theme_slug != st.session_state.selected_theme:
+        st.session_state.selected_theme = selected_theme_slug
+    
+    # Get current theme data
+    theme = theme_data[st.session_state.selected_theme]
     st.subheader(f"Generating content for: {theme.get('name', '')}")
     
+    # Display theme details
     with st.expander("Theme Details", expanded=True):
         col1, col2 = st.columns(2)
         
@@ -335,59 +342,15 @@ elif page == "Content Generator":
             default=["facebook", "instagram", "x"]
         )
 
-    with st.expander("Advanced Content Options"):
-        st.subheader("Content Focus")
-        
-        # Theme metadata focus
-        focus_options = [
-            "Balanced (Default)",
-            "Feature Focused",
-            "Selling Points Focused",
-            "Audience Focused",
-            "New Release Announcement" if theme.get("updated", "") > (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d") else None,
-            "Testimonial Based" if theme.get("testimonials", []) else None
-        ]
-        focus_options = [opt for opt in focus_options if opt is not None]
-        
-        selected_focus = st.selectbox(
-            "Content Focus",
-            options=focus_options
-        )
-        
-        # Custom content adjustments
-        st.subheader("Content Adjustments")
-        
-        emoji_use = st.slider("Emoji Usage", 0, 3, 1, 
-                            help="0 = No emojis, 3 = Maximum emojis")
-        
-        hashtag_density = st.slider("Hashtag Density (Instagram)", 1, 5, 3,
-                                help="1 = Minimal hashtags, 5 = Maximum hashtags")
-        
-        tone_options = ["Professional", "Casual", "Excited", "Informative"]
-        selected_tone = st.selectbox("Tone", tone_options)
-        
-        # Pass these parameters to the generate_social_campaign function
-        if st.button("Apply Settings"):
-            st.session_state.content_settings = {
-                "focus": selected_focus,
-                "emoji_use": emoji_use,
-                "hashtag_density": hashtag_density,
-                "tone": selected_tone
-            }
-            st.success("Settings applied! They will be used when generating posts.")
-    
     with col2:
         post_count = st.slider("Number of Posts per Platform", 1, 5, 2)
     
     if st.button("Generate Posts"):
         with st.spinner("Generating posts..."):
-            # Check for content settings
-            content_settings = st.session_state.get("content_settings", {})
-           
-            posts = social_post_agent.generate_posts(selected_theme, count=2, data=data)
+            posts = social_post_agent.generate_posts(st.session_state.selected_theme, count=post_count, data=data)
             st.session_state.generated_posts = posts
     
-    # Display generated posts
+    # Display generated posts with FIXED STYLING
     if "generated_posts" in st.session_state:
         posts = st.session_state.generated_posts
         
@@ -401,7 +364,12 @@ elif page == "Content Generator":
             
             for i, post in enumerate(posts[platform]):
                 with st.container():
-                    st.markdown(f"<div class='post-container'>{post}</div>", unsafe_allow_html=True)
+                    # FIXED: Use markdown with proper styling instead of HTML div
+                    st.markdown(f"""
+                    <div style='background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e6e6e6; margin-bottom: 10px; color: #333;'>
+                    {post}
+                    </div>
+                    """, unsafe_allow_html=True)
                     
                     # Edit button for each post
                     col1, col2 = st.columns([3, 1])
@@ -412,17 +380,17 @@ elif page == "Content Generator":
                     
                     with col2:
                         if st.button(f"Regenerate this post", key=f"regen_{platform}_{i}"):
-                            # This would regenerate just this post in a real implementation
-                            new_posts = generate_social_campaign(selected_theme, [platform], 1)
-                            st.session_state.generated_posts[platform][i] = new_posts[platform][0]
-                            st.rerun()
+                            # Regenerate just this post
+                            new_posts = social_post_agent.generate_posts(st.session_state.selected_theme, platforms=[platform], count=1, data=data)
+                            if platform in new_posts and new_posts[platform]:
+                                st.session_state.generated_posts[platform][i] = new_posts[platform][0]
+                                st.rerun()
         
         # Schedule button
         if st.button("Schedule these posts to Buffer"):
             st.session_state.posts_to_schedule = st.session_state.generated_posts
             st.session_state.page = "Scheduling"
             st.rerun()
-
 # Scheduling page
 elif page == "Scheduling":
     st.header("Schedule Posts to Buffer")
