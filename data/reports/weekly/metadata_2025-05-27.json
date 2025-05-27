@@ -1,0 +1,16 @@
+{
+  "generated_on": "2025-05-27",
+  "report_type": "weekly",
+  "posted_to_notion": true,
+  "report_length": 13899,
+  "report_file_path": "data/weekly/eurusd_weekly_report_2025-05-27.md",
+  "tradable_day": true,
+  "saved_to_obsidian": true,
+  "agents_used": [
+    "Economic News Agent",
+    "Technical Analyst Agent",
+    "Fundamental Analyst Agent",
+    "Sentiment Analyst Agent",
+    "Weekly Report Writer Agent"
+  ]
+}
