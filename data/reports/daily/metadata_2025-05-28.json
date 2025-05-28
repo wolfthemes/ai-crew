@@ -1,0 +1,18 @@
+{
+  "generated_on": "2025-05-28",
+  "report_type": "daily",
+  "posted_to_notion": true,
+  "report_length": 4279,
+  "report_file_path": "data/daily/eurusd_daily_report_2025-05-28.md",
+  "tradable_day": true,
+  "saved_to_obsidian": true,
+  "session_focus": "London",
+  "generation_time": "08:10",
+  "agents_used": [
+    "Economic News Agent",
+    "Weekly Profile Analyst Agent",
+    "Daily Bias Analyst Agent",
+    "CISD Pattern Analyst Agent",
+    "Daily Report Writer Agent"
+  ]
+}
