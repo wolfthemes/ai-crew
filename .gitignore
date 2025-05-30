@@ -25,11 +25,16 @@ data/dynamic/editor/*
 data/dynamic/tickets/*
 !data/dynamic/tickets/.gitkeep
 
-!data/reports/daily
-!data/reports/daily
-data/reports/weekly/.gitkeep
-data/reports/daily/.gitkeep
+# Ignore everything under data/reports
+data/reports/*
 
+# But not the folder structure
+!data/reports/daily/
+!data/reports/weekly/
+
+# And not their .gitkeep files
+!data/reports/daily/.gitkeep
+!data/reports/weekly/.gitkeep
 
 *.log
 logs/
