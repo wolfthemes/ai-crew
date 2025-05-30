@@ -25,6 +25,12 @@ data/dynamic/editor/*
 data/dynamic/tickets/*
 !data/dynamic/tickets/.gitkeep
 
+!data/reports/daily
+!data/reports/daily
+data/reports/weekly/.gitkeep
+data/reports/daily/.gitkeep
+
+
 *.log
 logs/
 debug
