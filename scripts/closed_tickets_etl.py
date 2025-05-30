@@ -147,14 +147,16 @@ def backup_database(db_path, backup_dir):
         shutil.copy2(db_path, backup_path)
         
         # Also create a copy with a fixed name (latest version)
-        latest_backup_path = os.path.join(backup_dir, "closed_tickets_latest.db")
-        shutil.copy2(db_path, latest_backup_path)
+        # latest_backup_path = os.path.join(backup_dir, "closed_tickets_latest.db")
+        # shutil.copy2(db_path, latest_backup_path)
         
         print(f"✅ Database backed up to {backup_path}")
         print(f"✅ Latest version backed up to {latest_backup_path}")
+
         return True
+
     except Exception as e:
-        print(f"❌ Database backup failed: {str(e)}")
+        print(f"❌ Database backup failed (possible Google Drive glicth): {str(e)}")
         return False
 
 def main():
