@@ -1,1 +1,1 @@
-wsl bash -c "cd /mnt/c/Users/Constantin/wolfthemes-dev/ai-crew && source .venv/bin/activate && python scripts/generate_market_report.py"
+wsl bash -c "cd /mnt/c/Users/Constantin/wolfthemes-dev/ai-crew && source .venv/bin/activate && python scripts/generate_market_report.py --no-notion"
