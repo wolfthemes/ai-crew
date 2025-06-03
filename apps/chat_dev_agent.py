@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-REPO_ROOT = os.path.abspath("repos")
+REPO_ROOT = os.getenv("LOCAL_REPOS_DIR")
 GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
@@ -39,7 +39,7 @@ st.set_page_config(page_title="Dev Agent Chat", layout="wide")
 st.sidebar.title("📂 Codebase Context")
 
 # Repository selection
-repos_dir = "repos"
+repos_dir = REPO_ROOT or "repos"  # Fallback to 'repos' if env var is not set
 code_extensions = (".py", ".php", ".js", ".ts", ".css", ".html")
 
 # List repos + default "All Repos" option
