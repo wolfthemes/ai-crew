@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-REPO_ROOT = os.path.abspath("repos")
+REPO_ROOT = os.getenv("LOCAL_REPOS_DIR")
 GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 

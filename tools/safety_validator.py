@@ -1,7 +1,10 @@
 import os
 import subprocess
 
-REPO_ROOT = os.path.abspath("repos")
+from dotenv import load_dotenv
+load_dotenv()
+
+REPO_ROOT = os.getenv("LOCAL_REPOS_DIR")
 
 class SafetyValidator:
     """Base class for validating operations according to safety rules"""

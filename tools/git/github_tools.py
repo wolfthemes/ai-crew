@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-REPO_ROOT = os.path.abspath("repos")
+REPO_ROOT = os.getenv("LOCAL_REPOS_DIR")
 GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
@@ -37,7 +37,7 @@ class GitHubTool(BaseTool):
             # First attempt: clone with specified branch (default: main)
             try:
                 subprocess.run(
-                    ["git", "clone", "--branch", branch, "--single-branch", repo_url, repo_name],
+                    ["git", "clone", "--branch", branch, "--single-branch", epo_url, repo_name],
                     cwd=REPO_ROOT,
                     check=True
                 )
