@@ -4,6 +4,7 @@ import shutil
 import sys
 import json
 import os
+import markdown2
 from pathlib import Path
 import subprocess
 from datetime import date
@@ -80,14 +81,16 @@ def main():
         print(f"Processing Ticket #{ticket['id']}: {ticket['subject']}")
         
         result = support_crew_with_research(ticket["last_message"], instruction="", ticket_id=ticket['id'])
-        # Extract the actual string content from the TaskOutput object
+
         if hasattr(result["reply"], "output"):
-            reply_html = result["reply"].output
+            reply_markdown = result["reply"].output
         elif isinstance(result["reply"], str):
-            reply_html = result["reply"]
+            reply_markdown = result["reply"]
         else:
-            # If it's a TaskOutput object without an output attribute, try to convert it to string
-            reply_html = str(result["reply"])
+            reply_markdown = str(result["reply"])
+
+        # Convert markdown to HTML - make sure the output is always in HTML
+        reply_html = markdown2.markdown(reply_markdown)
 
         # Save in draft DRAFT_PATH/draft_ticket['id']
         with open(draft_file, "w", encoding="utf-8") as f:
