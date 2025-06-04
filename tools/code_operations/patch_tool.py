@@ -5,8 +5,10 @@ import os
 import difflib
 import subprocess
 from tools.safety_validator import SafetyValidator
+from dotenv import load_dotenv
+load_dotenv()
 
-REPO_ROOT = os.path.abspath("repos")
+REPO_ROOT = os.getenv("LOCAL_REPOS_ROOT")
 
 class PatchInput(BaseModel):
     operation: Literal["preview", "apply"] = Field(..., description="Operation: preview or apply patch")

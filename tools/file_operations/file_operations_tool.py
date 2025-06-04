@@ -4,8 +4,9 @@ from crewai.tools import BaseTool
 import os
 import shutil
 import subprocess
-
-REPO_ROOT = os.path.abspath("repos")
+from dotenv import load_dotenv
+load_dotenv()
+REPO_ROOT = os.getenv("LOCAL_REPOS_ROOT")
 
 class FileOperationsInput(BaseModel):
     source_repo: str = Field(..., description="Source repository name")

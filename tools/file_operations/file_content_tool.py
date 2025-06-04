@@ -3,7 +3,10 @@ from pydantic import BaseModel, Field
 from crewai.tools import BaseTool
 import os
 
-REPO_ROOT = os.path.abspath("repos")
+from dotenv import load_dotenv
+load_dotenv()
+
+REPO_ROOT = os.getenv("LOCAL_REPOS_DIR")
 
 class FileContentInput(BaseModel):
     repo_name: str = Field(..., description="Repository name")

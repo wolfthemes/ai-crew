@@ -3,8 +3,10 @@ from pydantic import BaseModel, Field
 from crewai.tools import BaseTool
 import os
 import re
+from dotenv import load_dotenv
+load_dotenv()
 
-REPO_ROOT = os.path.abspath("repos")
+REPO_ROOT = os.getenv("LOCAL_REPOS_ROOT")
 
 class CodeSearchInput(BaseModel):
     search_type: Literal["function", "hook", "class", "pattern"] = Field(
