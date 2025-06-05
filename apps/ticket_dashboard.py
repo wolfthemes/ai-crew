@@ -8,6 +8,7 @@ import requests
 import threading
 import json
 import html
+import markdown2
 from html import unescape
 from crews.support_crew import support_crew_with_research
 from scripts import preprocess_open_tickets
