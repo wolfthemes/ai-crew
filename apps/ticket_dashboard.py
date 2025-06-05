@@ -205,8 +205,18 @@ else:
                     try:
                         result = support_crew_with_research(ticket["last_message"], instruction=crew_instruction, ticket_id=ticket_id)
                         
-                        reply_html = result["reply"].output if hasattr(result["reply"], "output") else result["reply"]
+                        # reply_html = result["reply"].output if hasattr(result["reply"], "output") else result["reply"]
                         
+                        if hasattr(result["reply"], "output"):
+                            reply_markdown = result["reply"].output
+                        elif isinstance(result["reply"], str):
+                            reply_markdown = result["reply"]
+                        else:
+                            reply_markdown = str(result["reply"])
+
+                        # Convert markdown to HTML - make sure the output is always in HTML
+                        reply_html = markdown2.markdown(reply_markdown)
+
                         st.session_state[editor_state_key] = reply_html
                         st.rerun()
                     except Exception as e:
