@@ -3,6 +3,7 @@ from agents.support.research_agent import research_agent
 from agents.support.support_agent import support_agent
 from agents.support.quality_agent import support_quality_control_agent
 
+from core.ticket_parser import parse_fresh_ticket_metadata
 from utils.ticket_utils import get_ticket_metadata
 from tasks.support.research_task import create_research_task
 from tasks.support.support_tasks import create_support_reply_task
@@ -21,7 +22,8 @@ def support_crew_with_research(ticket_text: str, instruction: str = "", ticket_i
     if ticket_id:
         ticket_meta = get_ticket_metadata(ticket_id)
     else:
-        ticket_meta = {}
+        # ticket_meta = {}
+        ticket_meta = parse_fresh_ticket_metadata(ticket_text)
 
     # 1. Research the ticket and structure its issues
     # Now passing instruction to research task

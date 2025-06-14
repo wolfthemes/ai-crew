@@ -1,6 +1,6 @@
 import json
 import logging
-from core.ticket_parser import TicketParser
+from core.ticket_parser import EnhancedTicketParser
 from tools.kb_tools import search_kb_structured
 from tools.vector_retriever import retriever
 from utils.helpers import setup_logging
@@ -103,6 +103,8 @@ def process_ticket_research(ticket_text: str, ticket_meta: dict = None, addition
             }
             
         else:
+
+            # This condition should not be reached as we passed the parsed meta directly in the support_crew file
             logger.info("Processing without ticket metadata")
             
             # Parse the ticket with error handling
