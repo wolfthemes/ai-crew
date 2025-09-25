@@ -37,6 +37,7 @@ def is_tradable_day(current_date: date = None, economic_events: List[Dict[str, A
     
     keywords = [
         r'Nonfarm.*Payrolls',
+        r'HCOB',
         r'Consumer.*Price.*Index',
         r'Consumer.*Prices',
         r'ECB.*Rate',
