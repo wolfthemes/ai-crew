@@ -43,9 +43,9 @@ def is_tradable_day(current_date: date = None, economic_events: List[Dict[str, A
         r'Fed.*Interest.*Rate',
         r'ECB.*Press.*Conference',
         r'FOMC.*Press.*Conference',
-        r'Fed.*Speech',
-        r'ECB.*Speech',
-        r'President.*Speech',
+        # r'Fed.*Speech',
+        # r'ECB.*Speech',
+        # r'President.*Speech',
     ]
     pattern = re.compile('|'.join(keywords), re.IGNORECASE)
 
