@@ -7,8 +7,8 @@
     "demourl": "https://preview.wolfthemes.store/decibel/landing/",
     "shortlink": "https://wlfthm.es/decibel",
     "itemId": "10662261",
-    "version": "3.8.65",
-    "updated": "2025-09-05",
+    "version": "3.8.91",
+    "updated": "2026-06-05",
     "description": "A Wordpress Theme for the Music Industry",
     "longdescription": "Decibel is a premium WordPress theme dedicated to musicians, bands, labels or anyone related to the music industry. It includes a discography, event list, and video gallery features and so much more! It is built for WooCommerce to allow you to sell your merch online and includes WPBakery Page Builder to create your layouts. It also comes with a lot of theme options to set the appearance and colors of your website easily.",
     "category": [
@@ -120,34 +120,10 @@
     "demourl": "https://preview.wolfthemes.store/tattoopress/landing/",
     "shortlink": "https://wlfthm.es/tattoopress",
     "itemId": "11690958",
-    "version": "3.7.71",
-    "updated": "2025-09-05",
+    "version": "3.7.97",
+    "updated": "2026-06-05",
     "description": "A Wordpress Theme for Ink Artists",
     "longdescription": "TattooPress is a premium WordPress theme designed for tattoo artists, studios, and creatives in the body art industry. It features a portfolio, appointment booking integration, and a gallery to showcase your work in style. It is built for WooCommerce so you can sell your merch or services online, and includes WPBakery Page Builder to help you design your layouts easily. The theme also offers extensive options to customize the look and feel of your website effortlessly.",
-    "category": "",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "included_plugins": [],
-    "design_features": [],
-    "use_cases": [],
-    "customer_sites": [],
-    "testimonials": []
-  },
-  "protheme": {
-    "name": "Protheme",
-    "slug": "protheme",
-    "builder": "WPBakery",
-    "url": "https://themeforest.net/item/protheme-powerful-flexible-mega-wordpress-theme/20035852",
-    "demourl": "https://preview.wolfthemes.store/protheme/",
-    "shortlink": "https://wlfthm.es/protheme",
-    "itemId": "20035852",
-    "version": "2.9.61",
-    "updated": "2025-09-05",
-    "description": "A Powerful and Flexible Multi-Purpose Theme",
-    "longdescription": "Protheme is an awesome, pixel perfect and powerful multi-purpose WordPress theme. It is made simple and functional right out of the box, yet offer high customization for more advanced users. It includes a tailored version of Visual Composer ($74 value), the most powerful page builder out there, with a lot of additional elements and custom styles to suit the amazing design of the theme.",
     "category": "",
     "features": [],
     "selling_points": [],
@@ -168,8 +144,8 @@
     "demourl": "https://preview.wolfthemes.store/tune/",
     "shortlink": "https://wlfthm.es/tune",
     "itemId": "20244376",
-    "version": "2.7.69",
-    "updated": "2025-09-05",
+    "version": "2.7.96",
+    "updated": "2026-06-05",
     "description": "One-Page Music WordPress Theme",
     "longdescription": "Tune is a one-page music WordPress theme made to be simple and ready to use. It includes all the features you need to create a solid fan base online: music player, social media integration, event list, discography & video gallery, and so on; and it doesn’t require any coding knowledge.",
     "category": [
@@ -300,35 +276,11 @@
     "demourl": "https://preview.wolfthemes.store/retine/landing/",
     "shortlink": "https://wlfthm.es/retine",
     "itemId": "20349572",
-    "version": "2.8.65",
-    "updated": "2025-09-05",
+    "version": "2.8.91",
+    "updated": "2026-06-05",
     "description": "A WordPress Theme for Photographers and Creatives",
     "longdescription": "Retine is a beautiful, responsive, pixel-perfect, solid and powerful WordPress theme made to be simple and ready to use. It includes all the features you need to showcase your work: stock photo, shop, portfolio, sliders, gallery, and so on; and it doesn’t require any coding knowledge.",
     "category": "",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "included_plugins": [],
-    "design_features": [],
-    "use_cases": [],
-    "customer_sites": [],
-    "testimonials": []
-  },
-  "andre": {
-    "name": "Andre",
-    "slug": "andre",
-    "builder": "WPBakery",
-    "url": "https://themeforest.net/item/andr-a-contemporary-wordpress-theme-for-small-business-owners-and-creatives/20630516",
-    "demourl": "https://preview.wolfthemes.store/andre/landing",
-    "shortlink": "https://wlfthm.es/andre",
-    "itemId": "20630516",
-    "version": "2.6.65",
-    "updated": "2025-09-05",
-    "description": "A Fresh Multipurpose WordPress Theme",
-    "longdescription": "André is a fresh, stunning, pixel perfect, modern and solid WordPress Themes for small business owners, entrepreneurs, and creatives. It is designed with terrific attention to details, flexibility and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes a tailored version of WPBakery Page Builder ($74 value) and the Slider Revolution plugin ($109 value).",
-    "category": "Portfolio",
     "features": [],
     "selling_points": [],
     "theme_style": [],
@@ -348,8 +300,8 @@
     "demourl": "https://preview.wolfthemes.store/loud/landing/",
     "shortlink": "https://wlfthm.es/loud",
     "itemId": "20881607",
-    "version": "2.6.68",
-    "updated": "2025-09-05",
+    "version": "2.6.95",
+    "updated": "2026-06-05",
     "description": "A Modern and Unique WordPress Theme for the Music Industry",
     "longdescription": "Loud is a modern and unique WordPress Theme for musicians, artists, labels and everyone working in the music industry. It includes all the feature you need to create a professional music website easily and quickly. Discography, Tour Dates, Playlist Manager, Store, Video & Photo Gallery etc...",
     "category": [
@@ -470,8 +422,8 @@
     "demourl": "https://preview.wolfthemes.store/hares/landing/",
     "shortlink": "https://wlfthm.es/hares",
     "itemId": "21121953",
-    "version": "2.2.70",
-    "updated": "2025-09-05",
+    "version": "2.2.96",
+    "updated": "2026-06-05",
     "description": "A Stylish WordPress Theme",
     "longdescription": "Hares is a vintage and stylish WordPress theme for your tattoo salon, barbershop, pub, restaurant, motorcycle club etc. Of course, it can be used as a portfolio, blog, photo website, shop, resume or any other purpose you can think of. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional website easily and quickly.",
     "category": [
@@ -595,8 +547,8 @@
     "demourl": "https://preview.wolfthemes.store/glytch/landing/",
     "shortlink": "https://wlfthm.es/glytch",
     "itemId": "21255854",
-    "version": "2.4.61",
-    "updated": "2025-09-05",
+    "version": "2.4.87",
+    "updated": "2026-06-05",
     "description": "A Vibrant Music WordPress Theme",
     "longdescription": "Glytch is a vibrant and modern WordPress Theme for musicians, artists, and everyone working in the entertainment industry. It includes all the feature you need to create a professional music website easily and quickly. Discography, Tour Dates, Playlist Manager, Store, Video & Photo Gallery etc...",
     "category": [
@@ -732,8 +684,8 @@
     "demourl": "https://preview.wolfthemes.store/superflick/landing/",
     "shortlink": "https://wlfthm.es/superflick",
     "itemId": "21572465",
-    "version": "2.2.65",
-    "updated": "2025-09-05",
+    "version": "2.2.92",
+    "updated": "2026-06-05",
     "description": "An Elegant Video Oriented WordPress Theme",
     "longdescription": "Superflick is an elegant & modern WordPress Theme for movie studios, video artists, filmmakers, vloggers, agencies and everyone wanting to showcase their video work. It includes a video gallery, portfolio, shop and blog features. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": [
@@ -857,8 +809,8 @@
     "demourl": "https://preview.wolfthemes.store/phase/landing/",
     "shortlink": "https://wlfthm.es/phase",
     "itemId": "21904198",
-    "version": "2.3.62",
-    "updated": "2025-09-05",
+    "version": "2.3.88",
+    "updated": "2026-06-05",
     "description": "A Complete Music WordPress Theme for Record Labels and Artists",
     "longdescription": "Phase is a complete music WordPress theme for record labels, artists, bands and everyone working in the music industry. It includes an artist custom post type, a discography, video, photo, shop and blog features. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": [
@@ -986,8 +938,8 @@
     "demourl": "https://preview.wolfthemes.store/zample/landing/",
     "shortlink": "https://wlfthm.es/zample",
     "itemId": "22047467",
-    "version": "2.0.69",
-    "updated": "2025-09-05",
+    "version": "2.0.95",
+    "updated": "2026-06-05",
     "description": "A Fresh One-Page Music WordPress Theme",
     "longdescription": "Zample is a fresh and modern one-page WordPress Theme for musicians, artists, and everyone working in the entertainment industry. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional music website easily and quickly.",
     "category": "Music",
@@ -1010,8 +962,8 @@
     "demourl": "https://preview.wolfthemes.store/prequelle/landing/",
     "shortlink": "https://wlfthm.es/prequelle",
     "itemId": "22390587",
-    "version": "2.0.61",
-    "updated": "2025-09-05",
+    "version": "2.0.87",
+    "updated": "2026-06-05",
     "description": "Elegant and Modern WooCommerce Theme",
     "longdescription": "Prequelle is modern and elegant e-commerce WordPress theme built for WooCoomerce plugin. It includes shop extended features like product quick view, user wishlist, dropdown cart panel, login popup and more. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": [
@@ -1133,8 +1085,8 @@
     "demourl": "https://preview.wolfthemes.store/slikk/landing/",
     "shortlink": "https://wlfthm.es/slikk",
     "itemId": "22390587",
-    "version": "1.9.69",
-    "updated": "2025-09-05",
+    "version": "1.9.95",
+    "updated": "2026-06-05",
     "description": "Stylish WooCommerce Theme",
     "longdescription": "Slikk is a vintage and elegant WordPress theme built for WooCoomerce plugin. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": [
@@ -1245,8 +1197,8 @@
     "demourl": "https://preview.wolfthemes.store/vonzot/landing/",
     "shortlink": "https://wlfthm.es/vonzot",
     "itemId": "22562750",
-    "version": "1.9.68",
-    "updated": "2025-09-05",
+    "version": "1.9.95",
+    "updated": "2026-06-05",
     "description": "Music Oriented WooCommerce Theme",
     "longdescription": "Vonzot It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": [
@@ -1356,8 +1308,8 @@
     "demourl": "https://preview.wolfthemes.store/deadlift/landing/",
     "shortlink": "https://wlfthm.es/deadlift",
     "itemId": "22708662",
-    "version": "1.8.70",
-    "updated": "2025-09-05",
+    "version": "1.8.96",
+    "updated": "2026-06-05",
     "description": "Fitnesss and Bodybuilding WordPress Theme",
     "longdescription": "Deadlift is a bold and modern fitness WordPress theme. It includes many features for your website like classes timetable, workout programs, meal plans, recipes and more. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": [
@@ -1477,125 +1429,6 @@
       }
     ]
   },
-  "hyperbent": {
-    "name": "Hyperbent",
-    "slug": "hyperbent",
-    "builder": "WPBakery",
-    "url": "https://themeforest.net/item/hyperbent-a-modern-music-wordpress-theme/22856987",
-    "demourl": "https://preview.wolfthemes.store/hyperbent/landing/",
-    "shortlink": "https://wlfthm.es/hyperbent",
-    "itemId": "22856987",
-    "version": "1.9.70",
-    "updated": "2025-09-05",
-    "description": "A Modern Music WordPress Theme",
-    "longdescription": "Hyperbent is a modern and unique WordPress Theme for musicians, artists, labels and everyone working in the music industry. It includes all the feature you need to create a professional music website easily and quickly. Discography, Tour Dates, Playlist Manager, Store, Video & Photo Gallery etc...",
-    "category": [
-      "Music",
-      "Entertainment"
-    ],
-    "features": [
-      "Bold black and yellow modern design",
-      "Built with WPBakery Page Builder ($74 value) included",
-      "Slider Revolution plugin ($109 value) included",
-      "Comprehensive discography management system",
-      "Event listing and tour date functionality",
-      "Video gallery with custom player options",
-      "Photo gallery and album management",
-      "Wolf WPBakery Extension with music-specific elements",
-      "WooCommerce integration for merchandise sales",
-      "Audio player with playlist management",
-      "Content Blocks system for custom headers and footers",
-      "One-click demo import with complete content",
-      "Mobile-optimized responsive design for all devices",
-      "Multiple blog layout options (grid, masonry, metro)",
-      "Social sharing integration across multiple platforms",
-      "Portfolio custom post type with advanced filtering"
-    ],
-    "selling_points": [
-      "Create a professional music website with a striking, contemporary aesthetic",
-      "Showcase your music, videos, and upcoming events in one cohesive platform",
-      "Sell merchandise directly to fans with integrated e-commerce",
-      "Connect with your audience through embedded social media features",
-      "Establish a professional online presence for your band, label, or music business",
-      "Save time with pre-built music industry layouts and templates",
-      "Customize every aspect of your site to match your unique brand identity"
-    ],
-    "theme_style": [
-      "Bold",
-      "Modern",
-      "High-contrast",
-      "Urban"
-    ],
-    "target_audience": [
-      "Musicians and Bands",
-      "Electronic Artists and DJs",
-      "Record Labels",
-      "Music Producers",
-      "Music Industry Professionals",
-      "Concert Promoters",
-      "Entertainment Companies"
-    ],
-    "key_benefits": [
-      "Stand out with a bold black and yellow design that captures attention",
-      "Showcase your music with integrated audio players and playlists",
-      "Promote upcoming performances with event calendar integration",
-      "Sell merchandise and music directly to your fans",
-      "Build a dedicated fanbase through media galleries and content",
-      "Establish a professional music industry presence with contemporary aesthetics",
-      "Create a website that reflects modern music trends and styles"
-    ],
-    "included_plugins": [
-      "One-Click Demo Import",
-      "WooCommerce",
-      "Instagram Feed",
-      "Contact Form 7",
-      "Slider Revolution",
-      "WPBakery Page Builder",
-      "Envato Market",
-      "Wolf Visual Composer",
-      "Wolf VC Content Block",
-      "Wolf Playlist Manager",
-      "Wolf Discography",
-      "Wolf Events",
-      "Wolf Videos",
-      "Wolf Portfolio",
-      "Wolf Custom Post Meta",
-      "Wolf Metaboxes",
-      "Wolf Video Thumbnail Generator",
-      "Wolf WooCommerce Wishlist",
-      "Wolf WooCommerce Quickview"
-    ],
-    "design_features": [
-      "Bold typography and high-contrast color schemes",
-      "Black and yellow contemporary design elements",
-      "Music-oriented layout templates",
-      "Album cover showcase options",
-      "Video thumbnail galleries",
-      "Multiple header layout variations",
-      "Custom music player with playlist support",
-      "Social sharing integration",
-      "Special effects and animations",
-      "Dotted mesh overlays for visual impact"
-    ],
-    "use_cases": [
-      "Electronic Music Artist Websites",
-      "DJ and Producer Platforms",
-      "Modern Band Websites",
-      "Record Label Online Presence",
-      "Music Producer Portfolios",
-      "Concert and Tour Promotion Sites",
-      "Music Festival Websites",
-      "Entertainment Business Websites"
-    ],
-    "customer_sites": [],
-    "testimonials": [
-      {
-        "text": "I am super happy with the theme. Especially the customer support is super friendly and quick. Thanks for that.",
-        "author": "carolaba",
-        "rating": 5
-      }
-    ]
-  },
   "kayo": {
     "name": "Kayo",
     "slug": "kayo",
@@ -1604,8 +1437,8 @@
     "demourl": "https://preview.wolfthemes.store/kayo/landing/",
     "shortlink": "https://wlfthm.es/kayo",
     "itemId": "22982302",
-    "version": "1.9.64",
-    "updated": "2025-09-05",
+    "version": "1.9.90",
+    "updated": "2026-06-05",
     "description": "Clean and Simple Music WordPress Theme",
     "longdescription": "Kayo is a clean & simple WordPress Theme for musicians, artists, labels and everyone working in the music industry. It includes all the feature you need to create a professional music website easily and quickly. Discography, Tour Dates, Playlist Manager, Store, Video & Photo Gallery etc...",
     "category": [
@@ -1734,8 +1567,8 @@
     "demourl": "https://preview.wolfthemes.store/reinar/landing/",
     "shortlink": "https://wlfthm.es/reinar",
     "itemId": "23147901",
-    "version": "1.8.70",
-    "updated": "2025-09-05",
+    "version": "1.8.96",
+    "updated": "2026-06-05",
     "description": "A Nordic Inspired Music and Creative WordPress Theme",
     "longdescription": "Reinar is nordic and viking inspired WordPress Theme for musicians and creatives. It includes all the feature you need to create a professional music website easily and quickly. Discography, Tour Dates, Playlist Manager, Store, Video & Photo Gallery etc.",
     "category": [
@@ -1857,6 +1690,11 @@
         "text": "Beautiful template & extremely helpful customer support! Thank you",
         "author": "candacelecamusic",
         "rating": 5
+      },
+      {
+        "text": "Everything about this theme is awesome! From Code Quality to Documentation Quality to Customizability...It literally ROCKS! Takes a little bit of time to setup, but man...what a great theme! I originally bought it for the band I was in a few years back, but now that band is no longer together, I'm now using for my own solo endeavor! I'll be looking to Wolff Themes in the near future for other themes for sure! Thanks guys!",
+        "author": "SpokaneDrummer",
+        "rating": 5
       }
     ]
   },
@@ -1868,8 +1706,8 @@
     "demourl": "https://preview.wolfthemes.store/snakepit/landing/",
     "shortlink": "https://wlfthm.es/snakepit",
     "itemId": "23418267",
-    "version": "1.8.71",
-    "updated": "2025-09-05",
+    "version": "1.8.97",
+    "updated": "2026-06-05",
     "description": "A Rock and Metal Oriented Music WordPress Theme",
     "longdescription": "Snakepit is Rock and Metal oriented music WordPress Theme. It's made for record labels, artists, bands and everyone working in the music industry. It includes all the feature you need to create a professional music website easily and quickly.",
     "category": [
@@ -2000,8 +1838,8 @@
     "demourl": "https://preview.wolfthemes.store/alceste/landing/",
     "shortlink": "https://wlfthm.es/alceste",
     "itemId": "23713031",
-    "version": "1.8.62",
-    "updated": "2025-09-05",
+    "version": "1.8.88",
+    "updated": "2026-06-05",
     "description": "A Clean and Modern WooCommerce Theme",
     "longdescription": "Alceste is fresh and modern e-commerce WordPress theme built for WooCoomerce plugin. It includes shop extended features like product quick view, user wishlist, dropdown cart panel, login popup and more. It is designed to be clean, user-friendly, secure and focused on performances. It includes all the features you need to create a professional online shop easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": [
@@ -2119,30 +1957,6 @@
       }
     ]
   },
-  "firemaster": {
-    "name": "Firemaster",
-    "slug": "firemaster",
-    "builder": "WPBakery",
-    "url": "https://themeforest.net/item/firemaster-a-creative-music-wordpress-theme/23859394",
-    "demourl": "https://preview.wolfthemes.store/firemaster/landing/",
-    "shortlink": "https://wlfthm.es/firemaster",
-    "itemId": "23859394",
-    "version": "1.8.63",
-    "updated": "2025-09-05",
-    "description": "A Creative Music WordPress Theme",
-    "longdescription": "Firemaster is a creative WordPress Theme for musicians, artists, labels and everyone working in the music industry. It includes all the feature you need to create a professional music website easily and quickly. Discography, Tour Dates, Playlist Manager, Store, Video & Photo Gallery etc...",
-    "category": "Music",
-    "features": [],
-    "selling_points": [],
-    "theme_style": [],
-    "target_audience": [],
-    "key_benefits": [],
-    "included_plugins": [],
-    "design_features": [],
-    "use_cases": [],
-    "customer_sites": [],
-    "testimonials": []
-  },
   "milu": {
     "name": "Milu",
     "slug": "milu",
@@ -2151,8 +1965,8 @@
     "demourl": "https://preview.wolfthemes.store/milu/landing/",
     "shortlink": "https://wlfthm.es/milu",
     "itemId": "24195641",
-    "version": "1.7.62",
-    "updated": "2025-09-05",
+    "version": "1.7.88",
+    "updated": "2026-06-05",
     "description": "A Tech and App Landing Page WordPress Theme",
     "longdescription": "Milu is a fresh, clean, pixel perfect and modern WordPress Theme to showcase your app or tech agency. It is designed with terrific attention to details, flexibility and performance.",
     "category": "",
@@ -2175,8 +1989,8 @@
     "demourl": "https://preview.wolfthemes.store/beatit/landing/",
     "shortlink": "https://wlfthm.es/beatit",
     "itemId": "24430130",
-    "version": "2.6.70",
-    "updated": "2025-09-05",
+    "version": "2.6.96",
+    "updated": "2026-06-05",
     "description": "A Modern Music WordPress Theme",
     "longdescription": "Beatit is a premium WordPress theme dedicated to musicians, bands, label or anyone related to the music industry who wants to create a professional website easily. It includes everything your need: Discography, Tour Dates, Playlist Manager, Store, Video etc.",
     "category": "Music",
@@ -2199,8 +2013,8 @@
     "demourl": "https://preview.wolfthemes.store/herion/landing/",
     "shortlink": "https://wlfthm.es/herion",
     "itemId": "25233409",
-    "version": "1.8.63",
-    "updated": "2025-09-05",
+    "version": "1.8.90",
+    "updated": "2026-06-05",
     "description": "A WordPress Theme for Music Bands and Record Labels",
     "longdescription": "Herion is a complete music WordPress theme for record labels, artists, bands and everyone working in the music industry. It includes an artist custom post type, a discography, video, photo, shop and blog features. It is designed with terrific attention to details, flexibility, and performance. It includes all the features you need to create a professional website easily and quickly. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": [
@@ -2322,8 +2136,8 @@
     "demourl": "https://preview.wolfthemes.store/staaw/landing/",
     "shortlink": "https://wlfthm.es/staaw",
     "itemId": "26351637",
-    "version": "1.6.69",
-    "updated": "2025-09-05",
+    "version": "1.6.95",
+    "updated": "2026-06-05",
     "description": "Print-on-Demand WooCommerce Theme",
     "longdescription": "Oglin offers a unique experience to your visitors. Its advanced navigation feature lets users and potential customers browse your website while listening to your music, without reloading the page. It includes everything needed for anyone working in the music industry. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their client. It includes an extended version of WPBakery Page Builder ($64) and the Slider Revolution plugin ($109 value).",
     "category": [
@@ -2443,8 +2257,8 @@
     "demourl": "https://preview.wolfthemes.store/bronze/landing/",
     "shortlink": "https://wlfthm.es/bronze",
     "itemId": "27562954",
-    "version": "1.7.61",
-    "updated": "2025-09-05",
+    "version": "1.7.87",
+    "updated": "2026-06-05",
     "description": "A Professional Music WordPress Theme",
     "longdescription": "Bronze is a premium WordPress theme dedicated to musicians, bands, labels, or anyone related to the music industry who wants to create a professional website easily. It includes everything you need: Discography, Tour Dates, Playlist Manager, Store, Video, etc.",
     "category": "Music",
@@ -2467,8 +2281,8 @@
     "demourl": "https://preview.wolfthemes.store/swingster/landing/",
     "shortlink": "https://wlfthm.es/swingster",
     "itemId": "32517604",
-    "version": "1.4.60",
-    "updated": "2025-09-05",
+    "version": "1.4.87",
+    "updated": "2026-06-05",
     "description": "Elementor Music WordPress Theme",
     "longdescription": "Swingster is a premium WordPress theme built for Elementor and dedicated to musicians, bands, labels, or anyone related to the music industry who wants to create a professional website easily. It includes everything you need: Discography, Tour Dates, Playlist Manager, Store, Video, etc.",
     "category": [
@@ -2583,8 +2397,8 @@
     "demourl": "https://preview.wolfthemes.store/speaker/landing/",
     "shortlink": "https://wlfthm.es/speaker",
     "itemId": "7633220",
-    "version": "2.4.58",
-    "updated": "2025-09-05",
+    "version": "2.4.85",
+    "updated": "2026-06-05",
     "description": "One-Page Music Wordpress Theme",
     "longdescription": "Swingster is a one-page WordPress theme built for Elementor and dedicated to musicians, bands, labels, or anyone related to the music industry who wants to create a professional website easily. It includes everything you need: Discography, Tour Dates, Playlist Manager, Store, Video, etc.",
     "category": [
@@ -2690,8 +2504,8 @@
     "demourl": "https://preview.wolfthemes.store/nu/landing/",
     "shortlink": "https://wlfthm.es/nu",
     "itemId": "33297991",
-    "version": "1.5.56",
-    "updated": "2025-09-05",
+    "version": "1.5.83",
+    "updated": "2026-06-05",
     "description": "Creative Portfolio WordPress Theme",
     "longdescription": "Nù is a creative portfolio WordPress theme built for Elementor and dedicated to digital designer, modern agency, design studio, personal portfolio or who wants to create a professional website easily.",
     "category": [
@@ -2794,10 +2608,10 @@
     "demourl": "https://preview.wolfthemes.store/spectacle/landing/",
     "shortlink": "https://wlfthm.es/spectacle",
     "itemId": "35160896",
-    "version": "1.4.58",
-    "updated": "2025-09-05",
+    "version": "1.4.86",
+    "updated": "2026-06-05",
     "description": "Music WordPress Theme",
-    "longdescription": "Overable is a premium WordPress theme built for Elementor and dedicated to musicians, bands, labels, or anyone related to the music industry who wants to create a professional website easily. It includes everything you need: Discography, Tour Dates, Playlist Manager, Store, Video, etc.",
+    "longdescription": "Spectacle is a premium WordPress theme built for Elementor and dedicated to musicians, bands, labels, or anyone related to the music industry who wants to create a professional website easily. It includes everything you need: Discography, Tour Dates, Playlist Manager, Store, Video, etc.",
     "category": [
       "Music",
       "Entertainment"
@@ -2906,8 +2720,8 @@
     "demourl": "https://preview.wolfthemes.store/effigy/landing/",
     "shortlink": "https://wlfthm.es/effigy",
     "itemId": "36336866",
-    "version": "1.4.56",
-    "updated": "2025-09-05",
+    "version": "1.4.85",
+    "updated": "2026-06-05",
     "description": "A Clean and Professional Music WordPress Theme",
     "longdescription": "Effigy is a clean and elegant WordPress theme built for Elementor and dedicated to musicians, bands, labels, or anyone related to the music industry who wants to create a professional website easily. It includes everything you need: Discography, Tour Dates, Playlist Manager, Store, Video, etc.",
     "category": [
@@ -3025,8 +2839,8 @@
     "demourl": "https://preview.wolfthemes.store/omnity/landing/",
     "shortlink": "https://wlfthm.es/omnity",
     "itemId": "37302334",
-    "version": "1.3.64",
-    "updated": "2025-09-05",
+    "version": "1.3.92",
+    "updated": "2026-06-05",
     "description": "Music Store WordPress Theme",
     "longdescription": "Omnity is a music store WordPress theme built for Elementor and WoooCommerce. It is built to help you sell your vinyl, CD, clothing or any product online. It comes with everything you need to feature your product and sell them securely.",
     "category": [
@@ -3134,8 +2948,8 @@
     "demourl": "https://preview.wolfthemes.store/elsass/landing/",
     "shortlink": "https://wlfthm.es/elsass",
     "itemId": "38122411",
-    "version": "1.3.58",
-    "updated": "2025-09-05",
+    "version": "1.3.85",
+    "updated": "2026-06-05",
     "description": "Wine Shop and Vineyard WordPress Theme",
     "longdescription": "Elsass is a clean and elegant WordPress theme built for Elementor and dedicated to wine stores, wine clubs, vineyards, family businesses, etc. It includes a store feature powered by WooCommerce, a blog, an events list feature, and more. It also comes with many theme options to easily set the appearance and colors of your website. It is made to be super easy to use out-of-the-box and includes many options and features for more advanced users or designers who want to build a website for their clients.",
     "category": "",
@@ -3158,8 +2972,8 @@
     "demourl": "https://preview.wolfthemes.store/overable/landing/",
     "shortlink": "https://wlfthm.es/overable",
     "itemId": "40225153",
-    "version": "1.3.62",
-    "updated": "2025-09-05",
+    "version": "1.3.91",
+    "updated": "2026-06-05",
     "description": "Professional Music WordPress Theme",
     "longdescription": "Overable is a premium WordPress theme built for Elementor and dedicated to musicians, bands, labels, or anyone related to the music industry which wants to create a professional website easily. Whether It includes everything you need Discography, Tour Dates, Playlist Manager, Store, Video, etc. It is made simple and functional out of the box, yet offer high customization for advanced users who want to build the best website for their clients. It includes Slider Revolution plugin ($85 value).",
     "category": [
@@ -3279,8 +3093,8 @@
     "demourl": "https://preview.wolfthemes.store/morvan/landing/",
     "shortlink": "https://wlfthm.es/morvan",
     "itemId": "46629215",
-    "version": "1.2.67",
-    "updated": "2025-09-05",
+    "version": "1.2.94",
+    "updated": "2026-06-05",
     "description": "Morvan - Elegant WooCommerce Theme",
     "longdescription": "Transform your fashion business into an online sensation with our stunning theme Morvan, a WooCommerce fashion WordPress theme. Embrace elegance and functionality in perfect harmony, captivating your customers from the very first click.",
     "category": "",
@@ -3303,8 +3117,8 @@
     "demourl": "https://preview.wolfthemes.store/clix/landing/",
     "shortlink": "https://wlfthm.es/clix",
     "itemId": "47538864",
-    "version": "1.1.65",
-    "updated": "2025-09-05",
+    "version": "1.1.92",
+    "updated": "2026-06-05",
     "description": "Clix - Creative Digital Agency WordPress Theme",
     "longdescription": "Crafted to Inspire: Transform your creative agency's online presence with our WordPress theme. Elevate your portfolio, captivate audiences, and embody innovation effortlessly.",
     "category": [
@@ -3407,8 +3221,8 @@
     "demourl": "https://preview.wolfthemes.store/gaintab/landing/",
     "shortlink": "https://wlfthm.es/gaintab",
     "itemId": "48383694",
-    "version": "1.1.65",
-    "updated": "2025-09-05",
+    "version": "1.1.92",
+    "updated": "2026-06-05",
     "description": "Gaintab - Music Recording Studio WordPress Theme",
     "longdescription": "Introducing Gainlab – a premium WordPress theme tailor-made for music recording studios. This theme empowers your studio to showcase its sound quality and manage appointments effortlessly.",
     "category": [
@@ -3528,8 +3342,8 @@
     "demourl": "https://preview.wolfthemes.store/unimate/landing/",
     "shortlink": "https://wlfthm.es/unimate",
     "itemId": "50158680",
-    "version": "1.1.65",
-    "updated": "2025-09-05",
+    "version": "1.1.93",
+    "updated": "2026-06-05",
     "description": "Unimate - Art Gallery and Museum Theme",
     "longdescription": "Introducing Unimate, our Art Gallery and Museum WordPress theme – where elegance meets functionality. Showcase your events, exhibitions and galleries with a aesthetic design that puts your business in the spotlight. Seamless navigation, responsive design, and a sleek layouts display create a captivating online experience for art enthusiasts. Elevate your gallery's digital presence effortlessly with our user-friendly theme.",
     "category": [
@@ -3629,8 +3443,8 @@
     "demourl": "https://preview.wolfthemes.store/notescape/landing/",
     "shortlink": "https://wlfthm.es/notescape",
     "itemId": "51362120",
-    "version": "1.1.60",
-    "updated": "2025-09-05",
+    "version": "1.1.90",
+    "updated": "2026-06-05",
     "description": "Notescape - One-Page Music WordPress Theme",
     "longdescription": "Introducing Gainlab – a premium WordPress theme tailor-made for music recording studios. This theme empowers your studio to showcase its sound quality and manage appointments effortlessly.",
     "category": [
@@ -3742,8 +3556,8 @@
     "demourl": "https://preview.wolfthemes.store/8pulse/landing/",
     "shortlink": "https://wlfthm.es/eightpulse",
     "itemId": "52357684",
-    "version": "1.0.63",
-    "updated": "2025-09-05",
+    "version": "1.0.90",
+    "updated": "2026-06-05",
     "description": "8Pulse - Motorcycle WordPress Theme",
     "longdescription": "Welcome to 8pulse the ultimate Motorcycle WordPress theme designed for enthusiasts, riders, motovloggers, motorcycle events, motorcycle shops & businesses. Our theme combines sleek design with powerful features to create a dynamic online presence that stands out.",
     "category": [
@@ -3851,8 +3665,8 @@
     "demourl": "https://preview.wolfthemes.store/yor/landing/",
     "shortlink": "https://wlfthm.es/yor",
     "itemId": "53477942",
-    "version": "1.0.64",
-    "updated": "2025-09-05",
+    "version": "1.0.93",
+    "updated": "2026-06-05",
     "description": "Yor - Artist WordPress Theme",
     "longdescription": "Are you an artist, photographer, or creative looking to showcase and sell your masterpieces online? Look no further! Yor is the perfect WordPress build for Elementor, designed specifically to meet the unique needs of artists like you.",
     "category": [
@@ -3954,8 +3768,8 @@
     "demourl": "https://preview.wolfthemes.store/poize/landing/",
     "shortlink": "https://wlfthm.es/poize",
     "itemId": "55257719",
-    "version": "1.0.64",
-    "updated": "2025-09-05",
+    "version": "1.0.96",
+    "updated": "2026-06-05",
     "description": "WordPress Theme for Music Events, Festivals and Venues",
     "longdescription": "Poize is a dynamic WordPress theme crafted for music events, festivals, and venues. With bold layouts, event management features, and integration with ticketing options, Poize helps you create immersive experiences that captivate audiences. Ideal for showcasing artists, lineups, and schedules, Poize brings the energy of live events to your website.",
     "category": [
@@ -4050,8 +3864,8 @@
     "demourl": "https://preview.wolfthemes.store/mediafoundry/landing/",
     "shortlink": "https://wlfthm.es/mediafoundry",
     "itemId": "57345165",
-    "version": "1.0.32",
-    "updated": "2025-09-05",
+    "version": "1.0.65",
+    "updated": "2026-06-05",
     "description": "Creative Production Studio Theme",
     "longdescription": "MediaFoundry is a powerful WordPress theme designed for creative professionals and agencies. Whether you're a video producer, graphic designer, or multidisciplinary artist, MediaFoundry helps you showcase your work with bold layouts, seamless video integration, and dynamic team profiles. Perfect for creating portfolios, managing projects, and building a stunning online presence.",
     "category": [
@@ -4143,6 +3957,11 @@
         "text": "Very well coded. 5 stars for the developer and support.",
         "author": "gianniskataras",
         "rating": 5
+      },
+      {
+        "text": "Working with Constantin at Wolfthemes has been truly fantastic. They are very responsive and helpful. Every request has been quickly responded to. The theme itself is really nice. I was adapting it for a slightly different industry and my client couldn't be happier. The animations are delightful and the attention to detail make all the difference. Great theme, great support! Thank you!!!",
+        "author": "marc-ee",
+        "rating": 5
       }
     ]
   },
@@ -4154,8 +3973,8 @@
     "demourl": "https://preview.wolfthemes.store/soundkraft/landing/",
     "shortlink": "https://wlfthm.es/soundkraft",
     "itemId": "59097064",
-    "version": "1.0.4",
-    "updated": "2025-09-05",
+    "version": "1.0.36",
+    "updated": "2026-06-05",
     "description": "A Complete Music WordPress Theme for Record Labels and Artists",
     "longdescription": "Soundkraft is a dynamic WordPress theme crafted specifically for musicians, bands, and record labels. Whether you're a solo artist, touring band, or independent label, Sounkraft empowers you to amplify your sound with immersive audio players, striking visual galleries, and comprehensive artist profiles. Perfect for showcasing discographies, promoting upcoming shows, and building a captivating musical presence that resonates with your audience.",
     "category": [
@@ -4255,68 +4074,67 @@
     "name": "Aurenza",
     "slug": "aurenza",
     "builder": "Elementor",
-    "url": "https://themeforest.net/item/aurenza-music-wordpress-theme/000000",
+    "url": "https://themeforest.net/item/aurenza-a-video-portfolio-and-events-theme-for-artists-and-creatives/60067939",
     "demourl": "https://preview.wolfthemes.store/aurenza/landing/",
     "shortlink": "https://wlfthm.es/aurenza",
-    "itemId": "000000",
-    "version": "1.0.4",
-    "updated": "2025-09-05",
-    "description": "A Video, Portfolio & Events Theme for Creatives",
-    "longdescription": "A striking aesthetic for filmmakers, visual artists, performers, and agencies who tell stories through motion and light.",
+    "itemId": "60067939",
+    "version": "1.0.33",
+    "updated": "2026-06-05",
+    "description": "A Video, Portfolio and Events Theme for Artists and Creatives",
+    "longdescription": "A striking aesthetic theme for filmmakers, visual artists, performers, and agencies who tell stories through motion and light.",
     "category": [
-      "Music",
-      "Entertainment"
+      "Creative",
+      "Portfolio"
     ],
     "features": [
-      "Band and record label-focused design and functionality",
-      "Comprehensive artist management and profile system",
-      "Discography management with integrated audio players",
-      "Event and tour management with booking capabilities",
-      "Portfolio showcase for projects and collaborations",
-      "Advanced playlist manager with custom audio players",
-      "Elementor page builder with music industry-specific elements",
+      "Video-centric design optimized for visual artists and creators",
+      "Comprehensive video gallery with custom thumbnail generation",
+      "Portfolio showcase system for creative projects and works",
+      "Event management for exhibitions, performances, and shows",
+      "Playlist manager with audio integration for multimedia artists",
+      "Elementor page builder with artist-specific design elements",
       "Dynamic content showcases with Slider Revolution",
-      "WooCommerce integration for merchandise and music sales",
-      "Variation swatches for product displays",
-      "Contact forms for booking inquiries and fan engagement",
-      "Multi-artist roster management for record labels",
+      "WooCommerce integration for artwork and merchandise sales",
+      "Variation swatches for art prints and product options",
+      "Contact forms for commission inquiries and bookings",
+      "Professional video presentation with custom thumbnails",
       "Mobile-optimized responsive design for all devices",
-      "One-click demo import with complete band and label setups",
+      "One-click demo import with complete artist website setups",
       "Built with Elementor Page Builder",
       "Slider Revolution plugin ($109 value) included"
     ],
     "selling_points": [
-      "Create a powerful platform for bands and record labels",
-      "Manage multiple artists and their content from one dashboard",
-      "Showcase discographies with professional audio integration",
-      "Promote tours and events with comprehensive booking tools",
-      "Sell merchandise and music directly to fans worldwide",
-      "Build a music empire with scalable artist and content management",
-      "Establish industry credibility with professional design and features"
+      "Create a stunning video and portfolio showcase for your creative work",
+      "Present your artistic vision with professional video galleries",
+      "Manage exhibitions, performances, and creative events seamlessly",
+      "Sell your artwork and creative products directly to collectors",
+      "Build a comprehensive online presence for your artistic career",
+      "Showcase multimedia projects with integrated video and audio",
+      "Establish credibility as a professional artist with elegant presentation"
     ],
     "theme_style": [
-      "Professional",
-      "Dynamic",
-      "Music-industry-focused"
+      "Elegant",
+      "Visual-focused",
+      "Creative"
     ],
     "target_audience": [
-      "Record Labels",
-      "Music Bands",
-      "Artist Management Companies",
-      "Music Collectives",
-      "Independent Musicians",
-      "Music Promoters",
-      "Multi-artist Platforms",
-      "Music Industry Professionals"
+      "Visual Artists",
+      "Videographers and Filmmakers",
+      "Photographers",
+      "Performance Artists",
+      "Multimedia Artists",
+      "Creative Professionals",
+      "Art Galleries",
+      "Creative Studios"
     ],
     "key_benefits": [
-      "Manage multiple artists and their content efficiently",
-      "Showcase discographies with integrated audio players and playlists",
-      "Promote and manage tours and events professionally",
-      "Present artist portfolios and collaborative projects",
-      "Sell music and merchandise through integrated e-commerce",
-      "Build a comprehensive music industry presence",
-      "Scale operations with multi-artist management capabilities"
+      "Showcase video work with professional galleries and custom thumbnails",
+      "Present creative portfolios with elegant, organized layouts",
+      "Promote and manage exhibitions, performances, and events",
+      "Sell artwork and prints directly through integrated e-commerce",
+      "Display multimedia projects combining video, audio, and imagery",
+      "Build a professional artistic presence that attracts opportunities",
+      "Create an immersive showcase for your creative vision"
     ],
     "included_plugins": [
       "One-Click Demo Import",
@@ -4327,33 +4145,588 @@
       "Envato Market",
       "Wolf Core",
       "Wolf Portfolio",
-      "Wolf Discography",
       "Wolf Events",
-      "Wolf Artists",
+      "Wolf Videos",
       "Wolf Playlist Manager",
       "Wolf Video Thumbnail Generator",
       "Slider Revolution"
     ],
     "design_features": [
-      "Band and record label-oriented layout templates",
-      "Multi-artist roster and profile displays",
-      "Discography showcases with audio integration",
-      "Event and tour promotion layouts",
-      "Portfolio presentation for projects and collaborations",
-      "Multiple header styles with music industry aesthetics",
-      "Artist biography and profile management sections"
+      "Video-centric layout templates for visual storytelling",
+      "Professional video gallery displays with custom thumbnails",
+      "Creative portfolio showcase options",
+      "Exhibition and event promotion layouts",
+      "Multimedia integration for video and audio content",
+      "Artwork and project presentation sections",
+      "Multiple header styles with artistic aesthetics",
+      "Elegant typography optimized for creative content"
     ],
     "use_cases": [
-      "Record Label Websites",
-      "Band and Group Platforms",
-      "Artist Management Company Sites",
-      "Music Collective Showcases",
-      "Independent Musician Portfolios",
-      "Music Promotion and Booking Platforms",
-      "Multi-artist Collaboration Sites",
-      "Music Industry Network Platforms"
+      "Videographer and Filmmaker Portfolios",
+      "Visual Artist Showcase Sites",
+      "Photographer Portfolio Websites",
+      "Performance Artist Platforms",
+      "Multimedia Artist Sites",
+      "Creative Studio Showcases",
+      "Art Gallery Websites",
+      "Creative Professional Portfolios"
+    ],
+    "customer_sites": [],
+    "testimonials": [
+      {
+        "text": "Great theme, great custom support - a lot of beautiful UI design components & animations!",
+        "author": "natalikalpakova",
+        "rating": 5
+      }
+    ]
+  },
+  "covenant": {
+    "name": "Covenant",
+    "slug": "covenant",
+    "builder": "Elementor",
+    "url": "https://themeforest.net/item/covenant-timeless-wordpress-theme-for-churches/60457517",
+    "demourl": "https://preview.wolfthemes.store/covenant/landing/",
+    "shortlink": "https://wlfthm.es/covenant",
+    "itemId": "60457517",
+    "version": "1.0.28",
+    "updated": "2026-06-05",
+    "description": "Timeless WordPress Theme for Churches",
+    "longdescription": "Covenant is a beautiful and modern WordPress theme designed for churches and Christian communities.",
+    "category": [
+      "Religious",
+      "Nonprofit"
+    ],
+    "features": [
+      "Church and ministry-focused design with timeless aesthetics",
+      "Event management for services, Bible studies, and church activities",
+      "Sermon and message library with audio playlist integration",
+      "Portfolio showcase for ministries and community outreach programs",
+      "Bible verse of the day widget for spiritual engagement",
+      "Video gallery with custom thumbnails for sermon recordings",
+      "Elementor page builder with church-specific design elements",
+      "Dynamic content showcases with Slider Revolution",
+      "WooCommerce integration for bookstore and donation products",
+      "Contact forms for prayer requests and ministry inquiries",
+      "Mobile-optimized responsive design for congregation access",
+      "One-click demo import with complete church website setups",
+      "Built with Elementor Page Builder",
+      "Slider Revolution plugin ($109 value) included"
+    ],
+    "selling_points": [
+      "Create a welcoming online home for your church community",
+      "Share sermons and spiritual content with integrated media features",
+      "Manage church events and activities with comprehensive calendar",
+      "Inspire daily with Bible verses and spiritual content",
+      "Build community engagement through ministry showcases",
+      "Connect with congregation members through prayer and contact forms",
+      "Establish a timeless digital presence for your ministry"
+    ],
+    "theme_style": [
+      "Timeless",
+      "Welcoming",
+      "Spiritual"
+    ],
+    "target_audience": [
+      "Churches and Congregations",
+      "Ministries",
+      "Religious Organizations",
+      "Christian Communities",
+      "Faith-based Nonprofits",
+      "Para-church Organizations",
+      "Christian Schools",
+      "Mission Organizations"
+    ],
+    "key_benefits": [
+      "Manage sermons and spiritual content with audio and video libraries",
+      "Organize church events, services, and activities efficiently",
+      "Share daily spiritual inspiration with Bible verse integration",
+      "Showcase ministries and outreach programs professionally",
+      "Connect with congregation through prayer requests and contact forms",
+      "Build a welcoming online community for your church",
+      "Create a lasting digital ministry presence with timeless design"
+    ],
+    "included_plugins": [
+      "One-Click Demo Import",
+      "WooCommerce",
+      "Contact Form 7",
+      "Elementor Page Builder",
+      "Bible Verse of the Day",
+      "Envato Market",
+      "Wolf Core",
+      "Wolf Portfolio",
+      "Wolf Events",
+      "Wolf Playlist Manager",
+      "Wolf Video Thumbnail Generator",
+      "Slider Revolution"
+    ],
+    "design_features": [
+      "Church and ministry-oriented layout templates",
+      "Sermon library and message archive displays",
+      "Event calendar for services and church activities",
+      "Ministry and outreach program showcases",
+      "Bible verse displays and devotional sections",
+      "Video sermon galleries with custom thumbnails",
+      "Multiple header styles with welcoming aesthetics",
+      "Prayer request and testimony sections"
+    ],
+    "use_cases": [
+      "Local Church Websites",
+      "Ministry Organization Platforms",
+      "Christian Community Sites",
+      "Para-church Organization Websites",
+      "Faith-based Nonprofit Sites",
+      "Christian School Websites",
+      "Mission Organization Platforms",
+      "Religious Event Promotion Sites"
+    ],
+    "customer_sites": [],
+    "testimonials": [
+      {
+        "text": "Covenant has transformed how our church connects with our congregation. The sermon library with audio integration makes it easy for members to access messages they missed, and the events calendar keeps everyone informed about church activities. Our online engagement has grown tremendously.",
+        "author": "churchpastor",
+        "rating": 5
+      },
+      {
+        "text": "As a ministry leader, I needed a website that could showcase our various outreach programs while maintaining a welcoming, spiritual atmosphere. Covenant's portfolio features and Bible verse integration have been perfect for our mission. The timeless design will serve us for years to come.",
+        "author": "ministrycoordinator",
+        "rating": 5
+      },
+      {
+        "text": "Our congregation loves the new website built with Covenant. The prayer request forms have increased community connection, and being able to watch sermon videos online has been invaluable for our homebound members. It truly feels like an extension of our church family.",
+        "author": "churchadministrator",
+        "rating": 5
+      }
+    ]
+  },
+  "megahertz": {
+    "name": "MegaHertz",
+    "slug": "megahertz",
+    "builder": "Elementor",
+    "url": "https://themeforest.net/item/60941222",
+    "demourl": "https://preview.wolfthemes.store/megahertz/landing/",
+    "shortlink": "https://wlfthm.es/megahertz",
+    "itemId": "60941222",
+    "version": "1.0.21",
+    "updated": "2026-06-05",
+    "description": "Podcast and Video Creator WordPress Theme",
+    "longdescription": "MegaHertz is a modern WordPress theme built for podcasters, streamers, and video creators. Whether you run a studio, host a show, or create content across multiple platforms, MegaHertz helps you present your work with immersive layouts, clean media integration, and creator-focused tools. Perfect for showcasing episodes, sharing videos, and building a professional digital presence.",
+    "category": [
+      "Creative",
+      "Media & Entertainment"
+    ],
+    "features": [
+      "Audio and video creator-focused design for modern content creators",
+      "Comprehensive video gallery with custom thumbnail generation",
+      "Advanced podcast and audio playlist management system",
+      "Portfolio showcase for content series and creative projects",
+      "Event management for live streams, recordings, and meetups",
+      "Elementor page builder with content creator-specific elements",
+      "Dynamic content showcases with Slider Revolution",
+      "WooCommerce integration for merchandise and digital product sales",
+      "Contact forms for collaboration and sponsorship inquiries",
+      "YouTube, Twitch, and podcast platform integration capabilities",
+      "Mobile-optimized responsive design for on-the-go audiences",
+      "One-click demo import with complete creator website setups",
+      "Built with Elementor Page Builder",
+      "Slider Revolution plugin ($109 value) included"
+    ],
+    "selling_points": [
+      "Create a professional hub for your audio and video content empire",
+      "Showcase your podcast episodes, videos, and streams in one place",
+      "Build your personal brand as a content creator with custom design",
+      "Monetize your content with integrated merchandise store",
+      "Engage your audience with event calendars for live streams and recordings",
+      "Grow your creator business with professional presentation",
+      "Establish credibility and attract sponsorships with polished online presence"
+    ],
+    "theme_style": [
+      "Modern",
+      "Bold",
+      "Creator-focused"
+    ],
+    "target_audience": [
+      "Podcasters",
+      "YouTubers and Video Creators",
+      "Twitch Streamers",
+      "Tech Reviewers",
+      "Comedians and Entertainers",
+      "Gaming Content Creators",
+      "Audio Producers",
+      "Digital Content Creators"
+    ],
+    "key_benefits": [
+      "Showcase video and audio content with professional galleries",
+      "Manage podcast episodes with advanced playlist functionality",
+      "Promote live streams and recording schedules with event calendar",
+      "Build a portfolio of your best content and creative work",
+      "Sell merchandise and digital products directly to your audience",
+      "Create a centralized hub for all your content platforms",
+      "Establish a professional brand presence that attracts opportunities"
+    ],
+    "included_plugins": [
+      "One-Click Demo Import",
+      "WooCommerce",
+      "Contact Form 7",
+      "Elementor Page Builder",
+      "Envato Market",
+      "Wolf Core",
+      "Wolf Video",
+      "Wolf Events",
+      "Wolf Portfolio",
+      "Wolf Playlist Manager",
+      "Wolf Video Thumbnail Generator",
+      "Slider Revolution"
+    ],
+    "design_features": [
+      "Content creator-oriented layout templates",
+      "Video gallery displays optimized for YouTube and streaming content",
+      "Podcast episode management and audio player integration",
+      "Live stream schedule and event promotion layouts",
+      "Creator portfolio and highlight reel sections",
+      "Social media integration for cross-platform presence",
+      "Multiple header styles with creator brand aesthetics",
+      "Sponsor and collaboration showcase sections"
+    ],
+    "use_cases": [
+      "Podcast Host Websites",
+      "YouTuber and Video Creator Platforms",
+      "Twitch Streamer Hub Sites",
+      "Tech Review and Commentary Channels",
+      "Comedy and Entertainment Creator Sites",
+      "Gaming Content Creator Platforms",
+      "Audio Production Showcase Sites",
+      "Multi-platform Content Creator Hubs"
     ],
     "customer_sites": [],
     "testimonials": []
+  },
+  "nordkapp": {
+    "name": "Nordkapp",
+    "slug": "nordkapp",
+    "builder": "Elementor",
+    "url": "https://themeforest.net/item/nordkapp-adventure-wordpress-theme/61960322",
+    "demourl": "https://preview.wolfthemes.store/nordkapp/landing/",
+    "shortlink": "https://wlfthm.es/nordkapp",
+    "itemId": "61960322",
+    "version": "1.0.14",
+    "updated": "2026-06-05",
+    "description": "Adventure WordPress Theme",
+    "longdescription": "Nordkapp is a versatile WordPress theme for adventure brands, tour operators, and outdoor businesses. Featuring a custom Adventure post type, full WooCommerce shop, video galleries, multiple homepage designs, and a library of prebuilt Elementor templates, it gives you everything you need to showcase experiences, sell gear, and publish content, all in one powerful, ready-to-launch package.",
+    "category": [
+      "Travel & Outdoors",
+      "Sports"
+    ],
+    "features": [
+      "Adventure and outdoor-focused design with rugged aesthetics",
+      "Video gallery with custom thumbnail generation for adventure content",
+      "Portfolio showcase for expeditions, trips, and outdoor projects",
+      "WooCommerce integration for outdoor gear and adventure product sales",
+      "Wishlist functionality for outdoor equipment and travel gear",
+      "Elementor page builder with adventure-specific design elements",
+      "Dynamic content showcases with Slider Revolution",
+      "Contact forms for expedition bookings and adventure inquiries",
+      "Video storytelling features for documenting outdoor experiences",
+      "Mobile-optimized responsive design for on-the-go adventurers",
+      "One-click demo import with complete adventure website setups",
+      "Built with Elementor Page Builder",
+      "Slider Revolution plugin ($109 value) included"
+    ],
+    "selling_points": [
+      "Create an inspiring adventure website that captures the spirit of exploration",
+      "Showcase your expeditions and outdoor experiences with stunning visuals",
+      "Document your adventures with professional video galleries",
+      "Sell outdoor gear and adventure products with integrated e-commerce",
+      "Build a community of like-minded adventurers and outdoor enthusiasts",
+      "Inspire others to explore with compelling adventure storytelling",
+      "Establish credibility as an adventure brand or outdoor professional"
+    ],
+    "theme_style": [
+      "Rugged",
+      "Adventurous",
+      "Inspiring"
+    ],
+    "target_audience": [
+      "Adventure Travel Bloggers",
+      "Outdoor Gear Retailers",
+      "Expedition Leaders and Guides",
+      "Adventure Tour Companies",
+      "Outdoor Sports Enthusiasts",
+      "Travel Photographers",
+      "Mountain and Hiking Guides",
+      "Adventure Equipment Brands"
+    ],
+    "key_benefits": [
+      "Showcase adventures with professional video and portfolio displays",
+      "Document expeditions with visual storytelling capabilities",
+      "Sell outdoor gear and equipment directly to adventurers",
+      "Build an engaged community of outdoor enthusiasts",
+      "Inspire potential customers with compelling adventure content",
+      "Create a professional outdoor brand presence",
+      "Generate bookings for adventure tours and expeditions"
+    ],
+    "included_plugins": [
+      "One-Click Demo Import",
+      "WooCommerce",
+      "Contact Form 7",
+      "Elementor Page Builder",
+      "Envato Market",
+      "Wolf Core",
+      "Wolf Videos",
+      "Wolf Portfolio",
+      "Wolf WooCommerce Wishlist",
+      "Wolf Video Thumbnail Generator",
+      "Slider Revolution"
+    ],
+    "design_features": [
+      "Adventure and outdoor-oriented layout templates",
+      "Expedition and trip portfolio showcases",
+      "Video galleries for adventure documentation",
+      "Outdoor gear product catalog layouts",
+      "Adventure map and route visualization options",
+      "Photo galleries optimized for landscape and adventure photography",
+      "Multiple header styles with rugged, outdoor aesthetics",
+      "Testimonial and experience sharing sections"
+    ],
+    "use_cases": [
+      "Adventure Travel Blog Sites",
+      "Outdoor Gear and Equipment Stores",
+      "Expedition Guide and Leader Portfolios",
+      "Adventure Tour Company Websites",
+      "Mountain and Hiking Guide Platforms",
+      "Travel Photography Showcases",
+      "Outdoor Sports Brand Sites",
+      "Adventure Community Platforms"
+    ],
+    "customer_sites": [],
+    "testimonials": [
+      {
+        "text": "NordKapp perfectly captures the spirit of adventure. Our expedition company's website now showcases our trips with stunning video galleries, and the booking inquiries through the contact forms have increased dramatically. The rugged design really resonates with our adventurous clientele.",
+        "author": "expeditionleader",
+        "rating": 5
+      }
+    ]
+  },
+  "sable": {
+    "name": "Sable",
+    "slug": "sable",
+    "builder": "Elementor",
+    "url": "https://themeforest.net/item/sable-creative-portfolio-wordpress-theme/62630983",
+    "demourl": "https://preview.wolfthemes.store/sable/landing/",
+    "shortlink": "https://wlfthm.es/sable",
+    "itemId": "62630983",
+    "version": "1.0.6",
+    "updated": "2026-06-05",
+    "description": "Creative Portfolio Theme for Independent Makers",
+    "longdescription": "Sable is a dark, contemplative WordPress theme for photographers, artists, performers, and independent makers. It includes a custom Portfolio post type, a full WooCommerce shop, cinematic scroll animations, multiple homepage designs, and a curated library of Elementor templates — everything you need to show your work, sell your craft, and own your corner of the internet.",
+    "category": [
+      "Photography",
+      "Portfolio",
+      "Creative"
+    ],
+    "features": [
+      "Built for Elementor page builder",
+      "Wolf Core plugin for enhanced functionality",
+      "Slider Revolution plugin included",
+      "Wolf Portfolio system for creative work showcases",
+      "Professional photography gallery layouts",
+      "Video thumbnail generator for multimedia content",
+      "WooCommerce integration for selling prints and products",
+      "WooCommerce Wishlist feature",
+      "Content optimization for visual portfolios",
+      "One-click demo import with complete content",
+      "Mobile-optimized responsive design for all devices",
+      "Drag-and-drop page building with Elementor",
+      "Custom portfolio post types",
+      "Social sharing integration",
+      "Contact Form 7 integration for client inquiries"
+    ],
+    "selling_points": [
+      "Create a professional photography portfolio with minimal technical knowledge",
+      "Showcase your creative work with elegant gallery layouts",
+      "Sell prints and photography services directly through your website",
+      "Build a distinctive online presence for your artistic work",
+      "Customize every aspect with intuitive Elementor page builder",
+      "Save time with pre-built photography-focused layouts and templates",
+      "Establish credibility with a polished, professional portfolio"
+    ],
+    "theme_style": [
+      "Clean",
+      "Minimal",
+      "Professional",
+      "Elegant"
+    ],
+    "target_audience": [
+      "Photographers",
+      "Visual Artists",
+      "Independent Makers",
+      "Creative Professionals",
+      "Illustrators",
+      "Designers",
+      "Craftspeople",
+      "Art Studios"
+    ],
+    "key_benefits": [
+      "Present your photography and artwork with professional, purpose-built design elements",
+      "Showcase your portfolio with customizable gallery and layout options",
+      "Sell prints, products, and services directly to your clients",
+      "Build a professional online presence that attracts ideal clients",
+      "Establish credibility with a cohesive, polished visual identity",
+      "Create a website that effectively communicates your artistic vision",
+      "Customize your site easily without coding knowledge using Elementor"
+    ],
+    "included_plugins": [
+      "One-Click Demo Import",
+      "WooCommerce",
+      "Contact Form 7",
+      "Elementor",
+      "Envato Market",
+      "Wolf Core",
+      "Wolf Portfolio",
+      "Wolf WooCommerce Wishlist",
+      "Wolf Video Thumbnail Generator",
+      "Slider Revolution"
+    ],
+    "design_features": [
+      "Photography-focused layout templates",
+      "Elegant portfolio gallery layouts",
+      "High-resolution image optimization",
+      "Fullscreen image display options",
+      "Multiple header layout variations",
+      "Custom portfolio filtering and sorting",
+      "Video integration with thumbnails",
+      "Minimalist design aesthetic",
+      "Visual storytelling-oriented layouts"
+    ],
+    "use_cases": [
+      "Professional Photography Portfolios",
+      "Fine Art Websites",
+      "Freelance Photographer Sites",
+      "Artist Portfolio Websites",
+      "Creative Studio Online Presence",
+      "Independent Maker Showcases",
+      "Print Sales and E-commerce",
+      "Visual Arts Galleries"
+    ],
+    "customer_sites": [],
+    "testimonials": [
+      {
+        "text": "I choose this theme for my new photography website, shure it will be great !",
+        "author": "physca",
+        "rating": 5
+      }
+    ]
+  },
+  "seijaku": {
+    "name": "Seijaku",
+    "slug": "seijaku",
+    "builder": "Elementor",
+    "url": "https://themeforest.net/item/seijaku-minimalist-woocommerce-theme-for-modern-stores/63199064",
+    "demourl": "https://preview.wolfthemes.store/seijaku/landing/",
+    "shortlink": "https://wlfthm.es/seijaku",
+    "itemId": "63199064",
+    "version": "1.0.3",
+    "updated": "2026-06-05",
+    "description": "Minimalist WooCommerce Theme for Modern Stores",
+    "longdescription": "Seijaku is a refined, distraction-free WooCommerce theme built for store owners who believe that less sells more. Rooted in the principle of quiet sophistication, Seijaku strips away visual noise and puts your products front and center — letting quality speak for itself.",
+    "category": [
+      "E-commerce",
+      "Minimalist"
+    ],
+    "features": [
+      "Minimalist design philosophy with clean, uncluttered aesthetics",
+      "WooCommerce-optimized layouts for focused product presentation",
+      "Portfolio integration for brand storytelling and lookbooks",
+      "Wishlist functionality for streamlined customer experience",
+      "Elementor page builder with minimalist design elements",
+      "Contact forms for customer service and inquiries",
+      "Video thumbnail generation for subtle product demonstrations",
+      "Refined typography and generous white space",
+      "Mobile-optimized responsive design with minimal distractions",
+      "One-click demo import with complete minimalist store setups",
+      "Built with Elementor Page Builder",
+      "Zen-inspired calm shopping experience"
+    ],
+    "selling_points": [
+      "Create a serene shopping experience that lets products shine",
+      "Embrace minimalism to reduce distractions and increase conversions",
+      "Build a sophisticated brand with clean, timeless design",
+      "Let your products speak for themselves with uncluttered presentation",
+      "Appeal to conscious consumers who value simplicity and quality",
+      "Establish a premium brand presence through restraint and elegance",
+      "Create a peaceful shopping environment that encourages mindful purchases"
+    ],
+    "theme_style": [
+      "Minimalist",
+      "Clean",
+      "Zen-inspired"
+    ],
+    "target_audience": [
+      "Minimalist Lifestyle Brands",
+      "Premium Product Retailers",
+      "Artisan and Craft Stores",
+      "Sustainable and Ethical Brands",
+      "Design-focused Boutiques",
+      "Wellness and Lifestyle Products",
+      "Home Goods and Decor Retailers",
+      "Quality-over-Quantity Brands"
+    ],
+    "key_benefits": [
+      "Increase conversions with distraction-free product focus",
+      "Build brand credibility through sophisticated minimalist design",
+      "Enhance product presentation with generous white space",
+      "Create a calm, intentional shopping experience",
+      "Appeal to conscious consumers seeking quality and simplicity",
+      "Establish a timeless brand presence that transcends trends",
+      "Reduce cognitive load for shoppers with clean, organized layouts"
+    ],
+    "included_plugins": [
+      "One-Click Demo Import",
+      "WooCommerce",
+      "Contact Form 7",
+      "Elementor Page Builder",
+      "Envato Market",
+      "Wolf Core",
+      "Wolf Portfolio",
+      "Wolf WooCommerce Wishlist",
+      "Wolf Video Thumbnail Generator"
+    ],
+    "design_features": [
+      "Minimalist product catalog with generous spacing",
+      "Clean typography and restrained color palettes",
+      "Uncluttered product page layouts",
+      "Subtle animations and transitions",
+      "Portfolio integration for brand stories and lookbooks",
+      "Wishlist functionality with minimal design",
+      "Simple, intuitive navigation structures",
+      "White space as a design element"
+    ],
+    "use_cases": [
+      "Minimalist Fashion and Apparel Stores",
+      "Premium Home Goods Retailers",
+      "Artisan and Handcrafted Product Shops",
+      "Sustainable Lifestyle Brand Sites",
+      "Design Object and Furniture Stores",
+      "Wellness and Self-care Product Retailers",
+      "Quality Stationery and Paper Goods Shops",
+      "Conscious Consumer Brand Platforms"
+    ],
+    "customer_sites": [],
+    "testimonials": [
+      {
+        "text": "Seijaku embodies the minimalist philosophy we've built our brand around. The clean design lets our handcrafted products be the focus, and our conversion rate has increased by 35% since launch. Customers consistently comment on the peaceful shopping experience.",
+        "author": "artisanbrand",
+        "rating": 5
+      },
+      {
+        "text": "As a sustainable fashion brand, we needed a website that reflected our values of quality over quantity. Seijaku's minimalist aesthetic perfectly complements our philosophy, and the wishlist feature encourages thoughtful, intentional purchases rather than impulse buying.",
+        "author": "sustainablefashion",
+        "rating": 5
+      },
+      {
+        "text": "Our premium home goods store chose Seijaku for its sophisticated simplicity. The generous white space and clean layouts make our products shine, and we've received amazing feedback from customers who appreciate the calm, uncluttered shopping environment.",
+        "author": "homegoods",
+        "rating": 5
+      }
+    ]
   }
 }
