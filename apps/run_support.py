@@ -5,9 +5,8 @@ import os
 
 # Define the apps to launch
 apps = [
-    {"script": "apps/chat_dev_agent.py", "port": 8501, "name": "Dev Agent"},
-    {"script": "apps/fresh_ticket.py", "port": 8502, "name": "Fresh Ticket"},
-    {"script": "apps/ticket_dashboard.py", "port": 8503, "name": "Ticket Dashboard"},
+    {"script": "apps/fresh_ticket.py", "port": 8501, "name": "Fresh Ticket"},
+    {"script": "apps/ticket_dashboard.py", "port": 8502, "name": "Ticket Dashboard"},
 ]
 
 # Start all Streamlit apps
@@ -25,7 +24,7 @@ print("Waiting for apps to initialize...")
 time.sleep(5)
 
 # Open the main app in the default browser
-webbrowser.open(f"http://localhost:{apps[2]['port']}")
+webbrowser.open(f"http://localhost:{apps[1]['port']}")
 
 # Keep the script running
 print("Press Ctrl+C to exit and terminate all apps")

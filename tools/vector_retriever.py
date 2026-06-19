@@ -23,7 +23,6 @@ from utils.document_loaders import (
     load_support_agent_backstory,
     load_support_agent_instructions,
     load_reformulate_agent_instructions,
-    load_dev_agent_backstory
 )
 from utils.helpers import compute_all_file_hashes, hashes_changed, setup_logging
 
@@ -125,13 +124,12 @@ def load_documents():
     
     # Load instruction texts (global variables)
     global support_agent_backstory_text, support_agent_instructions_text
-    global reformulate_agent_instructions_text, dev_agent_backstory_text
-    
+    global reformulate_agent_instructions_text
+
     try:
         support_agent_backstory_text = load_support_agent_backstory()
         support_agent_instructions_text = load_support_agent_instructions()
         reformulate_agent_instructions_text = load_reformulate_agent_instructions()
-        dev_agent_backstory_text = load_dev_agent_backstory()
     except Exception as e:
         logger.error(f"Error loading instruction texts: {e}")
     
@@ -301,5 +299,3 @@ if 'support_agent_instructions_text' not in globals():
 if 'reformulate_agent_instructions_text' not in globals():
     reformulate_agent_instructions_text = "Reformulate Agent Instructions not loaded"
     
-if 'dev_agent_backstory_text' not in globals():
-    dev_agent_backstory_text = "Dev Agent Backstory not loaded"

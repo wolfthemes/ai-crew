@@ -178,6 +178,3 @@ def load_guidelines(path="prompts/support_task_guidelines.md"):
     with open(path, encoding="utf-8") as f:
         return f.read()
     
-def load_dev_agent_backstory(path="prompts/dev_agent_backstory.md"):
-    with open(path, encoding="utf-8") as f:
-        return f.read()
