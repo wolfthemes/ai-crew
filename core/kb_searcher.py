@@ -9,6 +9,10 @@ class KnowledgeBaseSearcher:
         "support_ticket": 4,
         "theme_doc": 5,
         "theme_info": 6,
+        "product_positioning": 7,
+        "theme_meta": 8,
+        "theme_changelog": 9,
+        "product_wiki": 10,
         "unknown": 99
     }
     
@@ -130,6 +134,21 @@ class KnowledgeBaseSearcher:
                     "is_strict": False
                 }
         
+        # 6. Product positioning / theme meta / changelogs / wiki
+        for source_key in ("product_positioning", "theme_meta", "theme_changelog", "product_wiki"):
+            if source_key in source_groups:
+                best_match = source_groups[source_key][0]
+                confidence = self._calculate_confidence(best_match, query)
+                return {
+                    "source": source_key,
+                    "title": best_match.metadata.get("title", "Theme Reference"),
+                    "theme": best_match.metadata.get("theme", ""),
+                    "url": best_match.metadata.get("url", ""),
+                    "content": best_match.page_content[:1000],
+                    "confidence_score": confidence,
+                    "is_strict": False
+                }
+
         # Fallback: first result if no categorized results
         first_result = prioritized_results[0]
         
@@ -165,6 +184,10 @@ class KnowledgeBaseSearcher:
             base_confidence = 0.5
         elif source in ["theme_doc", "theme_info"]:
             base_confidence = 0.4
+        elif source in ["product_positioning", "theme_meta"]:
+            base_confidence = 0.45
+        elif source in ["theme_changelog", "product_wiki"]:
+            base_confidence = 0.35
         else:
             base_confidence = 0.3
         

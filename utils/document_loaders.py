@@ -1,5 +1,7 @@
 import os
+import re
 import json
+import glob
 import sqlite3
 from langchain_core.documents import Document
 from utils.helpers import parse_json_file, clean_html_to_text
@@ -158,6 +160,96 @@ def load_closed_tickets_from_db(db_path: str) -> list[Document]:
         }
         docs.append(Document(page_content=thread, metadata=metadata))
 
+    return docs
+
+# --- External knowledge sources ---
+
+def load_product_wiki(path=None):
+    if not path:
+        path = os.getenv("PRODUCT_WIKI_PATH", "")
+    if not path or not os.path.exists(path):
+        return []
+    with open(path, encoding="utf-8") as f:
+        content = f.read()
+    sections = re.split(r'\n(?=## )', content)
+    docs = []
+    for section in sections:
+        section = section.strip()
+        if not section:
+            continue
+        title_match = re.match(r'^##\s+(.+)', section)
+        title = title_match.group(1).strip() if title_match else "Portfolio Overview"
+        docs.append(Document(
+            page_content=section,
+            metadata={"source": "product_wiki", "title": title, "url": ""}
+        ))
+    return docs
+
+def load_theme_positioning(base_path=None):
+    if not base_path:
+        base_path = os.getenv("SUPERTHEME_PATH", "")
+    if not base_path:
+        return []
+    path = os.path.join(base_path, "docs", "theme-positioning.md")
+    if not os.path.exists(path):
+        return []
+    with open(path, encoding="utf-8") as f:
+        content = f.read()
+    sections = re.split(r'\n(?=## )', content)
+    docs = []
+    for section in sections:
+        section = section.strip()
+        if not section:
+            continue
+        title_match = re.match(r'^##\s+(.+)', section)
+        title = title_match.group(1).strip() if title_match else "Theme Positioning"
+        docs.append(Document(
+            page_content=section,
+            metadata={"source": "product_positioning", "title": title, "theme": title.lower(), "url": ""}
+        ))
+    return docs
+
+def load_theme_meta_json(base_path=None):
+    if not base_path:
+        base_path = os.getenv("SUPERTHEME_PATH", "")
+    if not base_path:
+        return []
+    pattern = os.path.join(base_path, "THEMES", "*", "theme_meta.json")
+    docs = []
+    for filepath in glob.glob(pattern):
+        slug = os.path.basename(os.path.dirname(filepath))
+        try:
+            with open(filepath, encoding="utf-8") as f:
+                data = json.load(f)
+            text = f"Theme: {slug}\n" + json.dumps(data, indent=2, ensure_ascii=False)
+            docs.append(Document(
+                page_content=text,
+                metadata={"source": "theme_meta", "title": f"{slug} features & metadata", "theme": slug, "url": ""}
+            ))
+        except Exception:
+            continue
+    return docs
+
+def load_theme_changelogs(base_path=None):
+    if not base_path:
+        base_path = os.getenv("SUPERTHEME_PATH", "")
+    if not base_path:
+        return []
+    pattern = os.path.join(base_path, "THEMES", "*", "CHANGELOG.md")
+    docs = []
+    for filepath in glob.glob(pattern):
+        slug = os.path.basename(os.path.dirname(filepath))
+        try:
+            with open(filepath, encoding="utf-8") as f:
+                content = f.read().strip()
+            if not content:
+                continue
+            docs.append(Document(
+                page_content=content,
+                metadata={"source": "theme_changelog", "title": f"{slug} changelog", "theme": slug, "url": ""}
+            ))
+        except Exception:
+            continue
     return docs
 
 # --- Load static prompts ---

@@ -23,6 +23,10 @@ from utils.document_loaders import (
     load_support_agent_backstory,
     load_support_agent_instructions,
     load_reformulate_agent_instructions,
+    load_product_wiki,
+    load_theme_positioning,
+    load_theme_meta_json,
+    load_theme_changelogs,
 )
 from utils.helpers import compute_all_file_hashes, hashes_changed, setup_logging
 
@@ -133,8 +137,41 @@ def load_documents():
     except Exception as e:
         logger.error(f"Error loading instruction texts: {e}")
     
+    try:
+        product_wiki_docs = load_product_wiki()
+        logger.info(f"✓ Loaded {len(product_wiki_docs)} product wiki sections")
+    except Exception as e:
+        logger.error(f"Error loading product wiki: {e}")
+        product_wiki_docs = []
+
+    try:
+        theme_positioning_docs = load_theme_positioning()
+        logger.info(f"✓ Loaded {len(theme_positioning_docs)} theme positioning sections")
+    except Exception as e:
+        logger.error(f"Error loading theme positioning: {e}")
+        theme_positioning_docs = []
+
+    try:
+        theme_meta_json_docs = load_theme_meta_json()
+        logger.info(f"✓ Loaded {len(theme_meta_json_docs)} theme meta JSON docs")
+    except Exception as e:
+        logger.error(f"Error loading theme meta JSON: {e}")
+        theme_meta_json_docs = []
+
+    try:
+        theme_changelog_docs = load_theme_changelogs()
+        logger.info(f"✓ Loaded {len(theme_changelog_docs)} theme changelogs")
+    except Exception as e:
+        logger.error(f"Error loading theme changelogs: {e}")
+        theme_changelog_docs = []
+
     # Combine all docs for vectorization
-    all_docs = common_issues + reference_tickets + articles + theme_docs + closed_tickets_from_db
+    all_docs = (
+        common_issues + reference_tickets + articles + theme_docs
+        + closed_tickets_from_db + theme_meta_docs
+        + product_wiki_docs + theme_positioning_docs
+        + theme_meta_json_docs + theme_changelog_docs
+    )
     
     duration = time.time() - start_time
     logger.info(f"✓ Document loading completed in {duration:.2f} seconds. Total documents: {len(all_docs)}")
