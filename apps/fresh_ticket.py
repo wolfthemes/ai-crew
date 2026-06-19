@@ -1,47 +1,42 @@
-# streamlit run streamlit_fresh_ticket.py
 from pathlib import Path
 import sys
-# Add the parent directory to sys.path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 import streamlit as st
-from crewai import Crew
+import markdown2
 from crews.support_crew import support_crew_with_research
-from utils.ticket_classifier import classify_ticket
-from utils.helpers import convert_html_to_plaintext_with_urls
 
+st.set_page_config(page_title="Fresh Ticket", layout="centered")
+st.title("WolfThemes — Fresh Ticket Reply")
+st.markdown("Paste any customer message (email, forum post, etc.) and generate a support reply.")
 
-st.set_page_config(page_title="WolfThemes Support Agent", layout="centered")
+ticket_input = st.text_area("Customer message:", height=220, placeholder="Paste the customer text here...")
+crew_instruction = st.text_area("Optional note / instruction:", height=80, placeholder="e.g. 'Be brief' or 'Customer is angry'")
 
-st.title("🧠 WolfThemes Support Assistant")
+if st.button("Generate Reply") and ticket_input.strip():
+    with st.spinner("Generating reply..."):
+        try:
+            result = support_crew_with_research(ticket_input.strip(), instruction=crew_instruction)
 
-st.markdown("Paste a ticket message below. The agent will suggest a reply:")
+            raw = result.get("reply", "")
+            if hasattr(raw, "raw"):
+                reply_text = raw.raw
+            elif hasattr(raw, "output"):
+                reply_text = raw.output
+            elif isinstance(raw, str):
+                reply_text = raw
+            else:
+                reply_text = str(raw)
 
-ticket_input = st.text_area("🎫 Paste the customer ticket text here:", height=200)
+            reply_html = markdown2.markdown(reply_text)
+            st.session_state["fresh_reply_html"] = reply_html
+            st.session_state["fresh_reply_text"] = reply_text
+        except Exception as e:
+            st.error(f"Error: {e}")
 
-crew_instruction = st.text_area("📝 Paste an optional note here:")
-
-if st.button("✉️ Generate Reply") and ticket_input.strip():
-   
-    # 1. Classify the ticket for internal use
-    category = classify_ticket(ticket_input)
-    print(f"📋 Ticket classified as: {category}")
-    
-    # 3. Run both reply and review with proper crew
-    print("🤖 Starting support crew...")
-
-    result = support_crew_with_research(ticket_input, instruction=crew_instruction)
-
-    #st.markdown("### 🔎 Search:")
-    #st.markdown(result["research"])
-    
-    st.markdown("### 💬 Suggested Reply:")
-    html_reply = result["reply"]  # Your raw HTML reply
-    plain_text_reply = convert_html_to_plaintext_with_urls(html_reply)
-    st.markdown(plain_text_reply)
-
-    #st.markdown("### 🕵️‍♂️ Quality Review:")
-    #st.markdown(result["review"])
-
-elif st.button("❌ Clear"):
-    ticket_input = ""
+if "fresh_reply_html" in st.session_state:
+    st.divider()
+    st.subheader("Suggested Reply")
+    st.markdown(st.session_state["fresh_reply_html"], unsafe_allow_html=True)
+    st.divider()
+    st.text_area("Plain text (copy from here):", value=st.session_state["fresh_reply_text"], height=300)
