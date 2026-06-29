@@ -1,6 +1,5 @@
 import os
 import streamlit as st
-import streamlit.components.v1 as components
 import uuid
 
 def tinymce_editor(initial_content="", ticket_id="0", height=500):
@@ -83,7 +82,7 @@ def tinymce_editor(initial_content="", ticket_id="0", height=500):
     """
 
     # Return the content of the editor
-    return components.html(component_html, height=height)
+    return st.components.v1.html(component_html, height=height)
 
 def get_tinymce_content(ticket_id: str) -> str:
     path = f"data/dynamic/editor/draft_{ticket_id}"
