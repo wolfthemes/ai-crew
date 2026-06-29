@@ -1,1 +1,1 @@
-wsl bash -c "cd /mnt/c/Users/Constantin/wolfthemes-dev/ai-crew && source .venv/bin/activate && python scripts/closed_tickets_etl.py"
+wsl bash -c "cd /mnt/c/Users/Constantin/dev/ai-crew && source .venv/bin/activate && python scripts/closed_tickets_etl.py"

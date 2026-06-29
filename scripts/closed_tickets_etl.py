@@ -1,4 +1,4 @@
-# cd ~/wolfthemes-dev/ai-crew && source .venv/scripts/activate && python scripts/closed_tickets_etl.py
+# cd ~/dev/ai-crew && source .venv/scripts/activate && python scripts/closed_tickets_etl.py
 
 import sys
 import os

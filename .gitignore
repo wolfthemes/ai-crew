@@ -47,3 +47,8 @@ repos/*
 
 # Node-related (if you use Node or frontend tooling)
 node_modules/
+
+# Local tooling / generated
+venv/
+graphify-out/
+.claude/

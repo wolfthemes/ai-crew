@@ -1,5 +1,5 @@
 # scripts/generate_reply_drafts.py
-# cd ~/wolfthemes-dev/ai-crew && source .venv/scripts/activate && python scripts/generate_reply_drafts.py
+# cd ~/dev/ai-crew && source .venv/scripts/activate && python scripts/generate_reply_drafts.py
 import shutil
 import sys
 import json

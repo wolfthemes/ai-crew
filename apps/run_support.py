@@ -2,6 +2,7 @@ import subprocess
 import webbrowser
 import time
 import os
+import sys
 
 # Define the apps to launch
 apps = [
@@ -12,7 +13,7 @@ apps = [
 # Start all Streamlit apps
 for app in apps:
     subprocess.Popen([
-        "streamlit", "run", app["script"],
+        sys.executable, "-m", "streamlit", "run", app["script"],
         "--server.port", str(app["port"]),
         "--server.headless", "true"
     ])
@@ -23,8 +24,10 @@ for app in apps:
 print("Waiting for apps to initialize...")
 time.sleep(5)
 
-# Open the main app in the default browser
-webbrowser.open(f"http://localhost:{apps[1]['port']}")
+# Open the main app in Brave
+ui_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "support_dashboard_ui.html"))
+webbrowser.register("brave", None, webbrowser.BackgroundBrowser("/mnt/c/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"))
+webbrowser.get("brave").open(f"file://{ui_path}")
 
 # Keep the script running
 print("Press Ctrl+C to exit and terminate all apps")
