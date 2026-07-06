@@ -1,20 +1,11 @@
 # 🧠 AI Crew
 
-A modular AI assistant team powered by CrewAI, OpenAI, and LangChain — built to automate my support workflow, WordPress development, trading insights, and more.
+An AI support assistant powered by CrewAI, OpenAI, and LangChain — built to automate my support workflow.
 
 ## ✅ Features
 
 - Support agent replies to customer tickets in my natural tone
-- Modular structure for adding new agents (dev, trading, RSS, etc.)
-- Future integration with Ticksy, Notion, GitHub, and FX feeds
-
-## 📁 Project Layout
-
-- agents/ — agent definitions  
-- tasks/ — agent tasks  
-- crews/ — crew orchestration  
-- main.py — main entry point  
-- .env.example — environment variable template  
+- Integrates with Ticksy, Notion, and Obsidian
 
 ## ⚙️ Setup
 
@@ -31,8 +22,6 @@ A modular AI assistant team powered by CrewAI, OpenAI, and LangChain — built t
 
 OPENAI_API_KEY=your-key
 NOTION_API_KEY=your-key
-GITHUB_USERNAME=your-username
-GITHUB_TOKEN=your-key
 TICKSY_DOMAIN=your-username
 TICKSY_API_KEY=your-key
 
